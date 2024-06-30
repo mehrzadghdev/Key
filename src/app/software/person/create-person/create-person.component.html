@@ -93,7 +93,7 @@
     </div>
     
     <mat-dialog-actions class="form-dialog-footer">
-      <button mat-ripple class="stroked-button" (click)="closeDialog()">لغو</button>
+      <button mat-ripple type="button" class="stroked-button" (click)="closeDialog()">لغو</button>
       <button [ngClass]="{'button-loading': addPersonLoading}" mat-ripple class="primary-button" (click)="onAddPerson()">ایجاد</button>
     </mat-dialog-actions>
 </form>

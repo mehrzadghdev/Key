@@ -44,6 +44,14 @@
     max-height: 80vh;
     overflow-y: auto;
     background-color: var(--base-color);
+    position: relative;
+
+    .form-dialog-content-loading {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+        background-color: color-mix(in srgb, var(--base-color), transparent 50%);
+    }
 }
 
 .form-dialog {

@@ -31,7 +31,7 @@ export interface GetUsersCompanyListBody {
 
 // Company/GetCompany
 
-export type GetCompany = Company;
+export type GetCompany = [Company];
 
 export interface GetCompanyBody {
     databaseId: number
@@ -78,16 +78,16 @@ export interface AddCompanyBody {
 export type UpdateCompany = null;
 
 export interface UpdateCompanyBody {
-    packageNo: number,
-    companyName: string,
-    taxIdentity: string,
-    privateKey: string,
-    companyZipCode: string,
-    companyAddress: string,
-    companyTel: string,
-    companyBranchNo: string,
-    companyStatus: boolean,
-    companyDesc: string
+    databaseId: number, 
+    companyName: string, 
+    taxIdentity: string, 
+    privateKey: string, 
+    companyZipCode: string, 
+    companyAddress: string, 
+    companyTel: string, 
+    companyBranchNo: string, 
+    companyStatus: boolean, 
+    companyDesc: string 
 };
 
 // Company/DeleteCompany 

@@ -49,3 +49,10 @@
 .form-dialog {
     background-color: var(--base-color);
 }
+
+@media only screen and (max-width: 576px) {
+    .form-dialog-field-row {
+        display: flex;
+        flex-direction: column;
+    }
+}

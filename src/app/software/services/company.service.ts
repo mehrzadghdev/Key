@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/request.service';
 import { AddCompany, AddCompanyBody, DeleteCompany, DeleteCompanyBody, GetCompany, GetCompanyBody, GetCompanyList, GetUsersCompanyList, GetUsersCompanyListBody, UpdateCompany, UpdateCompanyBody } from '../types/company.type';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CompanyService {
 
-  constructor(private request: RequestService) { }
+  constructor(private request: RequestService, private http: HttpClient) { }
 
   public getAllCompanyList(): Observable<GetCompanyList> {
     return this.request.post<GetCompanyList, null>("Company/GetCompanyList", null);

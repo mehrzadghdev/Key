@@ -13,16 +13,16 @@ export class RequestService {
 
   public post<Result, Body = any>(controlAndMethodName: string, body: Body): Observable<Result> {
     const request = this.http.post<Result>(environment.apiUrl + controlAndMethodName, body, { headers: this.headers() }).pipe(
-      catchError((err) => {
-        if ([401, 403].includes(err.status)) {
-          this.authentication.logout();
-          this.authentication.authorize();
-        }
-        const error = err.error?.message || err.statusText;
-        console.error(err);
+      // catchError((err) => {
+      //   if ([401, 403].includes(err.status)) {
+      //     this.authentication.logout();
+      //     this.authentication.authorize();
+      //   }
+      //   const error = err.error?.message || err.statusText;
+      //   console.error(err);
 
-        return throwError(() => error);
-      })
+      //   return throwError(() => error);
+      // })
     ) as Observable<Result>;
 
     return request;

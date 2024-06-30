@@ -8,6 +8,7 @@ import { SelectCompanyComponent } from '../select-company/select-company.compone
 import { UserDetails } from 'src/app/shared/types/authentication.type';
 import { KeyModules } from 'src/app/shared/types/modules.type';
 import { CompanyService } from '../../services/company.service';
+import { UpdateCompanyComponent } from '../update-company/update-company.component';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -48,6 +49,17 @@ export class ListCompanyComponent implements OnInit {
       data: {
         firstCompany: false, 
         disableClose: false
+      }
+    }).afterClosed().subscribe(res => {
+      this.loadCompanyList()
+    })
+  }
+
+  public onUpdateCompany(databaseId: number) {
+    this.dialog.openFormDialog(UpdateCompanyComponent, {
+      width: "456px",
+      data: {
+        databaseId: databaseId
       }
     }).afterClosed().subscribe(res => {
       this.loadCompanyList()

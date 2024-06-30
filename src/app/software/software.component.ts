@@ -14,6 +14,7 @@ import { GetUsersCompanyListBody } from './types/company.type';
 import { ListProductComponent } from './product/list-product/list-product.component';
 import { ListPersonComponent } from './person/list-person/list-person.component';
 import { ListCompanyComponent } from './company/list-company/list-company.component';
+import { KeyModules } from '../shared/types/modules.type';
 
 @Component({
   selector: 'app-software',
@@ -172,5 +173,15 @@ export class SoftwareComponent {
         // TODO: this.currentActivatedRoute.reloadProductList();
       }
     })
+  }
+
+  public activeRouteIs(value: KeyModules): boolean {
+    if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
+    if (value === 'person') return this.currentActivatedRoute instanceof ListPersonComponent;
+    if (value === 'product') return this.currentActivatedRoute instanceof ListProductComponent;
+    //TODO: if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
+    //TODO: if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
+
+    return false;
   }
 }
