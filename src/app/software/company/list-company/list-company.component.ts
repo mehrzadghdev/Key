@@ -22,16 +22,9 @@ export class ListCompanyComponent implements OnInit {
   constructor(private dialog: DialogService, private companyService: CompanyService, private authentication: AuthenticationService) {}
 
   ngOnInit(): void {
-    const currentUserPackageNo: GetUsersCompanyListBody = {
-      packageNo: (this.authentication.userDetails as UserDetails).packageNo
-    } as const;
-
-    this.companyService.getUsersCompanyList(currentUserPackageNo).subscribe(res => {
-      this.companiesList = res;
-      this.companiesListLoaded = true;
-    })
+    this.loadCompanyList();
   }
-  public reloadCompanyList(): void {
+  public loadCompanyList(): void {
     this.companiesListLoaded = false;
   
     const currentUserPackageNo: GetUsersCompanyListBody = {
@@ -46,7 +39,7 @@ export class ListCompanyComponent implements OnInit {
 
   public onDeleteCompany(idToDelete: number): void {
     this.companyService.deleteCompany({ databaseId: idToDelete }).subscribe(res => {
-      this.reloadCompanyList()
+      this.loadCompanyList()
     })
   }
 
@@ -57,7 +50,7 @@ export class ListCompanyComponent implements OnInit {
         disableClose: false
       }
     }).afterClosed().subscribe(res => {
-      this.reloadCompanyList()
+      this.loadCompanyList()
     })
   }
 }

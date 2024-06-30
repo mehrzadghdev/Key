@@ -33,19 +33,15 @@ export class ListPersonComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const currentCompany = this.authentication.currentCompany as Company;
-
-    this.personSerivce.getCompaniesPersonList({ databaseId: currentCompany.databaseId }).subscribe(res => {
-      console.log(res);
-      this.personsList = res;
-      this.personListLoaded = true;
-    })
+    this.loadPersonList();
   }
 
-  public reloadPersonList(): void {
+  public loadPersonList(): void {
     this.personListLoaded = false;
   
     const currentCompany = this.authentication.currentCompany as Company;
+
+    console.log(currentCompany.databaseId);
 
     this.personSerivce.getCompaniesPersonList({ databaseId: currentCompany.databaseId }).subscribe(res => {
       this.personsList = res;
@@ -55,7 +51,7 @@ export class ListPersonComponent implements OnInit {
 
   public onDeletePerson(personCodeToDelete: number): void {
     this.personSerivce.deletePerson({ code: personCodeToDelete }).subscribe(res => {
-      this.reloadPersonList();
+      this.loadPersonList();
     })
   }
 
@@ -63,7 +59,7 @@ export class ListPersonComponent implements OnInit {
     this.dialog.openFormDialog(CreatePersonComponent, {
       width: "456px"
     }).afterClosed().subscribe(res => {
-      this.reloadPersonList()
+      this.loadPersonList()
     })
   }
 }

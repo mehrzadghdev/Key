@@ -22,10 +22,17 @@ import { ListCompanyComponent } from './company/list-company/list-company.compon
 })
 export class SoftwareComponent {
   public isExpanded: boolean = true;
+
   get authDone(): boolean {
     return this.authentication.userLoggedIn;
   }
+
+  get userDetails(): UserDetails {
+    return this.authentication.userDetails as UserDetails;
+  }
+
   public companySelected: boolean = false;
+
   get isMobile(): boolean {
     return window.screen.width <= 768;
   }
@@ -123,10 +130,10 @@ export class SoftwareComponent {
       }
     }).afterClosed().subscribe(res => {
       if (this.currentActivatedRoute instanceof ListCompanyComponent) {
-        this.currentActivatedRoute.reloadCompanyList();
+        this.currentActivatedRoute.loadCompanyList();
       }
       if (this.currentActivatedRoute instanceof ListPersonComponent) {
-        this.currentActivatedRoute.reloadPersonList();
+        this.currentActivatedRoute.loadPersonList();
       }
       if (this.currentActivatedRoute instanceof ListProductComponent) {
         // TODO: this.currentActivatedRoute.reloadProductList();
@@ -142,7 +149,7 @@ export class SoftwareComponent {
       }
     }).afterClosed().subscribe(res => {
       if (this.currentActivatedRoute instanceof ListCompanyComponent) {
-        this.currentActivatedRoute.reloadCompanyList();
+        this.currentActivatedRoute.loadCompanyList();
       }
     })
   }
@@ -152,7 +159,7 @@ export class SoftwareComponent {
       width: "456px"
     }).afterClosed().subscribe(res => {
       if (this.currentActivatedRoute instanceof ListPersonComponent) {
-        this.currentActivatedRoute.reloadPersonList();
+        this.currentActivatedRoute.loadPersonList();
       }
     })
   }

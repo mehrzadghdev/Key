@@ -6,6 +6,7 @@
     justify-content: space-between;
     padding: 10px;
     border-bottom: 2px solid var(--border-color-light);
+    background-color: var(--base-color);
 
     h3 {
         padding: 5px;
@@ -29,6 +30,7 @@
     align-items: center;
     justify-content: end;
     gap: 10px;
+    background-color: var(--base-color);
 
     button {
         width: 120px;
@@ -41,4 +43,9 @@
     padding: 25px 10px 10px 10px;
     max-height: 80vh;
     overflow-y: auto;
+    background-color: var(--base-color);
+}
+
+.form-dialog {
+    background-color: var(--base-color);
 }

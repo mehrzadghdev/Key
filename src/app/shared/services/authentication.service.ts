@@ -11,14 +11,16 @@ import { Company } from 'src/app/software/types/company.type';
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private _company = localStorage.getItem("current-company");
-  private _userDetails = localStorage.getItem("user-details");
+  private _company: string | null = null;
+  private _userDetails: string | null = null;
   private _accessToken: string | null = null;
   private _tokenExpireDate: string | null = null;
   
   get currentCompany(): Company | "" {
-    if (this._company !== null) {
-      return JSON.parse(this._company);
+    const currentLocalCompany: string | null = localStorage.getItem('current-company');
+    
+    if (currentLocalCompany !== null) {
+      return JSON.parse(currentLocalCompany);
     }
 
     return "";
@@ -26,11 +28,14 @@ export class AuthenticationService {
 
   set currentCompany(item: Company) {
     localStorage.setItem("current-company", JSON.stringify(item));
+    this._company = JSON.stringify(item);
   }
 
   get userDetails(): UserDetails | "" {
-    if (this._userDetails !== null) {
-      return JSON.parse(this._userDetails);
+    const currentLocalUserDetails: string | null = localStorage.getItem('user-details');
+
+    if (currentLocalUserDetails !== null) {
+      return JSON.parse(currentLocalUserDetails);
     }
 
     return "";
@@ -79,7 +84,9 @@ export class AuthenticationService {
   constructor(private http: HttpClient, private router: Router) { }
 
   public currentCompanySelected(): boolean {
-    if (this._company && this._company !== null && this._company !== "") {
+    const currentLocalCompany: string | null = localStorage.getItem('current-company');
+
+    if (currentLocalCompany && currentLocalCompany !== null && currentLocalCompany !== "") {
       return true
     }
 

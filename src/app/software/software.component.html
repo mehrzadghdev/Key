@@ -1,15 +1,22 @@
 <ng-container *ngIf="authDone && companySelected">
     <div class="panel-sidebar" [ngClass]="{'active': isExpanded, 'not-active': !isExpanded, 'mobile-hidden': !isExpanded}">
         <div class="panel-sidebar_top">
-            <div class="panel-sidebar_logo" [mat-menu-trigger-for]="userMenu" mat-ripple>
+            <div class="panel-sidebar__logo" [mat-menu-trigger-for]="userMenu" mat-ripple>
                 <div class="person-icon">
                     <mat-icon>person_outline</mat-icon>
                 </div>
                 <span *ngIf="isExpanded">
                     <a class="pointer">نرم افزار واسط کلید</a>
+                    <span class="package-number">شماره بسته: {{ userDetails.packageNo }}</span>
                 </span>
             </div>
             <mat-menu #userMenu="matMenu">
+                <button mat-menu-item>
+                    <div class="home-button" (click)="onReSelectCompany()">
+                        <mat-icon class="material-icons-outlined">apartment_outline</mat-icon>
+                        تغییر شرکت فعال
+                    </div>
+                </button>
                 <button mat-menu-item>
                     <div class="home-button">
                         <mat-icon class="material-icons-outlined">home</mat-icon>
