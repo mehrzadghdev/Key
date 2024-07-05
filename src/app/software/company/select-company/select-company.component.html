@@ -1,9 +1,9 @@
 <div class="dialog fullscreen-dialog">
     <div class="header">
         <div *ngIf="data.reSelect" class="icon-button" (click)="closeDialog()">
-            <button class="icon-button">
+            <key-button content="icon">
                 <mat-icon class="icon-base">close</mat-icon>
-            </button>
+            </key-button>
         </div>
 
         <div class="header-title">
@@ -20,7 +20,7 @@
                         <p>{{ company.companyDesc }}</p>
                     </div>
                     <div class="company-select">
-                        <button mat-ripple class="stroked-button" (click)="onSelectCompany(company)">فعال کردن</button>
+                        <key-button appearance="stroked" (click)="onSelectCompany(company)">فعال کردن</key-button>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                         <p>{{ company.companyDesc }}</p>
                     </div>
                     <div class="company-select">
-                        <button mat-ripple class="stroked-button" (click)="onSelectCompany(company)">فعال کردن</button>
+                        <key-button [disabled]="data.reSelect && currentCompany.databaseId === company.databaseId" appearance="stroked" (click)="onSelectCompany(company)">فعال کردن</key-button>
                     </div>
                 </div>
             </div>
@@ -65,10 +65,10 @@
                 </div>
             </div>
             <div class="add-company-button__wrapper">
-                <button class="text-button add-company-button" mat-ripple (click)="onAddCompanyDialog()">
+                <key-button appearance="text" (click)="onAddCompanyDialog()"> 
                     <mat-icon class="material-icons-outlined">add</mat-icon>
                     ایجاد شرکت جدید
-                </button>
+                </key-button>
             </div>
         </div>
     </div>

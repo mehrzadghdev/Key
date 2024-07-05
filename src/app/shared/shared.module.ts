@@ -24,6 +24,8 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { JdatePipe } from './pipes/jdate.pipe';
 import { TableLoadingComponent } from './components/table-loading/table-loading.component';
 import { RandomWidthDirective } from './directives/random-width.directive';
+import { ButtonComponent } from './components/button/button.component';
+import { PricePipe } from './pipes/price.pipe';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -34,7 +36,9 @@ export function playerFactory() {
     LoadingComponent,
     JdatePipe,
     TableLoadingComponent,
-    RandomWidthDirective
+    RandomWidthDirective,
+    ButtonComponent,
+    PricePipe
   ],
   imports: [
     CommonModule,
@@ -54,6 +58,7 @@ export function playerFactory() {
     MatInputModule,
     MatFormFieldModule,
     MatMenuModule,
+    MatSnackBarModule,
     MatAutocompleteModule,
     LottieModule.forRoot({ player: playerFactory })
   ],
@@ -68,7 +73,9 @@ export function playerFactory() {
     LoadingComponent,
     JdatePipe,
     TableLoadingComponent,
-    RandomWidthDirective
+    RandomWidthDirective,
+    PricePipe,
+    ButtonComponent
   ] 
 })
 export class SharedModule { }

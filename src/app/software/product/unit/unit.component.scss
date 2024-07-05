@@ -1,0 +1,53 @@
+@import url('../../../shared/scss/key-list.scss');
+
+.unit-container {
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-template-columns: 250px auto;
+    gap: 20px;
+
+    .add-new-unit-form {
+        margin-top: 17px;
+        box-shadow: 0 -3px 31px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.02);
+        overflow-x: auto;
+        background-color: var(--base-color);
+        padding: 15px;
+
+        span {
+            font-size: 14px;
+            font-weight: 500;
+
+            &::after {
+                content: '';
+                display: block;
+                height: 2px;
+                margin-top: 5px;
+                border-radius: 10px;
+                width: 100%;
+                background-color: var(--primary-color);
+            }
+        }
+
+        .add-unit-form {
+            margin-top: 30px;
+
+            mat-form-field {
+                width: 100%;
+            }
+        }
+    }
+
+    .unit-form-actions-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    .unit-container {
+        display: flex;
+        flex-direction: column;
+    }
+}

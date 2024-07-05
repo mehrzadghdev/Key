@@ -8,6 +8,8 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
 import { KeyModules } from 'src/app/shared/types/modules.type';
 import { PersonService } from '../../services/person.service';
 import { Company } from '../../types/company.type';
+import { UpdatePersonComponent } from '../update-person/update-person.component';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -25,9 +27,15 @@ export class ListPersonComponent implements OnInit {
     { display: 'اتباع غیر ایرانی', value: PersonType.NonIranianNotionals },
     { display: 'مصرف کننده نهایی', value: PersonType.FinalConsumer },
   ]
-  
-  constructor(private authentication: AuthenticationService, private router: Router, private personSerivce: PersonService, private dialog: DialogService) {}
-    
+
+  constructor(
+    private authentication: AuthenticationService,
+    private router: Router,
+    private personSerivce: PersonService,
+    private dialog: DialogService,
+    private utility: UtilityService
+  ) { }
+
   public personTypeTextByNumber(personType: PersonType): string {
     return this.personTypes.find(person => person.value === personType)?.display ?? "نامشخص";
   }
@@ -38,10 +46,8 @@ export class ListPersonComponent implements OnInit {
 
   public loadPersonList(): void {
     this.personListLoaded = false;
-  
-    const currentCompany = this.authentication.currentCompany as Company;
 
-    console.log(currentCompany.databaseId);
+    const currentCompany = this.authentication.currentCompany as Company;
 
     this.personSerivce.getCompaniesPersonList({ databaseId: currentCompany.databaseId }).subscribe(res => {
       this.personsList = res;
@@ -51,6 +57,7 @@ export class ListPersonComponent implements OnInit {
 
   public onDeletePerson(personCodeToDelete: number): void {
     this.personSerivce.deletePerson({ code: personCodeToDelete }).subscribe(res => {
+      this.utility.message('طرف حساب با موفقیت حذف شد.', 'بستن');
       this.loadPersonList();
     })
   }
@@ -61,5 +68,38 @@ export class ListPersonComponent implements OnInit {
     }).afterClosed().subscribe(res => {
       this.loadPersonList()
     })
+  }
+
+  public onUpdatePerson(code: number) {
+    this.dialog.openFormDialog(UpdatePersonComponent, {
+      width: "456px",
+      data: {
+        code: code
+      }
+    }).afterClosed().subscribe(res => {
+      this.loadPersonList()
+    })
+  }
+
+  public onSearch(searchQuery: string) {
+    if (searchQuery && this.personListLoaded) {      
+      const filteredData = this.personsList.filter(person => {
+        for (const [key, value] of Object.entries(person)) {
+          if (typeof value === 'string' && value.includes(searchQuery)) {
+            return true
+          }
+          if (typeof value === 'number'&& value.toString().includes(searchQuery)) {
+            return true
+          }
+        }
+        
+        return;
+      })
+      
+      this.personsList = filteredData;
+    }
+    else {
+      this.loadPersonList();
+    }
   }
 }

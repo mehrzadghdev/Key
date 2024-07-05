@@ -16,12 +16,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { UpdatePersonComponent } from './update-person/update-person.component';
 
 
 @NgModule({
   declarations: [
     ListPersonComponent,
-    CreatePersonComponent
+    CreatePersonComponent,
+    UpdatePersonComponent
   ],
   imports: [
     CommonModule,

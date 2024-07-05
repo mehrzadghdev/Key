@@ -1,0 +1,18 @@
+<button [ngClass]="{
+            'button-loading': loading,
+            'primary-button':  content === 'text' && appearance === 'primary',
+            'stroked-button':  content === 'text' && appearance === 'stroked',
+            'flat-button':  content === 'text' && appearance === 'flat',
+            'raised-button':  content === 'text' && appearance === 'raised',
+            'error-button':  content === 'text' && appearance === 'error',
+            'text-button': content === 'text' && appearance === 'text',
+    
+            'icon-button':  content === 'icon' && appearance === 'primary',
+            'stroked-icon-button':  content === 'icon' && appearance === 'stroked',
+            'flat-icon-button':  content === 'icon' && appearance === 'flat',
+            'block-button': block
+        }" [disabled]="disabled" mat-ripple [type]="type">
+    <div class="button-content center-button-content">
+        <ng-content></ng-content>
+    </div>
+</button>

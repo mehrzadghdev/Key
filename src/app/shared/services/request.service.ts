@@ -3,26 +3,33 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { environment } from 'src/environment/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { UtilityService } from './utility.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestService {
 
-  constructor(private http: HttpClient, private authentication: AuthenticationService) { }
+  constructor(private http: HttpClient, private authentication: AuthenticationService, private utilityService: UtilityService) { }
 
   public post<Result, Body = any>(controlAndMethodName: string, body: Body): Observable<Result> {
     const request = this.http.post<Result>(environment.apiUrl + controlAndMethodName, body, { headers: this.headers() }).pipe(
-      // catchError((err) => {
-      //   if ([401, 403].includes(err.status)) {
-      //     this.authentication.logout();
-      //     this.authentication.authorize();
-      //   }
-      //   const error = err.error?.message || err.statusText;
-      //   console.error(err);
+      catchError((err) => {
+        if ([500].includes(err.status)) {
+          this.utilityService.message("خطای داخلی، لطفا با پشتیبانی تماس بگیرید", 'بستن')
+        }
+        if ([401, 403].includes(err.status)) {
+          this.authentication.logout();
+          this.authentication.authorize();
+        }
+        if ([409].includes(err.status)) {
+          this.utilityService.message("کد وارد شده تکراری است، لطفا از کد دیگری استفاده کنید.", 'بستن')
+        }
 
-      //   return throwError(() => error);
-      // })
+        const error = err.error?.message || err.statusText;
+        return throwError(() => error);
+      })
     ) as Observable<Result>;
 
     return request;

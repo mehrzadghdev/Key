@@ -16,12 +16,17 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { UnitComponent } from './unit/unit.component';
+import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
+import { UpdateProductComponent } from './update-product/update-product.component';
 
 
 @NgModule({
   declarations: [
     ListProductComponent,
-    CreateProductComponent
+    CreateProductComponent,
+    UnitComponent,
+    UpdateProductComponent
   ],
   imports: [
     CommonModule,
@@ -37,7 +42,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatFormFieldModule,
     MatMenuModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
+    NgxMaskDirective
+  ],
+  providers: [
+    provideNgxMask(),
   ]
 })
 export class ProductModule { }

@@ -1,0 +1,111 @@
+<form [formGroup]="updateProductForm">
+    <div class="form-dialog-top-bar">
+        <h3>ایجاد کالای جدید</h3>
+        <key-button content="icon" (click)="closeDialog()">
+            <mat-icon class="icon-base">close</mat-icon>
+        </key-button>
+    </div>
+    
+    <div class="form-dialog-content">
+        <div class="form-dialog-content-loading" *ngIf="getUnitListLoading || getProductLoading"></div>
+        <mat-form-field class="form-dialog-field" appearance="outline">
+            <mat-label>واحد کالا و خدمات</mat-label>
+            <mat-select formControlName="unitCode" name="unitCode">
+                <mat-option *ngFor="let unit of unitList" [value]="unit.code">{{unit.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="updateProductForm.get('unitCode')?.invalid && validationLastCheck">
+                این فیلد الزامیست
+            </mat-error>
+        </mat-form-field> 
+        <div class="form-dialog-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>نوع کالا </mat-label>
+                <mat-select formControlName="productType" name="productType">
+                    <mat-option *ngFor="let productType of productTypes" [value]="productType.value">{{productType.display}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="updateProductForm.get('productType')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>کد کالا</mat-label>
+                <input type="number" matInput formControlName="code">
+                <mat-error *ngIf="updateProductForm.get('code')?.invalid && validationLastCheck">
+                    <ng-container *ngIf="updateProductForm.get('code')?.hasError('required')">
+                        این فیلد الزامیست
+                    </ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-dialog-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>نام کالا</mat-label>
+                <input type="text" matInput formControlName="name">
+                <mat-error *ngIf="updateProductForm.get('name')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>شناسه کالا</mat-label>
+                <input type="string" matInput formControlName="productCode">
+                <mat-error *ngIf="updateProductForm.get('productCode')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-dialog-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>قیمت</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="price">
+                <mat-error *ngIf="updateProductForm.get('price')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>درصد ارزش افزوده</mat-label>
+                <input type="number" matInput formControlName="taxPercent">
+                <mat-error *ngIf="updateProductForm.get('taxPercent')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-dialog-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>سایر وجود قانونی</mat-label>
+                <input type="text" matInput formControlName="otherLegalFunds">
+                <mat-error *ngIf="updateProductForm.get('otherLegalFunds')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>درصد سایر وجود قانونی</mat-label>
+                <input type="number" matInput formControlName="otherLegalFundsPercent">
+                <mat-error *ngIf="updateProductForm.get('otherLegalFundsPercent')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-dialog-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>سایر عوارض و مالیات</mat-label>
+                <input type="text" matInput formControlName="otherTax">
+                <mat-error *ngIf="updateProductForm.get('otherTax')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>درصد سایر عوارض و مالیات</mat-label>
+                <input type="number" matInput formControlName="otherTaxPercent">
+                <mat-error *ngIf="updateProductForm.get('otherTaxPercent')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+    </div>
+    
+    <mat-dialog-actions class="form-dialog-footer">
+        <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
+        <key-button [loading]="updateProductLoading" (click)="onUpdateProduct()" type="submit">ویرایش</key-button>
+    </mat-dialog-actions>
+</form>

@@ -46,7 +46,7 @@ export interface GetCompaniesPersonListBody {
 
 // Person/GetPerson
 
-export type GetPerson = Person;
+export type GetPerson = [Person];
 
 export interface GetPersonBody {
     code: number

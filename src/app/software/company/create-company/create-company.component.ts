@@ -5,6 +5,7 @@ import { AddCompanyBody } from '../../types/company.type';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { CompanyService } from '../../services/company.service';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-create-company',
@@ -21,6 +22,7 @@ export class CreateCompanyComponent {
     private dialogRef: MatDialogRef<CreateCompanyComponent>,
     private companyService: CompanyService,
     private authentication: AuthenticationService,
+    private utility: UtilityService,
     @Inject(MAT_DIALOG_DATA) public data: { firstCompany?: boolean, disableClose?: boolean }
   ) {
     this.addCompanyForm = fb.group({
@@ -51,9 +53,8 @@ export class CreateCompanyComponent {
   }
 
   public onAddCompany(): void {
-    this.addCompanyLoading = true;
-    
     if (!this.addCompanyForm.invalid && this.authentication.userDetails) {
+      this.addCompanyLoading = true;
 
       const addCompanyBody: AddCompanyBody = {
         packageNo: this.authentication.userDetails.packageNo,
@@ -71,8 +72,13 @@ export class CreateCompanyComponent {
       this.companyService.addCompany(addCompanyBody).subscribe(res => {
         this.authentication.currentCompany = res;
         this.addCompanyLoading = false;
+        this.utility.message('شرکت با موفقیت ایجاد شد.', 'بستن');
         this.dialogRef.close();
       })
+    }
+    else if (!this.authentication.userDetails) {
+      this.utility.message('احراز هویت با خطا مواجه شد', 'متوجه شدم');
+      this.authentication.logout();
     }
     else {
       this.addCompanyForm.markAllAsTouched();

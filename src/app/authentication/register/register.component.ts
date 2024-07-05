@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 import { LoginApiBody, RegisterApiBody } from 'src/app/shared/types/authentication.type';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 
@@ -31,7 +32,8 @@ export class RegisterComponent {
 	constructor(
 		private authentication: AuthenticationService,
 		private router: Router,
-		private fb: FormBuilder
+		private fb: FormBuilder,
+		private utility: UtilityService
 	) { }
 
 	public onRegister(): void {
@@ -54,8 +56,6 @@ export class RegisterComponent {
 				exportPatternCount: 0
 			}
 
-			console.log(registerBody);
-
 			this.authentication.register(registerBody).subscribe({
 				next: (result) => {
 					const loginBody: LoginApiBody = {
@@ -69,16 +69,23 @@ export class RegisterComponent {
 						next: (loginResult) => {
 							this.authentication.accessToken = loginResult.accessToken;
 							this.authentication.tokenExpireDate = loginResult.expiresIn;
-							this.registerLoading = false;
-							this.router.navigate(['/software']);
+
+							this.authentication.userInfo().subscribe(result => {
+								this.authentication.userDetails = result;
+								this.registerLoading = false;
+								this.utility.message("ساخت حساب کاربری انجام شد.", 'بستن');
+								this.router.navigate(['/software']);
+							})
 						},
 						error: (err) => {
 							this.registerLoading = false;
+							this.utility.message("ساخت حساب کاربری انجام شد، لطفا وارد حساب شوید.", 'بستن');
 							this.router.navigate(['/auth/login']);
 						}
 					})
 				},
 				error: (err) => {
+					this.utility.message("آدرس ایمیل تکراری است، در صورت نیاز وارد حساب کاربری شوید", 'بستن');
 					this.registerLoading = false;
 				}
 			})

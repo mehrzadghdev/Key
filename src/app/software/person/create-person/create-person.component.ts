@@ -7,6 +7,7 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 import { AddPersonBody } from '../../types/person.type';
 import { PersonService } from '../../services/person.service';
 import { Company } from '../../types/company.type';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-create-person',
@@ -25,7 +26,13 @@ export class CreatePersonComponent {
     { display: 'مصرف کننده نهایی', value: PersonType.FinalConsumer },
   ]
   
-  constructor(private dialgoRef: MatDialogRef<CreatePersonComponent>, private personService: PersonService, private fb: FormBuilder, private authentication: AuthenticationService) {
+  constructor(
+    private dialgoRef: MatDialogRef<CreatePersonComponent>, 
+    private personService: PersonService, 
+    private fb: FormBuilder, 
+    private authentication: AuthenticationService,
+    private utility: UtilityService
+  ) {
     this.addPersonForm = fb.group({
       code: [null, [Validators.required]], 
       personType: [0, [Validators.required]],
@@ -69,7 +76,11 @@ export class CreatePersonComponent {
 
       this.personService.addPerson(addPersonBody).subscribe(res => {
         this.addPersonLoading = false;
+        this.utility.message("طرف حساب با موفقیت ایجاد شد.", 'بستن');
         this.closeDialog();
+      },
+      err => {
+        this.addPersonLoading = false
       })
     }
     else {

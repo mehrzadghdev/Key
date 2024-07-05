@@ -1,9 +1,9 @@
-import { Component, ComponentRef } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, OnInit } from '@angular/core';
 import { Theme } from '../shared/types/theme.type';
 import { ThemeService } from '../shared/services/theme.service';
 import { AuthenticationService } from '../shared/services/authentication.service';
 import { DialogService } from '../shared/services/dialog.service';
-import { Router } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { SelectCompanyComponent } from './company/select-company/select-company.component';
 import { CreateCompanyComponent } from './company/create-company/create-company.component';
 import { CreatePersonComponent } from './person/create-person/create-person.component';
@@ -15,13 +15,17 @@ import { ListProductComponent } from './product/list-product/list-product.compon
 import { ListPersonComponent } from './person/list-person/list-person.component';
 import { ListCompanyComponent } from './company/list-company/list-company.component';
 import { KeyModules } from '../shared/types/modules.type';
+import { UnitComponent } from './product/unit/unit.component';
 
 @Component({
   selector: 'app-software',
   templateUrl: './software.component.html',
-  styleUrls: ['./software.component.scss']
+  styleUrls: ['./software.component.scss'],
+  animations: [
+    // fader,
+  ]
 })
-export class SoftwareComponent {
+export class SoftwareComponent implements OnInit, AfterViewInit {
   public isExpanded: boolean = true;
 
   get authDone(): boolean {
@@ -43,6 +47,7 @@ export class SoftwareComponent {
   }
 
   public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent>;
+  public currentActivatedRouteLoaded: boolean = false;
   public searchQuery: string = "";
   public fullscreen: boolean = true;
 
@@ -57,6 +62,10 @@ export class SoftwareComponent {
   }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 768) {
+      this.isExpanded = false;
+    }
+
     const currentUserPackageNo: GetUsersCompanyListBody = {
       packageNo: (this.authentication.userDetails as UserDetails).packageNo
     } as const;
@@ -87,9 +96,22 @@ export class SoftwareComponent {
     }
   }
 
+  ngAfterViewInit(): void {
+    this.currentActivatedRouteLoaded = true;
+  }
+
+  public prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animations'];
+  }
+
   public onSearch(): void {
-    if (this.searchQuery === "") {
-      console.log("searching: ", this.searchQuery);
+    if (
+      this.currentActivatedRoute instanceof ListCompanyComponent 
+      || this.currentActivatedRoute instanceof ListPersonComponent
+      || this.currentActivatedRoute instanceof ListProductComponent
+      || this.currentActivatedRoute instanceof UnitComponent
+    ) {
+      this.currentActivatedRoute.onSearch(this.searchQuery);
     }
   }
 
@@ -137,7 +159,10 @@ export class SoftwareComponent {
         this.currentActivatedRoute.loadPersonList();
       }
       if (this.currentActivatedRoute instanceof ListProductComponent) {
-        // TODO: this.currentActivatedRoute.reloadProductList();
+        this.currentActivatedRoute.loadProductList();
+      }
+      if (this.currentActivatedRoute instanceof UnitComponent) {
+        this.currentActivatedRoute.loadUnitList()
       }
     })
   }
@@ -170,7 +195,7 @@ export class SoftwareComponent {
       width: "456px"
     }).afterClosed().subscribe(res => {
       if (this.currentActivatedRoute instanceof ListProductComponent) {
-        // TODO: this.currentActivatedRoute.reloadProductList();
+        this.currentActivatedRoute.loadProductList();
       }
     })
   }
@@ -178,8 +203,7 @@ export class SoftwareComponent {
   public activeRouteIs(value: KeyModules): boolean {
     if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
     if (value === 'person') return this.currentActivatedRoute instanceof ListPersonComponent;
-    if (value === 'product') return this.currentActivatedRoute instanceof ListProductComponent;
-    //TODO: if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
+    if (value === 'product') return this.currentActivatedRoute instanceof ListProductComponent || this.currentActivatedRoute instanceof UnitComponent;
     //TODO: if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
 
     return false;

@@ -14,7 +14,8 @@ const routes: Routes = [
     children: [
       {
         path: "company",
-        loadChildren: () => import('./company/company.module').then(m => m.CompanyModule)
+        loadChildren: () => import('./company/company.module').then(m => m.CompanyModule),
+        data: { animation: 'isRight' }
       },
       {
         path: "person",
@@ -22,7 +23,8 @@ const routes: Routes = [
       },
       {
         path: "product",
-        loadChildren: () => import('./product/product.module').then(m => m.ProductModule)
+        loadChildren: () => import('./product/product.module').then(m => m.ProductModule),
+        data: { animation: 'isLeft' }
       },
     ]
   }

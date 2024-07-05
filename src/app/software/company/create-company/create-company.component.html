@@ -1,9 +1,9 @@
 <div class="dialog new-company-dialog">
     <div class="header">
         <div *ngIf="!data.firstCompany && !data.disableClose" class="icon-button" (click)="closeDialog()">
-            <button class="icon-button">
+            <key-button content="icon">
                 <mat-icon class="icon-base">close</mat-icon>
-            </button>
+            </key-button>
         </div>
 
         <div class="header-title">
@@ -30,7 +30,7 @@
                         به راحتی شرکت جدید ایجاد کنید
                     </ng-container>
                 </p>
-                <button type="button" mat-ripple class="primary-button block-button" (click)="setStep('base')">شروع</button>
+                <key-button (click)="setStep('base')" [block]="true">شروع</key-button>
             </div>
             <div *ngSwitchCase="'base'" class="step-base">
                 <h2 class="add-company-field-title">اطلاعات پایه</h2>
@@ -49,8 +49,8 @@
                     </mat-error>
                 </mat-form-field>
                 <div class="add-company-buttons-container">
-                    <button type="button" mat-ripple class="stroked-button block-button" (click)="setStep('welcome')">بازگشت</button>
-                    <button type="button" mat-ripple class="primary-button block-button" (click)="setStep('information')">ادامه</button>
+                    <key-button (click)="setStep('welcome')" [block]="true" appearance="stroked">بازگشت</key-button>
+                    <key-button (click)="setStep('information')" [block]="true" appearance="primary">ادامه</key-button>
                 </div>
             </div>
             <div *ngSwitchCase="'information'" class="step-information">
@@ -84,8 +84,8 @@
                     </mat-error>
                 </mat-form-field>
                 <div class="add-company-buttons-container">
-                    <button type="button" mat-ripple class="stroked-button block-button" (click)="setStep('base')">بازگشت</button>
-                    <button type="button" mat-ripple class="primary-button block-button" (click)="setStep('tax')">ادامه</button>
+                    <key-button (click)="setStep('base')" [block]="true" appearance="stroked">بازگشت</key-button>
+                    <key-button (click)="setStep('tax')" [block]="true" appearance="primary">ادامه</key-button>
                 </div>
             </div>
             <div *ngSwitchCase="'tax'" class="step-tax">
@@ -106,8 +106,8 @@
                 </mat-form-field>
                 <mat-checkbox formControlName="companyStatus" [disabled]="true" class="example-margin">فعال بودن شرکت</mat-checkbox>   
                 <div class="add-company-buttons-container">
-                    <button type="button" mat-ripple class="stroked-button block-button" (click)="setStep('information')">بازگشت</button>
-                    <button type="button" [ngClass]="{'button-loading': addCompanyLoading}" mat-ripple class="primary-button block-button" (click)="onAddCompany()">ایجاد شرکت</button>
+                    <key-button (click)="setStep('information')" [block]="true" appearance="stroked">بازگشت</key-button>
+                    <key-button (click)="onAddCompany()" [block]="true" appearance="primary" type="submit" [loading]="addCompanyLoading">ایجاد شرکت</key-button>
                 </div>
             </div>
         </form>

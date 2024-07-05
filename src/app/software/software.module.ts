@@ -17,6 +17,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { LottieModule } from 'ngx-lottie';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { LottieModule } from 'ngx-lottie';
   imports: [
     CommonModule,
     SoftwareRoutingModule,
+    BrowserAnimationsModule,
     MatMenuModule,
     MatIconModule,
     FormsModule,

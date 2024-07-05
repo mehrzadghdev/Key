@@ -1,0 +1,97 @@
+<div class="content-topbar">
+    <div>
+        <h2>واحد کالا و خدمات</h2>
+        <span>
+            کالا
+            <mat-icon class="icon-primary">arrow_back_ios</mat-icon>
+            واحد کالا و خدمات
+        </span>
+    </div>
+    <div>
+        <a routerLink="/software/product">
+            <key-button>
+                <mat-icon class="list-add-button-icon">list</mat-icon> 
+                لیست تمام کالا ها
+            </key-button>
+        </a>
+    </div>
+</div>
+<div class="unit-container">
+    <div class="add-new-unit-form">
+        <span>
+            <ng-container *ngIf="!updateMode">
+                افزودن واحد جدید
+            </ng-container>
+            <ng-container *ngIf="updateMode">
+                ویرایش واحد  
+            </ng-container>
+        </span>
+
+        <form [formGroup]="addUnitForm" class="add-unit-form">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>کد واحد</mat-label>
+                <input type="text" matInput formControlName="code">
+                <mat-error *ngIf="addUnitForm.get('code')?.invalid && validationLastCheck">
+                    کد واحد نامعتبر است  
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>نام واحد</mat-label>
+                <input type="text" matInput formControlName="name">
+                <mat-error *ngIf="addUnitForm.get('name')?.invalid && validationLastCheck">
+                    نام واحد نامعتبر است  
+                </mat-error>
+            </mat-form-field>
+
+            <key-button *ngIf="!updateMode" [block]="true" [loading]="addUnitLoading" (click)="onAddUnit()" type="submit">ایجاد</key-button>
+            <div *ngIf="updateMode" class="unit-form-actions-container">
+                <key-button [loading]="updateUnitLoading" [block]="true" (click)="onCancelUpdateMode()" appearance="stroked">لغو</key-button>
+                <key-button [loading]="updateUnitLoading" [block]="true" (click)="onUpdateUnit()">ویرایش</key-button>
+            </div>
+        </form>
+    </div>
+    <div class="content-table"> 
+        <div class="table">
+            <table *ngIf="unitListLoaded" mat-table [dataSource]="unitList" class="">
+                <ng-container matColumnDef="ایدی واحد">
+                    <th mat-header-cell *matHeaderCellDef> ایدی واحد </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="نام واحد">
+                    <th mat-header-cell *matHeaderCellDef> نام واحد </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="کد واحد">
+                    <th mat-header-cell *matHeaderCellDef> کد واحد </th>
+                    <td mat-cell *matCellDef="let element"> {{ element.code }} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="عملیات">
+                    <th mat-header-cell *matHeaderCellDef> عملیات </th>
+                    <td mat-cell *matCellDef="let element">
+                        <div class="table-action-buttons">
+                            <key-button matTooltip="حذف واحد" (click)="onDeleteUnit(element.code)" content="icon">
+                                <mat-icon class="icon-red material-icons-outlined">delete</mat-icon>
+                            </key-button>
+                            <key-button matTooltip="ویرایش" (click)="onUpdateMode(element)" content="icon">
+                                <mat-icon class="icon-primary material-icons-outlined">edit_square</mat-icon>                       
+                            </key-button>
+                        </div>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell table-no-data" [colSpan]="tableColumns.length">
+                        هیچ داده ای یافت نشد
+                    </td>
+                </tr>
+            </table>
+            <key-table-loading *ngIf="!unitListLoaded" [columns]="tableColumns"></key-table-loading>
+        </div>
+    </div>
+</div>

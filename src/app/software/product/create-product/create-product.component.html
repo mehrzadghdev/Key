@@ -1,12 +1,22 @@
 <form [formGroup]="addProductForm">
     <div class="form-dialog-top-bar">
         <h3>ایجاد کالای جدید</h3>
-        <button mat-ripple (click)="closeDialog()" class="icon-button">
+        <key-button content="icon" (click)="closeDialog()">
             <mat-icon class="icon-base">close</mat-icon>
-        </button>
+        </key-button>
     </div>
     
     <div class="form-dialog-content">
+        <div class="form-dialog-content-loading" *ngIf="getUnitListLoading"></div>
+        <mat-form-field class="form-dialog-field" appearance="outline">
+            <mat-label>واحد کالا و خدمات</mat-label>
+            <mat-select formControlName="unitCode" name="unitCode">
+                <mat-option *ngFor="let unit of unitList" [value]="unit.code">{{unit.name}}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="addProductForm.get('unitCode')?.invalid && validationLastCheck">
+                این فیلد الزامیست
+            </mat-error>
+        </mat-form-field> 
         <div class="form-dialog-field-row">
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>نوع کالا </mat-label>
@@ -46,7 +56,7 @@
         <div class="form-dialog-field-row">
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>قیمت</mat-label>
-                <input type="number" matInput formControlName="price">
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="price">
                 <mat-error *ngIf="addProductForm.get('price')?.invalid && validationLastCheck">
                     این فیلد الزامیست
                 </mat-error>
@@ -95,7 +105,7 @@
     </div>
     
     <mat-dialog-actions class="form-dialog-footer">
-      <button mat-ripple type="button" class="stroked-button" (click)="closeDialog()">لغو</button>
-      <button [ngClass]="{'button-loading': addProductLoading}" mat-ripple class="primary-button" (click)="onAddProduct()">ایجاد</button>
+        <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
+        <key-button [loading]="addProductLoading" (click)="onAddProduct()" type="submit">ایجاد</key-button>
     </mat-dialog-actions>
 </form>

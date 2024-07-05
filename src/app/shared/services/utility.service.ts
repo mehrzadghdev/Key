@@ -11,15 +11,15 @@ export class UtilityService {
     private snackBar: MatSnackBar,
   ) { }
 
-  // public message(content: string | ComponentType<any>, action: string, type: 'dynamic' | 'static' = 'static',) {
-  //   if (type === 'static' && typeof content === 'string') {
-  //     return this.snackBar.open(content, action);
-  //   }
+  public message(content: string | ComponentType<any>, action: string, type: 'dynamic' | 'static' = 'static',) {
+    if (type === 'static' && typeof content === 'string') {
+      return this.snackBar.open(content, action);
+    }
 
-  //   if (type === 'dynamic' && typeof content !== 'string') {
-  //     return this.snackBar.openFromComponent(content);
-  //   }
+    if (type === 'dynamic' && typeof content !== 'string') {
+      return this.snackBar.openFromComponent(content);
+    }
 
-  //   return console.error("Message utiltiy called with bad params");
-  // }
+    return console.error("Message utiltiy called with bad params");
+  }
 }

@@ -9,6 +9,7 @@ import { UserDetails } from 'src/app/shared/types/authentication.type';
 import { KeyModules } from 'src/app/shared/types/modules.type';
 import { CompanyService } from '../../services/company.service';
 import { UpdateCompanyComponent } from '../update-company/update-company.component';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -20,7 +21,12 @@ export class ListCompanyComponent implements OnInit {
   public companiesListLoaded: boolean = false;
   public tableColumns: string[] = ["شماره بسته", "نام شرکت", "کد شعبه", "تلفن", "وضعیت", "توضیحات شرکت", "عملیات"]
 
-  constructor(private dialog: DialogService, private companyService: CompanyService, private authentication: AuthenticationService) {}
+  constructor(
+    private dialog: DialogService, 
+    private companyService: CompanyService, 
+    private authentication: AuthenticationService,
+    private utility: UtilityService
+  ) {}
 
   ngOnInit(): void {
     this.loadCompanyList();
@@ -40,6 +46,7 @@ export class ListCompanyComponent implements OnInit {
 
   public onDeleteCompany(idToDelete: number): void {
     this.companyService.deleteCompany({ databaseId: idToDelete }).subscribe(res => {
+      this.utility.message('شرکت با موفقیت حذف شد.', 'بستن');
       this.loadCompanyList()
     })
   }
@@ -64,5 +71,27 @@ export class ListCompanyComponent implements OnInit {
     }).afterClosed().subscribe(res => {
       this.loadCompanyList()
     })
+  }
+
+  public onSearch(searchQuery: string) {
+    if (searchQuery && this.companiesListLoaded) {
+      const filteredData = this.companiesList.filter(company => {
+        for (const [key, value] of Object.entries(company)) {
+          if (typeof value === 'string' && value.includes(searchQuery)) {
+            return true
+          }
+          if (typeof value === 'number'&& value.toString().includes(searchQuery)) {
+            return true
+          }
+        }
+  
+        return;
+      })
+  
+      this.companiesList = filteredData;
+    }
+    else {
+      this.loadCompanyList();
+    }
   }
 }

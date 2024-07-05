@@ -1,0 +1,100 @@
+<form class="form-dialog" [formGroup]="updatePersonForm">
+    <div class="form-dialog-top-bar">
+        <h3>ویرایش طرف حساب</h3>
+        <key-button content="icon" (click)="closeDialog()">
+            <mat-icon class="icon-base">close</mat-icon>
+        </key-button>
+    </div>
+    
+    <div class="form-dialog-content">
+        <div class="form-dialog-content-loading" *ngIf="getPersonLoading"></div>
+        <div class="form-dialog-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>نوع طرف حساب</mat-label>
+                <mat-select (valueChange)="updateValidityOfForm($event)" formControlName="personType" name="personType">
+                    <mat-option *ngFor="let personType of personTypes" [value]="personType.value">{{personType.display}}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="updatePersonForm.get('personType')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value === 0" class="form-dialog-field" appearance="outline">
+                <mat-label>کد ملی</mat-label>
+                <input type="number" matInput formControlName="nationalId">
+                <mat-error *ngIf="updatePersonForm.get('nationalId')?.invalid && validationLastCheck">
+                    <ng-container *ngIf="updatePersonForm.get('nationalId')?.hasError('required')">
+                        این فیلد الزامیست
+                    </ng-container>
+                    <ng-container *ngIf="updatePersonForm.get('nationalId')?.hasError('nationalId')">
+                        کد ملی نامعتبر است  
+                    </ng-container>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value !== 0" class="form-dialog-field" appearance="outline">
+                <mat-label>کد اقتصادی</mat-label>
+                <input type="type" matInput formControlName="economicCode">
+                <mat-error *ngIf="updatePersonForm.get('economicCode')?.invalid && validationLastCheck">
+                    <ng-container *ngIf="updatePersonForm.get('economicCode')?.hasError('required')">
+                        این فیلد الزامیست
+                    </ng-container>
+                    <ng-container *ngIf="updatePersonForm.get('economicCode')?.hasError('economicCode')">
+                        کد اقتصادی نامعتبر است  
+                    </ng-container>
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-dialog-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>نام طرف حساب</mat-label>
+                <input type="text" matInput formControlName="personName">
+                <mat-error *ngIf="updatePersonForm.get('personName')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>کد طرف حساب</mat-label>
+                <input type="number" [disabled]="true" matInput formControlName="code">
+                <mat-error *ngIf="updatePersonForm.get('code')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-dialog-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>شماره تلفن</mat-label>
+                <input type="number" matInput formControlName="tel">
+                <mat-error *ngIf="updatePersonForm.get('tel')?.invalid && validationLastCheck">
+                    شماره تلفن نامعتبر است
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>شماره موبایل</mat-label>
+                <input type="number" matInput formControlName="mobile">
+                <mat-error *ngIf="updatePersonForm.get('mobile')?.invalid && validationLastCheck">
+                    شماره موبایل نامعتبر است
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-dialog-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>کد پستی</mat-label>
+                <input type="text" matInput formControlName="zipCode">
+                <mat-error *ngIf="updatePersonForm.get('zipCode')?.invalid && validationLastCheck">
+                    کد پستی نامعتبر است  
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline" hideRequiredMarker>
+                <mat-label>آدرس و مکان</mat-label>
+                <textarea matInput formControlName="address" rows="1"></textarea>
+                <mat-error *ngIf="updatePersonForm.get('address')?.invalid && validationLastCheck">
+                    آدرس نامعتبر است  
+                </mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    
+    <mat-dialog-actions class="form-dialog-footer">
+      <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
+      <key-button [loading]="addPersonLoading" (click)="onUpdatePerson()" type="submit">ویرایش</key-button>
+    </mat-dialog-actions>
+</form>

@@ -1,9 +1,9 @@
 <form class="form-dialog" [formGroup]="addPersonForm">
     <div class="form-dialog-top-bar">
         <h3>ایجاد طرف حساب جدید</h3>
-        <button mat-ripple (click)="closeDialog()" class="icon-button">
+        <key-button content="icon" (click)="closeDialog()">
             <mat-icon class="icon-base">close</mat-icon>
-        </button>
+        </key-button>
     </div>
     
     <div class="form-dialog-content">
@@ -93,7 +93,7 @@
     </div>
     
     <mat-dialog-actions class="form-dialog-footer">
-      <button mat-ripple type="button" class="stroked-button" (click)="closeDialog()">لغو</button>
-      <button [ngClass]="{'button-loading': addPersonLoading}" mat-ripple class="primary-button" (click)="onAddPerson()">ایجاد</button>
+        <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
+        <key-button [loading]="addPersonLoading" (click)="onAddPerson()" type="submit">ایجاد</key-button>
     </mat-dialog-actions>
 </form>

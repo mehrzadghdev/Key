@@ -1,4 +1,5 @@
 <ng-container *ngIf="authDone && companySelected">
+    <div class="panel-sidebar-overlay" *ngIf="isExpanded" (click)="isExpanded = false"></div>
     <div class="panel-sidebar" [ngClass]="{'active': isExpanded, 'not-active': !isExpanded, 'mobile-hidden': !isExpanded}">
         <div class="panel-sidebar_top">
             <div class="panel-sidebar__logo" [mat-menu-trigger-for]="userMenu" mat-ripple>
@@ -31,9 +32,18 @@
                 </button>
             </mat-menu>
         </div>
+        <div class="panel-sidebar__mobile-only-search">
+            <form class="search-form" (ngSubmit)="onSearch()">
+                <input placeholder="جستجو کردن..." type="text" class="search" [(ngModel)]="searchQuery"
+                    name="search-input">
+                <button class="icon-light search-icon">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </form>
+        </div>
         <ul class="panel-sidebar__menu">
             <li class="menu-title">منو اصلی</li>
-            <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('company')}" #companyAccordion (click)="toggleAccordion(companyAccordion)"
+            <li class="nav-item accordion" [ngClass]="{'opened': currentActivatedRouteLoaded && activeRouteIs('company')}" #companyAccordion (click)="toggleAccordion(companyAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? companyMenu : null">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
@@ -58,7 +68,7 @@
                 <button mat-menu-item><a routerLink="/software/company">لیست تمام شرکت ها</a></button>
             </mat-menu>
     
-            <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('person')}" #contactAccordion (click)="toggleAccordion(contactAccordion)"
+            <li class="nav-item accordion" [ngClass]="{'opened': currentActivatedRouteLoaded && activeRouteIs('person')}" #contactAccordion (click)="toggleAccordion(contactAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? contactMenu : null">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
@@ -81,14 +91,14 @@
                 <button mat-menu-item><a routerLink="/software/person">لیست تمام طرف حساب ها</a></button>
             </mat-menu>
     
-            <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('product')}" #productAccordion (click)="toggleAccordion(productAccordion)"
+            <li class="nav-item accordion" [ngClass]="{'opened': currentActivatedRouteLoaded && activeRouteIs('product')}" #productAccordion (click)="toggleAccordion(productAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? productMenu : null">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
                             <mat-icon>shopping_cart_outline</mat-icon>
                         </div>
-                        <span *ngIf="isExpanded" class="nav-item__title unselectable">کالا</span>
+                        <span *ngIf="isExpanded" class="nav-item__title unselectable">کالا و خدمات</span>
                     </div>
                     <div *ngIf="isExpanded" class="accordion-icon">
                         <mat-icon>keyboard_arrow_down</mat-icon>
@@ -96,15 +106,17 @@
                 </div>
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
                     <li matRipple class="unselectable" (click)="onAddProduct()">ایجاد کالای جدید</li>
-                    <li matRipple class="unselectable">لیست تمام کالا ها</li>
+                    <li matRipple class="unselectable"><a routerLink="/software/product">لیست تمام کالا ها</a></li>
+                    <li matRipple class="unselectable"><a routerLink="/software/product/unit">واحد کالا و خدمات</a></li>
                 </ul>
             </li>
             <mat-menu #productMenu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="onAddProduct()">ایجاد کالای جدید</button>
                 <button mat-menu-item>لیست تمام کالا ها</button>
+                <button mat-menu-item><a routerLink="/software/product/unit">واحد کالا و خدمات</a></button>
             </mat-menu>
     
-            <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('invoice')}" #factorAccordion (click)="toggleAccordion(factorAccordion)"
+            <li class="nav-item accordion" [ngClass]="{'opened': currentActivatedRouteLoaded && activeRouteIs('invoice')}" #factorAccordion (click)="toggleAccordion(factorAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? factor : null">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
@@ -125,29 +137,6 @@
             <mat-menu #factor="matMenu" xPosition="before">
                 <button mat-menu-item>ایجاد فاکتور جدید</button>
                 <button mat-menu-item>لیست تمام فاکتور ها</button>
-            </mat-menu>
-    
-            <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('unit')}" #unitAccordion (click)="toggleAccordion(unitAccordion)"
-                [mat-menu-trigger-for]="!isExpanded ? unitMenu : null">
-                <div class="accordion-header" matRipple>
-                    <div class="accordion-title">
-                        <div class="nav-item__icon">
-                            <mat-icon>bar_chart</mat-icon>
-                        </div>
-                        <span *ngIf="isExpanded" class="nav-item__title unselectable">واحد</span>
-                    </div>
-                    <div *ngIf="isExpanded" class="accordion-icon">
-                        <mat-icon>keyboard_arrow_down</mat-icon>
-                    </div>
-                </div>
-                <ul class="accordion-content" (click)="$event.stopPropagation()">
-                    <li matRipple class="unselectable">ایجاد واحد جدید</li>
-                    <li matRipple class="unselectable">لیست تمام واحد ها</li>
-                </ul>
-            </li>
-            <mat-menu #unitMenu="matMenu" xPosition="before">
-                <button mat-menu-item>ایجاد واحد جدید</button>
-                <button mat-menu-item>لیست تمام واحد ها</button>
             </mat-menu>
         </ul>
     </div>
@@ -184,7 +173,7 @@
                 <button mat-menu-item (click)="changeTheme('default')">حالت پیشفرض</button>
                 <button mat-menu-item (click)="changeTheme('dark')">حالت تاریک</button>
             </mat-menu>
-            <div class="pointer icon" matRipple (click)="toggleFullScreen()">
+            <div class="pointer icon full-screen-icon" matRipple (click)="toggleFullScreen()">
                 <mat-icon *ngIf="fullscreen" class="material-icons-outlined">fullscreen</mat-icon>
                 <mat-icon *ngIf="!fullscreen" class="material-icons-outlined">fullscreen_exit</mat-icon>
             </div>
@@ -195,8 +184,8 @@
                 <mat-icon>settings</mat-icon>
             </div>
         </div>
-        <div class="panel-content">
-            <router-outlet (activate)="onRouteActivated($event)"></router-outlet>
+        <div class="panel-content" [@routeAnimations]="prepareRoute(outlet)">
+            <router-outlet #outlet="outlet" (activate)="onRouteActivated($event)"></router-outlet>
         </div>
     </div>
 </ng-container>

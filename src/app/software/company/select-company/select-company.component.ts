@@ -5,6 +5,7 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 import { DialogService } from 'src/app/shared/services/dialog.service';
 import { CreateCompanyComponent } from '../create-company/create-company.component';
 import { CompanyService } from '../../services/company.service';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-select-company',
@@ -14,12 +15,16 @@ import { CompanyService } from '../../services/company.service';
 export class SelectCompanyComponent implements OnInit {
   public companiesList: Company[] = [];
   public getCompaniesLoaded: boolean = false;
+  public get currentCompany(): Company {
+    return this.authentication.currentCompany as Company
+  }
   
   constructor(
     private dialogRef: MatDialogRef<SelectCompanyComponent>,
     private authentication: AuthenticationService,
     private dialog: DialogService,
     private companyService: CompanyService,
+    private utility: UtilityService,
     @Inject(MAT_DIALOG_DATA) public data: { companies: Company[], reSelect: boolean }
   ) { }
 
@@ -41,6 +46,12 @@ export class SelectCompanyComponent implements OnInit {
 
   public onSelectCompany(company: Company): void {
     this.authentication.currentCompany = company;
+    if (this.data.reSelect) {
+      this.utility.message('شرکت با موفقیت تغییر یافت.', 'بستن');
+    }
+    else {
+      this.utility.message('به نرم افزار واسط کلید خوش آمدید.', 'بستن');
+    }
     this.dialogRef.close();
   }
 

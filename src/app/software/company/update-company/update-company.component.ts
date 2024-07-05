@@ -4,6 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CompanyService } from '../../services/company.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { UpdateCompanyBody } from '../../types/company.type';
+import { UtilityService } from 'src/app/shared/services/utility.service';
 
 @Component({
   selector: 'app-update-company',
@@ -20,6 +21,7 @@ export class UpdateCompanyComponent implements OnInit {
     private dialgoRef: MatDialogRef<UpdateCompanyComponent>, 
     private companyService: CompanyService, 
     private fb: FormBuilder,
+    private utility: UtilityService,
     @Inject(MAT_DIALOG_DATA) private data: { databaseId: number }
   ) {
     this.updateCompanyForm = fb.group({
@@ -71,6 +73,7 @@ export class UpdateCompanyComponent implements OnInit {
 
       this.companyService.updateCompany(updateCompanyBody).subscribe(res => {
         this.updateCompanyLoading = false;
+        this.utility.message('شرکت با موفقیت ویرایش شد.', 'بستن');
         this.closeDialog();
       })
     }

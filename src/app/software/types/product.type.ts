@@ -30,7 +30,7 @@ export interface GetCompaniesProductListBody {
 
 // Product/GetProduct
 
-export type GetProduct = Product;
+export type GetProduct = [Product];
 
 export interface GetProductBody {
     code: number
