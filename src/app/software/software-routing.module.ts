@@ -15,16 +15,17 @@ const routes: Routes = [
       {
         path: "company",
         loadChildren: () => import('./company/company.module').then(m => m.CompanyModule),
-        data: { animation: 'isRight' }
+        data: { animation: 'One' }
       },
       {
         path: "person",
-        loadChildren: () => import('./person/person.module').then(m => m.PersonModule)
+        loadChildren: () => import('./person/person.module').then(m => m.PersonModule),
+        data: { animation: 'Two' }
       },
       {
         path: "product",
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule),
-        data: { animation: 'isLeft' }
+        data: { animation: 'Three' }
       },
     ]
   }

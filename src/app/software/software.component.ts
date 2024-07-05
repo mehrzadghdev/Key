@@ -16,14 +16,13 @@ import { ListPersonComponent } from './person/list-person/list-person.component'
 import { ListCompanyComponent } from './company/list-company/list-company.component';
 import { KeyModules } from '../shared/types/modules.type';
 import { UnitComponent } from './product/unit/unit.component';
+import { fader, routeTransitionAnimations } from '../shared/animations/route-animations';
 
 @Component({
   selector: 'app-software',
   templateUrl: './software.component.html',
   styleUrls: ['./software.component.scss'],
-  animations: [
-    // fader,
-  ]
+  animations: [routeTransitionAnimations]
 })
 export class SoftwareComponent implements OnInit, AfterViewInit {
   public isExpanded: boolean = true;
@@ -101,7 +100,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   }
 
   public prepareRoute(outlet: RouterOutlet) {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animations'];
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 
   public onSearch(): void {
