@@ -1,0 +1,78 @@
+<header class="main-header__container">
+    <div class="main-header">
+        <div class="logo__container">
+            <a routerLink="/home" class="logo">
+                <img src="assets/images/logo.png" alt="">
+                <h2>نرم افزار واسط کلید</h2>
+            </a>
+        </div>
+        <div class="menu">
+            <ul class="menu-items__container">
+                <li class="menu-item">
+                    <a routerLink="/home" routerLinkActive="active-link">صفحه اصلی</a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="/home/shop" routerLinkActive="active-link">فروشگاه کلید</a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="/home/about" routerLinkActive="active-link">درباره ما</a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="/home/contact" routerLinkActive="active-link">تماس با ما</a>
+                </li>
+            </ul>
+        </div>
+        <div class="action-buttons">
+            <a routerLink="/auth/register">
+                <key-button appearance="stroked">ثبت نام</key-button>
+            </a>
+            <a routerLink="/software/company">
+                <key-button>ورود به نرم افزار</key-button>
+            </a>
+        </div>
+        <div class="mobile-menu-icon">
+            <key-button content="icon" appearance="flat" (click)="mobileSidebarOpen = true">
+                <mat-icon class="icon-primary">menu</mat-icon>
+            </key-button>
+        </div>
+    </div>
+</header>
+
+<div class="header-mobile-sidebar__overlay" [ngClass]="{'mobile-sidebar-opened': mobileSidebarOpen}" (click)="mobileSidebarOpen = false"></div>
+<div class="header-mobile-sidebar" [ngClass]="{'mobile-sidebar-opened': mobileSidebarOpen}">
+    <div class="logo-close">
+        <div class="logo__container">
+            <a routerLink="/home" class="logo">
+                <img src="assets/images/logo.png" alt="">
+                <h2>نرم افزار واسط کلید</h2>
+            </a>
+        </div>
+        <key-button content="icon" (click)="mobileSidebarOpen = false">
+            <mat-icon>close</mat-icon>
+        </key-button>
+    </div>
+    <div class="menu">
+        <ul class="menu-items__container">
+            <li class="menu-item">
+                <a routerLink="/home" routerLinkActive="active-link">صفحه اصلی</a>
+            </li>
+            <li class="menu-item">
+                <a routerLink="/home/shop" routerLinkActive="active-link">فروشگاه کلید</a>
+            </li>
+            <li class="menu-item">
+                <a routerLink="/home/about" routerLinkActive="active-link">درباره ما</a>
+            </li>
+            <li class="menu-item">
+                <a routerLink="/home/contact" routerLinkActive="active-link">تماس با ما</a>
+            </li>
+        </ul>
+    </div>
+    <div class="action-buttons">
+        <a routerLink="/auth/register">
+            <key-button appearance="stroked" [block]="true">ثبت نام</key-button>
+        </a>
+        <a routerLink="/software/company">
+            <key-button [block]="true">ورود به نرم افزار</key-button>
+        </a>
+    </div>
+</div>

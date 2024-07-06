@@ -75,14 +75,14 @@ body {
 
 body {
     margin: 0;
-    font-family: Vazirmatn, PeydaWeb, sans-serif !important;
+    font-family: Vazirmatn, sans-serif !important;
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Vazirmatn, PeydaWeb, sans-serif !important;
+    font-family: Vazirmatn, sans-serif !important;
     letter-spacing: 1 !important;
 }
 
@@ -380,4 +380,10 @@ mat-nav-list.mobile-buttons-nav-list {
             background-position: 100% 0;
         }
     }
+}
+
+.container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
 }

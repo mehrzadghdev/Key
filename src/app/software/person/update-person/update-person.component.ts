@@ -57,9 +57,9 @@ export class UpdatePersonComponent implements OnInit {
         personName: res[0].personName ?? '',
         nationalId: res[0].nationalId ?? '',
         economicCode: res[0].economicCode ?? '',
-        tel: res[0].tel ?? '',
-        mobile: res[0].mobile ?? '',
-        zipCode: res[0].zipCode ?? '',
+        tel: res[0].tel && res[0].tel !== 'null' ? res[0].tel : null,
+        mobile: res[0].mobile && res[0].mobile !== 'null' ? res[0].mobile : null,
+        zipCode: res[0].zipCode && res[0].zipCode !== 'null' ? res[0].zipCode : null,
         address: res[0].address ?? ''
       })
 
