@@ -17,6 +17,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UpdatePersonComponent } from './update-person/update-person.component';
+import { A11yModule } from '@angular/cdk/a11y';
+import { } from '@angular/cdk';
 
 
 @NgModule({
@@ -39,7 +41,8 @@ import { UpdatePersonComponent } from './update-person/update-person.component';
     MatFormFieldModule,
     MatMenuModule,
     MatAutocompleteModule,
-    MatTooltipModule
+    MatTooltipModule,
+    A11yModule
   ]
 })
 export class PersonModule { }

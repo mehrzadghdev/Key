@@ -30,7 +30,7 @@
         <form [formGroup]="addUnitForm" class="add-unit-form">
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>کد واحد</mat-label>
-                <input type="text" matInput formControlName="code">
+                <input keyAutoFocus type="text" matInput formControlName="code">
                 <mat-error *ngIf="addUnitForm.get('code')?.invalid && validationLastCheck">
                     کد واحد نامعتبر است  
                 </mat-error>

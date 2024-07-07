@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { take } from 'rxjs';
 import { DialogResult, dialogCssClasses, DialogConfig } from '../types/dialog.type';
+import { AcceptDeleteComponent } from '../components/accept-delete/accept-delete.component';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +28,25 @@ export class DialogService {
   public openFormDialog<T, R = any>(component: ComponentType<unknown>, config?: DialogConfig<T>): MatDialogRef<unknown, DialogResult<R>> {
     const dialogRef = this.open<T, R>(component, {
       data: config?.data,
-      autoFocus: false,
+      autoFocus: true,
       disableClose: true,
       hasBackdrop: true,
       width: config?.width,
+    });
+
+    return dialogRef;
+  }
+
+  public openAcceptDeleteDialog(): MatDialogRef<any> {
+    const dialogRef = this.dialog.open(AcceptDeleteComponent, {
+      autoFocus: true,
+      disableClose: false,
+      hasBackdrop: true,
+      width:"300px",
+      height: "auto",
+      panelClass: [
+        dialogCssClasses.mobileFriendlyClass,
+      ],
     });
 
     return dialogRef;

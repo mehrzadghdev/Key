@@ -26,6 +26,8 @@ import { TableLoadingComponent } from './components/table-loading/table-loading.
 import { RandomWidthDirective } from './directives/random-width.directive';
 import { ButtonComponent } from './components/button/button.component';
 import { PricePipe } from './pipes/price.pipe';
+import { AutoFocusDirective } from './directives/auto-focus.directive';
+import { AcceptDeleteComponent } from './components/accept-delete/accept-delete.component';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -38,7 +40,9 @@ export function playerFactory() {
     TableLoadingComponent,
     RandomWidthDirective,
     ButtonComponent,
-    PricePipe
+    PricePipe,
+    AutoFocusDirective,
+    AcceptDeleteComponent
   ],
   imports: [
     CommonModule,
@@ -75,7 +79,8 @@ export function playerFactory() {
     TableLoadingComponent,
     RandomWidthDirective,
     PricePipe,
-    ButtonComponent
+    ButtonComponent,
+    AutoFocusDirective
   ] 
 })
 export class SharedModule { }

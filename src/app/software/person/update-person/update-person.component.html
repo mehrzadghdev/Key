@@ -11,7 +11,7 @@
         <div class="form-dialog-field-row">
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>نوع طرف حساب</mat-label>
-                <mat-select (valueChange)="updateValidityOfForm($event)" formControlName="personType" name="personType">
+                <mat-select keyAutoFocus (valueChange)="updateValidityOfForm($event)" formControlName="personType" name="personType">
                     <mat-option *ngFor="let personType of personTypes" [value]="personType.value">{{personType.display}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="updatePersonForm.get('personType')?.invalid && validationLastCheck">

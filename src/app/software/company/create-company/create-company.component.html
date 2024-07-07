@@ -36,7 +36,7 @@
                 <h2 class="add-company-field-title">اطلاعات پایه</h2>
                 <mat-form-field class="add-company-field" appearance="outline">
                     <mat-label>نام شرکت</mat-label>
-                    <input matInput formControlName="companyName" type="text" />
+                    <input keyAutoFocus matInput formControlName="companyName" type="text" />
                     <mat-error *ngIf="addCompanyForm.get('companyName')?.invalid && addCompanyForm.get('companyName')?.invalid">
                         این فیلد الزامیست
                     </mat-error>

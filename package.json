@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^16.2.0",
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
+    "@angular/service-worker": "^16.2.0",
     "jalali-moment": "^3.3.11",
     "lottie-web": "^5.12.2",
     "ngx-lottie": "^10.0.0",

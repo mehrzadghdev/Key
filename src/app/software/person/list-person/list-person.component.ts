@@ -56,9 +56,13 @@ export class ListPersonComponent implements OnInit {
   }
 
   public onDeletePerson(personCodeToDelete: number): void {
-    this.personSerivce.deletePerson({ code: personCodeToDelete }).subscribe(res => {
-      this.utility.message('طرف حساب با موفقیت حذف شد.', 'بستن');
-      this.loadPersonList();
+    this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
+      if (result) {
+        this.personSerivce.deletePerson({ code: personCodeToDelete }).subscribe(res => {
+          this.utility.message('طرف حساب با موفقیت حذف شد.', 'بستن');
+          this.loadPersonList();
+        })
+      }
     })
   }
 

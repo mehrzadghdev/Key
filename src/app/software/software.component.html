@@ -1,6 +1,7 @@
 <ng-container *ngIf="authDone && companySelected">
     <div class="panel-sidebar-overlay" *ngIf="isExpanded" (click)="isExpanded = false"></div>
-    <div class="panel-sidebar" [ngClass]="{'active': isExpanded, 'not-active': !isExpanded, 'mobile-hidden': !isExpanded}">
+    <div class="panel-sidebar"
+        [ngClass]="{'active': isExpanded, 'not-active': !isExpanded, 'mobile-hidden': !isExpanded}">
         <div class="panel-sidebar_top">
             <div class="panel-sidebar__logo" [mat-menu-trigger-for]="userMenu" mat-ripple>
                 <div class="person-icon">
@@ -67,7 +68,7 @@
                 <button mat-menu-item (click)="onReSelectCompany()">تغییر شرکت فعال</button>
                 <button mat-menu-item><a routerLink="/software/company">لیست تمام شرکت ها</a></button>
             </mat-menu>
-    
+
             <li class="nav-item accordion" #contactAccordion (click)="toggleAccordion(contactAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? contactMenu : null">
                 <div class="accordion-header" matRipple>
@@ -90,7 +91,7 @@
                 <button mat-menu-item (click)="onAddPerson()">ایجاد طرف حساب جدید</button>
                 <button mat-menu-item><a routerLink="/software/person">لیست تمام طرف حساب ها</a></button>
             </mat-menu>
-    
+
             <li class="nav-item accordion" #productAccordion (click)="toggleAccordion(productAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? productMenu : null">
                 <div class="accordion-header" matRipple>
@@ -106,8 +107,8 @@
                 </div>
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
                     <li matRipple class="unselectable" (click)="onAddProduct()">ایجاد کالای جدید</li>
-                    <li matRipple class="unselectable"><a routerLink="/software/product">لیست تمام کالا ها</a></li>
                     <li matRipple class="unselectable"><a routerLink="/software/product/unit">واحد کالا و خدمات</a></li>
+                    <li matRipple class="unselectable"><a routerLink="/software/product">لیست تمام کالا ها</a></li>
                 </ul>
             </li>
             <mat-menu #productMenu="matMenu" xPosition="before">
@@ -115,7 +116,7 @@
                 <button mat-menu-item><a routerLink="/software/product">لیست تمام کالا و خدمات</a></button>
                 <button mat-menu-item><a routerLink="/software/product/unit">واحد کالا و خدمات</a></button>
             </mat-menu>
-    
+
             <li class="nav-item accordion" #factorAccordion (click)="toggleAccordion(factorAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? factor : null">
                 <div class="accordion-header" matRipple>
@@ -140,7 +141,7 @@
             </mat-menu>
         </ul>
     </div>
-    
+
     <div class="main-content">
         <div class="panel-header">
             <div (click)="isExpanded = !isExpanded" class="pointer icon" matRipple>
@@ -187,6 +188,41 @@
         <div class="panel-content" [@routeAnimations]="prepareRoute(outlet)">
             <router-outlet #outlet="outlet" (activate)="onRouteActivated($event)"></router-outlet>
         </div>
+    </div>
+
+    <div class="mobile-bottom-menu">
+        <ul>
+            <li mat-ripple [mat-menu-trigger-for]="companyMenu"
+                [ngClass]="{'active-bottom-menu-item': activeRouteIs('company')}">
+                <div class="bottom-menu-icon">
+                    <mat-icon class="icon-light">apartment_outline</mat-icon>
+                </div>
+                <span>شرکت</span>
+            </li>
+            <li mat-ripple [mat-menu-trigger-for]="contactMenu"
+                [ngClass]="{'active-bottom-menu-item': activeRouteIs('person')}">
+                <div class="bottom-menu-icon">
+                    <mat-icon class="icon-light">badge_outline</mat-icon>
+                </div>
+
+                <span>طرف حساب</span>
+            </li>
+            <li mat-ripple [mat-menu-trigger-for]="productMenu"
+                [ngClass]="{'active-bottom-menu-item': activeRouteIs('product')}">
+                <div class="bottom-menu-icon">
+                    <mat-icon class="icon-light">shopping_cart_outline</mat-icon>
+                </div>
+                <span>کالا و خدمات</span>
+            </li>
+            <li mat-ripple [mat-menu-trigger-for]="factor"
+                [ngClass]="{'active-bottom-menu-item': activeRouteIs('invoice')}">
+                <div class="bottom-menu-icon">
+                    <mat-icon class="icon-light">payments_outline</mat-icon>
+                </div>
+
+                <span>فاکتور</span>
+            </li>
+        </ul>
     </div>
 </ng-container>
 

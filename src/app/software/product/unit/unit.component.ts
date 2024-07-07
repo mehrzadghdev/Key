@@ -3,6 +3,7 @@ import { AddUnitBody, Unit, UpdateUnitBody } from '../../types/unit.type';
 import { UnitService } from '../../services/unit.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilityService } from 'src/app/shared/services/utility.service';
+import { DialogService } from 'src/app/shared/services/dialog.service';
 
 @Component({
   selector: 'app-unit',
@@ -19,7 +20,7 @@ export class UnitComponent implements OnInit {
   public updateMode: boolean = false
   public updateUnitLoading: boolean = false;
 
-  constructor(private unitService: UnitService, private fb: FormBuilder, private utility: UtilityService) {
+  constructor(private unitService: UnitService, private fb: FormBuilder, private utility: UtilityService, private dialog: DialogService) {
     this.addUnitForm = fb.group({
       code: [null, [Validators.required]],
       name: ['', Validators.required],
@@ -41,9 +42,13 @@ export class UnitComponent implements OnInit {
   }
 
   public onDeleteUnit(unitCodeToDelete: number): void {
-    this.unitService.deleteUnit({ code: unitCodeToDelete }).subscribe(res => {
-      this.utility.message('واحد با موفقیت حذف شد.', 'بستن');
-      this.loadUnitList();
+    this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
+      if (result) {
+        this.unitService.deleteUnit({ code: unitCodeToDelete }).subscribe(res => {
+          this.utility.message('واحد با موفقیت حذف شد.', 'بستن');
+          this.loadUnitList();
+        })
+      }
     })
   }
 

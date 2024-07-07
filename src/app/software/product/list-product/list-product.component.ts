@@ -68,9 +68,13 @@ export class ListProductComponent {
   }
 
   public onDeleteProduct(productCodeToDelete: number): void {
-    this.productSerivce.deleteProduct({ code: productCodeToDelete }).subscribe(res => {
-      this.utility.message('کالا یا خدمات با موفقیت حذف شد.', 'بستن');
-      this.loadProductList();
+    this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
+      if (result) {
+        this.productSerivce.deleteProduct({ code: productCodeToDelete }).subscribe(res => {
+          this.utility.message('کالا یا خدمات با موفقیت حذف شد.', 'بستن');
+          this.loadProductList();
+        })
+      }
     })
   }
 

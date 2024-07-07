@@ -45,9 +45,13 @@ export class ListCompanyComponent implements OnInit {
   }
 
   public onDeleteCompany(idToDelete: number): void {
-    this.companyService.deleteCompany({ databaseId: idToDelete }).subscribe(res => {
-      this.utility.message('شرکت با موفقیت حذف شد.', 'بستن');
-      this.loadCompanyList()
+    this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
+      if (result) {
+        this.companyService.deleteCompany({ databaseId: idToDelete }).subscribe(res => {
+          this.utility.message('شرکت با موفقیت حذف شد.', 'بستن');
+          this.loadCompanyList();
+        })
+      }
     })
   }
 

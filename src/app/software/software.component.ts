@@ -203,7 +203,8 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
     if (value === 'person') return this.currentActivatedRoute instanceof ListPersonComponent;
     if (value === 'product') return this.currentActivatedRoute instanceof ListProductComponent || this.currentActivatedRoute instanceof UnitComponent;
-    //TODO: if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
+    if (value === 'invoice') return false;
+    // TODO: replace return false with the actual instance of the factor
 
     return false;
   }

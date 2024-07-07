@@ -11,7 +11,7 @@
         <div class="form-dialog-field-row">
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>نام شرکت</mat-label>
-                <input type="text" matInput formControlName="companyName">
+                <input keyAutoFocus type="text" matInput formControlName="companyName">
                 <mat-error *ngIf="updateCompanyForm.get('companyName')?.invalid && validationLastCheck">
                     این فیلد الزامیست
                 </mat-error>
