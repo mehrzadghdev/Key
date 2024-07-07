@@ -26,6 +26,9 @@ export class RequestService {
         if ([409].includes(err.status)) {
           this.utilityService.message("کد وارد شده تکراری است، لطفا از کد دیگری استفاده کنید.", 'بستن')
         }
+        if(!navigator.onLine) { 
+          this.utilityService.message("ارتباط با سرور برقرار نیست! لطفا اتصال اینترنت را بررسی کنید.", 'بستن')
+        }
 
         const error = err.error?.message || err.statusText;
         return throwError(() => error);
