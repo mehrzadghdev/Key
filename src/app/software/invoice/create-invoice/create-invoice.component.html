@@ -1,0 +1,322 @@
+<form [formGroup]="invoiceForm">
+    <div class="dialog create-invoice-dialog">
+        <div class="header">
+            <div class="icon-button" (click)="closeDialog()">
+                <key-button content="icon">
+                    <mat-icon class="icon-base">close</mat-icon>
+                </key-button>
+            </div>
+
+            <div class="header-title">
+                <p class="title">ایجاد فاکتور فروش جدید</p>
+            </div>
+
+            <div class="invoice-create">
+                <key-button [disabled]="addInvoiceLoading" (click)="onAddInvoice()">ذخیره فاکتور فروش</key-button>
+            </div>
+        </div>
+
+        <div class="invoice-header">
+            <div class="invoice-section-grid">
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>کد فاکتور</mat-label>
+                    <input type="number" matInput formControlName="invoiceCode">
+                    <mat-error *ngIf="invoiceForm.get('invoiceCode')?.invalid && validationLastCheck">
+                        <ng-container *ngIf="invoiceForm.get('invoiceCode')?.hasError('required')">
+                            این فیلد الزامیست
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+                <key-date-picker (dateSelected)="invoiceForm.get('invoiceDate')?.patchValue($event)">تاریخ
+                    فاکتور</key-date-picker>
+                <div class="radio-form-field">
+                    <label>نوع فاکتور: </label>
+                    <mat-radio-group formControlName="invoiceType">
+                        <mat-radio-button *ngFor="let invoiceType of invoiceTypeList"
+                            [value]="invoiceType.value">{{invoiceType.display}}</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>فاکتور مرجع</mat-label>
+                    <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode">
+                        <mat-option *ngFor="let referenceInvoiceCode of referenceInvoiceCodeList"
+                            [value]="referenceInvoiceCode">{{referenceInvoiceCode}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="invoiceForm.get('referenceInvoiceCode')?.invalid && validationLastCheck">
+                        این فیلد الزامیست
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="invoice-section-grid">
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>طرف حساب</mat-label>
+                    <mat-select formControlName="personCode" name="personCode">
+                        <mat-option *ngFor="let personCode of personList"
+                            [value]="personCode.code">{{personCode.personName}}</mat-option>
+                        <mat-option [value]="null">
+                            <ng-container *ngIf="personList.length < 1">
+                                طرف حسابی یافت نشد.
+                            </ng-container>
+                            <span (click)="onAddPerson()" class="invoice-link">ایجاد طرف حساب جدید</span>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="invoiceForm.get('personCode')?.invalid && validationLastCheck">
+                        این فیلد الزامیست
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>الگو فاکتور</mat-label>
+                    <mat-select formControlName="patternType" name="patternType">
+                        <mat-option *ngFor="let patternType of invoicePatternTypeList"
+                            [value]="patternType.value">{{patternType.display}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="invoiceForm.get('patternType')?.invalid && validationLastCheck">
+                        این فیلد الزامیست
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>شماره قرارداد</mat-label>
+                    <input type="number" matInput formControlName="vendorContractRegisterId">
+                    <mat-error *ngIf="invoiceForm.get('vendorContractRegisterId')?.invalid && validationLastCheck">
+                        <ng-container *ngIf="invoiceForm.get('vendorContractRegisterId')?.hasError('required')">
+                            این فیلد الزامیست
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="content">
+            <ng-container>
+                <key-button class="invoice-section-actions" [disabled]="!dataFetchLoaded" (click)="onAddInvoiceProduct()">افزودن کالا و خدمات</key-button>
+                <div class="invoice-section">
+                    <div class="content-table">
+                        <table *ngIf="dataFetchLoaded" mat-table [dataSource]="invoiceProducts">
+                            <ng-container matColumnDef="کد کالا">
+                                <th mat-header-cell *matHeaderCellDef> کد کالا </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.productCode }} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="نام کالا">
+                                <th mat-header-cell *matHeaderCellDef> نام کالا </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.productName }} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="تعداد">
+                                <th mat-header-cell *matHeaderCellDef> تعداد </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.amount }} </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="قیمت">
+                                <th mat-header-cell *matHeaderCellDef> قیمت </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.price | price }} ریال </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="تخفیف">
+                                <th mat-header-cell *matHeaderCellDef> تخفیف </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.discount | price }} ریال </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="درصد مالیات">
+                                <th mat-header-cell *matHeaderCellDef> درصد مالیات </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.taxPercent }}% </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="مالیات">
+                                <th mat-header-cell *matHeaderCellDef> مالیات </th>
+                                <td mat-cell *matCellDef="let element"> {{ element.tax | price }} ریال </td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="عملیات">
+                                <th mat-header-cell *matHeaderCellDef> عملیات </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="table-action-buttons">
+                                        <key-button matTooltip="حذف"
+                                            (click)="onDeleteInvoiceProduct(element.productCode)" content="icon">
+                                            <mat-icon class="icon-red material-icons-outlined">delete</mat-icon>
+                                        </key-button>
+                                        <key-button matTooltip="ویرایش"
+                                            (click)="onUpdateInvoiceProduct(element)" content="icon">
+                                            <mat-icon
+                                                class="icon-primary material-icons-outlined">edit_square</mat-icon>
+                                        </key-button>
+                                    </div>
+                                </td>
+                            </ng-container>
+
+                            <tr mat-header-row *matHeaderRowDef="invoiceProductsTableColumns"></tr>
+                            <tr mat-row *matRowDef="let row; columns: invoiceProductsTableColumns;"></tr>
+                            <tr class="mat-row" *matNoDataRow>
+                                <td class="mat-cell table-no-data" [colSpan]="invoiceProductsTableColumns.length">
+                                    هیچ داده ای یافت نشد
+                                </td>
+                            </tr>
+                        </table>
+                        <key-table-loading *ngIf="!dataFetchLoaded" [columns]="invoiceProductsTableColumns"
+                            [rows]="3"></key-table-loading>
+                    </div>
+                </div>
+            </ng-container>
+            <div class="invoice-mobile-form">
+                <div class="invoice-section-grid">
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>کد فاکتور</mat-label>
+                        <input type="number" matInput formControlName="invoiceCode">
+                        <mat-error *ngIf="invoiceForm.get('invoiceCode')?.invalid && validationLastCheck">
+                            <ng-container *ngIf="invoiceForm.get('invoiceCode')?.hasError('required')">
+                                این فیلد الزامیست
+                            </ng-container>
+                        </mat-error>
+                    </mat-form-field>
+                    <key-date-picker (dateSelected)="invoiceForm.get('invoiceDate')?.patchValue($event)">تاریخ
+                        فاکتور</key-date-picker>
+                    <div class="radio-form-field">
+                        <label>نوع فاکتور: </label>
+                        <mat-radio-group formControlName="invoiceType">
+                            <mat-radio-button *ngFor="let invoiceType of invoiceTypeList"
+                                [value]="invoiceType.value">{{invoiceType.display}}</mat-radio-button>
+                        </mat-radio-group>
+                    </div>
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>فاکتور مرجع</mat-label>
+                        <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode">
+                            <mat-option *ngFor="let referenceInvoiceCode of referenceInvoiceCodeList"
+                                [value]="referenceInvoiceCode">{{referenceInvoiceCode}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="invoiceForm.get('referenceInvoiceCode')?.invalid && validationLastCheck">
+                            این فیلد الزامیست
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="invoice-section-grid">
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>طرف حساب</mat-label>
+                        <mat-select formControlName="personCode" name="personCode">
+                            <mat-option *ngFor="let personCode of personList"
+                                [value]="personCode.code">{{personCode.personName}}</mat-option>
+                            <mat-option [value]="null">
+                                <ng-container *ngIf="personList.length < 1">
+                                    طرف حسابی یافت نشد.
+                                </ng-container>
+                                <span (click)="onAddPerson()" class="invoice-link">ایجاد طرف حساب جدید</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="invoiceForm.get('personCode')?.invalid && validationLastCheck">
+                            این فیلد الزامیست
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>الگو فاکتور</mat-label>
+                        <mat-select formControlName="patternType" name="patternType">
+                            <mat-option *ngFor="let patternType of invoicePatternTypeList"
+                                [value]="patternType.value">{{patternType.display}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="invoiceForm.get('patternType')?.invalid && validationLastCheck">
+                            این فیلد الزامیست
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>شماره قرارداد</mat-label>
+                        <input type="number" matInput formControlName="vendorContractRegisterId">
+                        <mat-error *ngIf="invoiceForm.get('vendorContractRegisterId')?.invalid && validationLastCheck">
+                            <ng-container *ngIf="invoiceForm.get('vendorContractRegisterId')?.hasError('required')">
+                                این فیلد الزامیست
+                            </ng-container>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <span class="invoice-section-title">اطلاعات پرداخت کننده:</span>
+                <div class="invoice-section-grid">
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>روش پرداخت</mat-label>
+                        <mat-select formControlName="paymentMethod" name="paymentMethod">
+                            <mat-option *ngFor="let paymentMethod of invoicePaymentMethodList"
+                                [value]="paymentMethod.value">{{paymentMethod.display}}</mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="invoiceForm.get('paymentMethod')?.invalid && validationLastCheck">
+                            این فیلد الزامیست
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>مبلغ نسیه</mat-label>
+                        <input type="text" mask="separator" thousandSeparator="," matInput formControlName="creditAmount">
+                        <mat-error *ngIf="invoiceForm.get('creditAmount')?.invalid && validationLastCheck">
+                            این فیلد الزامیست
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>کد ملی پرداخت کننده</mat-label>
+                        <input type="number" matInput formControlName="payerNationalId">
+                        <mat-error *ngIf="invoiceForm.get('payerNationalId')?.invalid && validationLastCheck">
+                            کد ملی پرداخت کننده نامعتبر است
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>شماره کارت پرداخت کننده</mat-label>
+                        <input type="number" matInput formControlName="payCardNumber">
+                        <mat-error *ngIf="invoiceForm.get('payCardNumber')?.invalid && validationLastCheck">
+                            این فیلد الزامیست
+                        </mat-error>
+                    </mat-form-field>
+    
+                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                        <mat-label>کد پیگیری پرداخت</mat-label>
+                        <input type="number" matInput formControlName="payReferenceNumber">
+                        <mat-error *ngIf="invoiceForm.get('payReferenceNumber')?.invalid && validationLastCheck">
+                            این فیلد الزامیست
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+
+        <div class="invoice-footer">
+            <span class="invoice-section-title">اطلاعات پرداخت کننده:</span>
+            <div class="invoice-section-grid">
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>روش پرداخت</mat-label>
+                    <mat-select formControlName="paymentMethod" name="paymentMethod">
+                        <mat-option *ngFor="let paymentMethod of invoicePaymentMethodList"
+                            [value]="paymentMethod.value">{{paymentMethod.display}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="invoiceForm.get('paymentMethod')?.invalid && validationLastCheck">
+                        این فیلد الزامیست
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>مبلغ نسیه</mat-label>
+                    <input type="text" mask="separator" thousandSeparator="," matInput formControlName="creditAmount">
+                    <mat-error *ngIf="invoiceForm.get('creditAmount')?.invalid && validationLastCheck">
+                        این فیلد الزامیست
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>کد ملی پرداخت کننده</mat-label>
+                    <input type="number" matInput formControlName="payerNationalId">
+                    <mat-error *ngIf="invoiceForm.get('payerNationalId')?.invalid && validationLastCheck">
+                        کد ملی پرداخت کننده نامعتبر است
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>شماره کارت پرداخت کننده</mat-label>
+                    <input type="number" matInput formControlName="payCardNumber">
+                    <mat-error *ngIf="invoiceForm.get('payCardNumber')?.invalid && validationLastCheck">
+                        این فیلد الزامیست
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="invoice-section-grid-field" appearance="outline">
+                    <mat-label>کد پیگیری پرداخت</mat-label>
+                    <input type="number" matInput formControlName="payReferenceNumber">
+                    <mat-error *ngIf="invoiceForm.get('payReferenceNumber')?.invalid && validationLastCheck">
+                        این فیلد الزامیست
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+</form>

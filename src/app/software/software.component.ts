@@ -17,6 +17,7 @@ import { ListCompanyComponent } from './company/list-company/list-company.compon
 import { KeyModules } from '../shared/types/modules.type';
 import { UnitComponent } from './product/unit/unit.component';
 import { fader, routeTransitionAnimations } from '../shared/animations/route-animations';
+import { CreateInvoiceComponent } from './invoice/create-invoice/create-invoice.component';
 
 @Component({
   selector: 'app-software',
@@ -26,6 +27,7 @@ import { fader, routeTransitionAnimations } from '../shared/animations/route-ani
 })
 export class SoftwareComponent implements OnInit, AfterViewInit {
   public isExpanded: boolean = true;
+  public demoErrorMessage: boolean = false;
 
   get authDone(): boolean {
     return this.authentication.userLoggedIn;
@@ -64,6 +66,8 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     if (window.innerWidth <= 768) {
       this.isExpanded = false;
     }
+
+    this.onAddInvoice();
 
     const currentUserPackageNo: GetUsersCompanyListBody = {
       packageNo: (this.authentication.userDetails as UserDetails).packageNo
@@ -196,6 +200,12 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       if (this.currentActivatedRoute instanceof ListProductComponent) {
         this.currentActivatedRoute.loadProductList();
       }
+    })
+  }
+
+  public onAddInvoice(): void {
+    this.dialog.openFullScreenDialog(CreateInvoiceComponent).afterClosed().subscribe(res => {
+      // TODO reload the factor lists now
     })
   }
 

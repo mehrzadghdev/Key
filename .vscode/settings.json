@@ -1,4 +1,8 @@
 {
     "workbench.preferredDarkColorTheme": "One Dark Pro Darker",
-    "workbench.colorTheme": "Default Dark+"
+    "workbench.colorTheme": "Default Dark+",
+    "material-icon-theme.folders.associations": {
+        "software":  "Keys",
+        "stripe":  "Resource"
+    }
 }

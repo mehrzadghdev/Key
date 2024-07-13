@@ -38,7 +38,6 @@ export class RegisterComponent {
 
 	public onRegister(): void {
 		if (this.registerForm.valid) {
-			console.log(this.registerForm.value)
 			this.registerLoading = true;
 
 			const registerBody: RegisterApiBody = {

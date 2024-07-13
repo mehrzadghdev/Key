@@ -10,7 +10,7 @@
         <div class="form-dialog-content-loading" *ngIf="getUnitListLoading || getProductLoading"></div>
         <mat-form-field class="form-dialog-field" appearance="outline">
             <mat-label>واحد کالا و خدمات</mat-label>
-            <mat-select keyAutoFocus formControlName="unitCode" name="unitCode">
+            <mat-select formControlName="unitCode" name="unitCode">
                 <mat-option *ngFor="let unit of unitList" [value]="unit.code">{{unit.name}}</mat-option>
             </mat-select>
             <mat-error *ngIf="updateProductForm.get('unitCode')?.invalid && validationLastCheck">

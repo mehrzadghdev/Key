@@ -29,12 +29,24 @@
         height: 18px;
         font-size: 18px;
     }
+
+    .content-topbar-actions {
+        display: flex;
+        gap: 10px;
+        justify-content: end;
+        align-items: center;
+        flex-wrap: wrap;
+    }
 }
 
 @media only screen and (max-width: 768px) {
     .content-topbar {
         flex-direction: column;
         align-items: start;
+
+        .content-topbar-actions {
+            justify-content: start;
+        }
     }
 }
 

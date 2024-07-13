@@ -1,5 +1,7 @@
 // Product Base
 
+import { Pagination, PaginationBody } from "src/app/shared/types/common.type";
+
 export interface Product {
     id: number,
     databaseId: number,
@@ -18,13 +20,19 @@ export interface Product {
 
 // Product/GetProductList
 
-export type GetProductList = Product[];
+export interface GetProductList extends Pagination {
+    result: Product[];
+};
+
+export interface GetProductListBody extends PaginationBody {}
 
 // Product/GetCompaniesProductList
 
-export type GetCompaniesProductList = Product[];
+export interface GetCompaniesProductList extends Pagination {
+    result: Product[];
+} 
 
-export interface GetCompaniesProductListBody {
+export interface GetCompaniesProductListBody extends PaginationBody {
     databaseId: number
 }
 

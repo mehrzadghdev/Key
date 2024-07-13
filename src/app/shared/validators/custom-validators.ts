@@ -65,6 +65,16 @@ export abstract class CustomValidators {
         return value.toString().length !== 12 ? { economicCode: true } : null;
     }
 
+    public static taxIdentity(formControl: AbstractControl): ValidationErrors | null {
+        const value = formControl.value as number;
+
+        if (!value) return null;
+
+        if (!value.toString().length) return null;
+        
+        return value.toString().length > 6 ? { taxIdentity: true } : null;
+    }
+
     public static branchNo(formControl: AbstractControl): ValidationErrors | null {
         const value = formControl.value as number;
 

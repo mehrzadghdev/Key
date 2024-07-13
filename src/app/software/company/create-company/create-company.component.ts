@@ -27,7 +27,7 @@ export class CreateCompanyComponent {
   ) {
     this.addCompanyForm = fb.group({
       companyName: ['', Validators.required],
-      taxIdentity: ['', Validators.required],
+      taxIdentity: ['', [Validators.required, CustomValidators.taxIdentity]],
       privateKey: ['', Validators.required],
       companyZipCode: ['', CustomValidators.zipCode],
       companyAddress: [''],

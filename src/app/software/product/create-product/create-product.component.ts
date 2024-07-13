@@ -77,7 +77,7 @@ export class CreateProductComponent implements OnInit {
       this.productService.addProduct(addProductBody).subscribe(res => {
         this.addProductLoading = false;
         this.utility.message((this.addProductForm.controls["productType"].value === ProductType.Product ? 'کالا' : 'خدمات') + ' با موفقیت ایجاد شد.', 'بستن');
-        this.closeDialog();
+        this.closeDialog(addProductBody.code);
       },
       err => {
         this.addProductLoading = false
@@ -88,7 +88,7 @@ export class CreateProductComponent implements OnInit {
     }
   }
 
-  public closeDialog(): void {
-    this.dialgoRef.close();
+  public closeDialog(value?: any): void {
+    this.dialgoRef.close(value);
   }
 }

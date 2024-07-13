@@ -850,3 +850,22 @@ input::placeholder {
         color: var(--primary-color) !important;
     }
 }
+
+.date-picker__wrapper .mat-mdc-menu-content {
+    padding: 0 !important;
+    overflow: hidden;
+}
+
+.mat-mdc-dialog-surface.mdc-dialog__surface {
+    background-color: var(--base-color) !important;
+}
+
+.mat-mdc-radio-button {
+    .mdc-radio {
+        padding: 0px 0px 0px 2px !important;
+    }
+
+    .mdc-label {
+        font-size: 13px !important;
+    }
+}

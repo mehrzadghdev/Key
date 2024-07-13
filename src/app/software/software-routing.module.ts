@@ -27,6 +27,11 @@ const routes: Routes = [
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule),
         data: { animation: 'Three' }
       },
+      {
+        path: "invoice",
+        loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule),
+        data: { animation: 'Four' }
+      },
     ]
   }
 ];

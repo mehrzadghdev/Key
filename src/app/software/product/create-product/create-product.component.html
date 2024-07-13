@@ -1,5 +1,5 @@
 <form [formGroup]="addProductForm">
-    <div class="form-dialog-top-bar">
+    <div class="form-dialog-top-bar" cdkDragHandle >
         <h3>ایجاد کالای جدید</h3>
         <key-button content="icon" (click)="closeDialog()">
             <mat-icon class="icon-base">close</mat-icon>
@@ -10,7 +10,7 @@
         <div class="form-dialog-content-loading" *ngIf="getUnitListLoading"></div>
         <mat-form-field class="form-dialog-field" appearance="outline">
             <mat-label>واحد کالا و خدمات</mat-label>
-            <mat-select keyAutoFocus formControlName="unitCode" name="unitCode">
+            <mat-select formControlName="unitCode" name="unitCode">
                 <mat-option *ngFor="let unit of unitList" [value]="unit.code">{{unit.name}}</mat-option>
             </mat-select>
             <mat-error *ngIf="addProductForm.get('unitCode')?.invalid && validationLastCheck">

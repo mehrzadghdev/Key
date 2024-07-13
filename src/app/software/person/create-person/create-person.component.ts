@@ -77,7 +77,7 @@ export class CreatePersonComponent {
       this.personService.addPerson(addPersonBody).subscribe(res => {
         this.addPersonLoading = false;
         this.utility.message("طرف حساب با موفقیت ایجاد شد.", 'بستن');
-        this.closeDialog();
+        this.closeDialog(addPersonBody.code);
       },
       err => {
         this.addPersonLoading = false
@@ -88,7 +88,7 @@ export class CreatePersonComponent {
     }
   }
 
-  public closeDialog(): void {
-    this.dialgoRef.close();
+  public closeDialog(value?: any): void {
+    this.dialgoRef.close(value ?? null);
   }
 }

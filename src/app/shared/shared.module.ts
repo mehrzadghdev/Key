@@ -28,6 +28,9 @@ import { ButtonComponent } from './components/button/button.component';
 import { PricePipe } from './pipes/price.pipe';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
 import { AcceptDeleteComponent } from './components/accept-delete/accept-delete.component';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { FarsiNumberPipe } from './pipes/farsi-number.pipe';
+import { SkeletonComponent } from './components/skeleton/skeleton.component';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -42,7 +45,10 @@ export function playerFactory() {
     ButtonComponent,
     PricePipe,
     AutoFocusDirective,
-    AcceptDeleteComponent
+    AcceptDeleteComponent,
+    DatePickerComponent,
+    FarsiNumberPipe,
+    SkeletonComponent
   ],
   imports: [
     CommonModule,
@@ -80,7 +86,10 @@ export function playerFactory() {
     RandomWidthDirective,
     PricePipe,
     ButtonComponent,
-    AutoFocusDirective
+    AutoFocusDirective,
+    DatePickerComponent,
+    FarsiNumberPipe,
+    SkeletonComponent
   ] 
 })
 export class SharedModule { }

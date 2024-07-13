@@ -1,5 +1,6 @@
 // Person Base
 
+import { Pagination, PaginationBody } from "src/app/shared/types/common.type";
 import { PersonType } from "../enums/person-type.enum";
 
 export interface Person {
@@ -18,11 +19,17 @@ export interface Person {
 
 // Person/GetPersonList
 
-export type GetPersonList = Person[];
+export interface GetPersonList extends Pagination {
+    result: GetCompaniesPersonListItem[];
+};
+
+export interface GetPersonListBody extends PaginationBody {}
 
 // Person/GetCompaniesPersonList
 
-export type GetCompaniesPersonList = GetCompaniesPersonListItem[];
+export interface GetCompaniesPersonList extends Pagination {
+    result: GetCompaniesPersonListItem[];
+}
 
 export interface GetCompaniesPersonListItem {
     id: number,
@@ -40,7 +47,7 @@ export interface GetCompaniesPersonListItem {
     modifiedDate: string
 }
 
-export interface GetCompaniesPersonListBody {
+export interface GetCompaniesPersonListBody extends PaginationBody {
     databaseId: number
 }
 

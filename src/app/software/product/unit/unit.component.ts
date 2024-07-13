@@ -11,6 +11,8 @@ import { DialogService } from 'src/app/shared/services/dialog.service';
   styleUrls: ['./unit.component.scss']
 })
 export class UnitComponent implements OnInit {
+  public date: string = new Date().toISOString();
+
   public unitListLoaded: boolean = false;
   public unitList: Unit[] = [];
   public tableColumns: string[] = ['ایدی واحد', 'نام واحد', 'کد واحد', 'عملیات'];

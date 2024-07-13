@@ -33,22 +33,30 @@ export const fader = trigger('routeAnimations', [
 
 export const routeTransitionAnimations = trigger('routeAnimations', [
     transition('* <=> *', [
-        query(':enter, :leave', [
-            style({
-                position: 'absolute',
-                inset: 10,
-                width: 'calc(100% - 24px)',
-                opacity: 0,
-                transform: 'translateY(5px)'
-            })
-        ]),
-        query(':enter', [
-            animate('300ms ease',
+        query(
+            ':enter, :leave',
+            [
                 style({
-                    opacity: 1,
-                    transform: 'translateY(0)'
+                    position: 'absolute',
+                    inset: 10,
+                    width: 'calc(100% - 24px)',
+                    opacity: 0,
+                    transform: 'translateY(5px)'
                 })
-            )
-        ])
+            ],
+            { optional: true }
+        ),
+        query(
+            ':enter',
+            [
+                animate('300ms ease',
+                    style({
+                        opacity: 1,
+                        transform: 'translateY(0)'
+                    })
+                )
+            ],
+            { optional: true }
+        )
     ])
 ]);

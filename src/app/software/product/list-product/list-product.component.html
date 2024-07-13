@@ -7,7 +7,12 @@
             لیست تمام کالا و خدمات
         </span>
     </div>
-    <div>
+    <div class="content-topbar-actions">
+        <a routerLink="/software/product/unit">
+            <key-button appearance="raised">
+                واحد کالا و خدمات  
+            </key-button>
+        </a>
         <key-button (click)="onAddProduct()">
             <mat-icon class="material-icons-outlined list-add-button-icon">add_circle_outline</mat-icon> کالا و خدمات جدید
         </key-button>

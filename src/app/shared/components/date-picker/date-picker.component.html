@@ -1,0 +1,41 @@
+<div class="date-picker">
+    <mat-form-field appearance="outline" subscriptSizing="dynamic" class="date-picker__form-field" [matMenuTriggerFor]="menu" [style.width]="fullWidth ? '100%' : null">
+        <mat-label><ng-content></ng-content></mat-label>
+        <input [(ngModel)]="dateModel" readonly type="text" matInput placeholder="date">
+        <key-button matSuffix [matMenuTriggerFor]="menu" content="icon">
+            <mat-icon class="icon-primary date-picker__picker-icon">calendar_month</mat-icon>
+        </key-button>
+    </mat-form-field>
+
+    <mat-menu #menu="matMenu" class="date-picker__wrapper" xPosition="before" yPosition="below">
+        <div class="date-picker__menu">
+            <div (click)="$event.stopPropagation()" class="date-picker__header">
+                <span (click)="$event.stopPropagation()" (click)="keyDate.subtractMonth()">
+                    <key-button content="icon">
+                        <mat-icon class="icon-white date-picker__navigation-icon">keyboard_arrow_right</mat-icon>
+                    </key-button>
+                </span>
+                <span class="date-picker__date-title" (click)="$event.stopPropagation()">{{ keyDate.monthName }} {{ keyDate.year | farsiNumber }}</span>
+                <span (click)="$event.stopPropagation()" (click)="keyDate.addMonth()">
+                    <key-button content="icon">
+                        <mat-icon class="icon-white date-picker__navigation-icon">keyboard_arrow_left</mat-icon>
+                    </key-button>
+                </span>
+            </div>
+            <div class="date-picker__main">
+                <div (click)="$event.stopPropagation()" class="date-picker__weekday-item"
+                    *ngFor="let weekday of keyDate.weekdayList; let i = index" [ngClass]="{'holiday': i === 6}">{{ weekday | slice: 0 : 1 }}</div>
+
+                <div (click)="$event.stopPropagation()"
+                    *ngFor="let emptyDate of [].constructor(this.keyDate.monthStartWeekDay); let i = index"></div>
+
+                <div mat-ripple class="date-picker__day-item" [ngClass]="{'today': date.today, 'holiday': date.weekdayNumber === 6}" (click)="onDateSelected(date.day)" *ngFor="let date of keyDate.datePicker">
+                    {{date.day| farsiNumber}}
+                </div>
+            </div>
+            <div class="date-picker__actions" (click)="$event.stopPropagation()">
+                <span mat-ripple (click)="keyDate.goToday()">برو به امروز</span>
+            </div> 
+        </div>
+    </mat-menu>
+</div>

@@ -61,7 +61,12 @@
                 <mat-label>شناسه یکتا مالیاتی</mat-label>
                 <input type="text" matInput formControlName="taxIdentity">
                 <mat-error *ngIf="updateCompanyForm.get('taxIdentity')?.invalid && validationLastCheck">
-                    این فیلد الزامیست
+                    <ng-container *ngIf="updateCompanyForm.get('taxIdentity')?.hasError('required')">
+                        این فیلد الزامیست
+                    </ng-container>
+                    <ng-container *ngIf="updateCompanyForm.get('taxIdentity')?.hasError('taxIdentity')">
+                        شناسه یکتا نامعتبر است  
+                    </ng-container>  
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="form-dialog-field" appearance="outline">

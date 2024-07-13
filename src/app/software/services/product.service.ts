@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/request.service';
-import { AddProduct, AddProductBody, DeleteProduct, DeleteProductBody, GetCompaniesProductList, GetCompaniesProductListBody, GetProduct, GetProductBody, GetProductList, UpdateProduct, UpdateProductBody } from '../types/product.type';
+import { AddProduct, AddProductBody, DeleteProduct, DeleteProductBody, GetCompaniesProductList, GetCompaniesProductListBody, GetProduct, GetProductBody, GetProductList, GetProductListBody, UpdateProduct, UpdateProductBody } from '../types/product.type';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,8 @@ export class ProductService {
 
   constructor(private request: RequestService) { }
 
-  public getAllProductList(): Observable<GetProductList> {
-    return this.request.post<GetProductList, null>("Product/GetProductList", null);
+  public getAllProductList(getAllProductListBody: GetProductListBody): Observable<GetProductList> {
+    return this.request.post<GetProductList, GetProductListBody>("Product/GetProductList", getAllProductListBody);
   }
 
   public getCompaniesProductList(getCompaniesProductListBody: GetCompaniesProductListBody): Observable<GetCompaniesProductList> {

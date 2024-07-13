@@ -50,7 +50,7 @@ export class ListPersonComponent implements OnInit {
     const currentCompany = this.authentication.currentCompany as Company;
 
     this.personSerivce.getCompaniesPersonList({ databaseId: currentCompany.databaseId }).subscribe(res => {
-      this.personsList = res;
+      this.personsList = res.result;
       this.personListLoaded = true;
     })
   }

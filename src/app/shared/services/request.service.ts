@@ -5,29 +5,34 @@ import { AuthenticationService } from './authentication.service';
 import { environment } from 'src/environment/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UtilityService } from './utility.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestService {
 
-  constructor(private http: HttpClient, private authentication: AuthenticationService, private utilityService: UtilityService) { }
+  constructor(private http: HttpClient, private authentication: AuthenticationService, private utilityService: UtilityService, private router: Router) { }
 
   public post<Result, Body = any>(controlAndMethodName: string, body: Body): Observable<Result> {
     const request = this.http.post<Result>(environment.apiUrl + controlAndMethodName, body, { headers: this.headers() }).pipe(
       catchError((err) => {
-        if ([500].includes(err.status)) {
+        if ([500, 501].includes(err.status)) {
           this.utilityService.message("خطای داخلی، لطفا با پشتیبانی تماس بگیرید", 'بستن')
         }
-        if ([401, 403].includes(err.status)) {
+        else if ([401, 403].includes(err.status)) {
+          this.utilityService.message("احراز هویت انجام نشد، لطفا مجدد وارد حساب کاربری شوید.", 'بستن')
           this.authentication.logout();
-          this.authentication.authorize();
+          this.router.navigate(['/auth/login']);
         }
-        if ([409].includes(err.status)) {
+        else if ([409].includes(err.status)) {
           this.utilityService.message("کد وارد شده تکراری است، لطفا از کد دیگری استفاده کنید.", 'بستن')
         }
-        if(!navigator.onLine) { 
+        else if(!navigator.onLine) { 
           this.utilityService.message("ارتباط با سرور برقرار نیست! لطفا اتصال اینترنت را بررسی کنید.", 'بستن')
+        }
+        else {
+          this.utilityService.message("خطای سمت سرور، لطفا بعدا سعی کنید یا با پشتیبانی ارتباط بگیرید.", 'بستن')
         }
 
         const error = err.error?.message || err.statusText;

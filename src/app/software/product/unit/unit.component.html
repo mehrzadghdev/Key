@@ -10,7 +10,7 @@
     <div>
         <a routerLink="/software/product">
             <key-button>
-                <mat-icon class="list-add-button-icon">list</mat-icon> 
+                <mat-icon class="list-add-button-icon">list</mat-icon>
                 لیست تمام کالا ها
             </key-button>
         </a>
@@ -23,7 +23,7 @@
                 افزودن واحد جدید
             </ng-container>
             <ng-container *ngIf="updateMode">
-                ویرایش واحد  
+                ویرایش واحد
             </ng-container>
         </span>
 
@@ -32,7 +32,7 @@
                 <mat-label>کد واحد</mat-label>
                 <input keyAutoFocus type="text" matInput formControlName="code">
                 <mat-error *ngIf="addUnitForm.get('code')?.invalid && validationLastCheck">
-                    کد واحد نامعتبر است  
+                    کد واحد نامعتبر است
                 </mat-error>
             </mat-form-field>
 
@@ -40,18 +40,20 @@
                 <mat-label>نام واحد</mat-label>
                 <input type="text" matInput formControlName="name">
                 <mat-error *ngIf="addUnitForm.get('name')?.invalid && validationLastCheck">
-                    نام واحد نامعتبر است  
+                    نام واحد نامعتبر است
                 </mat-error>
             </mat-form-field>
 
-            <key-button *ngIf="!updateMode" [block]="true" [loading]="addUnitLoading" (click)="onAddUnit()" type="submit">ایجاد</key-button>
+            <key-button *ngIf="!updateMode" [block]="true" [loading]="addUnitLoading" (click)="onAddUnit()"
+                type="submit">ایجاد</key-button>
             <div *ngIf="updateMode" class="unit-form-actions-container">
-                <key-button [loading]="updateUnitLoading" [block]="true" (click)="onCancelUpdateMode()" appearance="stroked">لغو</key-button>
+                <key-button [loading]="updateUnitLoading" [block]="true" (click)="onCancelUpdateMode()"
+                    appearance="stroked">لغو</key-button>
                 <key-button [loading]="updateUnitLoading" [block]="true" (click)="onUpdateUnit()">ویرایش</key-button>
             </div>
         </form>
     </div>
-    <div class="content-table"> 
+    <div class="content-table">
         <div class="table">
             <table *ngIf="unitListLoaded" mat-table [dataSource]="unitList" class="">
                 <ng-container matColumnDef="ایدی واحد">
@@ -77,7 +79,7 @@
                                 <mat-icon class="icon-red material-icons-outlined">delete</mat-icon>
                             </key-button>
                             <key-button matTooltip="ویرایش" (click)="onUpdateMode(element)" content="icon">
-                                <mat-icon class="icon-primary material-icons-outlined">edit_square</mat-icon>                       
+                                <mat-icon class="icon-primary material-icons-outlined">edit_square</mat-icon>
                             </key-button>
                         </div>
                     </td>

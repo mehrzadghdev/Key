@@ -1,4 +1,9 @@
 <ng-container *ngIf="authDone && companySelected">
+    <div class="panel-application-not-enabled" [ngClass]="{'menu-activated': isExpanded}" *ngIf="demoErrorMessage">
+        <span>توجه: نرم افزار در حالت دمو میباشد، لطفا در صورت علاقه نرم افزار را خریداری کنید.</span>
+        <a routerLink="/home/store">خرید نرم افزار</a>
+    </div>
+
     <div class="panel-sidebar-overlay" *ngIf="isExpanded" (click)="isExpanded = false"></div>
     <div class="panel-sidebar"
         [ngClass]="{'active': isExpanded, 'not-active': !isExpanded, 'mobile-hidden': !isExpanded}">
@@ -49,7 +54,7 @@
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
-                            <mat-icon>apartment_outline</mat-icon>
+                            <mat-icon class="material-icons-outlined">business_outline</mat-icon>
                         </div>
                         <span *ngIf="isExpanded" class="nav-item__title unselectable">شرکت</span>
                     </div>
@@ -74,7 +79,7 @@
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
-                            <mat-icon>badge_outline</mat-icon>
+                            <mat-icon class="material-icons-outlined">contacts_outline</mat-icon>
                         </div>
                         <span *ngIf="isExpanded" class="nav-item__title unselectable">طرف حساب</span>
                     </div>
@@ -97,7 +102,7 @@
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
-                            <mat-icon>shopping_cart_outline</mat-icon>
+                            <mat-icon class="material-icons-outlined">inventory_2_outline</mat-icon>
                         </div>
                         <span *ngIf="isExpanded" class="nav-item__title unselectable">کالا و خدمات</span>
                     </div>
@@ -122,8 +127,7 @@
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
-                            <mat-icon>payments_outline</mat-icon>
-                        </div>
+                            <mat-icon class="material-icons-outlined">article_outline</mat-icon>                        </div>
                         <span *ngIf="isExpanded" class="nav-item__title unselectable">فاکتور</span>
                     </div>
                     <div *ngIf="isExpanded" class="accordion-icon">
@@ -131,7 +135,7 @@
                     </div>
                 </div>
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
-                    <li matRipple class="unselectable">ایجاد فاکتور جدید</li>
+                    <li matRipple class="unselectable" (click)="onAddInvoice()">ایجاد فاکتور جدید</li>
                     <li matRipple class="unselectable">لیست تمام فاکتور ها</li>
                 </ul>
             </li>
@@ -144,17 +148,17 @@
 
     <div class="main-content">
         <div class="panel-header">
-            <div (click)="isExpanded = !isExpanded" class="pointer icon" matRipple>
+            <key-button (click)="isExpanded = !isExpanded" content="icon" class="icon">
                 <mat-icon *ngIf="!isExpanded">menu_open</mat-icon>
                 <mat-icon *ngIf="isExpanded">menu_closed</mat-icon>
-            </div>
+            </key-button>
             <button matRipple [matMenuTriggerFor]="createMenu" class="create-button">ایجاد کردن
                 <mat-icon>keyboard_arrow_down</mat-icon></button>
             <mat-menu #createMenu="matMenu">
                 <button mat-menu-item (click)="onAddCompany()">شرکت</button>
                 <button mat-menu-item (click)="onAddPerson()">طرف حساب</button>
                 <button mat-menu-item (click)="onAddProduct()">کالا</button>
-                <button mat-menu-item>فاکتور</button>
+                <button mat-menu-item (click)="onAddInvoice()">فاکتور</button>
             </mat-menu>
             <div class="search-box">
                 <form class="search-form" (ngSubmit)="onSearch()">
@@ -174,16 +178,16 @@
                 <button mat-menu-item (click)="changeTheme('default')">حالت پیشفرض</button>
                 <button mat-menu-item (click)="changeTheme('dark')">حالت تاریک</button>
             </mat-menu>
-            <div class="pointer icon full-screen-icon" matRipple (click)="toggleFullScreen()">
-                <mat-icon *ngIf="fullscreen" class="material-icons-outlined">fullscreen</mat-icon>
-                <mat-icon *ngIf="!fullscreen" class="material-icons-outlined">fullscreen_exit</mat-icon>
-            </div>
+            <key-button content="icon" class="icon" (click)="toggleFullScreen()">
+                <mat-icon *ngIf="fullscreen" class="material-icons-outlined" matTooltip="حالت تمام صفحه">fullscreen</mat-icon>
+                <mat-icon *ngIf="!fullscreen" class="material-icons-outlined" matTooltip="خروج از حالت تمام صفحه">fullscreen_exit</mat-icon>
+            </key-button>
             <div class="notification-icon pointer">
                 <mat-icon class="material-icons-outlined" matBadge="2" matBadgeColor="warn">notifications</mat-icon>
             </div>
-            <div class="icon pointer settings-icon" matRipple>
-                <mat-icon>settings</mat-icon>
-            </div>
+            <key-button content="icon" class="icon">
+                <mat-icon matTooltip="تنظیمات کاربری" class="settings-icons">settings</mat-icon>
+            </key-button>
         </div>
         <div class="panel-content" [@routeAnimations]="prepareRoute(outlet)">
             <router-outlet #outlet="outlet" (activate)="onRouteActivated($event)"></router-outlet>
@@ -192,36 +196,43 @@
 
     <div class="mobile-bottom-menu">
         <ul>
-            <li mat-ripple [mat-menu-trigger-for]="companyMenu"
-                [ngClass]="{'active-bottom-menu-item': activeRouteIs('company')}">
-                <div class="bottom-menu-icon">
-                    <mat-icon class="icon-light">apartment_outline</mat-icon>
-                </div>
-                <span>شرکت</span>
-            </li>
-            <li mat-ripple [mat-menu-trigger-for]="contactMenu"
-                [ngClass]="{'active-bottom-menu-item': activeRouteIs('person')}">
-                <div class="bottom-menu-icon">
-                    <mat-icon class="icon-light">badge_outline</mat-icon>
-                </div>
-
-                <span>طرف حساب</span>
-            </li>
-            <li mat-ripple [mat-menu-trigger-for]="productMenu"
-                [ngClass]="{'active-bottom-menu-item': activeRouteIs('product')}">
-                <div class="bottom-menu-icon">
-                    <mat-icon class="icon-light">shopping_cart_outline</mat-icon>
-                </div>
-                <span>کالا و خدمات</span>
-            </li>
-            <li mat-ripple [mat-menu-trigger-for]="factor"
-                [ngClass]="{'active-bottom-menu-item': activeRouteIs('invoice')}">
-                <div class="bottom-menu-icon">
-                    <mat-icon class="icon-light">payments_outline</mat-icon>
-                </div>
-
-                <span>فاکتور</span>
-            </li>
+            <a routerLink="/software/company">
+                <li mat-ripple
+                    [ngClass]="{'active-bottom-menu-item': activeRouteIs('company')}">
+                    <div class="bottom-menu-icon">
+                        <mat-icon class="icon-light" [ngClass]="{'material-icons-outlined': !activeRouteIs('company')}">business_outline</mat-icon>
+                    </div>
+                    <span>شرکت</span>
+                </li>
+            </a>
+            <a routerLink="/software/person">
+                <li mat-ripple
+                    [ngClass]="{'active-bottom-menu-item': activeRouteIs('person')}">
+                    <div class="bottom-menu-icon">
+                        <mat-icon class="icon-light" [ngClass]="{'material-icons-outlined': !activeRouteIs('person')}">contacts</mat-icon>
+                    </div>
+    
+                    <span>طرف حساب</span>
+                </li>
+            </a>
+            <a routerLink="/software/product">
+                <li mat-ripple
+                    [ngClass]="{'active-bottom-menu-item': activeRouteIs('product')}">
+                    <div class="bottom-menu-icon">
+                        <mat-icon class="icon-light" [ngClass]="{'material-icons-outlined': !activeRouteIs('product')}">inventory_2_outline</mat-icon>
+                    </div>
+                    <span>کالا و خدمات</span>
+                </li>
+            </a>
+            <a routerLink="/software/invoice">
+                <li mat-ripple
+                    [ngClass]="{'active-bottom-menu-item': activeRouteIs('invoice')}">
+                    <div class="bottom-menu-icon">
+                        <mat-icon class="icon-light" [ngClass]="{'material-icons-outlined': !activeRouteIs('invoice')}">article_outline</mat-icon>
+                    </div>
+                    <span>فاکتور</span>
+                </li>
+            </a>
         </ul>
     </div>
 </ng-container>

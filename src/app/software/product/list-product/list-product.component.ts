@@ -62,7 +62,7 @@ export class ListProductComponent {
     const currentCompany = this.authentication.currentCompany as Company;
 
     this.productSerivce.getCompaniesProductList({ databaseId: currentCompany.databaseId }).subscribe(res => {
-      this.productList = res;
+      this.productList = res.result;
       this.productListLoaded = true;
     })
   }
