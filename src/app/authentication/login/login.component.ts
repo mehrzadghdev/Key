@@ -49,8 +49,7 @@ export class LoginComponent {
             this.utilityService.message("ورود به حساب کاربری با موفقیت انجام شد.", 'بستن')
           })
         },
-        error: () => {
-          this.utilityService.message("آدرس ایمیل یا رمز عبور اشتباه است.", 'بستن');
+        error: (err) => {
           this.loginLoading = false;
         }
       })

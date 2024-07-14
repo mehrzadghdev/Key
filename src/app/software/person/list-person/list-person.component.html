@@ -35,7 +35,7 @@
             </ng-container>
 
             <ng-container matColumnDef="تاریخ ساخت">
-                <th mat-header-cell *matHeaderCellDef> تاریخ ساخت </th>
+                <th mat-header-cell *matHeaderCellDef> تاریخ ایجاد </th>
                 <td mat-cell *matCellDef="let element"> {{ element.createdDate | jdate }} </td>
             </ng-container>
 
@@ -79,5 +79,39 @@
             </tr>
         </table>
         <key-table-loading *ngIf="!personListLoaded" [columns]="tableColumns"></key-table-loading>
+        <div class="table-pagination">
+            <div class="table-pagination__paginator">
+                <key-button content="icon" [disabled]="!tablePagination.hasPrev" (click)="onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">
+                    <mat-icon class="paginator-icon icon-medium">arrow_forward_ios</mat-icon>
+                </key-button>
+                <div>
+                    <span>{{ (tablePagination.currentPage ?? 0) | farsiNumber }}</span>
+                    <span>از</span>
+                    <span>{{ (tablePagination.totalPages ?? 0) | farsiNumber }}</span>
+                </div>
+                <key-button content="icon" [disabled]="!tablePagination.hasNext" (click)="onPaginationChanged((tablePagination.currentPage ?? 1) + 1)">
+                    <mat-icon class="paginator-icon icon-medium">arrow_back_ios_new</mat-icon>
+                </key-button>
+            </div>
+            <div class="table-pagination__total-count">
+                <ng-container *ngIf="(tablePagination.totalCount ?? 0) <= 0">موردی یافت نشد</ng-container>
+                <ng-container *ngIf="(tablePagination.totalCount ?? 0) > 0">
+                    {{ tablePagination.totalCount ?? 0 | price }} مورد یافت شد
+                </ng-container>
+            </div>
+            <div class="table-pagination__page-size">
+                <span>نمایش در هر صفحه: </span>
+                <button mat-ripple [matMenuTriggerFor]="pageSizes">
+                    {{ (tablePagination.pageSize ?? 0) | farsiNumber }}
+                    <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
+                </button>
+                <mat-menu #pageSizes="matMenu">
+                    <button mat-menu-item (click)="onItemPerPageChanged(10)">{{ 10 | farsiNumber }} مورد</button>
+                    <button mat-menu-item (click)="onItemPerPageChanged(25)">{{ 25 | farsiNumber }} مورد</button>
+                    <button mat-menu-item (click)="onItemPerPageChanged(40)">{{ 40 | farsiNumber }} مورد</button>
+                    <button mat-menu-item (click)="onItemPerPageChanged(60)">{{ 60 | farsiNumber }} مورد</button>
+                </mat-menu>
+            </div>
+        </div>
     </div>
 </div>

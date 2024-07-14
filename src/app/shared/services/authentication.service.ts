@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError, of } from 'rxjs';
+import { Observable, catchError, of, throwError } from 'rxjs';
 import { LoginApiBody, LoginApiResult, RegisterApiBody, UserDetails } from '../types/authentication.type';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import * as moment from 'jalali-moment';
 import { Router } from '@angular/router';
 import { Company } from 'src/app/software/types/company.type';
+import { UtilityService } from './utility.service';
 
 @Injectable({
   providedIn: 'root'
@@ -81,7 +82,7 @@ export class AuthenticationService {
     this._tokenExpireDate = expirationDate.format('YYYY-MM-DD HH:mm:ss');
   }
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router, private utility: UtilityService) { }
 
   public currentCompanySelected(): boolean {
     const currentLocalCompany: string | null = localStorage.getItem('current-company');
@@ -127,7 +128,25 @@ export class AuthenticationService {
 
   public login(loginDetails: LoginApiBody): Observable<LoginApiResult> {
     this.clearCurrentCompany();
-    return this.http.post<LoginApiResult>(environment.apiUrl + "login", loginDetails);
+    return this.http.post<LoginApiResult>(environment.apiUrl + "login", loginDetails).pipe(
+      catchError((err) => {
+        if ([500, 501].includes(err.status)) {
+          this.utility.message("خطای داخلی، لطفا با پشتیبانی تماس بگیرید", 'بستن')
+        }
+        else if ([401, 403].includes(err.status)) {
+          this.utility.message("آدرس ایمیل یا رمز عبور اشتباه است.", 'بستن');
+        }
+        else if(!navigator.onLine) { 
+          this.utility.message("ارتباط با سرور برقرار نیست! لطفا اتصال اینترنت را بررسی کنید.", 'بستن')
+        }
+        else {
+          this.utility.message("خطای سمت سرور، لطفا بعدا سعی کنید یا با پشتیبانی ارتباط بگیرید.", 'بستن')
+        }
+
+        const error = err.error?.message || err.statusText;
+        return throwError(() => error);
+      })
+    );
   }
 
   public userInfo(): Observable<UserDetails> {

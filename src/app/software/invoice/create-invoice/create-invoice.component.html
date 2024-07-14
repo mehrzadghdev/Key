@@ -303,7 +303,7 @@
 
                 <mat-form-field class="invoice-section-grid-field" appearance="outline">
                     <mat-label>شماره کارت پرداخت کننده</mat-label>
-                    <input type="number" matInput formControlName="payCardNumber">
+                    <input type="text" mask="0000 0000 0000 0000" matInput formControlName="payCardNumber">
                     <mat-error *ngIf="invoiceForm.get('payCardNumber')?.invalid && validationLastCheck">
                         این فیلد الزامیست
                     </mat-error>

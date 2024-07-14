@@ -67,8 +67,6 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       this.isExpanded = false;
     }
 
-    this.onAddInvoice();
-
     const currentUserPackageNo: GetUsersCompanyListBody = {
       packageNo: (this.authentication.userDetails as UserDetails).packageNo
     } as const;

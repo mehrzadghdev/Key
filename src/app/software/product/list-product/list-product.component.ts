@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Product } from '../../types/product.type';
+import { GetCompaniesProductListBody, Product } from '../../types/product.type';
 import { ProductType } from '../../enums/product-type.enum';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Router } from '@angular/router';
@@ -11,6 +11,7 @@ import { Unit } from '../../types/unit.type';
 import { UnitService } from '../../services/unit.service';
 import { UpdateProductComponent } from '../update-product/update-product.component';
 import { UtilityService } from 'src/app/shared/services/utility.service';
+import { Pagination, PaginationBody } from 'src/app/shared/types/common.type';
 
 @Component({
   selector: 'app-list-product',
@@ -18,6 +19,16 @@ import { UtilityService } from 'src/app/shared/services/utility.service';
   styleUrls: ['./list-product.component.scss']
 })
 export class ListProductComponent {
+  public tablePagination: Partial<Pagination> = {
+    totalCount: 0,
+    pageSize: 0,
+    currentPage: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrev: false
+  };
+  public tableSearchQuery: string = '';
+
   public productList: Product[] = [];
   public unitList: Unit[] = [];
   public productListLoaded: boolean = false;
@@ -46,6 +57,14 @@ export class ListProductComponent {
     this.loadUnitList();
   }
 
+  public onItemPerPageChanged(itemsPerPage: 10 | 25 | 40 | 60): void {
+    this.loadProductList({ pageSize: itemsPerPage, page: 1, searchTerm: this.tableSearchQuery });
+  }
+
+  public onPaginationChanged(pagetoGo: number): void {
+    this.loadProductList({ pageSize: this.tablePagination.pageSize, page: pagetoGo, searchTerm: this.tableSearchQuery });
+  }
+
   public loadUnitList(): void {
     this.unitListLoaded = false;
 
@@ -55,14 +74,23 @@ export class ListProductComponent {
     })
   }
 
-
-  public loadProductList(): void {
+  public loadProductList(pagination: PaginationBody = { pageSize: 19, page: 1 }): void {
     this.productListLoaded = false;
   
     const currentCompany = this.authentication.currentCompany as Company;
+    const productListBody: GetCompaniesProductListBody = {
+      databaseId: currentCompany.databaseId,
+      ...pagination
+    }
 
-    this.productSerivce.getCompaniesProductList({ databaseId: currentCompany.databaseId }).subscribe(res => {
+    this.productSerivce.getCompaniesProductList(productListBody).subscribe(res => {
       this.productList = res.result;
+      this.tablePagination.totalCount = res.totalCount,
+      this.tablePagination.pageSize = res.pageSize,
+      this.tablePagination.currentPage = res.currentPage,
+      this.tablePagination.totalPages = res.totalPages,
+      this.tablePagination.hasNext = res.hasNext,
+      this.tablePagination.hasPrev = res.hasPrev
       this.productListLoaded = true;
     })
   }
@@ -103,24 +131,7 @@ export class ListProductComponent {
   }
 
   public onSearch(searchQuery: string) {
-    if (searchQuery && this.productListLoaded) {
-      const filteredData = this.productList.filter(product => {
-        for (const [key, value] of Object.entries(product)) {
-          if (typeof value === 'string' && value.includes(searchQuery)) {
-            return true
-          }
-          if (typeof value === 'number'&& value.toString().includes(searchQuery)) {
-            return true
-          }
-        }
-  
-        return;
-      })
-  
-      this.productList = filteredData;
-    }
-    else {
-      this.loadProductList();
-    }
+    this.tableSearchQuery = searchQuery
+    this.loadProductList({ pageSize: 10, page: 1, searchTerm: searchQuery });
   }
 }

@@ -11,7 +11,7 @@ export interface Pagination {
     currentPage: number,
     totalPages: number,
     hasNext: boolean,
-    hasPrev: false,
+    hasPrev: boolean,
 }
 
 export interface PaginationBody {

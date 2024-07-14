@@ -19,6 +19,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UpdatePersonComponent } from './update-person/update-person.component';
 import { A11yModule } from '@angular/cdk/a11y';
 import { } from '@angular/cdk';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import { } from '@angular/cdk';
     MatMenuModule,
     MatAutocompleteModule,
     MatTooltipModule,
+    MatPaginatorModule,
+    MatSortModule,
     A11yModule
   ]
 })

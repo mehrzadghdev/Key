@@ -174,12 +174,12 @@ export class CreateInvoiceComponent implements OnInit {
         referenceInvoiceCode: this.invoiceForm.get('referenceInvoiceCode')?.value ?? 1,
         personCode: this.invoiceForm.get('personCode')?.value,
         patternType: this.invoiceForm.get('patternType')?.value,
-        vendorContractRegisterId: this.invoiceForm.get('vendorContractRegisterId')?.value ?? '',
+        vendorContractRegisterId: this.invoiceForm.get('vendorContractRegisterId')?.value + "" ?? "",
         paymentMethod: this.invoiceForm.get('paymentMethod')?.value,
         creditAmount: this.invoiceForm.get('creditAmount')?.value,
-        payerNationalId: this.invoiceForm.get('payerNationalId')?.value,
-        payCardNumber: this.invoiceForm.get('payCardNumber')?.value,
-        payReferenceNumber: this.invoiceForm.get('payReferenceNumber')?.value,
+        payerNationalId: this.invoiceForm.get('payerNationalId')?.value + "",
+        payCardNumber: this.invoiceForm.get('payCardNumber')?.value + "",
+        payReferenceNumber: this.invoiceForm.get('payReferenceNumber')?.value + "",
         saleInvoiceItems: this.invoiceProducts
       }
 

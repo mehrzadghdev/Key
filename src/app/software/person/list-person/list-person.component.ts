@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { GetCompaniesPersonListItem, Person } from '../../types/person.type';
+import { GetCompaniesPersonListBody, GetCompaniesPersonListItem, GetPersonListBody, Person } from '../../types/person.type';
 import { PersonType } from '../../enums/person-type.enum';
 import { CreatePersonComponent } from '../create-person/create-person.component';
 import { DialogService } from 'src/app/shared/services/dialog.service';
@@ -10,6 +10,9 @@ import { PersonService } from '../../services/person.service';
 import { Company } from '../../types/company.type';
 import { UpdatePersonComponent } from '../update-person/update-person.component';
 import { UtilityService } from 'src/app/shared/services/utility.service';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { Pagination, PaginationBody } from 'src/app/shared/types/common.type';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -17,6 +20,16 @@ import { UtilityService } from 'src/app/shared/services/utility.service';
   styleUrls: ['./list-person.component.scss']
 })
 export class ListPersonComponent implements OnInit {
+  public tablePagination: Partial<Pagination> = {
+    totalCount: 0,
+    pageSize: 0,
+    currentPage: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrev: false
+  };
+  public tableSearchQuery: string = '';
+
   public personsList: GetCompaniesPersonListItem[] = [];
   public personListLoaded: boolean = false;
   public tableColumns: string[] = ["نوع", "نام", "کد ملی یا شماره اقتصادی", "تاریخ ساخت", "تلفن", "کد پستی", "عملیات"];
@@ -44,13 +57,31 @@ export class ListPersonComponent implements OnInit {
     this.loadPersonList();
   }
 
-  public loadPersonList(): void {
+  public onItemPerPageChanged(itemsPerPage: 10 | 25 | 40 | 60): void {
+    this.loadPersonList({ pageSize: itemsPerPage, page: 1, searchTerm: this.tableSearchQuery });
+  }
+
+  public onPaginationChanged(pagetoGo: number): void {
+    this.loadPersonList({ pageSize: this.tablePagination.pageSize, page: pagetoGo, searchTerm: this.tableSearchQuery });
+  }
+
+  public loadPersonList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
     this.personListLoaded = false;
 
     const currentCompany = this.authentication.currentCompany as Company;
+    const personListBody: GetCompaniesPersonListBody = {
+      databaseId: currentCompany.databaseId,
+      ...pagination
+    }
 
-    this.personSerivce.getCompaniesPersonList({ databaseId: currentCompany.databaseId }).subscribe(res => {
+    this.personSerivce.getCompaniesPersonList(personListBody).subscribe(res => {
       this.personsList = res.result;
+      this.tablePagination.totalCount = res.totalCount,
+      this.tablePagination.pageSize = res.pageSize,
+      this.tablePagination.currentPage = res.currentPage,
+      this.tablePagination.totalPages = res.totalPages,
+      this.tablePagination.hasNext = res.hasNext,
+      this.tablePagination.hasPrev = res.hasPrev
       this.personListLoaded = true;
     })
   }
@@ -86,24 +117,7 @@ export class ListPersonComponent implements OnInit {
   }
 
   public onSearch(searchQuery: string) {
-    if (searchQuery && this.personListLoaded) {      
-      const filteredData = this.personsList.filter(person => {
-        for (const [key, value] of Object.entries(person)) {
-          if (typeof value === 'string' && value.includes(searchQuery)) {
-            return true
-          }
-          if (typeof value === 'number'&& value.toString().includes(searchQuery)) {
-            return true
-          }
-        }
-        
-        return;
-      })
-      
-      this.personsList = filteredData;
-    }
-    else {
-      this.loadPersonList();
-    }
+    this.tableSearchQuery = searchQuery
+    this.loadPersonList({ pageSize: 10, page: 1, searchTerm: searchQuery });
   }
 }
