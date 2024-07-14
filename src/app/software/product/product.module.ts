@@ -20,6 +20,7 @@ import { UnitComponent } from './unit/unit.component';
 import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask, provideNgxMask } from 'ngx-mask';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -45,6 +46,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
     MatAutocompleteModule,
     MatTooltipModule,
     NgxMaskDirective,
+    MatSortModule,
     DragDropModule
   ],
   providers: [

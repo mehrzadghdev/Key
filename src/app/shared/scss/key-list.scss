@@ -120,6 +120,12 @@
                 gap: 20px;
                 justify-content: space-between;
                 border: 1px solid var(--border-color-medium);
+                transition: all .3s ease;
+                border-radius: 2px;
+
+                &:hover {
+                    border-color: var(--primary-color);
+                }
 
                 mat-icon {
                     width: 16px;

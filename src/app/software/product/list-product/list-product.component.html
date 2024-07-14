@@ -20,34 +20,34 @@
 </div>
 <div class="content-table">
     <div class="table">
-        <table *ngIf="productListLoaded && unitListLoaded" mat-table [dataSource]="productList" class="">
+        <table *ngIf="productListLoaded && unitListLoaded" mat-table [dataSource]="productList" matSort (matSortChange)="onTableSortChanged($event)">
             <ng-container matColumnDef="نوع">
-                <th mat-header-cell *matHeaderCellDef> نوع </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> نوع </th>
                 <td mat-cell *matCellDef="let element"> {{ productTypeTextByNumber(element.productType) }} </td>
             </ng-container>
 
             <ng-container matColumnDef="نام">
-                <th mat-header-cell *matHeaderCellDef> نام </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> نام </th>
                 <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
             </ng-container>
 
             <ng-container matColumnDef="شناسه کالا">
-                <th mat-header-cell *matHeaderCellDef> شناسه کالا </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> شناسه کالا </th>
                 <td mat-cell *matCellDef="let element"> {{ element.productCode }} </td>
             </ng-container>
             
             <ng-container matColumnDef="واحد کالا">
-                <th mat-header-cell *matHeaderCellDef> واحد کالا </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> واحد کالا </th>
                 <td mat-cell *matCellDef="let element"> {{ findUnitName(element.unitCode) }} </td>
             </ng-container>
 
             <ng-container matColumnDef="قیمت">
-                <th mat-header-cell *matHeaderCellDef> قیمت </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> قیمت </th>
                 <td mat-cell *matCellDef="let element"> {{ element.price | price }} ریال </td>
             </ng-container>
 
             <ng-container matColumnDef="کد کالا">
-                <th mat-header-cell *matHeaderCellDef> کد کالا </th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> کد کالا </th>
                 <td mat-cell *matCellDef="let element"> {{ element.code }} </td>
             </ng-container>
 
@@ -76,7 +76,7 @@
         <key-table-loading *ngIf="!productListLoaded || !unitListLoaded" [columns]="tableColumns"></key-table-loading>
         <div class="table-pagination">
             <div class="table-pagination__paginator">
-                <key-button content="icon" [disabled]="!tablePagination.hasPrev" (click)="onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">
+                <key-button content="icon" [disabled]="!tablePagination.hasPrev" (click)="tablePagination.hasPrev && onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">
                     <mat-icon class="paginator-icon icon-medium">arrow_forward_ios</mat-icon>
                 </key-button>
                 <div>
@@ -84,7 +84,7 @@
                     <span>از</span>
                     <span>{{ (tablePagination.totalPages ?? 0) | farsiNumber }}</span>
                 </div>
-                <key-button content="icon" [disabled]="!tablePagination.hasNext" (click)="onPaginationChanged((tablePagination.currentPage ?? 1) + 1)">
+                <key-button content="icon" [disabled]="!tablePagination.hasNext" (click)="tablePagination.hasNext && onPaginationChanged((tablePagination.currentPage ?? 1) + 1)">
                     <mat-icon class="paginator-icon icon-medium">arrow_back_ios_new</mat-icon>
                 </key-button>
             </div>

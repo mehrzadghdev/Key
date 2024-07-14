@@ -178,7 +178,7 @@
                 <button mat-menu-item (click)="changeTheme('default')">حالت پیشفرض</button>
                 <button mat-menu-item (click)="changeTheme('dark')">حالت تاریک</button>
             </mat-menu>
-            <key-button content="icon" class="icon" (click)="toggleFullScreen()">
+            <key-button content="icon" class="icon full-screen-icon" (click)="toggleFullScreen()">
                 <mat-icon *ngIf="fullscreen" class="material-icons-outlined" matTooltip="حالت تمام صفحه">fullscreen</mat-icon>
                 <mat-icon *ngIf="!fullscreen" class="material-icons-outlined" matTooltip="خروج از حالت تمام صفحه">fullscreen_exit</mat-icon>
             </key-button>

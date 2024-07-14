@@ -11,7 +11,7 @@ import { Company } from '../../types/company.type';
 import { UpdatePersonComponent } from '../update-person/update-person.component';
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { Pagination, PaginationBody } from 'src/app/shared/types/common.type';
 
 @Component({
@@ -29,6 +29,7 @@ export class ListPersonComponent implements OnInit {
     hasPrev: false
   };
   public tableSearchQuery: string = '';
+  public tableSortField: string = '';
 
   public personsList: GetCompaniesPersonListItem[] = [];
   public personListLoaded: boolean = false;
@@ -57,12 +58,68 @@ export class ListPersonComponent implements OnInit {
     this.loadPersonList();
   }
 
-  public onItemPerPageChanged(itemsPerPage: 10 | 25 | 40 | 60): void {
-    this.loadPersonList({ pageSize: itemsPerPage, page: 1, searchTerm: this.tableSearchQuery });
+  public onTableSortChanged(sort: Sort): void {
+    switch (sort.active) {
+      case "نوع":
+        if (sort.direction === 'asc') this.tableSortField = 'personType';
+        if (sort.direction === 'desc') this.tableSortField = 'personType_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "نام":
+        if (sort.direction === 'asc') this.tableSortField = 'personName';
+        if (sort.direction === 'desc') this.tableSortField = 'personName_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "کد ملی یا شماره اقتصادی":
+        if (sort.direction === 'asc') this.tableSortField = 'nationalId';
+        if (sort.direction === 'desc') this.tableSortField = 'nationalId_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "تاریخ ساخت":
+        if (sort.direction === 'asc') this.tableSortField = 'createdDate';
+        if (sort.direction === 'desc') this.tableSortField = 'createdDate_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "تلفن":
+        if (sort.direction === 'asc') this.tableSortField = 'mobile';
+        if (sort.direction === 'desc') this.tableSortField = 'mobile_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "کد پستی":
+        if (sort.direction === 'asc') this.tableSortField = 'zipCode';
+        if (sort.direction === 'desc') this.tableSortField = 'zipCode_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+    }
+
+    this.sortPersonList({ pageSize: this.tablePagination.pageSize, page: 1, sortFieldName: this.tableSortField });
   }
 
-  public onPaginationChanged(pagetoGo: number): void {
-    this.loadPersonList({ pageSize: this.tablePagination.pageSize, page: pagetoGo, searchTerm: this.tableSearchQuery });
+  public onItemPerPageChanged(itemsPerPage: 10 | 25 | 40 | 60): void {
+    this.loadPersonList({ pageSize: itemsPerPage, page: 1, searchTerm: this.tableSearchQuery, sortFieldName: this.tableSortField });
+  }
+
+  public onPaginationChanged(pagetoGo: number): void { 
+    this.loadPersonList({ pageSize: this.tablePagination.pageSize, page: pagetoGo, searchTerm: this.tableSearchQuery, sortFieldName: this.tableSortField });
+  }
+  
+  public sortPersonList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
+    const currentCompany = this.authentication.currentCompany as Company;
+    const personListBody: GetCompaniesPersonListBody = {
+      databaseId: currentCompany.databaseId,
+      ...pagination
+    }
+
+    this.personSerivce.getCompaniesPersonList(personListBody).subscribe(res => {
+      this.personsList = res.result;
+      this.tablePagination.totalCount = res.totalCount,
+      this.tablePagination.pageSize = res.pageSize,
+      this.tablePagination.currentPage = res.currentPage,
+      this.tablePagination.totalPages = res.totalPages,
+      this.tablePagination.hasNext = res.hasNext,
+      this.tablePagination.hasPrev = res.hasPrev
+      this.personListLoaded = true;
+    })
   }
 
   public loadPersonList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
@@ -118,6 +175,6 @@ export class ListPersonComponent implements OnInit {
 
   public onSearch(searchQuery: string) {
     this.tableSearchQuery = searchQuery
-    this.loadPersonList({ pageSize: 10, page: 1, searchTerm: searchQuery });
+    this.loadPersonList({ pageSize: 10, page: 1, searchTerm: searchQuery, sortFieldName: this.tableSortField });
   }
 }
