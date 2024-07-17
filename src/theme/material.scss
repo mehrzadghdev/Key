@@ -869,3 +869,7 @@ input::placeholder {
         font-size: 13px !important;
     }
 }
+
+input {
+    caret-color: var(--text-secondary-color) !important;
+}

@@ -9,6 +9,7 @@ import { AuthenticationService } from 'src/app/shared/services/authentication.se
 import { UnitService } from '../../services/unit.service';
 import { Company } from '../../types/company.type';
 import { UtilityService } from 'src/app/shared/services/utility.service';
+import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 
 @Component({
   selector: 'app-update-product',
@@ -37,7 +38,7 @@ export class UpdateProductComponent {
     @Inject(MAT_DIALOG_DATA) private data: { code: number }
   ) {
     this.updateProductForm = fb.group({
-      code: [data.code, Validators.required],
+      code: [data.code, [Validators.required, CustomValidators.code]],
       productCode: ["", Validators.required],
       productType: [0, Validators.required],
       name: ["", Validators.required],

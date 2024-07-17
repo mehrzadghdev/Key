@@ -19,8 +19,17 @@ export class AddInvoiceProductComponent implements OnInit {
   public addInvoiceProductForm: FormGroup;
   public productListLoaded: boolean = true;
   public validationLastCheck: boolean = false;
+
   public get totalPrice(): number {
-    return ((this.addInvoiceProductForm.get("price")?.value - this.addInvoiceProductForm.get("discount")?.value) +  this.addInvoiceProductForm.get("tax")?.value) * this.addInvoiceProductForm.get("amount")?.value
+    return this.pricebeforeTax + this.taxPrice
+  }
+
+  public get pricebeforeTax(): number {
+    return this.addInvoiceProductForm.get("price")?.value - ((this.addInvoiceProductForm.get("discount")?.value / 100) * this.addInvoiceProductForm.get("price")?.value)
+  }
+
+  public get taxPrice(): number {
+    return this.addInvoiceProductForm.get("taxPercent")?.value / 100 * this.pricebeforeTax;
   }
 
   constructor(
@@ -36,21 +45,14 @@ export class AddInvoiceProductComponent implements OnInit {
       productName: [null, Validators.required],
       amount: [1, [Validators.min(1), Validators.required]],
       price: [null, Validators.required],
-      discount: [null],
+      discount: [null, [Validators.min(0), Validators.max(100)]],
       taxPercent: [null, [Validators.min(0), Validators.max(100)]],
-      tax: [null],
     });
+
+    this.addInvoiceProductForm.get("tax")?.disable();
   }
 
   ngOnInit(): void {
-    this.addInvoiceProductForm.get("price")?.valueChanges.subscribe(value => {
-      this.addInvoiceProductForm.get("discount")?.addValidators(Validators.max(value));
-      this.addInvoiceProductForm.get("discount")?.updateValueAndValidity();
-    })
-    this.addInvoiceProductForm.get("taxPercent")?.valueChanges.subscribe(value => {
-      this.addInvoiceProductForm.get("tax")?.patchValue((value / 100) * this.addInvoiceProductForm.get("price")?.value)
-    })
-
     if (this.data.update && this.data.invoiceProductToUpdate) {
       this.addInvoiceProductForm.get("productCode")?.patchValue(this.data.invoiceProductToUpdate?.productCode);
       this.addInvoiceProductForm.get("productName")?.patchValue(this.data.invoiceProductToUpdate?.productName);
@@ -58,7 +60,6 @@ export class AddInvoiceProductComponent implements OnInit {
       this.addInvoiceProductForm.get("discount")?.patchValue(this.data.invoiceProductToUpdate?.discount);
       this.addInvoiceProductForm.get("price")?.patchValue(this.data.invoiceProductToUpdate?.price);
       this.addInvoiceProductForm.get("taxPercent")?.patchValue(this.data.invoiceProductToUpdate?.taxPercent);
-      this.addInvoiceProductForm.get("tax")?.patchValue((this.data.invoiceProductToUpdate?.taxPercent / 100) * this.data.invoiceProductToUpdate?.price);
     }
   }
 
@@ -79,7 +80,7 @@ export class AddInvoiceProductComponent implements OnInit {
         price: this.addInvoiceProductForm.get("price")?.value ?? 0,
         discount: this.addInvoiceProductForm.get("discount")?.value ?? 0,
         taxPercent: this.addInvoiceProductForm.get("taxPercent")?.value ?? 0,
-        tax: this.addInvoiceProductForm.get("tax")?.value ?? 0,
+        tax: this.taxPrice,
       }
 
       this.closeDialog(invoiceProductItem);
@@ -126,6 +127,5 @@ export class AddInvoiceProductComponent implements OnInit {
     this.addInvoiceProductForm.get("productName")?.patchValue(currentProduct.name);
     this.addInvoiceProductForm.get("price")?.patchValue(currentProduct.price);
     this.addInvoiceProductForm.get("taxPercent")?.patchValue(currentProduct.taxPercent);
-    this.addInvoiceProductForm.get("tax")?.patchValue((currentProduct.taxPercent / 100) * currentProduct.price);
   }
 }

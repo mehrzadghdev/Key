@@ -84,4 +84,14 @@ export abstract class CustomValidators {
         
         return value.toString().length > 4 ? { economicCode: true } : null;
     }
+
+    public static code(formControl: AbstractControl): ValidationErrors | null {
+        const value = formControl.value as number;
+
+        if (!value) return null;
+
+        if (!value.toString().length) return null;
+        
+        return value.toString().length > 10 ? { code: true } : null;
+    }
 }

@@ -16,6 +16,25 @@
 <div class="content-table">
     <div class="table">
         <table *ngIf="personListLoaded" mat-table [dataSource]="personsList" matSort (matSortChange)="onTableSortChanged($event)">
+            <ng-container matColumnDef="انتخاب">
+                <th mat-header-cell *matHeaderCellDef>
+                    <mat-checkbox 
+                        class="table-row-checkbox"
+                        (change)="$event ? selectAllRows() : null"
+                        [checked]="tableSelectionModel.hasValue() && isAllRowsSelected()"
+                        [indeterminate]="tableSelectionModel.hasValue() && !isAllRowsSelected()"
+                    ></mat-checkbox>
+                </th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-checkbox 
+                        class="table-row-checkbox"
+                        (click)="$event.stopPropagation()"
+                        (change)="$event ? tableSelectionModel.toggle(element) : null"
+                        [checked]="tableSelectionModel.isSelected(element)"
+                    ></mat-checkbox>
+                </td>
+            </ng-container>
+
             <ng-container matColumnDef="نوع">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> نوع </th>
                 <td mat-cell *matCellDef="let element"> {{ personTypeTextByNumber(element.personType) }} </td>

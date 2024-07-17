@@ -21,6 +21,7 @@ import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask, provideNgxMas
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -47,7 +48,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatTooltipModule,
     NgxMaskDirective,
     MatSortModule,
-    DragDropModule
+    MatCheckboxModule
   ],
   providers: [
     provideNgxMask(),

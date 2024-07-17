@@ -71,7 +71,7 @@ export class CreateInvoiceComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.invoiceForm = this.fb.group({
-      invoiceCode: [null, Validators.required],
+      invoiceCode: [null, [Validators.required, CustomValidators.code]],
       invoiceDate: [new Date().toISOString(), Validators.required],
       invoiceType: [0, Validators.required],
       referenceInvoiceCode: [null, Validators.nullValidator],

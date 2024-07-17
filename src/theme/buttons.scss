@@ -92,7 +92,7 @@ button {
 }
 
 .stroked-button {
-    background-color: transparent;
+    background-color: var(--base-color);
     border: 1px solid var(--primary-color);
     color: var(--primary-color);
     border-radius: 3px;

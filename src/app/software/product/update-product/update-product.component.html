@@ -34,6 +34,9 @@
                     <ng-container *ngIf="updateProductForm.get('code')?.hasError('required')">
                         این فیلد الزامیست
                     </ng-container>
+                    <ng-container *ngIf="updateProductForm.get('code')?.hasError('code')">
+                        کد نامعتبر است، حداکثر 10 رقم  
+                    </ng-container>
                 </mat-error>
             </mat-form-field>
         </div>
@@ -63,7 +66,7 @@
             </mat-form-field>
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>درصد ارزش افزوده</mat-label>
-                <input type="number" matInput formControlName="taxPercent">
+                <input keyPercentageInput type="number" matInput formControlName="taxPercent">
                 <mat-error *ngIf="updateProductForm.get('taxPercent')?.invalid && validationLastCheck">
                     این فیلد الزامیست
                 </mat-error>
@@ -79,7 +82,7 @@
             </mat-form-field>
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>درصد سایر وجود قانونی</mat-label>
-                <input type="number" matInput formControlName="otherLegalFundsPercent">
+                <input keyPercentageInput type="number" matInput formControlName="otherLegalFundsPercent">
                 <mat-error *ngIf="updateProductForm.get('otherLegalFundsPercent')?.invalid && validationLastCheck">
                     این فیلد الزامیست
                 </mat-error>
@@ -95,7 +98,7 @@
             </mat-form-field>
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>درصد سایر عوارض و مالیات</mat-label>
-                <input type="number" matInput formControlName="otherTaxPercent">
+                <input keyPercentageInput type="number" matInput formControlName="otherTaxPercent">
                 <mat-error *ngIf="updateProductForm.get('otherTaxPercent')?.invalid && validationLastCheck">
                     این فیلد الزامیست
                 </mat-error>

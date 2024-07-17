@@ -13,6 +13,7 @@ import { UpdateProductComponent } from '../update-product/update-product.compone
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { Pagination, PaginationBody } from 'src/app/shared/types/common.type';
 import { Sort } from '@angular/material/sort';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-list-product',
@@ -31,11 +32,13 @@ export class ListProductComponent {
   public tableSearchQuery: string = '';
   public tableSortField: string = '';
 
+  public tableSelectionModel = new SelectionModel<Product>(true, []);
+
   public productList: Product[] = [];
   public unitList: Unit[] = [];
   public productListLoaded: boolean = false;
   public unitListLoaded: boolean = false;
-  public tableColumns: string[] = ["نوع", "نام", "شناسه کالا", "واحد کالا", "قیمت", "کد کالا", "عملیات"];
+  public tableColumns: string[] = ["انتخاب", "نوع", "نام", "شناسه کالا", "واحد کالا", "قیمت", "کد کالا", "عملیات"];
   public productTypes = [
     { display: 'کالا', value: ProductType.Product },
     { display: 'خدمات', value: ProductType.Service },
@@ -57,6 +60,19 @@ export class ListProductComponent {
   ngOnInit(): void {
     this.loadProductList();
     this.loadUnitList();
+  }
+
+  public isAllRowsSelected(): boolean {
+    return this.tableSelectionModel.selected.length === this.productList.length;
+  }
+
+  public selectAllRows(): void {
+    if (this.isAllRowsSelected()) {
+      this.tableSelectionModel.clear();
+    }
+    else {
+      this.productList.forEach(product => this.tableSelectionModel.select(product));
+    }
   }
 
   public onTableSortChanged(sort: Sort): void {

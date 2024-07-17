@@ -25,6 +25,9 @@
                         <ng-container *ngIf="invoiceForm.get('invoiceCode')?.hasError('required')">
                             این فیلد الزامیست
                         </ng-container>
+                        <ng-container *ngIf="invoiceForm.get('invoiceCode')?.hasError('code')">
+                            کد نامعتبر است، حداکثر 10 رقم  
+                        </ng-container>
                     </mat-error>
                 </mat-form-field>
                 <key-date-picker (dateSelected)="invoiceForm.get('invoiceDate')?.patchValue($event)">تاریخ
@@ -163,8 +166,8 @@
                         <mat-label>کد فاکتور</mat-label>
                         <input type="number" matInput formControlName="invoiceCode">
                         <mat-error *ngIf="invoiceForm.get('invoiceCode')?.invalid && validationLastCheck">
-                            <ng-container *ngIf="invoiceForm.get('invoiceCode')?.hasError('required')">
-                                این فیلد الزامیست
+                            <ng-container *ngIf="invoiceForm.get('invoiceCode')?.hasError('code')">
+                                کد نامعتبر است، حداکثر 10 رقم  
                             </ng-container>
                         </mat-error>
                     </mat-form-field>
@@ -305,7 +308,7 @@
                     <mat-label>شماره کارت پرداخت کننده</mat-label>
                     <input type="text" mask="0000 0000 0000 0000" matInput formControlName="payCardNumber">
                     <mat-error *ngIf="invoiceForm.get('payCardNumber')?.invalid && validationLastCheck">
-                        این فیلد الزامیست
+                        شماره کارت نامعتبر است
                     </mat-error>
                 </mat-form-field>
 

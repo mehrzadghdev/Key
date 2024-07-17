@@ -5,7 +5,13 @@
     text-decoration: underline !important;
 }
 
-.total-invoice-product-price {
+.invoice-price-details {
+    display: flex;
+    gap: 30px;
+}
+
+.invoice-price-details-item {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -18,7 +24,17 @@
 
     h3 {
         font-size: 22px;
-        font-weight: 500;
+        font-weight: 700;
         color: var(--text-primary-color);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 150px;
+    }
+    
+    h4 {
+        font-size: 16px;
+        font-weight: 400;
+        color: var(--error-color);
     }
 }

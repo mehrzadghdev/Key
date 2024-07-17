@@ -36,7 +36,7 @@ export class UpdatePersonComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) private data: { code: number }
   ) {
     this.updatePersonForm = fb.group({
-      code: [null, [Validators.required]], 
+      code: [null, [Validators.required, CustomValidators.code]], 
       personType: [0, [Validators.required]],
       personName: ["", [Validators.required]],
       nationalId: [null, [Validators.required, CustomValidators.nationalId]],

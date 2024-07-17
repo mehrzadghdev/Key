@@ -8,23 +8,23 @@
     
     <div class="form-dialog-content">
         <div class="form-dialog-content-loading" *ngIf="!productListLoaded"></div>
+        <mat-form-field class="form-dialog-field" appearance="outline">
+            <mat-label>کالا یا خدمات</mat-label>
+            <mat-select formControlName="productCode" name="productCode" (valueChange)="onAutoFillData($event)">
+                <mat-option *ngFor="let product of data.products"
+                    [value]="product.code">{{product.name}}</mat-option>
+                <mat-option [value]="null">
+                    <ng-container *ngIf="data.products.length < 1">
+                        کالا و خدماتی یافت نشد.
+                    </ng-container>
+                    <span (click)="onAddProduct()" class="invoice-link">ایجاد کالا و خدمات جدید</span>
+                </mat-option>
+            </mat-select>
+            <mat-error *ngIf="addInvoiceProductForm.get('productCode')?.invalid && validationLastCheck">
+                این فیلد الزامیست
+            </mat-error>
+        </mat-form-field>
         <div class="form-dialog-field-row">
-            <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>کالا یا خدمات</mat-label>
-                <mat-select formControlName="productCode" name="productCode" (valueChange)="onAutoFillData($event)">
-                    <mat-option *ngFor="let product of data.products"
-                        [value]="product.code">{{product.name}}</mat-option>
-                    <mat-option [value]="null">
-                        <ng-container *ngIf="data.products.length < 1">
-                            کالا و خدماتی یافت نشد.
-                        </ng-container>
-                        <span (click)="onAddProduct()" class="invoice-link">ایجاد کالا و خدمات جدید</span>
-                    </mat-option>
-                </mat-select>
-                <mat-error *ngIf="addInvoiceProductForm.get('productCode')?.invalid && validationLastCheck">
-                    این فیلد الزامیست
-                </mat-error>
-            </mat-form-field>
             <mat-form-field appearance="outline">
                 <mat-label>مقدار</mat-label>
                 <input type="number" matInput formControlName="amount">
@@ -37,6 +37,13 @@
                     </ng-container>
                 </mat-error>
             </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>درصد مالیات</mat-label>
+                <input keyPercentageInput type="number" matInput formControlName="taxPercent">
+                <mat-error *ngIf="addInvoiceProductForm.get('taxPercent')?.invalid && validationLastCheck">
+                    درصد مالیات نامعتبر است
+                </mat-error>
+            </mat-form-field>
         </div>
         <div class="form-dialog-field-row">
             <mat-form-field class="form-dialog-field" appearance="outline">
@@ -47,37 +54,22 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>تخفیف</mat-label>
-                <input type="text" matInput mask="separator" thousandSeparator="," formControlName="discount">
+                <mat-label>درصد تخفیف</mat-label>
+                <input keyPercentageInput type="number" matInput formControlName="discount">
                 <mat-error *ngIf="addInvoiceProductForm.get('discount')?.invalid && validationLastCheck">
-                    <ng-container *ngIf="addInvoiceProductForm.get('discount')?.hasError('required')">
-                        این فیلد الزامیست
-                    </ng-container>
-                    <ng-container *ngIf="addInvoiceProductForm.get('discount')?.hasError('max')">
-                        تخفیف از قیمت بالاتر است              
-                    </ng-container>
+                    درصد تخفیف نامعتبر است
                 </mat-error>
             </mat-form-field>
         </div>
-        <div class="form-dialog-field-row">
-            <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>درصد مالیات</mat-label>
-                <input type="number" matInput formControlName="taxPercent">
-                <mat-error *ngIf="addInvoiceProductForm.get('taxPercent')?.invalid && validationLastCheck">
-                    درصد مالیات نامعتبر است
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>مالیات</mat-label>
-                <input type="text" matInput mask="separator" thousandSeparator="," formControlName="tax">
-                <mat-error *ngIf="addInvoiceProductForm.get('tax')?.invalid && validationLastCheck">
-                    شماره موبایل نامعتبر است
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div class="total-invoice-product-price">
-            <span>مبلغ کل: </span>
-            <h3>{{ (totalPrice >= 0 ? totalPrice : 0) | price }} ریال</h3>
+        <div class="invoice-price-details">
+            <div class="invoice-price-details-item" *ngIf="taxPrice > 0">
+                <span>مبلغ مالیات: </span>
+                <h4>{{ (taxPrice >= 0 ? taxPrice : 0) | price }} ریال</h4>
+            </div>
+            <div class="invoice-price-details-item">
+                <span>مبلغ کل: </span>
+                <h3>{{ (totalPrice >= 0 ? totalPrice : 0) | price }} ریال</h3>
+            </div>
         </div>
     </div>
     

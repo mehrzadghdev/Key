@@ -31,6 +31,7 @@ import { AcceptDeleteComponent } from './components/accept-delete/accept-delete.
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { FarsiNumberPipe } from './pipes/farsi-number.pipe';
 import { SkeletonComponent } from './components/skeleton/skeleton.component';
+import { PercentageInputDirective } from './directives/percentage-input.directive';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -48,7 +49,8 @@ export function playerFactory() {
     AcceptDeleteComponent,
     DatePickerComponent,
     FarsiNumberPipe,
-    SkeletonComponent
+    SkeletonComponent,
+    PercentageInputDirective
   ],
   imports: [
     CommonModule,
@@ -81,15 +83,16 @@ export function playerFactory() {
   ],
   exports: [
     LoadingComponent,
-    JdatePipe,
     TableLoadingComponent,
-    RandomWidthDirective,
-    PricePipe,
     ButtonComponent,
-    AutoFocusDirective,
     DatePickerComponent,
+    SkeletonComponent,
+    JdatePipe,
+    PricePipe,
     FarsiNumberPipe,
-    SkeletonComponent
+    RandomWidthDirective,
+    AutoFocusDirective,
+    PercentageInputDirective
   ] 
 })
 export class SharedModule { }

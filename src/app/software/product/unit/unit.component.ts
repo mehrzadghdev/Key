@@ -4,6 +4,7 @@ import { UnitService } from '../../services/unit.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { DialogService } from 'src/app/shared/services/dialog.service';
+import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 
 @Component({
   selector: 'app-unit',
@@ -24,7 +25,7 @@ export class UnitComponent implements OnInit {
 
   constructor(private unitService: UnitService, private fb: FormBuilder, private utility: UtilityService, private dialog: DialogService) {
     this.addUnitForm = fb.group({
-      code: [null, [Validators.required]],
+      code: [null, [Validators.required, CustomValidators.code]],
       name: ['', Validators.required],
       id: null
     })

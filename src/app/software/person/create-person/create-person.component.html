@@ -54,7 +54,12 @@
                 <mat-label>کد طرف حساب</mat-label>
                 <input type="number" matInput formControlName="code">
                 <mat-error *ngIf="addPersonForm.get('code')?.invalid && validationLastCheck">
-                    این فیلد الزامیست
+                    <ng-container *ngIf="addPersonForm.get('code')?.hasError('required')">
+                        این فیلد الزامیست
+                    </ng-container>
+                    <ng-container *ngIf="addPersonForm.get('code')?.hasError('code')">
+                        کد نامعتبر است، حداکثر 10 رقم  
+                    </ng-container>
                 </mat-error>
             </mat-form-field>
         </div>

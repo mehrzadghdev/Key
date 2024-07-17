@@ -34,7 +34,7 @@ export class CreatePersonComponent {
     private utility: UtilityService
   ) {
     this.addPersonForm = fb.group({
-      code: [null, [Validators.required]], 
+      code: [null, [Validators.required, CustomValidators.code]], 
       personType: [0, [Validators.required]],
       personName: ["", [Validators.required]],
       nationalId: [null, [Validators.required, CustomValidators.nationalId]],

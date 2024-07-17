@@ -21,6 +21,7 @@ import { A11yModule } from '@angular/cdk/a11y';
 import { } from '@angular/cdk';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 
 @NgModule({
@@ -46,7 +47,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
-    A11yModule
+    MatCheckboxModule
   ]
 })
 export class PersonModule { }

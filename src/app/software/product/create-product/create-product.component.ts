@@ -9,6 +9,7 @@ import { Company } from '../../types/company.type';
 import { UnitService } from '../../services/unit.service';
 import { Unit } from '../../types/unit.type';
 import { UtilityService } from 'src/app/shared/services/utility.service';
+import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 
 @Component({
   selector: 'app-create-product',
@@ -34,7 +35,7 @@ export class CreateProductComponent implements OnInit {
     private utility: UtilityService
   ) {
     this.addProductForm = fb.group({
-      code: [null, Validators.required],
+      code: [null, [Validators.required, CustomValidators.code]],
       productCode: ["", Validators.required],
       productType: [0, Validators.required],
       name: ["", Validators.required],
