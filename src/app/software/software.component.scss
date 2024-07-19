@@ -573,10 +573,9 @@
                 aspect-ratio: 1 / 1;
                 transition: all .3s ease;
 
-                mat-icon {
-                    width: 20px;
-                    height: 20px;
-                    font-size: 20px;
+                img {
+                    width: 28px;
+                    height: 28px;
                 }
             }
             
@@ -588,7 +587,7 @@
             }
 
             &.active-bottom-menu-item {
-                mat-icon {
+                img {
                     filter: var(--icon-primary) !important;
                 }
                 

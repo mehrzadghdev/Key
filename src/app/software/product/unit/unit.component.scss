@@ -12,6 +12,8 @@
         overflow-x: auto;
         background-color: var(--base-color);
         padding: 15px;
+        border-radius: 3px;
+        border: 1px solid var(--border-color-light);
 
         span {
             font-size: 14px;

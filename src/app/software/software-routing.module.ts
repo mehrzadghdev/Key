@@ -8,25 +8,29 @@ const routes: Routes = [
     redirectTo: 'company',
     pathMatch: 'full'
   },
-  { 
+  {
     path: '',
     component: SoftwareComponent,
     children: [
       {
         path: "company",
         loadChildren: () => import('./company/company.module').then(m => m.CompanyModule),
+        data: { animation: 'One' }
       },
       {
         path: "person",
         loadChildren: () => import('./person/person.module').then(m => m.PersonModule),
+        data: { animation: 'Two' }
       },
       {
         path: "product",
         loadChildren: () => import('./product/product.module').then(m => m.ProductModule),
+        data: { animation: 'Three' }
       },
       {
         path: "invoice",
         loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule),
+        data: { animation: 'Three' }
       },
     ]
   }

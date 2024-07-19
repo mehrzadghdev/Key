@@ -138,6 +138,156 @@
     }
 }
 
+.cross-platform-application_wrapper {
+    background-image: url("../../../assets/images/home/home-pic-1.jpg");
+    background-size: cover;
+    background-attachment: fixed;
+    padding: 70px 20px 75px 20px;
+    position: relative;
+
+    &::after {
+        position: absolute;
+        inset: 0;
+        background-color: color-mix(in srgb, darken(#008a77, 20%), transparent 40%);
+        content: "";
+        z-index: 1;
+    }
+}
+
+.cross-platform-application {
+    z-index: 3;
+    position: relative;
+
+    h3 {
+        font-size: 28px;
+        font-weight: 500;
+        font-family: PeydaWeb;
+        color: var(--base-color);
+        text-align: center;
+    }
+
+    ul {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-top: 40px;
+        gap: 20px;
+
+        li {
+            background-color: var(--base-color);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            border: 3px solid var(--border-color-medium);
+            transition: all .1s ease;
+
+            span {
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--text-secondary-color);
+            }
+
+            &:hover {
+                border-color: var(--primary-color);
+                background-color: color-mix(in srgb, var(--primary-color), transparent 15%);
+                scale: 1.05;
+
+                span {
+                    color: var(--base-color);
+                }
+            }
+
+            img {
+                width: 42px;
+                height: 42px;
+            }
+        }
+    }
+}
+
+
+.software-download__wrapper {
+    padding: 75px 0;
+}
+
+.software-download {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    span {
+        font-size: 18px;
+        font-weight: 500;
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        color: var(--primary-color);
+        text-align: center;
+    }
+
+    h3 {
+        font-size: 28px;
+        font-weight: 500;
+        font-family: PeydaWeb;
+        color: var(--base-opposite-color);
+        text-align: center;
+        padding-top: 10px;
+    }
+
+    ul {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        padding-top: 30px;
+        gap: 20px;
+
+        li {
+            flex: 1;
+            background-color: var(--base-color);
+            padding: 28px;
+            list-style: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all .1s ease;
+            box-shadow: 0px 3px 16px 0px rgba(0, 0, 0, .05);
+            outline: 1px dashed var(--border-color-medium);
+            outline-offset: -4px;
+
+            div {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+            }
+
+            span {
+                font-size: 24px;
+                font-weight: 700;
+                color: var(--primary-color);
+            }
+
+            p {
+                font-weight: 700;
+                color: var(--text-primary-color);
+                font-family: PeydaWeb;
+                padding-top: 5px;
+            }
+
+            &:hover {
+                // scale: 1.03;
+                outline: 2px dashed var(--border-color-medium);
+            }
+
+            img {
+                width: 38px;
+                height: 38px;
+            }
+        }
+    }
+}
+
 @media only screen and (max-width: 768px) {
     .hero-section {
         flex-direction: column;

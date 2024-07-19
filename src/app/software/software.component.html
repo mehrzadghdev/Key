@@ -127,7 +127,8 @@
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
-                            <mat-icon class="material-icons-outlined">article_outline</mat-icon>                        </div>
+                            <mat-icon class="material-icons-outlined">article_outline</mat-icon>
+                        </div>
                         <span *ngIf="isExpanded" class="nav-item__title unselectable">فاکتور</span>
                     </div>
                     <div *ngIf="isExpanded" class="accordion-icon">
@@ -179,8 +180,10 @@
                 <button mat-menu-item (click)="changeTheme('dark')">حالت تاریک</button>
             </mat-menu>
             <key-button content="icon" class="icon full-screen-icon" (click)="toggleFullScreen()">
-                <mat-icon *ngIf="fullscreen" class="material-icons-outlined" matTooltip="حالت تمام صفحه">fullscreen</mat-icon>
-                <mat-icon *ngIf="!fullscreen" class="material-icons-outlined" matTooltip="خروج از حالت تمام صفحه">fullscreen_exit</mat-icon>
+                <mat-icon *ngIf="fullscreen" class="material-icons-outlined"
+                    matTooltip="حالت تمام صفحه">fullscreen</mat-icon>
+                <mat-icon *ngIf="!fullscreen" class="material-icons-outlined"
+                    matTooltip="خروج از حالت تمام صفحه">fullscreen_exit</mat-icon>
             </key-button>
             <div class="notification-icon pointer">
                 <mat-icon class="material-icons-outlined" matBadge="2" matBadgeColor="warn">notifications</mat-icon>
@@ -197,38 +200,41 @@
     <div class="mobile-bottom-menu">
         <ul>
             <a routerLink="/software/company">
-                <li mat-ripple
-                    [ngClass]="{'active-bottom-menu-item': activeRouteIs('company')}">
+                <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('company')}">
                     <div class="bottom-menu-icon">
-                        <mat-icon class="icon-light" [ngClass]="{'material-icons-outlined': !activeRouteIs('company')}">business_outline</mat-icon>
+                        <img class="icon-light"
+                            [src]="activeRouteIs('company') ? 'assets/images/software/company-solid.svg' : 'assets/images/software/company-outlined.svg'"
+                            alt="company icon">
                     </div>
                     <span>شرکت</span>
                 </li>
             </a>
             <a routerLink="/software/person">
-                <li mat-ripple
-                    [ngClass]="{'active-bottom-menu-item': activeRouteIs('person')}">
+                <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('person')}">
                     <div class="bottom-menu-icon">
-                        <mat-icon class="icon-light" [ngClass]="{'material-icons-outlined': !activeRouteIs('person')}">contacts</mat-icon>
+                        <img class="icon-light"
+                            [src]="activeRouteIs('person') ? 'assets/images/software/person-solid.svg' : 'assets/images/software/person-outlined.svg'"
+                            alt="company icon">
                     </div>
-    
                     <span>طرف حساب</span>
                 </li>
             </a>
             <a routerLink="/software/product">
-                <li mat-ripple
-                    [ngClass]="{'active-bottom-menu-item': activeRouteIs('product')}">
+                <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('product')}">
                     <div class="bottom-menu-icon">
-                        <mat-icon class="icon-light" [ngClass]="{'material-icons-outlined': !activeRouteIs('product')}">inventory_2_outline</mat-icon>
+                        <img class="icon-light"
+                            [src]="activeRouteIs('product') ? 'assets/images/software/product-solid.svg' : 'assets/images/software/product-outlined.svg'"
+                            alt="company icon">
                     </div>
                     <span>کالا و خدمات</span>
                 </li>
             </a>
             <a routerLink="/software/invoice">
-                <li mat-ripple
-                    [ngClass]="{'active-bottom-menu-item': activeRouteIs('invoice')}">
+                <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('invoice')}">
                     <div class="bottom-menu-icon">
-                        <mat-icon class="icon-light" [ngClass]="{'material-icons-outlined': !activeRouteIs('invoice')}">article_outline</mat-icon>
+                        <img class="icon-light"
+                            [src]="activeRouteIs('invoice') ? 'assets/images/software/invoice-solid.svg' : 'assets/images/software/invoice-outlined.svg'"
+                            alt="company icon">
                     </div>
                     <span>فاکتور</span>
                 </li>

@@ -27,7 +27,7 @@ import { CreateInvoiceComponent } from './invoice/create-invoice/create-invoice.
 })
 export class SoftwareComponent implements OnInit, AfterViewInit {
   public isExpanded: boolean = true;
-  public demoErrorMessage: boolean = true;
+  public demoErrorMessage: boolean = false;
 
   get authDone(): boolean {
     return this.authentication.userLoggedIn;
