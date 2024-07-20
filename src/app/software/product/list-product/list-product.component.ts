@@ -123,16 +123,14 @@ export class ListProductComponent {
   public loadUnitList(): void {
     this.unitListLoaded = false;
 
-    this.unitService.getUnitList().subscribe(res => {
+    this.unitService.getUnitList({}).subscribe(res => {
       this.unitList = res;
       this.unitListLoaded = true;
     })
   }
 
   public sortProductList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
-    const currentCompany = this.authentication.currentCompany as Company;
     const productListBody: GetCompaniesProductListBody = {
-      databaseId: currentCompany.databaseId,
       ...pagination
     }
 
@@ -151,9 +149,7 @@ export class ListProductComponent {
   public loadProductList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
     this.productListLoaded = false;
   
-    const currentCompany = this.authentication.currentCompany as Company;
     const productListBody: GetCompaniesProductListBody = {
-      databaseId: currentCompany.databaseId,
       ...pagination
     }
 

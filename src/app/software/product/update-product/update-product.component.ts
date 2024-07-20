@@ -53,7 +53,7 @@ export class UpdateProductComponent {
   }
 
   ngOnInit(): void {
-    this.unitSerivce.getUnitList().subscribe(res => {
+    this.unitSerivce.getUnitList({}).subscribe(res => {
       this.getUnitListLoading = false;
       this.unitList = res;
     })

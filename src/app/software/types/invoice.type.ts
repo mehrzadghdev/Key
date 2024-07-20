@@ -1,42 +1,89 @@
-// Invoice Base
-
-import { DateISO } from "src/app/shared/types/common.type";
+import { DateISO, HasDatabase, Pagination, PaginationBody, Percentage } from "src/app/shared/types/common.type";
 import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from "../enums/invoice-type.enum";
 
-export interface Invoice {
-    // TODO
+// Invoice Base
+
+export interface Invoice extends HasDatabase {
+    invoiceId: number,
+    invoiceCode: number,
+    invoiceDate: DateISO,
+    invoiceTime: string,
+    invoiceType: InvoiceType,
+    referenceInvoiceCode: number,
+    personCode: number,
+    personName: string,
+    patternType: InvoicePatternType,
+    vendorContractRegisterId: string,
+    paymentMethod: InvoicePaymentMethod,
+    creditAmount: number,
+    payerNationalId: string,
+    payCardNumber: string,
+    payReferenceNumber: string,
+    createdDate: DateISO,
+    modifiedDate: DateISO,
+    saleInvoiceItems: InvoiceProductItem[]
 }
 
-// Invoice/GetInvoiceList
-
-export type GetInvoiceList = Invoice[];
-
-// Invoice/GetCompaniesInvoiceList
-
-export type GetCompaniesInvoiceList = GetCompaniesInvoiceListItem[];
-
-export interface GetCompaniesInvoiceListItem {
-    // TODO
+export interface InvoiceProductItem extends HasDatabase {
+    id: number,
+    invoiceId: number,
+    productCode: number,
+    productName: string,
+    amount: number,
+    price: number,
+    discount: Percentage,
+    taxPercent: Percentage,
+    tax: number
 }
 
-export interface GetCompaniesInvoiceListBody {
-    databaseId: number
-    // TODO
+// Invoice/GetSaleInvoiceList
+
+export interface GetInvoiceListBody extends PaginationBody {};
+
+export interface GetInvoiceList extends Pagination {
+    saleInvoices: GetInvoiceListInvoiceItem[];
 }
 
-// Invoice/GetInvoice
+export interface GetInvoiceListInvoiceItem extends HasDatabase {
+    invoiceId: number,
+    invoiceCode: number,
+    invoiceDate: DateISO,
+    invoiceTime: string,
+    invoiceType: InvoiceType,
+    referenceInvoiceCode: number,
+    personCode: number,
+    personName: string,
+    patternType: InvoicePatternType,
+    vendorContractRegisterId: string,
+    paymentMethod: number,
+    creditAmount: number,
+    payerNationalId: string,
+    payCardNumber: string,
+    payReferenceNumber: string,
+    createdDate: DateISO,
+    modifiedDate: DateISO
+}
+
+// Invoice/GetCompaniesSaleInvoiceList
+
+export interface GetCompaniesInvoiceListBody extends HasDatabase, PaginationBody {}
+
+export interface GetCompaniesInvoiceList extends Pagination {
+    saleInvoices: GetInvoiceListInvoiceItem[];
+}
+
+// Invoice/GetSaleInvoice
 
 export type GetInvoice = [Invoice];
 
-export interface GetInvoiceBody {
-    // TODO
+export interface GetInvoiceBody extends HasDatabase {
+    invoiceCode: number
 }
 
-// Invoice/AddInvoice
+// Invoice/AddSaleInvoice
 
-export interface AddInvoice {
+export interface AddInvoice extends HasDatabase {
     invoiceId: number,
-    databaseId: number,
     invoiceCode: number,
     invoiceDate: DateISO,
     invoiceTime: string,
@@ -53,11 +100,10 @@ export interface AddInvoice {
     createdDate: DateISO,
     modifiedDate: DateISO,
     database: null,
-    saleInvoiceItems: InvoiceProductItem[]
+    saleInvoiceItems: AddInvoiceProductItem[]
 }
 
-export interface AddInvoiceBody {
-    databaseId: number,
+export interface AddInvoiceBody extends HasDatabase {
     invoiceCode: number,
     invoiceDate: DateISO,
     invoiceTime: string,
@@ -71,34 +117,67 @@ export interface AddInvoiceBody {
     payerNationalId: string,
     payCardNumber: string,
     payReferenceNumber: string,
-    saleInvoiceItems: InvoiceProductItem[]
+    saleInvoiceItems: AddInvoiceProductItem[]
 }
 
-export interface InvoiceProductItem {
+export interface AddInvoiceProductItem extends HasDatabase {
     id?: number,
-    databaseId: number,
     productCode: number,
     productName: string,
     amount: number,
     price: number,
-    discount: number,
-    taxPercent: number,
+    discount: Percentage,
+    taxPercent: Percentage,
     tax: number,
     invoice?: string,
 }
 
-// Invoice/UpdateInvoice
+// Invoice/UpdateSaleInvoice
 
 export type UpdateInvoice = null;
 
 export interface UpdateInvoiceBody {
-
+    invoiceCode: number,
+    invoiceDate: DateISO,
+    invoiceTime: string,
+    invoiceType: InvoiceType,
+    referenceInvoiceCode: number,
+    personCode: number,
+    patternType: InvoicePatternType,
+    vendorContractRegisterId: string,
+    paymentMethod: InvoicePaymentMethod,
+    creditAmount: number,
+    payerNationalId: string,
+    payCardNumber: string,
+    payReferenceNumber: string,
+    saleInvoiceItems: [
+      {
+        productCode: 0,
+        productName: string,
+        amount: 0,
+        price: 0,
+        discount: 0,
+        taxPercent: 0,
+        tax: 0
+      }
+    ]
 };
 
-// Invoice/DeleteInvoice 
+export interface UpdateInvoiceProductItem {
+    productCode: number,
+    productName: string,
+    amount: number,
+    price: number,
+    discount: Percentage,
+    taxPercent: Percentage,
+    tax: number
+}
+
+// Invoice/DeleteSaleInvoice 
 
 export type DeleteInvoice = null;
 
-export interface DeleteInvoiceBody {
-    // TODO
+export interface DeleteInvoiceBody extends HasDatabase {
+    invoiceId: number,
+    invoiceCode: number
 }

@@ -8,7 +8,7 @@ import { DialogResult } from 'src/app/shared/types/dialog.type';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Company } from '../../types/company.type';
 import { ProductService } from '../../services/product.service';
-import { Invoice, InvoiceProductItem } from '../../types/invoice.type';
+import { AddInvoiceProductItem, Invoice, InvoiceProductItem } from '../../types/invoice.type';
 
 @Component({
   selector: 'app-add-invoice-product',
@@ -63,17 +63,15 @@ export class AddInvoiceProductComponent implements OnInit {
     }
   }
 
-  public closeDialog(value?: InvoiceProductItem): void {
+  public closeDialog(value?: AddInvoiceProductItem): void {
     this.dialogRef.close(value);
   }
 
   
   public onAddInvoiceProduct(): void {
     if (this.addInvoiceProductForm.valid) {
-      const currentCompany = this.authentication.currentCompany as Company;
       
-      const invoiceProductItem: InvoiceProductItem = {
-        databaseId: currentCompany.id,
+      const invoiceProductItem: AddInvoiceProductItem = {
         productCode: this.addInvoiceProductForm.get("productCode")?.value,
         productName: this.addInvoiceProductForm.get("productName")?.value,
         amount: this.addInvoiceProductForm.get("amount")?.value ?? 1,
@@ -94,9 +92,7 @@ export class AddInvoiceProductComponent implements OnInit {
   public loadProductList(productCodeToAutoFill: number): void {
     this.productListLoaded = false;
 
-    const currentCompany = this.authentication.currentCompany as Company;
     const productListBody: GetCompaniesProductListBody = {
-      databaseId: currentCompany.databaseId,
       page: 1,
       pageSize: 10000
     };

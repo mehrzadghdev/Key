@@ -1,26 +1,21 @@
 <div class="content-topbar">
     <div>
-        <h2>لیست تمام کالا و خدمات</h2>
+        <h2>لیست فاکتور های فروش</h2>
         <span>
-            کالا و خدمات 
+            فاکتور فروش 
             <mat-icon class="icon-primary">arrow_back_ios</mat-icon>
-            لیست تمام کالا و خدمات
+            لیست فاکتور های فروش 
         </span>
     </div>
-    <div class="content-topbar-actions">
-        <a routerLink="/software/product/unit">
-            <key-button appearance="raised">
-                واحد کالا و خدمات  
-            </key-button>
-        </a>
-        <key-button (click)="onAddProduct()">
-            <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> کالا و خدمات جدید
+    <div>
+        <key-button (click)="onAddInvoice()">
+            <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> فاکتور فروش جدید 
         </key-button>
     </div>
 </div>
 <div class="content-table">
     <div class="table">
-        <table *ngIf="productListLoaded && unitListLoaded" mat-table [dataSource]="productList" matSort (matSortChange)="onTableSortChanged($event)">
+        <table *ngIf="invoiceListLoaded" mat-table [dataSource]="invoiceList" matSort (matSortChange)="onTableSortChanged($event)">
             <ng-container matColumnDef="انتخاب">
                 <th mat-header-cell *matHeaderCellDef>
                     <mat-checkbox 
@@ -40,44 +35,44 @@
                 </td>
             </ng-container>
 
+            <ng-container matColumnDef="کد">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> کد فاکتور فروش </th>
+                <td mat-cell *matCellDef="let element"> {{ element.invoiceCode }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="تاریخ فاکتور">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> تاریخ فاکتور </th>
+                <td mat-cell *matCellDef="let element"> {{ element.invoiceDate | jdate }} </td>
+            </ng-container>
+
             <ng-container matColumnDef="نوع">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> نوع </th>
-                <td mat-cell *matCellDef="let element"> {{ productTypeTextByNumber(element.productType) }} </td>
+                <td mat-cell *matCellDef="let element"> {{ invoiceTypeTextByNumber(element.invoiceType) }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="نام">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> نام </th>
-                <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+            <ng-container matColumnDef="طرف حساب">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> طرف حساب </th>
+                <td mat-cell *matCellDef="let element"> {{ element.personName }} </td>
             </ng-container>
 
-            <ng-container matColumnDef="شناسه کالا">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> شناسه کالا </th>
-                <td mat-cell *matCellDef="let element"> {{ element.productCode }} </td>
-            </ng-container>
-            
-            <ng-container matColumnDef="واحد کالا">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> واحد کالا </th>
-                <td mat-cell *matCellDef="let element"> {{ findUnitName(element.unitCode) }} </td>
+            <ng-container matColumnDef="الگو فروش">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> الگو فروش </th>
+                <td mat-cell *matCellDef="let element">{{ invoicePatternTypeTextByNumber(element.patternType) }}</td>
             </ng-container>
 
-            <ng-container matColumnDef="قیمت">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> قیمت </th>
-                <td mat-cell *matCellDef="let element"> {{ element.price | price }} ریال </td>
-            </ng-container>
-
-            <ng-container matColumnDef="کد کالا">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> کد کالا </th>
-                <td mat-cell *matCellDef="let element"> {{ element.code }} </td>
+            <ng-container matColumnDef="روش پرداخت">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> روش پرداخت </th>
+                <td mat-cell *matCellDef="let element">{{ invoicePaymentMethodTextByNumber(element.paymentMethod) }}</td>
             </ng-container>
 
             <ng-container matColumnDef="عملیات">
                 <th mat-header-cell *matHeaderCellDef> عملیات </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="table-action-buttons">
-                        <key-button [matTooltip]="'حذف ' + productTypeTextByNumber(element.productType)" (click)="onDeleteProduct(element.code)" content="icon">
+                        <key-button matTooltip="حذف فاکتور فروش" (click)="onDeleteInvoice(element.invoiceCode, element.invoiceId)" content="icon">
                             <mat-icon class="icon-red material-icons-outlined">delete</mat-icon>
                         </key-button>
-                        <key-button matTooltip="ویرایش" (click)="onUpdateProduct(element.code)" content="icon">
+                        <key-button matTooltip="ویرایش" (click)="onUpdateInvoice(element.invoiceCode)" content="icon">
                             <mat-icon class="icon-primary material-icons-outlined">edit_square</mat-icon>                       
                         </key-button>
                     </div>
@@ -92,7 +87,7 @@
                 </td>
             </tr>
         </table>
-        <key-table-loading *ngIf="!productListLoaded || !unitListLoaded" [columns]="tableColumns"></key-table-loading>
+        <key-table-loading *ngIf="!invoiceListLoaded" [columns]="tableColumns"></key-table-loading>
         <div class="table-pagination">
             <div class="table-pagination__paginator">
                 <key-button content="icon" [disabled]="!tablePagination.hasPrev" (click)="tablePagination.hasPrev && onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">

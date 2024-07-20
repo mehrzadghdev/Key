@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RequestService } from 'src/app/shared/services/request.service';
-import { AddUnit, AddUnitBody, DeleteUnit, DeleteUnitBody, GetUnit, GetUnitBody, GetUnitList, UpdateUnit, UpdateUnitBody } from '../types/unit.type';
+import { AddUnit, AddUnitBody, DeleteUnit, DeleteUnitBody, GetAllUnitList, GetAllUnitListBody, GetUnit, GetUnitBody, GetUnitList, GetUnitListBody, UpdateUnit, UpdateUnitBody } from '../types/unit.type';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -10,8 +10,12 @@ export class UnitService {
 
   constructor(private request: RequestService) { }
 
-  public getUnitList(): Observable<GetUnitList> {
-    return this.request.post<GetUnitList, null>("Unit/GetUnitList", null);
+  public getAllUnitList(): Observable<GetAllUnitList> {
+    return this.request.post<GetAllUnitList, GetAllUnitListBody>("Unit/GetAllUnitList", null);
+  }
+
+  public getUnitList(getUnitListBody: GetUnitListBody): Observable<GetUnitList> {
+    return this.request.post<GetUnitList, GetUnitListBody>("Unit/GetUnitList", getUnitListBody);
   }
 
   public getUnit(getUnitBody: GetUnitBody): Observable<GetUnit> {

@@ -98,9 +98,7 @@ export class CreateInvoiceComponent implements OnInit {
   private fetchData(): void {
     this.dataFetchLoaded = false;
 
-    const currentCompany = this.authentication.currentCompany as Company;
     const dataFetchBody: GetCompaniesPersonListBody | GetCompaniesProductListBody = {
-      databaseId: currentCompany.databaseId,
       page: 1,
       pageSize: 10000
     };
@@ -163,10 +161,8 @@ export class CreateInvoiceComponent implements OnInit {
 
   public onAddInvoice(): void {
     if (!this.invoiceForm.invalid) {
-      const currentCompany = this.authentication.currentCompany as Company
 
       const addInvoiceBody: AddInvoiceBody = {
-        databaseId: currentCompany.databaseId,
         invoiceCode: this.invoiceForm.get('invoiceCode')?.value ?? 0,
         invoiceDate: this.invoiceForm.get('invoiceDate')?.value ?? new Date().toISOString(),
         invoiceTime: '',

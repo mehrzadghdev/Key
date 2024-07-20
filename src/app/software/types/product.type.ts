@@ -1,10 +1,9 @@
 // Product Base
 
-import { Pagination, PaginationBody } from "src/app/shared/types/common.type";
+import { HasDatabase, Pagination, PaginationBody } from "src/app/shared/types/common.type";
 
-export interface Product {
+export interface Product extends HasDatabase {
     id: number,
-    databaseId: number,
     code: number,
     productCode: string,
     productType: number,
@@ -32,23 +31,20 @@ export interface GetCompaniesProductList extends Pagination {
     result: Product[];
 } 
 
-export interface GetCompaniesProductListBody extends PaginationBody {
-    databaseId: number
-}
+export interface GetCompaniesProductListBody extends PaginationBody, HasDatabase { }
 
 // Product/GetProduct
 
 export type GetProduct = [Product];
 
-export interface GetProductBody {
+export interface GetProductBody extends HasDatabase {
     code: number
 }
 
 // Product/AddProduct
 
-export interface AddProduct {
+export interface AddProduct extends HasDatabase {
     id: number,
-    databaseId: number,
     code: number,
     productCode: string,
     productType: number,
@@ -70,8 +66,7 @@ export interface AddProduct {
     }
 }
 
-export interface AddProductBody {
-    databaseId: number,
+export interface AddProductBody extends HasDatabase {
     code: number,
     productCode: string,
     productType: number,
@@ -107,6 +102,6 @@ export interface UpdateProductBody {
 
 export type DeleteProduct = null;
 
-export interface DeleteProductBody {
+export interface DeleteProductBody extends HasDatabase {
     code: number
 }

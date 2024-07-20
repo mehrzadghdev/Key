@@ -18,6 +18,7 @@ import { KeyModules } from '../shared/types/modules.type';
 import { UnitComponent } from './product/unit/unit.component';
 import { fader, routeTransitionAnimations } from '../shared/animations/route-animations';
 import { CreateInvoiceComponent } from './invoice/create-invoice/create-invoice.component';
+import { ListInvoiceComponent } from './invoice/list-invoice/list-invoice.component';
 
 @Component({
   selector: 'app-software',
@@ -47,7 +48,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     return this.themeService.getColorTheme();
   }
 
-  public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent>;
+  public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent>;
   public currentActivatedRouteLoaded: boolean = false;
   public searchQuery: string = "";
   public fullscreen: boolean = true;
@@ -111,6 +112,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       || this.currentActivatedRoute instanceof ListPersonComponent
       || this.currentActivatedRoute instanceof ListProductComponent
       || this.currentActivatedRoute instanceof UnitComponent
+      || this.currentActivatedRoute instanceof ListInvoiceComponent
     ) {
       this.currentActivatedRoute.onSearch(this.searchQuery);
     }
@@ -165,6 +167,9 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       if (this.currentActivatedRoute instanceof UnitComponent) {
         this.currentActivatedRoute.loadUnitList()
       }
+      if (this.currentActivatedRoute instanceof ListInvoiceComponent) {
+        this.currentActivatedRoute.loadInvoiceList();
+      }
     })
   }
 
@@ -203,7 +208,9 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
 
   public onAddInvoice(): void {
     this.dialog.openFullScreenDialog(CreateInvoiceComponent).afterClosed().subscribe(res => {
-      // TODO reload the factor lists now
+      if (this.currentActivatedRoute instanceof ListInvoiceComponent) {
+        this.currentActivatedRoute.loadInvoiceList();
+      }
     })
   }
 
@@ -211,8 +218,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
     if (value === 'person') return this.currentActivatedRoute instanceof ListPersonComponent;
     if (value === 'product') return this.currentActivatedRoute instanceof ListProductComponent || this.currentActivatedRoute instanceof UnitComponent;
-    if (value === 'invoice') return false;
-    // TODO: replace return false with the actual instance of the factor
+    if (value === 'invoice') return this.currentActivatedRoute instanceof ListInvoiceComponent;;
 
     return false;
   }

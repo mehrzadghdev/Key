@@ -50,7 +50,7 @@ export class CreateProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.unitSerivce.getUnitList().subscribe(res => {
+    this.unitSerivce.getUnitList({}).subscribe(res => {
       this.getUnitListLoading = false;
       this.unitList = res;
     })
@@ -59,9 +59,7 @@ export class CreateProductComponent implements OnInit {
   public onAddProduct(): void {
     if (this.addProductForm.valid) {
       this.addProductLoading = true;
-      const currentCompany = this.authentication.currentCompany as Company;
       const addProductBody: AddProductBody = {
-        databaseId: currentCompany.databaseId,
         code: this.addProductForm.controls["code"].value,
         productType: this.addProductForm.controls["productType"].value,
         productCode: this.addProductForm.controls["productCode"].value,

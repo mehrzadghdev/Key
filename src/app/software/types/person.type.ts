@@ -1,11 +1,10 @@
 // Person Base
 
-import { Pagination, PaginationBody } from "src/app/shared/types/common.type";
+import { HasDatabase, Pagination, PaginationBody } from "src/app/shared/types/common.type";
 import { PersonType } from "../enums/person-type.enum";
 
-export interface Person {
+export interface Person extends HasDatabase {
     id: number,
-    databaseId: number,
     code: number,
     personType: number,
     personName: string,
@@ -31,9 +30,8 @@ export interface GetCompaniesPersonList extends Pagination {
     result: GetCompaniesPersonListItem[];
 }
 
-export interface GetCompaniesPersonListItem {
+export interface GetCompaniesPersonListItem extends HasDatabase {
     id: number,
-    databaseId: number,
     code: number,
     personType: PersonType,
     personName: string,
@@ -47,23 +45,20 @@ export interface GetCompaniesPersonListItem {
     modifiedDate: string
 }
 
-export interface GetCompaniesPersonListBody extends PaginationBody {
-    databaseId: number
-}
+export interface GetCompaniesPersonListBody extends PaginationBody, HasDatabase {}
 
 // Person/GetPerson
 
 export type GetPerson = [Person];
 
-export interface GetPersonBody {
+export interface GetPersonBody extends HasDatabase {
     code: number
 }
 
 // Person/AddPerson
 
-export interface AddPerson {
+export interface AddPerson extends HasDatabase {
     id: number,
-    databaseId: number,
     code: number,
     personType: number,
     personName: string,
@@ -77,8 +72,7 @@ export interface AddPerson {
     database: any
 }
 
-export interface AddPersonBody {
-    databaseId: number,
+export interface AddPersonBody extends HasDatabase {
     code?: number,
     personType: number,
     personName: string,
@@ -110,6 +104,6 @@ export interface UpdatePersonBody {
 
 export type DeletePerson = null;
 
-export interface DeletePersonBody {
+export interface DeletePersonBody extends HasDatabase {
     code: number
 }

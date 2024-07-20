@@ -81,7 +81,6 @@ export class UpdatePersonComponent implements OnInit {
   public onUpdatePerson(): void {
     if (this.updatePersonForm.valid) {
       this.addPersonLoading = true;
-      const currentCompany = this.authentication.currentCompany as Company;
       const addPersonBody: UpdatePersonBody = {
         code: this.data.code,
         personType: this.updatePersonForm.controls["personType"].value,

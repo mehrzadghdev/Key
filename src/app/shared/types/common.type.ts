@@ -1,5 +1,7 @@
 export type DateISO = string;
 
+export type Percentage = number;
+
 export interface SelectOption<T>  {
     display: string;
     value: T;
@@ -19,4 +21,8 @@ export interface PaginationBody {
     pageSize?: number,
     searchTerm?: string,
     sortFieldName?: string
+}
+
+export interface HasDatabase {
+    databaseId?: number;
 }

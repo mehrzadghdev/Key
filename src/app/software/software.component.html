@@ -136,8 +136,8 @@
                     </div>
                 </div>
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
-                    <li matRipple class="unselectable" (click)="onAddInvoice()">ایجاد فاکتور جدید</li>
-                    <li matRipple class="unselectable">لیست تمام فاکتور ها</li>
+                    <li matRipple class="unselectable" (click)="onAddInvoice()">ایجاد فاکتور فروش جدید</li>
+                    <li matRipple class="unselectable"><a routerLink="/software/invoice">لیست فاکتور های فروش</a></li>
                 </ul>
             </li>
             <mat-menu #factor="matMenu" xPosition="before">

@@ -60,9 +60,7 @@ export class CreatePersonComponent {
   public onAddPerson(): void {
     if (this.addPersonForm.valid) {
       this.addPersonLoading = true;
-      const currentCompany = this.authentication.currentCompany as Company;
       const addPersonBody: AddPersonBody = {
-        databaseId: currentCompany.databaseId,
         code: this.addPersonForm.controls["code"].value,
         personType: this.addPersonForm.controls["personType"].value,
         personName: this.addPersonForm.controls["personName"].value,

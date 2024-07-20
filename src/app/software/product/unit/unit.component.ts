@@ -38,7 +38,7 @@ export class UnitComponent implements OnInit {
   public loadUnitList(): void {
     this.unitListLoaded = false;
 
-    this.unitService.getUnitList().subscribe(res => {
+    this.unitService.getUnitList({}).subscribe(res => {
       this.unitList = res;
       this.unitListLoaded = true;
     })
@@ -82,7 +82,6 @@ export class UnitComponent implements OnInit {
     if (this.addUnitForm.valid) {
       this.updateUnitLoading = true;
       const updateUnitBody: UpdateUnitBody = {
-        id: this.addUnitForm.controls["id"].value,
         code: this.addUnitForm.controls["code"].value,
         name: this.addUnitForm.controls["name"].value
       }

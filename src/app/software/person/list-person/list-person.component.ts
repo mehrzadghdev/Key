@@ -120,9 +120,7 @@ export class ListPersonComponent implements OnInit {
   }
   
   public sortPersonList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
-    const currentCompany = this.authentication.currentCompany as Company;
     const personListBody: GetCompaniesPersonListBody = {
-      databaseId: currentCompany.databaseId,
       ...pagination
     }
 
@@ -141,9 +139,7 @@ export class ListPersonComponent implements OnInit {
   public loadPersonList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
     this.personListLoaded = false;
 
-    const currentCompany = this.authentication.currentCompany as Company;
     const personListBody: GetCompaniesPersonListBody = {
-      databaseId: currentCompany.databaseId,
       ...pagination
     }
 

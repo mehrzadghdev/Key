@@ -212,6 +212,7 @@
 
 .software-download__wrapper {
     padding: 75px 0;
+    background-color: var(--border-color-light);
 }
 
 .software-download {
@@ -231,11 +232,11 @@
 
     h3 {
         font-size: 28px;
-        font-weight: 500;
+        font-weight: 700;
         font-family: PeydaWeb;
         color: var(--base-opposite-color);
         text-align: center;
-        padding-top: 10px;
+        padding-top: 3px;
     }
 
     ul {
