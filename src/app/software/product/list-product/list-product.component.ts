@@ -11,7 +11,7 @@ import { Unit } from '../../types/unit.type';
 import { UnitService } from '../../services/unit.service';
 import { UpdateProductComponent } from '../update-product/update-product.component';
 import { UtilityService } from 'src/app/shared/services/utility.service';
-import { Pagination, PaginationBody } from 'src/app/shared/types/common.type';
+import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { Sort } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 

@@ -54,6 +54,10 @@ export class CreateProductComponent implements OnInit {
       this.getUnitListLoading = false;
       this.unitList = res;
     })
+
+    this.productService.getNewProductCode({}).subscribe(res => {
+      this.addProductForm.get('code')?.patchValue(res.newCode);
+    })
   }
 
   public onAddProduct(): void {

@@ -1,7 +1,9 @@
 // Person Base
 
-import { HasDatabase, Pagination, PaginationBody } from "src/app/shared/types/common.type";
+import { GetNewCode, GetNewCodeBody, HasDatabase } from "src/app/shared/types/common.type";
 import { PersonType } from "../enums/person-type.enum";
+import { Pagination, PaginationBody } from "src/app/shared/types/pagination.type";
+
 
 export interface Person extends HasDatabase {
     id: number,
@@ -107,3 +109,8 @@ export type DeletePerson = null;
 export interface DeletePersonBody extends HasDatabase {
     code: number
 }
+
+// Person/GetNewPersonCode 
+
+export type GetNewPersonCodeBody = GetNewCodeBody;
+export type GetNewPersonCode = GetNewCode;

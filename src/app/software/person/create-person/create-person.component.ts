@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonType } from '../../enums/person-type.enum';
@@ -14,7 +14,7 @@ import { UtilityService } from 'src/app/shared/services/utility.service';
   templateUrl: './create-person.component.html',
   styleUrls: ['./create-person.component.scss']
 })
-export class CreatePersonComponent {
+export class CreatePersonComponent implements OnInit {
   public addPersonForm: FormGroup;
   public validationLastCheck: boolean = false;
   public addPersonLoading: boolean = false;
@@ -43,6 +43,12 @@ export class CreatePersonComponent {
       mobile: [null, CustomValidators.phoneNumber],
       zipCode: [null, CustomValidators.zipCode],
       address: [null]
+    })
+  }
+
+  ngOnInit(): void {
+    this.personService.getNewPersonCode({}).subscribe(res => {
+      this.addPersonForm.get('code')?.patchValue(res.newCode);
     })
   }
 

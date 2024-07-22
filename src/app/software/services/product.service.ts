@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/request.service';
-import { AddProduct, AddProductBody, DeleteProduct, DeleteProductBody, GetCompaniesProductList, GetCompaniesProductListBody, GetProduct, GetProductBody, GetProductList, GetProductListBody, UpdateProduct, UpdateProductBody } from '../types/product.type';
+import { AddProduct, AddProductBody, DeleteProduct, DeleteProductBody, GetCompaniesProductList, GetCompaniesProductListBody, GetNewProductCode, GetNewProductCodeBody, GetProduct, GetProductBody, GetProductList, GetProductListBody, UpdateProduct, UpdateProductBody } from '../types/product.type';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +32,9 @@ export class ProductService {
 
   public deleteProduct(deleteProductBody: DeleteProductBody): Observable<DeleteProduct> {
     return this.request.post<DeleteProduct, DeleteProductBody>("Product/DeleteProduct", deleteProductBody)
+  }
+
+  public getNewProductCode(getNewProductCodeBody: GetNewProductCodeBody): Observable<GetNewProductCode> {
+    return this.request.post<GetNewProductCode, GetNewProductCodeBody>("Product/GetNewProductCode", getNewProductCodeBody);
   }
 }

@@ -1,6 +1,8 @@
 // Product Base
 
-import { HasDatabase, Pagination, PaginationBody } from "src/app/shared/types/common.type";
+import { GetNewCode, GetNewCodeBody, HasDatabase } from "src/app/shared/types/common.type";
+import { Pagination, PaginationBody } from "src/app/shared/types/pagination.type";
+
 
 export interface Product extends HasDatabase {
     id: number,
@@ -105,3 +107,8 @@ export type DeleteProduct = null;
 export interface DeleteProductBody extends HasDatabase {
     code: number
 }
+
+// Product/GetNewProductCode 
+
+export type GetNewProductCodeBody = GetNewCodeBody;
+export type GetNewProductCode = GetNewCode;

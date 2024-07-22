@@ -129,7 +129,7 @@
                         <div class="nav-item__icon">
                             <mat-icon class="material-icons-outlined">article_outline</mat-icon>
                         </div>
-                        <span *ngIf="isExpanded" class="nav-item__title unselectable">فاکتور</span>
+                        <span *ngIf="isExpanded" class="nav-item__title unselectable">فاکتور فروش</span>
                     </div>
                     <div *ngIf="isExpanded" class="accordion-icon">
                         <mat-icon>keyboard_arrow_down</mat-icon>
@@ -145,6 +145,10 @@
                 <button mat-menu-item>لیست تمام فاکتور ها</button>
             </mat-menu>
         </ul>
+        <span class="software-version">
+            نسخه: 
+            v{{ softwareVersion | farsiNumber }}
+        </span>
     </div>
 
     <div class="main-content">

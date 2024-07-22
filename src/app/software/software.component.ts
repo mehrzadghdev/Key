@@ -19,6 +19,7 @@ import { UnitComponent } from './product/unit/unit.component';
 import { fader, routeTransitionAnimations } from '../shared/animations/route-animations';
 import { CreateInvoiceComponent } from './invoice/create-invoice/create-invoice.component';
 import { ListInvoiceComponent } from './invoice/list-invoice/list-invoice.component';
+import { VersioningService } from '../shared/services/versioning.service';
 
 @Component({
   selector: 'app-software',
@@ -48,6 +49,10 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     return this.themeService.getColorTheme();
   }
 
+  get softwareVersion(): number {
+    return this.versioningService.version as number;
+  }
+
   public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent>;
   public currentActivatedRouteLoaded: boolean = false;
   public searchQuery: string = "";
@@ -58,12 +63,15 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     private dialog: DialogService,
     private router: Router,
     private authentication: AuthenticationService,
-    private companyService: CompanyService
+    private companyService: CompanyService,
+    private versioningService: VersioningService,
   ) {
     this.authentication.authorize();
   }
 
   ngOnInit(): void {
+    this.versioningService.initVersioning();
+
     if (window.innerWidth <= 768) {
       this.isExpanded = false;
     }

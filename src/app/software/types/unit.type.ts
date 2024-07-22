@@ -1,6 +1,7 @@
 // Unit Base
 
-import { HasDatabase } from "src/app/shared/types/common.type";
+import { GetNewCode, GetNewCodeBody, HasDatabase } from "src/app/shared/types/common.type";
+
 
 export interface Unit extends HasDatabase {
     id: number,
@@ -57,3 +58,8 @@ export type DeleteUnit = null;
 export interface DeleteUnitBody extends HasDatabase {
     code: number
 }
+
+// Unit/GetNewUnitCode 
+
+export type GetNewUnitCodeBody = GetNewCodeBody;
+export type GetNewUnitCode = GetNewCode;

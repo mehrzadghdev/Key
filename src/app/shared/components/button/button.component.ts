@@ -13,7 +13,7 @@ export class ButtonComponent {
   public disabled: boolean = false;
 
   @Input('appearance')
-  public appearance: 'stroked' | 'raised' | 'primary' | 'flat' | 'error' | 'text' = 'primary'
+  public appearance: 'stroked' | 'raised' | 'primary' | 'flat' | 'error' | 'text' | 'warn' = 'primary'
 
   @Input('content')
   public content: 'icon' | 'text' = 'text';

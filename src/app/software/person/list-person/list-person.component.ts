@@ -12,7 +12,7 @@ import { UpdatePersonComponent } from '../update-person/update-person.component'
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Pagination, PaginationBody } from 'src/app/shared/types/common.type';
+import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({

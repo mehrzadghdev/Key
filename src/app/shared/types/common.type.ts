@@ -7,22 +7,12 @@ export interface SelectOption<T>  {
     value: T;
 }[]
 
-export interface Pagination {
-    totalCount: number,
-    pageSize: number,
-    currentPage: number,
-    totalPages: number,
-    hasNext: boolean,
-    hasPrev: boolean,
-}
-
-export interface PaginationBody {
-    page?: number,
-    pageSize?: number,
-    searchTerm?: string,
-    sortFieldName?: string
-}
-
 export interface HasDatabase {
     databaseId?: number;
+}
+
+export interface GetNewCodeBody extends HasDatabase {};
+
+export interface GetNewCode {
+    newCode: number;
 }

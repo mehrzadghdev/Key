@@ -93,6 +93,10 @@ export class CreateInvoiceComponent implements OnInit {
   ngOnInit(): void {
     this.initFormFieldSubscriptions();
     this.fetchData();
+
+    this.invoiceService.getNewInvoiceCode({}).subscribe(res => {
+      this.invoiceForm.get('invoiceCode')?.patchValue(res.newCode);
+    })
   }
 
   private fetchData(): void {
@@ -184,9 +188,9 @@ export class CreateInvoiceComponent implements OnInit {
         this.utility.message("فاکتور فروش با موفقیت ایجاد شد.", 'بستن');
         this.closeDialog();
       },
-      err => {
-        this.addInvoiceLoading = false
-      })
+        err => {
+          this.addInvoiceLoading = false
+        })
     }
     else {
       this.invoiceForm.markAllAsTouched();

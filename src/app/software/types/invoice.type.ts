@@ -1,5 +1,6 @@
-import { DateISO, HasDatabase, Pagination, PaginationBody, Percentage } from "src/app/shared/types/common.type";
+import { DateISO, GetNewCode, GetNewCodeBody, HasDatabase, Percentage } from "src/app/shared/types/common.type";
 import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from "../enums/invoice-type.enum";
+import { Pagination, PaginationBody } from "src/app/shared/types/pagination.type";
 
 // Invoice Base
 
@@ -181,3 +182,8 @@ export interface DeleteInvoiceBody extends HasDatabase {
     invoiceId: number,
     invoiceCode: number
 }
+
+// Invoice/GetNewInvoiceCode 
+
+export type GetNewInvoiceCodeBody = GetNewCodeBody;
+export type GetNewInvoiceCode = GetNewCode;

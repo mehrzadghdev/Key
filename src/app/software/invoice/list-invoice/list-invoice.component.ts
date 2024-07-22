@@ -1,6 +1,6 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
-import { Pagination, PaginationBody, SelectOption } from 'src/app/shared/types/common.type';
+import { SelectOption } from 'src/app/shared/types/common.type';
 import { GetCompaniesInvoiceList, GetCompaniesInvoiceListBody, GetInvoiceListInvoiceItem } from '../../types/invoice.type';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { Router } from '@angular/router';
@@ -10,6 +10,8 @@ import { UtilityService } from 'src/app/shared/services/utility.service';
 import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from '../../enums/invoice-type.enum';
 import { Sort } from '@angular/material/sort';
 import { CreateInvoiceComponent } from '../create-invoice/create-invoice.component';
+import { UpdatePersonComponent } from '../../person/update-person/update-person.component';
+import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 
 @Component({
   selector: 'app-list-invoice',
@@ -27,6 +29,7 @@ export class ListInvoiceComponent implements OnInit {
   };
   public tableSearchQuery: string = '';
   public tableSortField: string = '';
+  public checkInvoiceValidityLoading: boolean = false;
 
   public tableSelectionModel = new SelectionModel<GetInvoiceListInvoiceItem>(true, []);
 
@@ -93,40 +96,38 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   public onTableSortChanged(sort: Sort): void {
-    // switch (sort.active) {
-    //   case "نوع":
-    //     if (sort.direction === 'asc') this.tableSortField = 'invoiceType';
-    //     if (sort.direction === 'desc') this.tableSortField = 'invoiceType_desc';
-    //     if (sort.direction === '') this.tableSortField = '';
-    //   break;
-    //   case "نام":
-    //     if (sort.direction === 'asc') this.tableSortField = 'invoiceName';
-    //     if (sort.direction === 'desc') this.tableSortField = 'invoiceName_desc';
-    //     if (sort.direction === '') this.tableSortField = '';
-    //   break;
-    //   case "کد ملی یا شماره اقتصادی":
-    //     if (sort.direction === 'asc') this.tableSortField = 'nationalId';
-    //     if (sort.direction === 'desc') this.tableSortField = 'nationalId_desc';
-    //     if (sort.direction === '') this.tableSortField = '';
-    //   break;
-    //   case "تاریخ ساخت":
-    //     if (sort.direction === 'asc') this.tableSortField = 'createdDate';
-    //     if (sort.direction === 'desc') this.tableSortField = 'createdDate_desc';
-    //     if (sort.direction === '') this.tableSortField = '';
-    //   break;
-    //   case "تلفن":
-    //     if (sort.direction === 'asc') this.tableSortField = 'mobile';
-    //     if (sort.direction === 'desc') this.tableSortField = 'mobile_desc';
-    //     if (sort.direction === '') this.tableSortField = '';
-    //   break;
-    //   case "کد پستی":
-    //     if (sort.direction === 'asc') this.tableSortField = 'zipCode';
-    //     if (sort.direction === 'desc') this.tableSortField = 'zipCode_desc';
-    //     if (sort.direction === '') this.tableSortField = '';
-    //   break;
-    // }
-
-    // TODO*
+    switch (sort.active) {
+      case "کد":
+        if (sort.direction === 'asc') this.tableSortField = 'invoiceCode';
+        if (sort.direction === 'desc') this.tableSortField = 'invoiceCode_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "تاریخ فاکتور":
+        if (sort.direction === 'asc') this.tableSortField = 'invoiceDate';
+        if (sort.direction === 'desc') this.tableSortField = 'invoiceDate_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "نوع":
+        if (sort.direction === 'asc') this.tableSortField = 'invoiceType';
+        if (sort.direction === 'desc') this.tableSortField = 'invoiceType_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "طرف حساب":
+        if (sort.direction === 'asc') this.tableSortField = 'personName';
+        if (sort.direction === 'desc') this.tableSortField = 'personName_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "الگو فروش":
+        if (sort.direction === 'asc') this.tableSortField = 'patternType';
+        if (sort.direction === 'desc') this.tableSortField = 'patternType_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case "روش پرداخت":
+        if (sort.direction === 'asc') this.tableSortField = 'paymentMethod';
+        if (sort.direction === 'desc') this.tableSortField = 'paymentMethod_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+    }
 
     this.sortInvoiceList({ pageSize: this.tablePagination.pageSize, page: 1, sortFieldName: this.tableSortField });
   }
@@ -196,8 +197,29 @@ export class ListInvoiceComponent implements OnInit {
     // TODO
   }
 
+  public onUpdateInvoicePerson(personCodeToEdit: number): void {
+    this.dialog.openFormDialog(UpdatePersonComponent, {
+      width: "456px",
+      data: {
+        code: personCodeToEdit
+      }
+    }).afterClosed().subscribe(res => {
+      this.loadInvoiceList()
+    })
+  }
+
   public onSearch(searchQuery: string) {
     this.tableSearchQuery = searchQuery
     this.loadInvoiceList({ pageSize: 10, page: 1, searchTerm: searchQuery, sortFieldName: this.tableSortField });
+  }
+
+  public checkInvoiceValidity(invoiceCode: number): void {
+    // TODO
+    this.checkInvoiceValidityLoading = true;
+    
+    setTimeout(() => {
+      this.loadInvoiceList();
+      this.checkInvoiceValidityLoading = false;
+    }, 3000);
   }
 }

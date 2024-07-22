@@ -599,6 +599,15 @@
     }
 }
 
+.software-version {
+    position: fixed;
+    right: 20px;
+    bottom: 5px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #A4B0BE;
+}
+
 @media only screen and (max-width: 768px) {
     .panel-application-not-enabled {
         width: 100%;

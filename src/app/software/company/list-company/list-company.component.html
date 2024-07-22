@@ -17,7 +17,7 @@
 
 <div class="content-table">
     <div class="table">
-        <table *ngIf="companiesListLoaded" mat-table [dataSource]="companiesList" class="">
+        <table *ngIf="companiesListLoaded" mat-table [dataSource]="companiesList">
             <ng-container matColumnDef="شماره بسته">
                 <th mat-header-cell *matHeaderCellDef> شماره بسته </th>
                 <td mat-cell *matCellDef="let element"> {{element.packageNo}} </td>
