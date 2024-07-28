@@ -73,7 +73,7 @@ export class CreateCompanyComponent {
         this.authentication.currentCompany = res;
         this.addCompanyLoading = false;
         this.utility.message('شرکت با موفقیت ایجاد شد.', 'بستن');
-        this.dialogRef.close();
+        this.dialogRef.close(res.databaseId);
       })
     }
     else if (!this.authentication.userDetails) {

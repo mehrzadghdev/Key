@@ -19,13 +19,14 @@ export class AddInvoiceProductComponent implements OnInit {
   public addInvoiceProductForm: FormGroup;
   public productListLoaded: boolean = true;
   public validationLastCheck: boolean = false;
+  public filteredProducts: Product[] = []
 
   public get totalPrice(): number {
     return this.pricebeforeTax + this.taxPrice
   }
 
   public get pricebeforeTax(): number {
-    return this.addInvoiceProductForm.get("price")?.value - ((this.addInvoiceProductForm.get("discount")?.value / 100) * this.addInvoiceProductForm.get("price")?.value)
+    return this.addInvoiceProductForm.get("price")?.value - this.addInvoiceProductForm.get("discount")?.value
   }
 
   public get taxPrice(): number {
@@ -42,17 +43,18 @@ export class AddInvoiceProductComponent implements OnInit {
   ) {
     this.addInvoiceProductForm = this.fb.group({
       productCode: [null, Validators.required],
+      productCodeSearch: [null, Validators.required],
       productName: [null, Validators.required],
       amount: [1, [Validators.min(1), Validators.required]],
       price: [null, Validators.required],
-      discount: [null, [Validators.min(0), Validators.max(100)]],
+      discount: [null],
       taxPercent: [null, [Validators.min(0), Validators.max(100)]],
     });
-
-    this.addInvoiceProductForm.get("tax")?.disable();
   }
 
   ngOnInit(): void {
+    this.filteredProducts = this.data.products;
+
     if (this.data.update && this.data.invoiceProductToUpdate) {
       this.addInvoiceProductForm.get("productCode")?.patchValue(this.data.invoiceProductToUpdate?.productCode);
       this.addInvoiceProductForm.get("productName")?.patchValue(this.data.invoiceProductToUpdate?.productName);
@@ -60,17 +62,26 @@ export class AddInvoiceProductComponent implements OnInit {
       this.addInvoiceProductForm.get("discount")?.patchValue(this.data.invoiceProductToUpdate?.discount);
       this.addInvoiceProductForm.get("price")?.patchValue(this.data.invoiceProductToUpdate?.price);
       this.addInvoiceProductForm.get("taxPercent")?.patchValue(this.data.invoiceProductToUpdate?.taxPercent);
+      this.addInvoiceProductForm.get("discount")?.setValidators(Validators.max(this.data.invoiceProductToUpdate?.price));
     }
+
+    this.addInvoiceProductForm.get("productCodeSearch")?.valueChanges.subscribe(value => {
+      this.filteredProducts = this.data.products.filter(product => product.name.includes(value));
+    })
+
+    this.addInvoiceProductForm.get("price")?.valueChanges.subscribe(value => {
+      this.addInvoiceProductForm.get("discount")?.setValidators(Validators.max(value));
+    })
   }
 
   public closeDialog(value?: AddInvoiceProductItem): void {
     this.dialogRef.close(value);
   }
 
-  
+
   public onAddInvoiceProduct(): void {
     if (this.addInvoiceProductForm.valid) {
-      
+
       const invoiceProductItem: AddInvoiceProductItem = {
         productCode: this.addInvoiceProductForm.get("productCode")?.value,
         productName: this.addInvoiceProductForm.get("productName")?.value,
@@ -88,7 +99,7 @@ export class AddInvoiceProductComponent implements OnInit {
       this.validationLastCheck = true;
     }
   }
-  
+
   public loadProductList(productCodeToAutoFill: number): void {
     this.productListLoaded = false;
 
@@ -98,6 +109,7 @@ export class AddInvoiceProductComponent implements OnInit {
     };
 
     this.productService.getCompaniesProductList(productListBody).subscribe(res => {
+      this.filteredProducts = res.result;
       this.data.products = res.result;
 
       this.onAutoFillData(productCodeToAutoFill);
@@ -110,7 +122,6 @@ export class AddInvoiceProductComponent implements OnInit {
       width: "456px"
     }).afterClosed().subscribe((productCode) => {
       if (productCode) {
-        console.log(productCode);
         this.addInvoiceProductForm.get('productCode')?.patchValue(productCode);
         this.loadProductList(productCode as unknown as number);
       }

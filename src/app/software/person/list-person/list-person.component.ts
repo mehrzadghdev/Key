@@ -170,7 +170,9 @@ export class ListPersonComponent implements OnInit {
     this.dialog.openFormDialog(CreatePersonComponent, {
       width: "456px"
     }).afterClosed().subscribe(res => {
-      this.loadPersonList()
+      if (res) {
+        this.loadPersonList()
+      }
     })
   }
 
@@ -181,7 +183,10 @@ export class ListPersonComponent implements OnInit {
         code: code
       }
     }).afterClosed().subscribe(res => {
-      this.loadPersonList()
+      console.log(res);
+      if (res) {
+        this.loadPersonList()
+      }
     })
   }
 

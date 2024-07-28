@@ -32,6 +32,11 @@ const routes: Routes = [
         loadChildren: () => import('./invoice/invoice.module').then(m => m.InvoiceModule),
         data: { animation: 'Four' }
       },
+      {
+        path: "settings",
+        loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
+        data: { animation: 'Five' }
+      },
     ]
   }
 ];

@@ -184,7 +184,9 @@ export class ListProductComponent {
     this.dialog.openFormDialog(CreateProductComponent, {
       width: "456px"
     }).afterClosed().subscribe(res => {
-      this.loadProductList()
+      if (res) {
+        this.loadProductList()
+      }
     })
   }
 
@@ -195,7 +197,9 @@ export class ListProductComponent {
         code: code
       }
     }).afterClosed().subscribe(res => {
-      this.loadProductList()
+      if (res) {
+        this.loadProductList()
+      }
     })
     return;
   }

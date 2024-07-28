@@ -1,4 +1,5 @@
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { Person } from "src/app/software/types/person.type";
 
 export abstract class CustomValidators {
     public static confirmPassword(password: string, confirmPassword: string) {
@@ -16,7 +17,7 @@ export abstract class CustomValidators {
 
             if (passwordControl.value !== confirmPasswordControl.value) {
                 confirmPasswordControl.setErrors({ passwordMismatch: true });
-            } 
+            }
             else {
                 confirmPasswordControl.setErrors(null);
             }
@@ -29,7 +30,7 @@ export abstract class CustomValidators {
         if (!value) return null;
 
         if (!value.toString().length) return null;
-        
+
         return value.toString().length !== 10 ? { nationalId: true } : null;
     }
 
@@ -39,8 +40,12 @@ export abstract class CustomValidators {
         if (!value) return null;
 
         if (!value.toString().length) return null;
-        
+
         return value.toString().length !== 10 ? { zipCode: true } : null;
+    }
+
+    public static invalid(formControl: AbstractControl): ValidationErrors {
+        return { invalid: true }
     }
 
     public static phoneNumber(formControl: AbstractControl): ValidationErrors | null {
@@ -51,7 +56,7 @@ export abstract class CustomValidators {
         if (!value.toString().length) return null;
 
         if (value.toString().startsWith("09")) return null;
-        
+
         return value.toString().length !== 10 ? { phoneNumber: true } : null;
     }
 
@@ -61,7 +66,7 @@ export abstract class CustomValidators {
         if (!value) return null;
 
         if (!value.toString().length) return null;
-        
+
         return value.toString().length !== 12 ? { economicCode: true } : null;
     }
 
@@ -71,7 +76,7 @@ export abstract class CustomValidators {
         if (!value) return null;
 
         if (!value.toString().length) return null;
-        
+
         return value.toString().length > 6 ? { taxIdentity: true } : null;
     }
 
@@ -81,7 +86,7 @@ export abstract class CustomValidators {
         if (!value) return null;
 
         if (!value.toString().length) return null;
-        
+
         return value.toString().length > 4 ? { economicCode: true } : null;
     }
 
@@ -91,7 +96,7 @@ export abstract class CustomValidators {
         if (!value) return null;
 
         if (!value.toString().length) return null;
-        
+
         return value.toString().length > 10 ? { code: true } : null;
     }
 }

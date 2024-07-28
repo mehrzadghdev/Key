@@ -74,7 +74,7 @@ export class UpdateCompanyComponent implements OnInit {
       this.companyService.updateCompany(updateCompanyBody).subscribe(res => {
         this.updateCompanyLoading = false;
         this.utility.message('شرکت با موفقیت ویرایش شد.', 'بستن');
-        this.closeDialog();
+        this.closeDialog(updateCompanyBody.databaseId);
       })
     }
     else {
@@ -82,7 +82,7 @@ export class UpdateCompanyComponent implements OnInit {
     }
   }
 
-  public closeDialog(): void {
-    this.dialgoRef.close();
+  public closeDialog(value?: any): void {
+    this.dialgoRef.close(value);
   }
 }

@@ -277,6 +277,20 @@ div.mat-mdc-select-panel {
         min-height: 2.5rem !important;
         color: var(--text-primary-color) !important;
         background-color: var(--select-background) !important;
+
+        .mdc-list-item__primary-text {
+            margin: 0 !important;
+            width: 100% !important;
+        }
+    }
+}
+
+.mat-mdc-autocomplete-panel {
+    .mat-mdc-option {
+        font-size: 0.75rem !important;
+        min-height: 2.5rem !important;
+        color: var(--text-primary-color) !important;
+        background-color: var(--select-background) !important;
     }
 }
 
@@ -334,7 +348,7 @@ div.mat-mdc-autocomplete-panel {
     background-color: var(--background-color-light) !important;
 
     .mdc-list-item__primary-text {
-        font-size: 1rem !important;
+        font-size: 12px !important;
         color: var(--text-primary-color) !important;
         margin: 0;
         width: 100%;
@@ -353,8 +367,8 @@ mat-chip-row {
 }
 
 .mat-mdc-standard-chip {
-    min-height: 36px;
-    border-radius: 20px;
+    // min-height: 36px;
+    border-radius: 50px;
 }
 
 .mat-mdc-chip {
@@ -367,6 +381,12 @@ mat-chip-row {
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+}
+
+.mat-mdc-chip-selected {
+    font-size: 0.75rem !important;
+    color: var(--text-secondary-color) !important;
+    background-color: var(--chip-background) !important;
 }
 
 .mat-mdc-chip.mat-mdc-standard-chip {
@@ -395,7 +415,7 @@ mat-chip-row {
 .mat-mdc-chip.mat-mdc-standard-chip.mat-mdc-chip-selected.mat-primary {
     color: var(--primary-color) !important;
     border: 1px solid var(--primary-color) !important;
-    background-color: var(--selected-background-color) !important;
+    background-color: color-mix(in srgb, var(--primary-color), transparent 90%) !important;
 
     .mat-mdc-select-value {
         color: var(--primary-color) !important;
@@ -408,6 +428,10 @@ mat-chip-row {
     .mdc-evolution-chip__text-label .mat-mdc-chip-action-label {
         color: var(--primary-color) !important;
     }
+}
+
+.mat-mdc-chip.mat-mdc-standard-chip {
+    padding: 0px 10px;
 }
 
 .mat-mdc-chip.mat-mdc-standard-chip::after {
@@ -431,14 +455,6 @@ mat-chip-row {
 .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic
     .mdc-evolution-chip__action--primary[dir="rtl"] {
     padding-left: 0 !important;
-}
-
-[dir="ltr"]
-    .mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic
-    .mdc-evolution-chip__action--primary,
-.mat-mdc-standard-chip.mdc-evolution-chip--with-primary-graphic
-    .mdc-evolution-chip__action--primary[dir="ltr"] {
-    padding-right: 0 !important;
 }
 
 .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled)
@@ -872,4 +888,61 @@ input::placeholder {
 
 input {
     caret-color: var(--text-secondary-color) !important;
+}
+
+.mat-select-search {
+    padding: 10px 16px;
+    background-color: var(--background-color-zebra);
+    border-bottom: 1px solid var(--border-color-medium) !important;
+    font-size: 12px;
+    border: none;
+    outline: none;
+    display: block;
+    width: 100%;
+    color: var(--text-tertiary-color);
+    
+    &::placeholder {
+        color: var(--text-tertiary-color);
+    }
+}
+
+.mat-option-tabled {
+    display: block;
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-primary-color);
+
+    span {
+        color: var(--text-secondary-color);
+        font-weight: 700;
+    }
+
+    &:not(:last-child) {
+        border-bottom: 1px solid var(--selected-background-color);
+    }
+}
+
+.form-chip-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.form-chip {
+    background-color: var(--chip-background);
+    padding: 5px 20px;
+    font-size: 12px;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    transition: all .1s ease;
+    color: var(--text-primary-color);
+    cursor: pointer;
+
+    &.selected-chip {
+        background-color: color-mix(in srgb, var(--primary-color), transparent 90%);
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+    }
 }

@@ -26,12 +26,14 @@
                             این فیلد الزامیست
                         </ng-container>
                         <ng-container *ngIf="invoiceForm.get('invoiceCode')?.hasError('code')">
-                            کد نامعتبر است، حداکثر 10 رقم  
+                            کد نامعتبر است، حداکثر 10 رقم
                         </ng-container>
                     </mat-error>
                 </mat-form-field>
+
                 <key-date-picker (dateSelected)="invoiceForm.get('invoiceDate')?.patchValue($event)">تاریخ
                     فاکتور</key-date-picker>
+
                 <div class="radio-form-field">
                     <label>نوع فاکتور: </label>
                     <mat-radio-group formControlName="invoiceType">
@@ -39,11 +41,29 @@
                             [value]="invoiceType.value">{{invoiceType.display}}</mat-radio-button>
                     </mat-radio-group>
                 </div>
+
                 <mat-form-field class="invoice-section-grid-field" appearance="outline">
                     <mat-label>فاکتور مرجع</mat-label>
-                    <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode">
-                        <mat-option *ngFor="let referenceInvoiceCode of referenceInvoiceCodeList"
-                            [value]="referenceInvoiceCode">{{referenceInvoiceCode}}</mat-option>
+                    <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode" (opened)="invoiceCodeSearchMobile.focus()">
+                        <input class="mat-select-search" type="text" formControlName="referenceInvoiceCodeSearch" #invoiceCodeSearchMobile placeholder="جستجو کردن...">
+                        <mat-option *ngFor="let referenceInvoice of filteredReferenceInvoiceList"
+                            [value]="referenceInvoice.invoiceCode">
+                            <div class="mat-option-tabled">
+                                <span>کد فاکتور: </span>
+                                {{ referenceInvoice.invoiceCode }}
+                            </div>
+                            <div class="mat-option-tabled">
+                                <span>طرف حساب: </span>
+                                {{referenceInvoice.personName}}
+                            </div>
+                            <div class="mat-option-tabled">
+                                <span>تاریخ: </span>
+                                {{ referenceInvoice.invoiceDate | jdate }}
+                            </div>
+                        </mat-option>
+                        <mat-option [value]="null" [disabled]="true"> 
+                            <span *ngIf="filteredReferenceInvoiceList.length < 1">موردی برای نمایش پیدا نشد</span>
+                        </mat-option>
                     </mat-select>
                     <mat-error *ngIf="invoiceForm.get('referenceInvoiceCode')?.invalid && validationLastCheck">
                         این فیلد الزامیست
@@ -53,11 +73,12 @@
             <div class="invoice-section-grid">
                 <mat-form-field class="invoice-section-grid-field" appearance="outline">
                     <mat-label>طرف حساب</mat-label>
-                    <mat-select formControlName="personCode" name="personCode">
-                        <mat-option *ngFor="let personCode of personList"
+                    <mat-select formControlName="personCode" name="personCode" (opened)="personCodeSearch.focus()">
+                        <input class="mat-select-search" type="text" formControlName="personCodeSearch" #personCodeSearch placeholder="جستجو کردن..">
+                        <mat-option *ngFor="let personCode of filteredPersonList"
                             [value]="personCode.code">{{personCode.personName}}</mat-option>
                         <mat-option [value]="null">
-                            <ng-container *ngIf="personList.length < 1">
+                            <ng-container *ngIf="filteredPersonList.length < 1">
                                 طرف حسابی یافت نشد.
                             </ng-container>
                             <span (click)="onAddPerson()" class="invoice-link">ایجاد طرف حساب جدید</span>
@@ -67,6 +88,7 @@
                         این فیلد الزامیست
                     </mat-error>
                 </mat-form-field>
+
                 <mat-form-field class="invoice-section-grid-field" appearance="outline">
                     <mat-label>الگو فاکتور</mat-label>
                     <mat-select formControlName="patternType" name="patternType">
@@ -77,6 +99,7 @@
                         این فیلد الزامیست
                     </mat-error>
                 </mat-form-field>
+
                 <mat-form-field class="invoice-section-grid-field" appearance="outline">
                     <mat-label>شماره قرارداد</mat-label>
                     <input type="number" matInput formControlName="vendorContractRegisterId">
@@ -91,7 +114,10 @@
 
         <div class="content">
             <ng-container>
-                <key-button class="invoice-section-actions" [disabled]="!dataFetchLoaded" (click)="onAddInvoiceProduct()">افزودن کالا و خدمات</key-button>
+                <div class="invoice-section-actions">
+                    <key-button [disabled]="!dataFetchLoaded" (click)="onAddInvoiceProduct()">افزودن کالا و
+                        خدمات</key-button>
+                </div>
                 <div class="invoice-section">
                     <div class="content-table">
                         <table *ngIf="dataFetchLoaded" mat-table [dataSource]="invoiceProducts">
@@ -138,8 +164,8 @@
                                             (click)="onDeleteInvoiceProduct(element.productCode)" content="icon">
                                             <mat-icon class="icon-red material-icons-outlined">delete</mat-icon>
                                         </key-button>
-                                        <key-button matTooltip="ویرایش"
-                                            (click)="onUpdateInvoiceProduct(element)" content="icon">
+                                        <key-button matTooltip="ویرایش" (click)="onUpdateInvoiceProduct(element)"
+                                            content="icon">
                                             <mat-icon
                                                 class="icon-primary material-icons-outlined">edit_square</mat-icon>
                                         </key-button>
@@ -167,7 +193,7 @@
                         <input type="number" matInput formControlName="invoiceCode">
                         <mat-error *ngIf="invoiceForm.get('invoiceCode')?.invalid && validationLastCheck">
                             <ng-container *ngIf="invoiceForm.get('invoiceCode')?.hasError('code')">
-                                کد نامعتبر است، حداکثر 10 رقم  
+                                کد نامعتبر است، حداکثر 10 رقم
                             </ng-container>
                         </mat-error>
                     </mat-form-field>
@@ -182,9 +208,26 @@
                     </div>
                     <mat-form-field class="invoice-section-grid-field" appearance="outline">
                         <mat-label>فاکتور مرجع</mat-label>
-                        <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode">
-                            <mat-option *ngFor="let referenceInvoiceCode of referenceInvoiceCodeList"
-                                [value]="referenceInvoiceCode">{{referenceInvoiceCode}}</mat-option>
+                        <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode" (opened)="invoiceCodeSearchMobile.focus()">
+                            <input class="mat-select-search" type="text" formControlName="referenceInvoiceCodeSearch" #invoiceCodeSearchMobile placeholder="جستجو کردن...">
+                            <mat-option *ngFor="let referenceInvoice of filteredReferenceInvoiceList"
+                                [value]="referenceInvoice.invoiceCode">
+                                <div class="mat-option-tabled">
+                                    <span>کد فاکتور: </span>
+                                    {{ referenceInvoice.invoiceCode }}
+                                </div>
+                                <div class="mat-option-tabled">
+                                    <span>طرف حساب: </span>
+                                    {{referenceInvoice.personName}}
+                                </div>
+                                <div class="mat-option-tabled">
+                                    <span>تاریخ: </span>
+                                    {{ referenceInvoice.invoiceDate | jdate }}
+                                </div>
+                            </mat-option>
+                            <mat-option [value]="null" [disabled]="true"> 
+                                <span *ngIf="filteredReferenceInvoiceList.length < 1">موردی برای نمایش پیدا نشد</span>
+                            </mat-option>
                         </mat-select>
                         <mat-error *ngIf="invoiceForm.get('referenceInvoiceCode')?.invalid && validationLastCheck">
                             این فیلد الزامیست
@@ -194,11 +237,12 @@
                 <div class="invoice-section-grid">
                     <mat-form-field class="invoice-section-grid-field" appearance="outline">
                         <mat-label>طرف حساب</mat-label>
-                        <mat-select formControlName="personCode" name="personCode">
-                            <mat-option *ngFor="let personCode of personList"
+                        <mat-select formControlName="personCode" name="personCode" (opened)="personCodeSearchMobile.focus()">
+                            <input class="mat-select-search" type="text" formControlName="personCodeSearch" #personCodeSearchMobile placeholder="جستجو کردن...">
+                            <mat-option *ngFor="let personCode of filteredPersonList"
                                 [value]="personCode.code">{{personCode.personName}}</mat-option>
                             <mat-option [value]="null">
-                                <ng-container *ngIf="personList.length < 1">
+                                <ng-container *ngIf="filteredPersonList.length < 1">
                                     طرف حسابی یافت نشد.
                                 </ng-container>
                                 <span (click)="onAddPerson()" class="invoice-link">ایجاد طرف حساب جدید</span>
@@ -242,12 +286,13 @@
                     </mat-form-field>
                     <mat-form-field class="invoice-section-grid-field" appearance="outline">
                         <mat-label>مبلغ نسیه</mat-label>
-                        <input type="text" mask="separator" thousandSeparator="," matInput formControlName="creditAmount">
+                        <input type="text" mask="separator" thousandSeparator="," matInput
+                            formControlName="creditAmount">
                         <mat-error *ngIf="invoiceForm.get('creditAmount')?.invalid && validationLastCheck">
                             این فیلد الزامیست
                         </mat-error>
                     </mat-form-field>
-    
+
                     <mat-form-field class="invoice-section-grid-field" appearance="outline">
                         <mat-label>کد ملی پرداخت کننده</mat-label>
                         <input type="number" matInput formControlName="payerNationalId">
@@ -255,7 +300,7 @@
                             کد ملی پرداخت کننده نامعتبر است
                         </mat-error>
                     </mat-form-field>
-    
+
                     <mat-form-field class="invoice-section-grid-field" appearance="outline">
                         <mat-label>شماره کارت پرداخت کننده</mat-label>
                         <input type="number" matInput formControlName="payCardNumber">
@@ -263,7 +308,7 @@
                             این فیلد الزامیست
                         </mat-error>
                     </mat-form-field>
-    
+
                     <mat-form-field class="invoice-section-grid-field" appearance="outline">
                         <mat-label>کد پیگیری پرداخت</mat-label>
                         <input type="number" matInput formControlName="payReferenceNumber">

@@ -14,7 +14,7 @@
     .content {
         z-index: 2;
         display: flex;
-        align-items: stretch;
+        // align-items: stretch;
         justify-content: start;
         flex-direction: column;
         gap: 10px;
@@ -122,6 +122,7 @@
 .invoice-section-actions {
     display: flex;
     gap: 7px;
+    justify-content: start;
     align-items: center;
 }
 
@@ -203,7 +204,7 @@
     }
 
     .table-action-buttons {
-        display: flex;
+        // display: flex;
 
         mat-icon {
             font-size: 20px;

@@ -96,7 +96,7 @@ export class UpdatePersonComponent implements OnInit {
       this.personService.updatePerson(addPersonBody).subscribe(res => {
         this.addPersonLoading = false;
         this.utility.message("طرف حساب با موفقیت ویرایش شد.", 'بستن');
-        this.closeDialog();
+        this.closeDialog(addPersonBody.code);
       })
     }
     else {
@@ -104,7 +104,7 @@ export class UpdatePersonComponent implements OnInit {
     }
   }
 
-  public closeDialog(): void {
-    this.dialgoRef.close();
+  public closeDialog(value?: any): void {
+    this.dialgoRef.close(value);
   }
 }

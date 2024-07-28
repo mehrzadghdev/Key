@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from '../../enums/invoice-type.enum';
 import { SelectOption } from 'src/app/shared/types/common.type';
-import { AddInvoiceBody, Invoice, InvoiceProductItem } from '../../types/invoice.type';
+import { AddInvoiceBody, GetInvoiceListInvoiceItem, Invoice, InvoiceProductItem } from '../../types/invoice.type';
 import { PersonService } from '../../services/person.service';
 import { ProductService } from '../../services/product.service';
 import { forkJoin } from 'rxjs';
@@ -17,6 +17,7 @@ import { CreatePersonComponent } from '../../person/create-person/create-person.
 import { AddInvoiceProductComponent } from '../add-invoice-product/add-invoice-product.component';
 import { UtilityService } from 'src/app/shared/services/utility.service';
 import { InvoiceService } from '../../services/invoice.service';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-create-invoice',
@@ -26,10 +27,13 @@ import { InvoiceService } from '../../services/invoice.service';
 export class CreateInvoiceComponent implements OnInit {
   public invoiceForm: FormGroup;
   public validationLastCheck: boolean = false;
-  public referenceInvoiceCodeList: any[] = [1, 2, 3, 4, 5, 6]; // TODO*****
+  public referenceInvoiceList: GetInvoiceListInvoiceItem[] = [];
+  public filteredReferenceInvoiceList: GetInvoiceListInvoiceItem[] = [];
   public dataFetchLoaded: boolean = false;
   public productsList: Product[] = [];
+  public personCodeAcDisplay: string = '';
   public personList: Person[] = [];
+  public filteredPersonList: Person[] = [];
   public addInvoiceLoading: boolean = false;
 
   public invoiceProductsTableColumns: string[] = ['کد کالا', 'نام کالا', 'تعداد', 'قیمت', 'تخفیف', 'درصد مالیات', 'مالیات', 'عملیات']
@@ -75,7 +79,9 @@ export class CreateInvoiceComponent implements OnInit {
       invoiceDate: [new Date().toISOString(), Validators.required],
       invoiceType: [0, Validators.required],
       referenceInvoiceCode: [null, Validators.nullValidator],
+      referenceInvoiceCodeSearch: [null],
       personCode: [null, Validators.required],
+      personCodeSearch: [null],
       patternType: [null, Validators.required],
       vendorContractRegisterId: [null, Validators.nullValidator],
       paymentMethod: [null, Validators.required],
@@ -110,10 +116,16 @@ export class CreateInvoiceComponent implements OnInit {
     forkJoin({
       persons: this.personService.getCompaniesPersonList(dataFetchBody),
       products: this.productService.getCompaniesProductList(dataFetchBody),
+      invoices: this.invoiceService.getCompaniesInvoiceList(dataFetchBody)
     })
       .subscribe(res => {
         this.productsList = res.products.result;
+
         this.personList = res.persons.result;
+        this.filteredPersonList = res.persons.result;
+
+        this.referenceInvoiceList = res.invoices.saleInvoices;
+        this.filteredReferenceInvoiceList = res.invoices.saleInvoices;
 
         this.dataFetchLoaded = true;
       })
@@ -161,8 +173,16 @@ export class CreateInvoiceComponent implements OnInit {
         this.invoiceForm.get("creditAmount")?.disable();
       }
     })
-  }
 
+    this.invoiceForm.get("personCodeSearch")?.valueChanges.subscribe(value => {
+      this.filteredPersonList = this.personList.filter(person => person.personName.includes(value));
+    })
+
+    this.invoiceForm.get("referenceInvoiceCodeSearch")?.valueChanges.subscribe(value => {
+      this.filteredReferenceInvoiceList = this.referenceInvoiceList.filter(invoice => invoice.personName.includes(value));
+    })
+  }
+  
   public onAddInvoice(): void {
     if (!this.invoiceForm.invalid) {
 
@@ -171,22 +191,22 @@ export class CreateInvoiceComponent implements OnInit {
         invoiceDate: this.invoiceForm.get('invoiceDate')?.value ?? new Date().toISOString(),
         invoiceTime: '',
         invoiceType: this.invoiceForm.get('invoiceType')?.value,
-        referenceInvoiceCode: this.invoiceForm.get('referenceInvoiceCode')?.value ?? 1,
+        referenceInvoiceCode: this.invoiceForm.get('referenceInvoiceCode')?.value ?? null,
         personCode: this.invoiceForm.get('personCode')?.value,
         patternType: this.invoiceForm.get('patternType')?.value,
-        vendorContractRegisterId: this.invoiceForm.get('vendorContractRegisterId')?.value + "" ?? "",
+        vendorContractRegisterId: this.invoiceForm.get('vendorContractRegisterId')?.value ?? "" + "",
         paymentMethod: this.invoiceForm.get('paymentMethod')?.value,
-        creditAmount: this.invoiceForm.get('creditAmount')?.value,
-        payerNationalId: this.invoiceForm.get('payerNationalId')?.value + "",
-        payCardNumber: this.invoiceForm.get('payCardNumber')?.value + "",
-        payReferenceNumber: this.invoiceForm.get('payReferenceNumber')?.value + "",
+        creditAmount: this.invoiceForm.get('creditAmount')?.value ?? 0,
+        payerNationalId: this.invoiceForm.get('payerNationalId')?.value ?? "" + "",
+        payCardNumber: this.invoiceForm.get('payCardNumber')?.value ?? "" + "",
+        payReferenceNumber: this.invoiceForm.get('payReferenceNumber')?.value ?? "" + "",
         saleInvoiceItems: this.invoiceProducts
       }
 
       this.invoiceService.addInvoice(addInvoiceBody).subscribe(res => {
         this.addInvoiceLoading = false;
         this.utility.message("فاکتور فروش با موفقیت ایجاد شد.", 'بستن');
-        this.closeDialog();
+        this.closeDialog(addInvoiceBody.invoiceCode);
       },
         err => {
           this.addInvoiceLoading = false
@@ -202,10 +222,13 @@ export class CreateInvoiceComponent implements OnInit {
   public onAddPerson(): void {
     this.dialog.openFormDialog(CreatePersonComponent, {
       width: "456px"
-    }).afterClosed().subscribe(createdPersonCode => {
-      if (createdPersonCode) {
-        this.invoiceForm.get('personCode')?.patchValue(createdPersonCode);
+    }).afterClosed().subscribe(createdPerson => {
+      const typedCreatedPerson: Person = createdPerson as unknown as Person;
+
+      if (typedCreatedPerson) {
+        this.invoiceForm.get('personCode')?.patchValue(typedCreatedPerson.code);
       }
+
       this.fetchData();
     })
   }
@@ -250,7 +273,7 @@ export class CreateInvoiceComponent implements OnInit {
     })
   }
 
-  public closeDialog(): void {
-    this.dialogRef.close();
+  public closeDialog(value?: any): void {
+    this.dialogRef.close(value);
   }
 }

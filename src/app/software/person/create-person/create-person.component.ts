@@ -81,7 +81,7 @@ export class CreatePersonComponent implements OnInit {
       this.personService.addPerson(addPersonBody).subscribe(res => {
         this.addPersonLoading = false;
         this.utility.message("طرف حساب با موفقیت ایجاد شد.", 'بستن');
-        this.closeDialog(addPersonBody.code);
+        this.closeDialog(addPersonBody);
       },
       err => {
         this.addPersonLoading = false

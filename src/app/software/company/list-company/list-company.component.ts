@@ -62,7 +62,9 @@ export class ListCompanyComponent implements OnInit {
         disableClose: false
       }
     }).afterClosed().subscribe(res => {
-      this.loadCompanyList()
+      if (res) {
+        this.loadCompanyList()
+      }
     })
   }
 
@@ -73,7 +75,9 @@ export class ListCompanyComponent implements OnInit {
         databaseId: databaseId
       }
     }).afterClosed().subscribe(res => {
-      this.loadCompanyList()
+      if (res) {
+        this.loadCompanyList()
+      }
     })
   }
 

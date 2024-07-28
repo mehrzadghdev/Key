@@ -11,6 +11,8 @@
 .panel-sidebar {
     position: fixed;
     overflow-y: auto;
+    // display: flex;
+    flex-direction: column;
     overflow-x: hidden;
     top: 0;
     right: 0;
@@ -81,6 +83,17 @@
                     }
                 }
             }
+        }
+
+        .software-version {
+            flex: 1;
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            padding: 5px;
+            font-size: 12px;
+            font-weight: 500;
+            color: #A4B0BE;
         }
     }
 
@@ -209,6 +222,10 @@
         display: flex;
         align-items: center;
         box-shadow: 0 -3px 31px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.02);
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        background-color: var(--sidebar-background);
 
         .panel-sidebar__logo {
             cursor: pointer;
@@ -256,6 +273,16 @@
                 }
             }
         }
+    }
+
+    .software-version {
+        flex: 1;
+        display: flex;
+        align-items: end;
+        padding: 10px 20px;
+        font-size: 12px;
+        font-weight: 500;
+        color: #A4B0BE;
     }
 }
 
@@ -305,6 +332,9 @@
     transition: all .5s ease;
 
     .panel-header {
+        position: sticky;
+        top: 0;
+        z-index: 999;
         height: 70px;
         display: flex;
         background-color: var(--base-color);
@@ -441,8 +471,9 @@
 
     .panel-content {
         position: relative;
-        height: calc(100vh - 70px);
-        padding: 24px 12px;
+        min-height: calc(100vh - 70px);
+        padding: 24px 12px 24px 12px;
+        margin-bottom: 100px;
         background-color: var(--background-color);
     }
 }
@@ -599,15 +630,6 @@
     }
 }
 
-.software-version {
-    position: fixed;
-    right: 20px;
-    bottom: 5px;
-    font-size: 12px;
-    font-weight: 500;
-    color: #A4B0BE;
-}
-
 @media only screen and (max-width: 768px) {
     .panel-application-not-enabled {
         width: 100%;
@@ -634,7 +656,6 @@
     .main-content {
         width: 100% !important;
         margin: 0 !important;
-        padding-bottom: 100px !important;
     }
 
     .panel-sidebar__mobile-only-search {
@@ -642,6 +663,8 @@
     }
 
     .main-content {
+        padding-bottom: 5px;
+
         .panel-header {
             .create-button {
                 display: none;

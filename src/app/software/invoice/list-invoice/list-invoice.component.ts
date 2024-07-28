@@ -189,7 +189,9 @@ export class ListInvoiceComponent implements OnInit {
 
   public onAddInvoice(): void {
     this.dialog.openFullScreenDialog(CreateInvoiceComponent).afterClosed().subscribe(res => {
-      this.loadInvoiceList();
+      if (res) {
+        this.loadInvoiceList();
+      }
     })
   }
 

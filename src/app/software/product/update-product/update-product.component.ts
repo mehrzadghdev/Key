@@ -98,7 +98,7 @@ export class UpdateProductComponent {
       this.productService.updateProduct(updateProductBody).subscribe(res => {
         this.updateProductLoading = false;
         this.utility.message((this.updateProductForm.controls["productType"].value === ProductType.Product ? 'کالا' : 'خدمات') + ' با موفقیت ویرایش شد.', 'بستن');
-        this.closeDialog();
+        this.closeDialog(updateProductBody.productCode);
       })
     }
     else {
@@ -106,7 +106,7 @@ export class UpdateProductComponent {
     }
   }
 
-  public closeDialog(): void {
-    this.dialgoRef.close();
+  public closeDialog(value?: any): void {
+    this.dialgoRef.close(value);
   }
 }

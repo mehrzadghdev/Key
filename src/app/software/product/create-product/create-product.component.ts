@@ -22,6 +22,7 @@ export class CreateProductComponent implements OnInit {
   public addProductLoading: boolean = false;
   public getUnitListLoading: boolean = true;
   public unitList: Unit[] = [];
+  public filteredUnitList: Unit[] = [];
   public productTypes = [
     { display: 'کالا', value: ProductType.Product },
     { display: 'خدمات', value: ProductType.Service },
@@ -42,6 +43,7 @@ export class CreateProductComponent implements OnInit {
       price: [null, Validators.required],
       taxPercent: [10, [Validators.required, Validators.min(0), Validators.max(100)]],
       unitCode: [null, Validators.required],
+      unitCodeSearch: [null],
       otherLegalFunds: [''],
       otherLegalFundsPercent: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       otherTax: [""],
@@ -53,10 +55,15 @@ export class CreateProductComponent implements OnInit {
     this.unitSerivce.getUnitList({}).subscribe(res => {
       this.getUnitListLoading = false;
       this.unitList = res;
+      this.filteredUnitList = res;
     })
 
     this.productService.getNewProductCode({}).subscribe(res => {
       this.addProductForm.get('code')?.patchValue(res.newCode);
+    })
+
+    this.addProductForm.get("unitCodeSearch")?.valueChanges.subscribe(value => {
+      this.filteredUnitList = this.unitList.filter(unit => unit.name.includes(value));
     })
   }
 

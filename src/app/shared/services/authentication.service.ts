@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, of, throwError } from 'rxjs';
-import { LoginApiBody, LoginApiResult, RegisterApiBody, UserDetails } from '../types/authentication.type';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoginApiBody, LoginApiResult, RegisterApiBody, UpdateUser, UpdateUserBody, UserDetails } from '../types/authentication.type';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import * as moment from 'jalali-moment';
 import { Router } from '@angular/router';
@@ -151,8 +151,15 @@ export class AuthenticationService {
 
   public userInfo(): Observable<UserDetails> {
     const headers: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+this.accessToken);
-
+    
     return this.http.get<UserDetails>(environment.apiUrl + 'userInfo', { headers: headers })
+  }
+  
+  public updateUser(userId: string ,body: UpdateUserBody): Observable<UpdateUser> {
+    const headers: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+this.accessToken);
+    let params = new HttpParams().set('id', userId);
+
+    return this.http.post<UpdateUser>(environment.apiUrl + 'Users/UpdateUser', body, { headers: headers, params: params });
   }
 
   public logout(): void {

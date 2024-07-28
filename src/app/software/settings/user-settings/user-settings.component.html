@@ -1,0 +1,79 @@
+<div class="user-settings">
+    <div class="user-settings-topbar">
+        <a routerLink="/software">
+            <key-button content="icon" appearance="flat">
+                <mat-icon class="icon-primary">arrow_forward</mat-icon>
+            </key-button>
+        </a>
+        <h3 class="user-settings-title">تنظیمات کاربری</h3>
+    </div>
+    <form class="user-settings-form" [formGroup]="userSettingsForm">
+        <span class="user-settings-field-title">مشخصات کاربری</span>
+        <div class="user-settings-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>ایمیل</mat-label>
+                <input type="text" matInput (input)="enableResetButton()" formControlName="email">
+                <mat-error *ngIf="userSettingsForm.get('email')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>شماره بسته</mat-label>
+                <input type="text" matInput (input)="enableResetButton()" formControlName="packageNo" readonly="">
+                <mat-error *ngIf="userSettingsForm.get('packageNo')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="user-settings-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>نام</mat-label>
+                <input type="text" matInput (input)="enableResetButton()" formControlName="name">
+                <mat-error *ngIf="userSettingsForm.get('name')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>نام خانوادگی</mat-label>
+                <input type="text" matInput (input)="enableResetButton()" formControlName="family">
+                <mat-error *ngIf="userSettingsForm.get('family')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="user-settings-field-row">
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>شماره همراه</mat-label>
+                <input type="number" matInput (input)="enableResetButton()" formControlName="phoneNumber">
+                <mat-error *ngIf="userSettingsForm.get('phoneNumber')?.invalid && validationLastCheck">
+                    <ng-container *ngIf="userSettingsForm.get('phoneNumber')?.hasError('required')">
+                        این فیلد الزامیست
+                    </ng-container>
+                    <ng-container *ngIf="userSettingsForm.get('phoneNumber')?.hasError('phoneNumber')">
+                        شماره همراه نامعتبر است
+                    </ng-container>
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="form-dialog-field" appearance="outline">
+                <mat-label>رمز عبور</mat-label>
+                <input type="text" matInput (input)="enableResetButton()" formControlName="password" readonly>
+                <mat-error *ngIf="userSettingsForm.get('password')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <span class="user-settings-field-title">تم و رنگ بندی</span>
+        <div class="form-chip-group">
+            <div class="form-chip" matRipple [ngClass]="{'selected-chip': activeTheme === 'default'}" (click)="setActiveTheme('default')">پیشفرض</div>
+            <div class="form-chip" matRipple [ngClass]="{'selected-chip': activeTheme === 'dark'}" (click)="setActiveTheme('dark')">تاریک</div>
+        </div>
+    </form>
+    <div class="user-settings-footer">
+        <key-button appearance="stroked" [disabled]="detailsChanged" (click)="onResetToDefault()">
+            بازگشت به تنظیمات اولیه 
+        </key-button>
+        <key-button [loading]="updateUserLoading" (click)="onUpdateUser()">
+            ذخیره تغییرات
+        </key-button>
+    </div>
+</div>

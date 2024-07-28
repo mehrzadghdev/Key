@@ -188,7 +188,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
         disableClose: false
       }
     }).afterClosed().subscribe(res => {
-      if (this.currentActivatedRoute instanceof ListCompanyComponent) {
+      if (res && this.currentActivatedRoute instanceof ListCompanyComponent) {
         this.currentActivatedRoute.loadCompanyList();
       }
     })
@@ -198,7 +198,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     this.dialog.openFormDialog(CreatePersonComponent, {
       width: "456px"
     }).afterClosed().subscribe(res => {
-      if (this.currentActivatedRoute instanceof ListPersonComponent) {
+      if (res && this.currentActivatedRoute instanceof ListPersonComponent) {
         this.currentActivatedRoute.loadPersonList();
       }
     })
@@ -208,7 +208,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     this.dialog.openFormDialog(CreateProductComponent, {
       width: "456px"
     }).afterClosed().subscribe(res => {
-      if (this.currentActivatedRoute instanceof ListProductComponent) {
+      if (res && this.currentActivatedRoute instanceof ListProductComponent) {
         this.currentActivatedRoute.loadProductList();
       }
     })
@@ -216,7 +216,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
 
   public onAddInvoice(): void {
     this.dialog.openFullScreenDialog(CreateInvoiceComponent).afterClosed().subscribe(res => {
-      if (this.currentActivatedRoute instanceof ListInvoiceComponent) {
+      if (res && this.currentActivatedRoute instanceof ListInvoiceComponent) {
         this.currentActivatedRoute.loadInvoiceList();
       }
     })

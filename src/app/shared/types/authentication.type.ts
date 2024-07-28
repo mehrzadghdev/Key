@@ -1,3 +1,5 @@
+import { DateISO } from "./common.type"
+
 export interface RegisterApiBody {
   email: string,
   password: string,
@@ -86,3 +88,13 @@ export interface UserDetails {
   modifiedDate: string,
   companies: null;
 }
+
+// /Users/UpdateUser
+
+export interface UpdateUserBody {
+  name: string,
+  family: string,
+  phoneNumber: string,
+}
+
+export type UpdateUser = null;

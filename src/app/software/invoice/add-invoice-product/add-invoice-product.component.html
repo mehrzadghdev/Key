@@ -10,11 +10,12 @@
         <div class="form-dialog-content-loading" *ngIf="!productListLoaded"></div>
         <mat-form-field class="form-dialog-field" appearance="outline">
             <mat-label>کالا یا خدمات</mat-label>
-            <mat-select formControlName="productCode" name="productCode" (valueChange)="onAutoFillData($event)">
-                <mat-option *ngFor="let product of data.products"
+            <mat-select formControlName="productCode" name="productCode" (valueChange)="onAutoFillData($event)" (opened)="productCodeSearchMobile.focus()">
+                <input class="mat-select-search" type="text" formControlName="productCodeSearch" #productCodeSearchMobile placeholder="جستجو کردن...">
+                <mat-option *ngFor="let product of filteredProducts"
                     [value]="product.code">{{product.name}}</mat-option>
                 <mat-option [value]="null">
-                    <ng-container *ngIf="data.products.length < 1">
+                    <ng-container *ngIf="filteredProducts.length < 1">
                         کالا و خدماتی یافت نشد.
                     </ng-container>
                     <span (click)="onAddProduct()" class="invoice-link">ایجاد کالا و خدمات جدید</span>
@@ -54,10 +55,10 @@
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>درصد تخفیف</mat-label>
-                <input keyPercentageInput type="number" matInput formControlName="discount">
+                <mat-label>تخفیف</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="discount">
                 <mat-error *ngIf="addInvoiceProductForm.get('discount')?.invalid && validationLastCheck">
-                    درصد تخفیف نامعتبر است
+                    حداکثر میزان تخفیف: {{ addInvoiceProductForm.get('price')?.value | price }} ریال
                 </mat-error>
             </mat-form-field>
         </div>

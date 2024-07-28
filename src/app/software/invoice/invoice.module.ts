@@ -19,6 +19,7 @@ import { ListInvoiceComponent } from './list-invoice/list-invoice.component';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatCheckboxModule,
     MatRadioModule,
     MatMenuModule,
+    MatAutocompleteModule,
     MatDialogModule,
     MatTableModule,
     MatTooltipModule,
