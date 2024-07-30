@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { UtilityService } from 'src/app/shared/services/utility.service';
-import { LoginApiBody } from 'src/app/shared/types/authentication.type';
+import { LoginBody } from 'src/app/shared/types/authentication.type';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +30,7 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.loginLoading = true;
       
-      const loginBody: LoginApiBody = {
+      const loginBody: LoginBody = {
         email: this.loginForm.get("email")?.value,
         password: this.loginForm.get("password")?.value,
         twoFactorCode: null,
@@ -42,7 +42,7 @@ export class LoginComponent {
           this.authentication.accessToken = result.accessToken;
           this.authentication.tokenExpireDate = result.expiresIn;
           this.authentication.userInfo().subscribe(result => {
-            this.authentication.userDetails = result;
+            this.authentication.userDetails = result[0];
             this.router.navigate(['/software']);
             this.loginLoading = false;
 

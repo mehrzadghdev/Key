@@ -3,7 +3,7 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/authentication.service';
 import { UtilityService } from 'src/app/shared/services/utility.service';
-import { LoginApiBody, RegisterApiBody } from 'src/app/shared/types/authentication.type';
+import { AddUserBody, LoginBody } from 'src/app/shared/types/authentication.type';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 
 @Component({
@@ -40,7 +40,7 @@ export class RegisterComponent {
 		if (this.registerForm.valid) {
 			this.registerLoading = true;
 
-			const registerBody: RegisterApiBody = {
+			const registerBody: AddUserBody = {
 				email: this.registerForm.get("email")?.value,
 				password: this.registerForm.get("password")?.value,
 				name: this.registerForm.get("name")?.value,
@@ -57,7 +57,7 @@ export class RegisterComponent {
 
 			this.authentication.register(registerBody).subscribe({
 				next: (result) => {
-					const loginBody: LoginApiBody = {
+					const loginBody: LoginBody = {
 						email: registerBody.email,
 						password: registerBody.password,
 						twoFactorCode: null,
@@ -70,7 +70,7 @@ export class RegisterComponent {
 							this.authentication.tokenExpireDate = loginResult.expiresIn;
 
 							this.authentication.userInfo().subscribe(result => {
-								this.authentication.userDetails = result;
+								this.authentication.userDetails = result[0];
 								this.registerLoading = false;
 								this.utility.message("ساخت حساب کاربری انجام شد.", 'بستن');
 								this.router.navigate(['/software']);

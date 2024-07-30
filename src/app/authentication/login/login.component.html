@@ -41,7 +41,9 @@
                 <button type="submit" matRipple class="primary-button block-button submit-button" [disabled]="loginLoading" [ngClass]="{'button-loading': loginLoading}">
                     <div class="button-content">ورود</div>
                 </button>
-                <button type="button" matRipple class="stroked-button block-button forget-password" nzBlock>فراموشی رمز عبور</button>
+                <a routerLink="/auth/forget-password">
+                    <button type="button" matRipple class="stroked-button block-button forget-password">فراموشی رمز عبور</button>
+                </a>
                 <span class="other-option-link">حساب کاربری ندارید؟<a routerLink="/auth/register">ثبت نام</a></span>
                 <a routerLink="register"></a>
             </form>

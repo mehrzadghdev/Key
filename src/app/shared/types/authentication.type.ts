@@ -1,6 +1,8 @@
 import { DateISO } from "./common.type"
 
-export interface RegisterApiBody {
+// Users/AddUsers
+
+export interface AddUserBody {
   email: string,
   password: string,
   name: string,
@@ -15,21 +17,7 @@ export interface RegisterApiBody {
   exportPatternCount: 0
 }
 
-export interface LoginApiBody {
-  email: string,
-  password: string,
-  twoFactorCode: null | string,
-  twoFactorRecoveryCode: null | string
-}
-
-export interface LoginApiResult {
-  tokenType: string,
-  accessToken: string,
-  expiresIn: number,
-  refreshToken: string
-}
-
-export interface RegisterApiResult {
+export interface AddUser {
   packageNo: number,
   name: string,
   family: string,
@@ -58,25 +46,34 @@ export interface RegisterApiResult {
   accessFailedCount: number
 }
 
+// Users/Login
+
+export interface LoginBody {
+  email: string,
+  password: string,
+  twoFactorCode: null | string,
+  twoFactorRecoveryCode: null | string
+}
+
+export interface Login {
+  tokenType: string,
+  accessToken: string,
+  expiresIn: number,
+  refreshToken: string
+}
+
+// Users/UserInfo
+
+export type UserInfo = [UserDetails];
+
 export interface UserDetails {
   id: string,
-  userName: string,
-  normalizedUserName: string,
-  email: string,
-  normalizedEmail: string,
-  emailConfirmed: boolean,
-  passwordHash: string,
-  securityStamp: string,
-  concurrencyStamp: string,
-  phoneNumberConfirmed: boolean,
-  twoFactorEnabled: boolean,
-  lockoutEnd: string,
-  lockoutEnabled: boolean,
-  accessFailedCount: number,
   packageNo: number,
   name: string,
   family: string,
-  phoneNumber: string,
+  phoneNumber: number,
+  userName: string,
+  email: string,
   salePatternCount: number,
   currencyPatternCount: number,
   goldPatternCount: number,
@@ -84,12 +81,11 @@ export interface UserDetails {
   servicePatternCount: number,
   airTicketPatternCount: number,
   exportPatternCount: number,
-  createdDate: string,
-  modifiedDate: string,
-  companies: null;
+  createdDate: DateISO,
+  modifiedDate: DateISO
 }
 
-// /Users/UpdateUser
+// Users/UpdateUser
 
 export interface UpdateUserBody {
   name: string,
@@ -98,3 +94,22 @@ export interface UpdateUserBody {
 }
 
 export type UpdateUser = null;
+
+// Users/ForgetPassword
+
+export interface ForgetPasswordBody {
+  email: string
+}
+
+export type ForgetPassword = null;
+
+// Users/ResetPassword
+
+export interface ResetPasswordBody {
+  password: string,
+  confirmPassword: string,
+  email: string,
+  token: string
+}
+
+export type ResetPassword = null;

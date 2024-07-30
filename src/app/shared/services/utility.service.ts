@@ -13,11 +13,17 @@ export class UtilityService {
 
   public message(content: string | ComponentType<any>, action: string, type: 'dynamic' | 'static' = 'static',) {
     if (type === 'static' && typeof content === 'string') {
-      return this.snackBar.open(content, action);
+      return this.snackBar.open(content, action, {
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      });
     }
 
     if (type === 'dynamic' && typeof content !== 'string') {
-      return this.snackBar.openFromComponent(content);
+      return this.snackBar.openFromComponent(content, {
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+      });
     }
 
     return console.error("Message utiltiy called with bad params");

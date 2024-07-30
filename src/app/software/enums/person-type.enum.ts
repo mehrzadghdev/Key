@@ -1,7 +1,7 @@
 export enum PersonType {
-    Genuine = 0,
-    Legal = 1,
-    CivilPartnership = 2,
-    NonIranianNotionals = 3,
-    FinalConsumer = 4,
+    Genuine = 1,
+    Legal = 2,
+    CivilPartnership = 3,
+    NonIranianNotionals = 4,
+    FinalConsumer = 5,
 }

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from '../../enums/invoice-type.enum';
 import { SelectOption } from 'src/app/shared/types/common.type';
-import { AddInvoiceBody, GetInvoiceListInvoiceItem, Invoice, InvoiceProductItem } from '../../types/invoice.type';
+import { AddInvoiceBody, AddInvoiceProductItem, GetInvoiceListInvoiceItem, Invoice, InvoiceProductItem } from '../../types/invoice.type';
 import { PersonService } from '../../services/person.service';
 import { ProductService } from '../../services/product.service';
 import { forkJoin } from 'rxjs';
@@ -37,7 +37,7 @@ export class CreateInvoiceComponent implements OnInit {
   public addInvoiceLoading: boolean = false;
 
   public invoiceProductsTableColumns: string[] = ['کد کالا', 'نام کالا', 'تعداد', 'قیمت', 'تخفیف', 'درصد مالیات', 'مالیات', 'عملیات']
-  public invoiceProducts: InvoiceProductItem[] = [];
+  public invoiceProducts: AddInvoiceProductItem[] = [];
 
   public invoiceTypeList: SelectOption<InvoiceType>[] = [
     { display: "اصلی", value: InvoiceType.Main },
@@ -182,7 +182,7 @@ export class CreateInvoiceComponent implements OnInit {
       this.filteredReferenceInvoiceList = this.referenceInvoiceList.filter(invoice => invoice.personName.includes(value));
     })
   }
-  
+
   public onAddInvoice(): void {
     if (!this.invoiceForm.invalid) {
 
@@ -203,14 +203,18 @@ export class CreateInvoiceComponent implements OnInit {
         saleInvoiceItems: this.invoiceProducts
       }
 
-      this.invoiceService.addInvoice(addInvoiceBody).subscribe(res => {
+      console.log(addInvoiceBody);
+
+      this.invoiceService.addInvoice(addInvoiceBody).subscribe(
+        res => {
         this.addInvoiceLoading = false;
         this.utility.message("فاکتور فروش با موفقیت ایجاد شد.", 'بستن');
         this.closeDialog(addInvoiceBody.invoiceCode);
-      },
+        },
         err => {
           this.addInvoiceLoading = false
-        })
+        }
+      )
     }
     else {
       this.invoiceForm.markAllAsTouched();
@@ -241,7 +245,7 @@ export class CreateInvoiceComponent implements OnInit {
       }
     }).afterClosed().subscribe(invoiceProductItem => {
       if (invoiceProductItem) {
-        this.invoiceProducts.push(invoiceProductItem as unknown as InvoiceProductItem);
+        this.invoiceProducts.push(invoiceProductItem as unknown as AddInvoiceProductItem);
         this.invoiceProducts = [...this.invoiceProducts];
       }
     })
@@ -266,8 +270,8 @@ export class CreateInvoiceComponent implements OnInit {
       }
     }).afterClosed().subscribe(invoiceProductItem => {
       if (invoiceProductItem) {
-        this.invoiceProducts = this.invoiceProducts.filter(product => product.productCode !== (invoiceProductItem as unknown as InvoiceProductItem).productCode);
-        this.invoiceProducts.push(invoiceProductItem as unknown as InvoiceProductItem);
+        this.invoiceProducts = this.invoiceProducts.filter(product => product.productCode !== (invoiceProductItem as unknown as AddInvoiceProductItem).productCode);
+        this.invoiceProducts.push(invoiceProductItem as unknown as AddInvoiceProductItem);
         this.invoiceProducts = [...this.invoiceProducts];
       }
     })

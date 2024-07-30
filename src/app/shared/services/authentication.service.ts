@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable, catchError, of, throwError } from 'rxjs';
-import { LoginApiBody, LoginApiResult, RegisterApiBody, UpdateUser, UpdateUserBody, UserDetails } from '../types/authentication.type';
+import { Observable, catchError, first, of, throwError } from 'rxjs';
+import { AddUser, AddUserBody, ForgetPassword, ForgetPasswordBody, Login, LoginBody, ResetPassword, ResetPasswordBody, UpdateUser, UpdateUserBody, UserDetails, UserInfo } from '../types/authentication.type';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import * as moment from 'jalali-moment';
@@ -121,14 +121,14 @@ export class AuthenticationService {
     this._tokenExpireDate = null
   }
 
-  public register(registerDetails: RegisterApiBody) {
+  public register(registerDetails: AddUserBody): Observable<AddUser> {
     this.clearCurrentCompany();
-    return this.http.post(environment.apiUrl + "Users/AddUser", registerDetails)
+    return this.http.post<AddUser>(environment.apiUrl + "Users/AddUser", registerDetails);
   }
 
-  public login(loginDetails: LoginApiBody): Observable<LoginApiResult> {
+  public login(loginDetails: LoginBody): Observable<Login> {
     this.clearCurrentCompany();
-    return this.http.post<LoginApiResult>(environment.apiUrl + "login", loginDetails).pipe(
+    return this.http.post<Login>(environment.apiUrl + "Users/Login", loginDetails).pipe(
       catchError((err) => {
         if ([500, 501].includes(err.status)) {
           this.utility.message("خطای داخلی، لطفا با پشتیبانی تماس بگیرید", 'بستن')
@@ -149,10 +149,12 @@ export class AuthenticationService {
     );
   }
 
-  public userInfo(): Observable<UserDetails> {
+  public userInfo(): Observable<UserInfo> {
     const headers: HttpHeaders = new HttpHeaders().set("Authorization", "Bearer "+this.accessToken);
     
-    return this.http.get<UserDetails>(environment.apiUrl + 'userInfo', { headers: headers })
+    return this.http.post<UserInfo>(environment.apiUrl + 'Users/UserInfo', null, { headers: headers }).pipe(
+      first()
+    )
   }
   
   public updateUser(userId: string ,body: UpdateUserBody): Observable<UpdateUser> {
@@ -160,6 +162,14 @@ export class AuthenticationService {
     let params = new HttpParams().set('id', userId);
 
     return this.http.post<UpdateUser>(environment.apiUrl + 'Users/UpdateUser', body, { headers: headers, params: params });
+  }
+
+  public forgetPassword(body: ForgetPasswordBody): Observable<ForgetPassword> {
+    return this.http.post<ForgetPassword>(environment.apiUrl + 'Users/ForgotPassword', body);
+  }
+
+  public resetPassword(body: ResetPasswordBody): Observable<ResetPassword> {
+    return this.http.post<ResetPassword>(environment.apiUrl + 'Users/ResetPassword', body);
   }
 
   public logout(): void {

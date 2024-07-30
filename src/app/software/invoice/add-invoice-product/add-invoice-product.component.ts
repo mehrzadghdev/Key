@@ -43,7 +43,7 @@ export class AddInvoiceProductComponent implements OnInit {
   ) {
     this.addInvoiceProductForm = this.fb.group({
       productCode: [null, Validators.required],
-      productCodeSearch: [null, Validators.required],
+      productCodeSearch: [null],
       productName: [null, Validators.required],
       amount: [1, [Validators.min(1), Validators.required]],
       price: [null, Validators.required],
@@ -81,8 +81,10 @@ export class AddInvoiceProductComponent implements OnInit {
 
   public onAddInvoiceProduct(): void {
     if (this.addInvoiceProductForm.valid) {
+      const currentCompany = this.authentication.currentCompany as Company;
 
       const invoiceProductItem: AddInvoiceProductItem = {
+        databaseId: currentCompany.databaseId,
         productCode: this.addInvoiceProductForm.get("productCode")?.value,
         productName: this.addInvoiceProductForm.get("productName")?.value,
         amount: this.addInvoiceProductForm.get("amount")?.value ?? 1,

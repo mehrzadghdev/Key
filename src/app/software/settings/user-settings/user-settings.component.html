@@ -69,10 +69,16 @@
         </div>
     </form>
     <div class="user-settings-footer">
-        <key-button appearance="stroked" [disabled]="detailsChanged" (click)="onResetToDefault()">
+        <div class="logout-button">
+            <key-button [block]="true" appearance="error" (click)="onLogout()">
+                <mat-icon class="logout-icon">logout</mat-icon>
+                خروج از حساب کاربری
+            </key-button>
+        </div>
+        <key-button [block]="true" appearance="stroked" [disabled]="detailsChanged" (click)="onResetToDefault()">
             بازگشت به تنظیمات اولیه 
         </key-button>
-        <key-button [loading]="updateUserLoading" (click)="onUpdateUser()">
+        <key-button [block]="true" [loading]="updateUserLoading" (click)="onUpdateUser()">
             ذخیره تغییرات
         </key-button>
     </div>

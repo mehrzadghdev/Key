@@ -55,7 +55,7 @@ export class CreateCompanyComponent {
   public onAddCompany(): void {
     if (!this.addCompanyForm.invalid && this.authentication.userDetails) {
       this.addCompanyLoading = true;
-
+      
       const addCompanyBody: AddCompanyBody = {
         packageNo: this.authentication.userDetails.packageNo,
         companyName: (this.addCompanyForm.controls["companyName"].value) + "",

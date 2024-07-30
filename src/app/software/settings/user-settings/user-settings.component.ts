@@ -49,7 +49,7 @@ export class UserSettingsComponent implements OnInit {
     
     this.authenticationService.userInfo().subscribe(result => {
       this.beforeSaveUserDetails = this.authenticationService.userDetails as UserDetails;
-      this.userDetails = result;
+      this.userDetails = result[0];
       this.autoFillForm(this.userDetails)
     })
   }
@@ -89,9 +89,9 @@ export class UserSettingsComponent implements OnInit {
         this.utility.message("تنظیمات کاربری با موفقیت ذخیره شد", "بستن");
 
         this.authenticationService.userInfo().subscribe(userDetails => {
-          this.userDetails = userDetails;
-          this.beforeSaveUserDetails = userDetails;
-          this.authenticationService.userDetails = userDetails;
+          this.userDetails = userDetails[0];
+          this.beforeSaveUserDetails = userDetails[0];
+          this.authenticationService.userDetails = userDetails[0];
 
         });
         this.updateUserLoading = false;
@@ -101,6 +101,11 @@ export class UserSettingsComponent implements OnInit {
       this.validationLastCheck = true;
       this.userSettingsForm.markAllAsTouched();
     }
+  }
+  
+  public onLogout(): void {
+    this.authenticationService.logout();
+    this.utility.message("حروج از حساب کاربری انجام شد", "بستن")
   }
 
   public autoFillForm(userDetails: UserDetails): void {
