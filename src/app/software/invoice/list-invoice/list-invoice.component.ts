@@ -12,6 +12,7 @@ import { Sort } from '@angular/material/sort';
 import { CreateInvoiceComponent } from '../create-invoice/create-invoice.component';
 import { UpdatePersonComponent } from '../../person/update-person/update-person.component';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
+import { UpdateInvoiceComponent } from '../update-invoice/update-invoice.component';
 
 @Component({
   selector: 'app-list-invoice',
@@ -101,32 +102,32 @@ export class ListInvoiceComponent implements OnInit {
         if (sort.direction === 'asc') this.tableSortField = 'invoiceCode';
         if (sort.direction === 'desc') this.tableSortField = 'invoiceCode_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "تاریخ فاکتور":
         if (sort.direction === 'asc') this.tableSortField = 'invoiceDate';
         if (sort.direction === 'desc') this.tableSortField = 'invoiceDate_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "نوع":
         if (sort.direction === 'asc') this.tableSortField = 'invoiceType';
         if (sort.direction === 'desc') this.tableSortField = 'invoiceType_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "طرف حساب":
         if (sort.direction === 'asc') this.tableSortField = 'personName';
         if (sort.direction === 'desc') this.tableSortField = 'personName_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "الگو فروش":
         if (sort.direction === 'asc') this.tableSortField = 'patternType';
         if (sort.direction === 'desc') this.tableSortField = 'patternType_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "روش پرداخت":
         if (sort.direction === 'asc') this.tableSortField = 'paymentMethod';
         if (sort.direction === 'desc') this.tableSortField = 'paymentMethod_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
     }
 
     this.sortInvoiceList({ pageSize: this.tablePagination.pageSize, page: 1, sortFieldName: this.tableSortField });
@@ -136,10 +137,10 @@ export class ListInvoiceComponent implements OnInit {
     this.loadInvoiceList({ pageSize: itemsPerPage, page: 1, searchTerm: this.tableSearchQuery, sortFieldName: this.tableSortField });
   }
 
-  public onPaginationChanged(pagetoGo: number): void { 
+  public onPaginationChanged(pagetoGo: number): void {
     this.loadInvoiceList({ pageSize: this.tablePagination.pageSize, page: pagetoGo, searchTerm: this.tableSearchQuery, sortFieldName: this.tableSortField });
   }
-  
+
   public sortInvoiceList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
     const invoiceListBody: GetCompaniesInvoiceListBody = {
       ...pagination
@@ -148,11 +149,11 @@ export class ListInvoiceComponent implements OnInit {
     this.invoiceSerivce.getCompaniesInvoiceList(invoiceListBody).subscribe(res => {
       this.invoiceList = res.saleInvoices;
       this.tablePagination.totalCount = res.totalCount,
-      this.tablePagination.pageSize = res.pageSize,
-      this.tablePagination.currentPage = res.currentPage,
-      this.tablePagination.totalPages = res.totalPages,
-      this.tablePagination.hasNext = res.hasNext,
-      this.tablePagination.hasPrev = res.hasPrev
+        this.tablePagination.pageSize = res.pageSize,
+        this.tablePagination.currentPage = res.currentPage,
+        this.tablePagination.totalPages = res.totalPages,
+        this.tablePagination.hasNext = res.hasNext,
+        this.tablePagination.hasPrev = res.hasPrev
       this.invoiceListLoaded = true;
     })
   }
@@ -167,11 +168,11 @@ export class ListInvoiceComponent implements OnInit {
     this.invoiceSerivce.getCompaniesInvoiceList(invoiceListBody).subscribe(res => {
       this.invoiceList = res.saleInvoices;
       this.tablePagination.totalCount = res.totalCount,
-      this.tablePagination.pageSize = res.pageSize,
-      this.tablePagination.currentPage = res.currentPage,
-      this.tablePagination.totalPages = res.totalPages,
-      this.tablePagination.hasNext = res.hasNext,
-      this.tablePagination.hasPrev = res.hasPrev
+        this.tablePagination.pageSize = res.pageSize,
+        this.tablePagination.currentPage = res.currentPage,
+        this.tablePagination.totalPages = res.totalPages,
+        this.tablePagination.hasNext = res.hasNext,
+        this.tablePagination.hasPrev = res.hasPrev
       this.invoiceListLoaded = true;
     })
   }
@@ -196,7 +197,11 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   public onUpdateInvoice(invoiceCode: number) {
-    // TODO
+    this.dialog.openFullScreenDialog(UpdateInvoiceComponent, { data: { invoiceCode: invoiceCode } }).afterClosed().subscribe(res => {
+      if (res) {
+        this.loadInvoiceList();
+      }
+    })
   }
 
   public onUpdateInvoicePerson(personCodeToEdit: number): void {
@@ -206,7 +211,9 @@ export class ListInvoiceComponent implements OnInit {
         code: personCodeToEdit
       }
     }).afterClosed().subscribe(res => {
-      this.loadInvoiceList()
+      if (res) {
+        this.loadInvoiceList()
+      }
     })
   }
 
@@ -218,7 +225,7 @@ export class ListInvoiceComponent implements OnInit {
   public checkInvoiceValidity(invoiceCode: number): void {
     // TODO
     this.checkInvoiceValidityLoading = true;
-    
+
     setTimeout(() => {
       this.loadInvoiceList();
       this.checkInvoiceValidityLoading = false;

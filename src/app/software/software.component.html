@@ -147,7 +147,7 @@
         </ul>
         <span class="software-version">
             <ng-container *ngIf="isExpanded">
-                نسخه: 
+                نسخه:
             </ng-container>
             v{{ softwareVersion | farsiNumber }}
         </span>
@@ -168,12 +168,25 @@
                 <button mat-menu-item (click)="onAddInvoice()">فاکتور فروش</button>
             </mat-menu>
             <div class="search-box">
-                <form class="search-form" (ngSubmit)="onSearch()">
-                    <input placeholder="جستجو کردن..." type="text" class="search" [(ngModel)]="searchQuery"
-                        name="search-input">
+                <form class="search-form" (ngSubmit)="searchInput.blur(); onSearch()">
+                    <input placeholder="جستجو کردن..." type="text" #searchInput (click)="searchOpened = true;" (keydown.esc)="searchOpened = false; searchInput.blur()" [ngClass]="{'search-opened': searchOpened}" class="search" [(ngModel)]="searchQuery" name="search-input">
+                    <div class="search-form-history" *ngIf="searchOpened">
+                        <span class="search-history-item" *ngFor="let searchHistoryItem of searchHistory">
+                            <div class="history-item-value" (click)="searchQuery = searchHistoryItem.value; onSearch();">
+                                <mat-icon class="icon-medium">history</mat-icon>
+                                <span>
+                                    {{ searchHistoryItem.value }}
+                                </span>
+                            </div>
+                            <div class="close-icon">
+                                <mat-icon (click)="removeFormHistory(searchHistoryItem)" class="icon-medium">close</mat-icon>
+                            </div>
+                        </span>
+                    </div>
                     <button class="icon-light search-icon">
                         <mat-icon>search</mat-icon>
                     </button>
+                    <div class="search-form-overlay" (click)="searchOpened = false"></div>
                 </form>
             </div>
             <div class="theme-select" mat-ripple [mat-menu-trigger-for]="themeMenu">
@@ -195,7 +208,7 @@
                 <mat-icon class="material-icons-outlined" matBadge="2" matBadgeColor="warn">notifications</mat-icon>
             </div>
             <a routerLink="/software/settings">
-                <key-button content="icon" class="icon" >
+                <key-button content="icon" class="icon">
                     <mat-icon matTooltip="تنظیمات کاربری" class="settings-icons">settings</mat-icon>
                 </key-button>
             </a>

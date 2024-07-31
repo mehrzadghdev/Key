@@ -7,7 +7,9 @@
     </div>
     
     <div class="form-dialog-content">
-        <div class="form-dialog-content-loading" *ngIf="getUnitListLoading || getProductLoading"></div>
+        <div class="form-dialog-content-loading" *ngIf="getUnitListLoading || getProductLoading">
+            <mat-spinner [diameter]="35"></mat-spinner>
+        </div>
         <mat-form-field class="form-dialog-field" appearance="outline">
             <mat-label>واحد کالا و خدمات</mat-label>
             <mat-select formControlName="unitCode" name="unitCode">

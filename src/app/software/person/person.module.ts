@@ -22,6 +22,7 @@ import { } from '@angular/cdk';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ]
 })
 export class PersonModule { }

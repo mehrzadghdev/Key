@@ -75,7 +75,7 @@ export interface GetCompaniesInvoiceList extends Pagination {
 
 // Invoice/GetSaleInvoice
 
-export type GetInvoice = [Invoice];
+export type GetInvoice = Invoice;
 
 export interface GetInvoiceBody extends HasDatabase {
     invoiceCode: number
@@ -150,17 +150,7 @@ export interface UpdateInvoiceBody {
     payerNationalId: string,
     payCardNumber: string,
     payReferenceNumber: string,
-    saleInvoiceItems: [
-      {
-        productCode: 0,
-        productName: string,
-        amount: 0,
-        price: 0,
-        discount: 0,
-        taxPercent: 0,
-        tax: 0
-      }
-    ]
+    saleInvoiceItems: UpdateInvoiceProductItem[]
 };
 
 export interface UpdateInvoiceProductItem {
@@ -168,7 +158,7 @@ export interface UpdateInvoiceProductItem {
     productName: string,
     amount: number,
     price: number,
-    discount: Percentage,
+    discount: number,
     taxPercent: Percentage,
     tax: number
 }

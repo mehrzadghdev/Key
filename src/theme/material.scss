@@ -886,7 +886,7 @@ input::placeholder {
     }
 }
 
-input {
+input, textarea {
     caret-color: var(--text-secondary-color) !important;
 }
 

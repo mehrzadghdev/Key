@@ -4,204 +4,204 @@
     display: -webkit-flex;
 }
 
-.flex-row {
+.flex-dr {
     flex-direction: row;
     -webkit-flex-direction: row;
 }
 
-.flex-row-reverse {
+.flex-drr {
     flex-direction: row-reverse;
     -webkit-flex-direction: row-reverse;
 }
 
-.flex-column {
+.flex-dc {
     flex-direction: column;
     -webkit-flex-direction: column;
 }
 
-.flex-column-reverse {
+.flex-dcr {
     flex-direction: column-reverse;
     -webkit-flex-direction: column-reverse;
 }
 
-.flex-wrap {
+.flex-ww {
     flex-wrap: wrap;
     -webkit-flex-wrap: wrap;
 }
 
-.flex-nowrap {
+.flex-wnw {
     flex-wrap: nowrap;
     -webkit-flex-wrap: nowrap;
 }
 
-.flex-wrap-reverse {
+.flex-wwr {
     flex-wrap: wrap-reverse;
     -webkit-flex-wrap: wrap-reverse;
 }
 
-.flex-justify-start {
+.flex-jcs {
     justify-content: flex-start;
     -webkit-justify-content: flex-start;
 }
 
-.flex-justify-end {
+.flex-jce {
     justify-content: flex-end;
     -webkit-justify-content: flex-end;
 }
 
-.flex-justify-center {
+.flex-jcc {
     justify-content: center;
     -webkit-justify-content: center;
 }
 
-.flex-justify-between {
+.flex-jcb {
     justify-content: space-between;
     -webkit-justify-content: space-between;
 }
 
-.flex-justify-around {
+.flex-jca {
     justify-content: space-around;
     -webkit-justify-content: space-around;
 }
 
-.flex-align-start {
+.flex-ais {
     align-items: flex-start;
     -webkit-align-items: flex-start;
 }
 
-.flex-align-end {
+.flex-aie {
     align-items: flex-end;
     -webkit-align-items: flex-end;
 }
 
-.flex-align-center {
+.flex-aic {
     align-items: center;
     -webkit-align-items: center;
 }
 
-.flex-align-baseline {
+.flex-aib {
     align-items: baseline;
     -webkit-align-items: baseline;
 }
 
-.flex-align-stretch {
+.flex-aisc {
     align-items: stretch;
     -webkit-align-items: stretch;
 }
 
-.flex-content-start {
+.flex-acs {
     align-content: flex-start;
     -webkit-align-content: flex-start;
 }
 
-.flex-content-end {
+.flex-ace {
     align-content: flex-end;
     -webkit-align-content: flex-end;
 }
 
-.flex-content-center {
+.flex-acc {
     align-content: center;
     -webkit-align-content: center;
 }
 
-.flex-content-between {
+.flex-acb {
     align-content: space-between;
     -webkit-align-content: space-between;
 }
 
-.flex-content-around {
+.flex-aca {
     align-content: space-around;
     -webkit-align-content: space-around;
 }
 
-.flex-content-stretch {
+.flex-acsc {
     align-content: stretch;
     -webkit-align-content: stretch;
 }
 
 /* Flex item properties */
-.flex-item {
+.flex-f1 {
     flex: 1;
     -webkit-flex: 1;
 }
 
-.flex-order-0 {
+.flex-o0 {
     order: 0;
     -webkit-order: 0;
 }
 
-.flex-order-1 {
+.flex-o1 {
     order: 1;
     -webkit-order: 1;
 }
 
-.flex-order-2 {
+.flex-o2 {
     order: 2;
     -webkit-order: 2;
 }
 
-.flex-order-3 {
+.flex-o3 {
     order: 3;
     -webkit-order: 3;
 }
 
-.flex-order-4 {
+.flex-o4 {
     order: 4;
     -webkit-order: 4;
 }
 
-.flex-grow-0 {
+.flex-g0 {
     flex-grow: 0;
     -webkit-flex-grow: 0;
 }
 
-.flex-grow-1 {
+.flex-g1 {
     flex-grow: 1;
     -webkit-flex-grow: 1;
 }
 
-.flex-shrink-0 {
+.flex-sh0 {
     flex-shrink: 0;
     -webkit-flex-shrink: 0;
 }
 
-.flex-shrink-1 {
+.flex-sh1 {
     flex-shrink: 1;
     -webkit-flex-shrink: 1;
 }
 
-.flex-basis-auto {
+.flex-ba {
     flex-basis: auto;
     -webkit-flex-basis: auto;
 }
 
-.flex-basis-0 {
+.flex-b0 {
     flex-basis: 0;
     -webkit-flex-basis: 0;
 }
 
-.flex-basis-25 {
+.flex-b25 {
     flex-basis: 25%;
     -webkit-flex-basis: 25%;
 }
 
-.flex-basis-50 {
+.flex-b50 {
     flex-basis: 50%;
     -webkit-flex-basis: 50%;
 }
 
-.flex-basis-75 {
+.flex-b75 {
     flex-basis: 75%;
     -webkit-flex-basis: 75%;
 }
 
-.flex-basis-100 {
+.flex-b100 {
     flex-basis: 100%;
     -webkit-flex-basis: 100%;
 }
 
 /* Combination classes */
-.flex-row-center {
+.flex-rcenter {
     flex-direction: row;
     -webkit-flex-direction: row;
     justify-content: center;
@@ -210,7 +210,7 @@
     -webkit-align-items: center;
 }
 
-.flex-column-center {
+.flex-ccenter {
     flex-direction: column;
     -webkit-flex-direction: column;
     justify-content: center;
@@ -220,30 +220,30 @@
 }
 
 /* Gap classes */
-.gap-0 {
+.flex-g0 {
     gap: 0px;
 }
 
-.gap-2 {
+.flex-g2 {
     gap: 2px;
 }
 
-.gap-4 {
+.flex-g4 {
     gap: 4px;
 }
 
-.gap-8 {
+.flex-g8 {
     gap: 8px;
 }
 
-.gap-16 {
+.flex-g16 {
     gap: 16px;
 }
 
-.gap-32 {
+.flex-g32 {
     gap: 32px;
 }
 
-.gap-64 {
+.flex-g64 {
     gap: 64px;
 }

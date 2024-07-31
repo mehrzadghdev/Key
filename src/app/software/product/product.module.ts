@@ -22,6 +22,7 @@ import { UpdateProductComponent } from './update-product/update-product.componen
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatTooltipModule,
     NgxMaskDirective,
     MatSortModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatProgressSpinnerModule
   ],
   providers: [
     provideNgxMask(),

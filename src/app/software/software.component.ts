@@ -20,6 +20,8 @@ import { fader, routeTransitionAnimations } from '../shared/animations/route-ani
 import { CreateInvoiceComponent } from './invoice/create-invoice/create-invoice.component';
 import { ListInvoiceComponent } from './invoice/list-invoice/list-invoice.component';
 import { VersioningService } from '../shared/services/versioning.service';
+import { HistoryService } from '../shared/services/history.service';
+import { SearchHistory, SearchHistoryItem } from '../shared/types/history.type';
 
 @Component({
   selector: 'app-software',
@@ -30,6 +32,9 @@ import { VersioningService } from '../shared/services/versioning.service';
 export class SoftwareComponent implements OnInit, AfterViewInit {
   public isExpanded: boolean = true;
   public demoErrorMessage: boolean = false;
+
+  public searchHistory: SearchHistory = [];
+  public searchOpened: boolean = false;
 
   get authDone(): boolean {
     return this.authentication.userLoggedIn;
@@ -61,6 +66,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   constructor(
     private themeService: ThemeService,
     private dialog: DialogService,
+    private historyService: HistoryService,
     private router: Router,
     private authentication: AuthenticationService,
     private companyService: CompanyService,
@@ -70,6 +76,8 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.loadSearchHistory();
+
     this.versioningService.initVersioning();
 
     if (window.innerWidth <= 768) {
@@ -122,8 +130,37 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       || this.currentActivatedRoute instanceof UnitComponent
       || this.currentActivatedRoute instanceof ListInvoiceComponent
     ) {
+      this.searchOpened = false
+      this.addToHistory({ value: this.searchQuery })
       this.currentActivatedRoute.onSearch(this.searchQuery);
     }
+  }
+
+  public onSearchFromHistory(searchHistoryItem: SearchHistoryItem): void {
+    if (
+      this.currentActivatedRoute instanceof ListCompanyComponent 
+      || this.currentActivatedRoute instanceof ListPersonComponent
+      || this.currentActivatedRoute instanceof ListProductComponent
+      || this.currentActivatedRoute instanceof UnitComponent
+      || this.currentActivatedRoute instanceof ListInvoiceComponent
+    ) {
+      this.searchOpened = false;
+      this.currentActivatedRoute.onSearch(searchHistoryItem.value);
+    }
+  }
+  
+  private loadSearchHistory(): void {
+    this.searchHistory = this.historyService.getHistory();
+  }
+  
+  private addToHistory(searchHistoryItem: SearchHistoryItem): void {
+    this.historyService.addToHistory(searchHistoryItem);
+    this.loadSearchHistory();
+  }
+
+  public removeFormHistory(searchHistoryItem: SearchHistoryItem): void {
+    this.historyService.removeFromHistory(searchHistoryItem);
+    this.loadSearchHistory();
   }
 
   public toggleFullScreen(): void {

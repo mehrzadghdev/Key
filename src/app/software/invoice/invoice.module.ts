@@ -20,13 +20,16 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { UpdateInvoiceComponent } from './update-invoice/update-invoice.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
   declarations: [
     CreateInvoiceComponent,
     AddInvoiceProductComponent,
-    ListInvoiceComponent
+    ListInvoiceComponent,
+    UpdateInvoiceComponent
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     MatDialogModule,
     MatTableModule,
     MatTooltipModule,
+    MatProgressSpinnerModule,
     NgxMaskDirective
   ]
 })

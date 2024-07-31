@@ -16,6 +16,7 @@ import { MatTableModule } from '@angular/material/table';
 import { SelectCompanyComponent } from './select-company/select-company.component'
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UpdateCompanyComponent } from './update-company/update-company.component';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { UpdateCompanyComponent } from './update-company/update-company.componen
     MatCheckboxModule,
     MatTableModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressSpinnerModule
   ]
 })
 export class CompanyModule { }

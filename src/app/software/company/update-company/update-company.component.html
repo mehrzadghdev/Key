@@ -7,7 +7,9 @@
     </div>
     
     <div class="form-dialog-content">
-        <div class="form-dialog-content-loading" *ngIf="getCompanyLoading"></div>
+        <div class="form-dialog-content-loading" *ngIf="getCompanyLoading">
+            <mat-spinner [diameter]="35"></mat-spinner>
+        </div>
         <div class="form-dialog-field-row">
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>نام شرکت</mat-label>

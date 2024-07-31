@@ -1,3 +1,7 @@
+.form-dialog {
+    max-height: 90vh !important;
+}
+
 .form-dialog-top-bar {
     width: 100%;
     display: flex;
@@ -41,7 +45,7 @@
 
 .form-dialog-content {
     padding: 25px 10px 10px 10px;
-    max-height: 80vh;
+    max-height: calc(90vh - 120px);
     overflow-y: auto;
     background-color: var(--base-color);
     position: relative;
@@ -51,6 +55,9 @@
         inset: 0;
         z-index: 2;
         background-color: color-mix(in srgb, var(--base-color), transparent 50%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 }
 
