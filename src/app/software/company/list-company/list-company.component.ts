@@ -40,7 +40,7 @@ export class ListCompanyComponent implements OnInit {
 
     this.companyService.getUsersCompanyList(currentUserPackageNo).subscribe(res => {
       this.companiesList = res;
-      // this.companiesListLoaded = true;
+      this.companiesListLoaded = true;
     })
   }
 
