@@ -8,38 +8,19 @@
         </span>
     </div>
     <div class="content-topbar-actions">
+        <key-button (click)="onAddProduct()">
+            <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> کالا و خدمات جدید
+        </key-button>
         <a routerLink="/software/product/unit">
             <key-button appearance="raised">
                 واحد کالا و خدمات  
             </key-button>
         </a>
-        <key-button (click)="onAddProduct()">
-            <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> کالا و خدمات جدید
-        </key-button>
     </div>
 </div>
 <div class="content-table">
     <div class="table">
-        <table *ngIf="productListLoaded && unitListLoaded" mat-table [dataSource]="productList" matSort (matSortChange)="onTableSortChanged($event)">
-            <ng-container matColumnDef="انتخاب">
-                <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox 
-                        class="table-row-checkbox"
-                        (change)="$event ? selectAllRows() : null"
-                        [checked]="tableSelectionModel.hasValue() && isAllRowsSelected()"
-                        [indeterminate]="tableSelectionModel.hasValue() && !isAllRowsSelected()"
-                    ></mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-checkbox 
-                        class="table-row-checkbox"
-                        (click)="$event.stopPropagation()"
-                        (change)="$event ? tableSelectionModel.toggle(element) : null"
-                        [checked]="tableSelectionModel.isSelected(element)"
-                    ></mat-checkbox>
-                </td>
-            </ng-container>
-
+        <table *ngIf="productListLoaded && unitListLoaded" mat-table [dataSource]="productList" matSort (matSortChange)="onTableSortChanged($event)" matTableResponsive>
             <ng-container matColumnDef="نوع">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> نوع </th>
                 <td mat-cell *matCellDef="let element"> {{ productTypeTextByNumber(element.productType) }} </td>

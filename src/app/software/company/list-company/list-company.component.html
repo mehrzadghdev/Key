@@ -7,17 +7,19 @@
             لیست تمام شرکت ها
         </span>
     </div>
-    <div>
-        <key-button (click)="onAddCompany()"> 
+    <div class="content-topbar-actions">
+        <key-button (click)="onAddCompany()">
             <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> شرکت جدید
+        </key-button>
+        <key-button appearance="raised" (click)="onReSelectCompany()">
+            تغییر شرکت فعال
         </key-button>
     </div>
 </div>
 
-
 <div class="content-table">
     <div class="table">
-        <table *ngIf="companiesListLoaded" mat-table [dataSource]="companiesList">
+        <table *ngIf="companiesListLoaded" mat-table [dataSource]="companiesList" matTableResponsive>
             <ng-container matColumnDef="شماره بسته">
                 <th mat-header-cell *matHeaderCellDef> شماره بسته </th>
                 <td mat-cell *matCellDef="let element"> {{element.packageNo}} </td>
@@ -65,7 +67,7 @@
                             <mat-icon class="icon-red material-icons-outlined">delete</mat-icon>
                         </key-button>
                         <key-button matTooltip="ویرایش" (click)="onUpdateCompany(element.databaseId)" content="icon">
-                            <mat-icon class="icon-primary material-icons-outlined">edit_square</mat-icon>                       
+                            <mat-icon class="icon-primary material-icons-outlined">edit_square</mat-icon>
                         </key-button>
                     </div>
                 </td>

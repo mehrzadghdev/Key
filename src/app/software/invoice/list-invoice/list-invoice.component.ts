@@ -32,11 +32,9 @@ export class ListInvoiceComponent implements OnInit {
   public tableSortField: string = '';
   public checkInvoiceValidityLoading: boolean = false;
 
-  public tableSelectionModel = new SelectionModel<GetInvoiceListInvoiceItem>(true, []);
-
   public invoiceList: GetInvoiceListInvoiceItem[] = [];
   public invoiceListLoaded: boolean = false;
-  public tableColumns: string[] = ["انتخاب", "کد", "تاریخ فاکتور", "نوع", "طرف حساب", "الگو فروش", "روش پرداخت", "عملیات"];
+  public tableColumns: string[] = ["کد", "تاریخ فاکتور", "نوع", "طرف حساب", "الگو فروش", "روش پرداخت", "عملیات"];
 
   public invoiceTypeList: SelectOption<InvoiceType>[] = [
     { display: "اصلی", value: InvoiceType.Main },
@@ -81,19 +79,6 @@ export class ListInvoiceComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadInvoiceList();
-  }
-
-  public isAllRowsSelected(): boolean {
-    return this.tableSelectionModel.selected.length === this.invoiceList.length;
-  }
-
-  public selectAllRows(): void {
-    if (this.isAllRowsSelected()) {
-      this.tableSelectionModel.clear();
-    }
-    else {
-      this.invoiceList.forEach(invoice => this.tableSelectionModel.select(invoice));
-    }
   }
 
   public onTableSortChanged(sort: Sort): void {

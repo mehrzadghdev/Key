@@ -15,26 +15,7 @@
 </div>
 <div class="content-table">
     <div class="table">
-        <table *ngIf="invoiceListLoaded" mat-table [dataSource]="invoiceList" matSort (matSortChange)="onTableSortChanged($event)">
-            <ng-container matColumnDef="انتخاب">
-                <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox 
-                        class="table-row-checkbox"
-                        (change)="$event ? selectAllRows() : null"
-                        [checked]="tableSelectionModel.hasValue() && isAllRowsSelected()"
-                        [indeterminate]="tableSelectionModel.hasValue() && !isAllRowsSelected()"
-                    ></mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let element">
-                    <mat-checkbox 
-                        class="table-row-checkbox"
-                        (click)="$event.stopPropagation()"
-                        (change)="$event ? tableSelectionModel.toggle(element) : null"
-                        [checked]="tableSelectionModel.isSelected(element)"
-                    ></mat-checkbox>
-                </td>
-            </ng-container>
-
+        <table *ngIf="invoiceListLoaded" mat-table [dataSource]="invoiceList" matSort (matSortChange)="onTableSortChanged($event)" matTableResponsive>
             <ng-container matColumnDef="کد">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> کد فاکتور فروش </th>
                 <td mat-cell *matCellDef="let element"> {{ element.invoiceCode }} </td>
@@ -53,9 +34,11 @@
             <ng-container matColumnDef="طرف حساب">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> طرف حساب </th>
                 <td mat-cell *matCellDef="let element"> 
-                    <key-button appearance="text" (click)="onUpdateInvoicePerson(element.personCode)">
-                        {{ element.personName }} 
-                    </key-button>
+                    <div class="table-action-buttons">
+                        <key-button appearance="text" (click)="onUpdateInvoicePerson(element.personCode)">
+                            {{ element.personName }} 
+                        </key-button>
+                    </div>
                 </td>
             </ng-container>
 

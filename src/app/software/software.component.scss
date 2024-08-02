@@ -340,10 +340,11 @@
         background-color: var(--base-color);
         align-items: center;
         padding: 20px 10px;
-        gap: 10px;
+        gap: 5px;
         box-shadow: 0 -3px 31px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.02);
 
         .theme-select {
+            margin-inline-start: 5px;
             padding: 5px;
             border-radius: 2px;
             display: flex;
@@ -737,6 +738,7 @@
 
     .main-content {
         padding-bottom: 5px;
+        position: relative;
 
         .panel-header {
             .create-button {
@@ -744,13 +746,79 @@
             }
 
             .search-box {
+                &.search-box-opened {
+                    padding: 15.5px 10px;
+                    width: 100%;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+
+                    .search-form {
+                        width: 100%;
+                    }
+                }
+
                 .search-form {
-                    display: none;
+                    width: 100%;
+
+                    .search {
+                        width: 100%;
+
+                        &.search-opened {
+                            box-shadow: var(--base-shadow);
+                            width: 100%;
+    
+                            & ~ .search-form-overlay {
+                                display: block;
+                            }
+                        }
+                    }
                 }
             }
 
             .full-screen-icon {
                 display: none;
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 480px) {
+    .main-content {
+        padding-bottom: 5px;
+        position: relative;
+
+        .panel-header {
+            .search-box {
+                &.search-box-opened {
+                    padding: 15.5px 10px;
+                    width: 100%;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+
+                    .search-form {
+                        width: 100%;
+                    }
+                }
+
+                .search-form {
+
+                    .search {
+                        width: 100%;
+
+                        &.search-opened {
+                            box-shadow: var(--base-shadow);
+                            width: 100%;
+    
+                            & ~ .search-form-overlay {
+                                display: block;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

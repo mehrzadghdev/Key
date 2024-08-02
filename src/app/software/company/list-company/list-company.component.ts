@@ -40,7 +40,15 @@ export class ListCompanyComponent implements OnInit {
 
     this.companyService.getUsersCompanyList(currentUserPackageNo).subscribe(res => {
       this.companiesList = res;
-      this.companiesListLoaded = true;
+      // this.companiesListLoaded = true;
+    })
+  }
+
+  public onReSelectCompany(): void {
+    this.dialog.openFullScreenDialog(SelectCompanyComponent, {
+      data: {
+        reSelect: true
+      }
     })
   }
 

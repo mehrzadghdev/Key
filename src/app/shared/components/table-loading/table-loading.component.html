@@ -1,7 +1,7 @@
 <div class="skeleton-table">
     <div class="skeleton-table-column" *ngFor="let column of columns">
         <div class="skeleton-table-title">{{ column }}</div>
-        <div class="skeleton-table-content" *ngFor="let row of rowsToLoop">
+        <div class="skeleton-table-content" *ngFor="let row of rowsToLoop; let i = index" [ngClass]="{'mobile-skeleton-table-content': i === 0}">
             <div keyRandomWidth class="skeleton" style="height: 1rem; border-radius: 3px;"></div>
         </div>
     </div>

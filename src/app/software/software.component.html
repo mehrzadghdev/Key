@@ -167,7 +167,7 @@
                 <button mat-menu-item (click)="onAddProduct()">کالا و خدمات</button>
                 <button mat-menu-item (click)="onAddInvoice()">فاکتور فروش</button>
             </mat-menu>
-            <div class="search-box">
+            <div class="search-box" [ngClass]="{'search-box-opened': searchOpened}">
                 <form class="search-form" (ngSubmit)="searchInput.blur(); onSearch()">
                     <input placeholder="جستجو کردن..." type="text" #searchInput (click)="searchOpened = true;" (keydown.esc)="searchOpened = false; searchInput.blur()" [ngClass]="{'search-opened': searchOpened}" class="search" [(ngModel)]="searchQuery" name="search-input">
                     <div class="search-form-history" *ngIf="searchOpened">
@@ -204,9 +204,6 @@
                 <mat-icon *ngIf="!fullscreen" class="material-icons-outlined"
                     matTooltip="خروج از حالت تمام صفحه">fullscreen_exit</mat-icon>
             </key-button>
-            <div class="notification-icon pointer">
-                <mat-icon class="material-icons-outlined" matBadge="2" matBadgeColor="warn">notifications</mat-icon>
-            </div>
             <a routerLink="/software/settings">
                 <key-button content="icon" class="icon">
                     <mat-icon matTooltip="تنظیمات کاربری" class="settings-icons">settings</mat-icon>

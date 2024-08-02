@@ -32,6 +32,7 @@ import { DatePickerComponent } from './components/date-picker/date-picker.compon
 import { FarsiNumberPipe } from './pipes/farsi-number.pipe';
 import { SkeletonComponent } from './components/skeleton/skeleton.component';
 import { PercentageInputDirective } from './directives/percentage-input.directive';
+import { TableResponsiveDirective } from './directives/table-responsive.directive';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -50,7 +51,8 @@ export function playerFactory() {
     DatePickerComponent,
     FarsiNumberPipe,
     SkeletonComponent,
-    PercentageInputDirective
+    PercentageInputDirective,
+    TableResponsiveDirective
   ],
   imports: [
     CommonModule,
@@ -92,7 +94,8 @@ export function playerFactory() {
     FarsiNumberPipe,
     RandomWidthDirective,
     AutoFocusDirective,
-    PercentageInputDirective
+    PercentageInputDirective,
+    TableResponsiveDirective
   ] 
 })
 export class SharedModule { }

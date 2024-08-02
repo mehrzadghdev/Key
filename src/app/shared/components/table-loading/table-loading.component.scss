@@ -20,3 +20,31 @@
         }
     }
 }
+
+@media only screen and (max-width: 768px) {
+    .skeleton-table {
+        flex-direction: column;
+    
+        .skeleton-table-column {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color-medium);
+
+            .skeleton-table-title {
+                border-bottom: none;
+            }
+            
+            .skeleton-table-content {
+                display: none;
+            }
+
+            .mobile-skeleton-table-content {
+                display: flex;
+                justify-content: end;
+                flex: 1;
+            }
+        }
+    }
+}

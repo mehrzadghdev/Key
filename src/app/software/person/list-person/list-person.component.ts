@@ -31,12 +31,9 @@ export class ListPersonComponent implements OnInit {
   };
   public tableSearchQuery: string = '';
   public tableSortField: string = '';
-
-  public tableSelectionModel = new SelectionModel<GetCompaniesPersonListItem>(true, []);
-
   public personsList: GetCompaniesPersonListItem[] = [];
   public personListLoaded: boolean = false;
-  public tableColumns: string[] = ["انتخاب", "نوع", "نام", "کد ملی یا شماره اقتصادی", "تاریخ ساخت", "تلفن", "کد پستی", "عملیات"];
+  public tableColumns: string[] = ["نوع", "نام", "کد ملی یا شماره اقتصادی", "تاریخ ساخت", "تلفن", "کد پستی", "عملیات"];
   public personTypes = [
     { display: 'حقیقی', value: PersonType.Genuine },
     { display: 'حقوقی', value: PersonType.Legal },
@@ -59,19 +56,6 @@ export class ListPersonComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadPersonList();
-  }
-
-  public isAllRowsSelected(): boolean {
-    return this.tableSelectionModel.selected.length === this.personsList.length;
-  }
-
-  public selectAllRows(): void {
-    if (this.isAllRowsSelected()) {
-      this.tableSelectionModel.clear();
-    }
-    else {
-      this.personsList.forEach(person => this.tableSelectionModel.select(person));
-    }
   }
 
   public onTableSortChanged(sort: Sort): void {
