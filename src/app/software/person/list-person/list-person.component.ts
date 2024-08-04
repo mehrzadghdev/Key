@@ -21,6 +21,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: ['./list-person.component.scss']
 })
 export class ListPersonComponent implements OnInit {
+  public tailedTable: boolean = false;
   public tablePagination: Partial<Pagination> = {
     totalCount: 0,
     pageSize: 0,
@@ -55,6 +56,10 @@ export class ListPersonComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 768) {
+      this.tailedTable = true;
+    }
+
     this.loadPersonList();
   }
 

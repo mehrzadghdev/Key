@@ -7,15 +7,20 @@
             لیست تمام طرف حساب ها
         </span>
     </div>
-    <div>
+    <div class="content-topbar-actions">
         <key-button (click)="onAddPerson()">
             <mat-icon class="material-icons-outlined list-add-button-icon">person_add</mat-icon> طرف حساب جدید
         </key-button>
+        <div class="buttons-seperator"></div>
+        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
+            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
+            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
+        </button>
     </div>
 </div>
 <div class="content-table">
     <div class="table">
-        <table *ngIf="personListLoaded" mat-table [dataSource]="personsList" matSort (matSortChange)="onTableSortChanged($event)" matTableResponsive>
+        <table *ngIf="personListLoaded" mat-table [dataSource]="personsList" matSort (matSortChange)="onTableSortChanged($event)" keyTiledTable [tiledTable]="tailedTable">
             <ng-container matColumnDef="نوع">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> نوع </th>
                 <td mat-cell *matCellDef="let element"> {{ personTypeTextByNumber(element.personType) }} </td>

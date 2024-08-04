@@ -20,6 +20,7 @@ import { UpdateInvoiceComponent } from '../update-invoice/update-invoice.compone
   styleUrls: ['./list-invoice.component.scss']
 })
 export class ListInvoiceComponent implements OnInit {
+  public tailedTable: boolean = false;
   public tablePagination: Partial<Pagination> = {
     totalCount: 0,
     pageSize: 0,
@@ -78,6 +79,10 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 768) {
+      this.tailedTable = true;
+    }
+
     this.loadInvoiceList();
   }
 

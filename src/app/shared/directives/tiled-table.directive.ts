@@ -1,10 +1,20 @@
-import { AfterViewInit, Directive, ElementRef, OnDestroy, OnInit, Renderer2 } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges } from '@angular/core';
 import { Subject, BehaviorSubject, combineLatest, mapTo, map, takeUntil } from 'rxjs';
 
 @Directive({
-  selector: '[matTableResponsive]'
+  selector: '[keyTiledTable]'
 })
-export class TableResponsiveDirective implements OnInit, AfterViewInit, OnDestroy {
+export class TiledTableDirective implements OnInit, AfterViewInit, OnDestroy {
+  @Input('tiledTable')
+  public set tailedTable(value: boolean) {
+    if (value) {
+      this.renderer.addClass(this.table.nativeElement, 'mat-mdc-tiled-table');
+    }
+    else {
+      this.renderer.removeClass(this.table.nativeElement, 'mat-mdc-tiled-table');
+    }
+  }
+
   private onDestroy$ = new Subject<boolean>();
 
   private thead!: HTMLTableSectionElement;
@@ -20,7 +30,7 @@ export class TableResponsiveDirective implements OnInit, AfterViewInit, OnDestro
     this.tbodyChanged$.next(true)
   );
 
-  constructor(private table: ElementRef, private renderer: Renderer2) {}
+  constructor(private table: ElementRef, private renderer: Renderer2) { }
 
   ngOnInit() {
     this.thead = this.table.nativeElement.querySelector('thead');

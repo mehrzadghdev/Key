@@ -1,4 +1,4 @@
-import { TableResponsiveDirective } from './table-responsive.directive';
+import { TableResponsiveDirective } from './tiled-table.directive';
 
 describe('TableResponsiveDirective', () => {
   it('should create an instance', () => {

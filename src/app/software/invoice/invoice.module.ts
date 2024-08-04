@@ -22,6 +22,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UpdateInvoiceComponent } from './update-invoice/update-invoice.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatRippleModule } from '@angular/material/core';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatTableModule,
     MatTooltipModule,
     MatProgressSpinnerModule,
+    MatRippleModule,
     NgxMaskDirective
   ]
 })

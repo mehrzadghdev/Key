@@ -21,6 +21,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: ['./list-product.component.scss']
 })
 export class ListProductComponent {
+  public tailedTable: boolean = false;
   public tablePagination: Partial<Pagination> = {
     totalCount: 0,
     pageSize: 0,
@@ -55,6 +56,10 @@ export class ListProductComponent {
   }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 768) {
+      this.tailedTable = true;
+    }
+
     this.loadProductList();
     this.loadUnitList();
   }

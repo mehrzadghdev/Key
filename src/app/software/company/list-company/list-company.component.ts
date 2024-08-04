@@ -17,6 +17,7 @@ import { UtilityService } from 'src/app/shared/services/utility.service';
   styleUrls: ['./list-company.component.scss']
 })
 export class ListCompanyComponent implements OnInit {
+  public tailedTable: boolean = false;
   public companiesList: Company[] = [];
   public companiesListLoaded: boolean = false;
   public tableColumns: string[] = ["شماره بسته", "نام شرکت", "کد شعبه", "تلفن", "وضعیت", "توضیحات شرکت", "عملیات"]
@@ -29,6 +30,10 @@ export class ListCompanyComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    if (window.innerWidth <= 768) {
+      this.tailedTable = true;
+    }
+
     this.loadCompanyList();
   }
   public loadCompanyList(): void {

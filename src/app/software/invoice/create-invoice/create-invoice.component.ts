@@ -25,6 +25,7 @@ import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
   styleUrls: ['./create-invoice.component.scss']
 })
 export class CreateInvoiceComponent implements OnInit {
+  public tailedTable: boolean = false;
   public invoiceForm: FormGroup;
   public validationLastCheck: boolean = false;
   public referenceInvoiceList: GetInvoiceListInvoiceItem[] = [];
@@ -97,6 +98,10 @@ export class CreateInvoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 768) {
+      this.tailedTable = true;
+    }
+
     this.initFormFieldSubscriptions();
     this.fetchData();
 

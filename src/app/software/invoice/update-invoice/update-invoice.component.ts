@@ -24,6 +24,7 @@ import { UpdateCompanyBody } from '../../types/company.type';
   styleUrls: ['./update-invoice.component.scss']
 })
 export class UpdateInvoiceComponent {
+  public tailedTable: boolean = false;
   public invoiceForm: FormGroup;
   public validationLastCheck: boolean = false;
   public referenceInvoiceList: GetInvoiceListInvoiceItem[] = [];
@@ -99,6 +100,10 @@ export class UpdateInvoiceComponent {
   }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 768) {
+      this.tailedTable = true;
+    }
+
     this.initFormFieldSubscriptions();
     this.fetchData();
   }

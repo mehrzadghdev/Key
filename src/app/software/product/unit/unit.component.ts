@@ -12,6 +12,7 @@ import { CustomValidators } from 'src/app/shared/validators/custom-validators';
   styleUrls: ['./unit.component.scss']
 })
 export class UnitComponent implements OnInit {
+  public tailedTable: boolean = false;
   public date: string = new Date().toISOString();
 
   public unitListLoaded: boolean = false;
@@ -32,6 +33,10 @@ export class UnitComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (window.innerWidth <= 768) {
+      this.tailedTable = true;
+    }
+
     this.loadUnitList()
   }
 

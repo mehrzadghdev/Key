@@ -48,8 +48,10 @@
 
                 <mat-form-field class="invoice-section-grid-field" appearance="outline">
                     <mat-label>فاکتور مرجع</mat-label>
-                    <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode" (opened)="invoiceCodeSearchMobile.focus()">
-                        <input class="mat-select-search" type="text" formControlName="referenceInvoiceCodeSearch" #invoiceCodeSearchMobile placeholder="جستجو کردن...">
+                    <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode"
+                        (opened)="invoiceCodeSearchMobile.focus()">
+                        <input class="mat-select-search" type="text" formControlName="referenceInvoiceCodeSearch"
+                            #invoiceCodeSearchMobile placeholder="جستجو کردن...">
                         <mat-option *ngFor="let referenceInvoice of filteredReferenceInvoiceList"
                             [value]="referenceInvoice.invoiceCode">
                             <div class="mat-option-tabled">
@@ -65,7 +67,7 @@
                                 {{ referenceInvoice.invoiceDate | jdate }}
                             </div>
                         </mat-option>
-                        <mat-option [value]="null" [disabled]="true"> 
+                        <mat-option [value]="null" [disabled]="true">
                             <span *ngIf="filteredReferenceInvoiceList.length < 1">موردی برای نمایش پیدا نشد</span>
                         </mat-option>
                     </mat-select>
@@ -78,7 +80,8 @@
                 <mat-form-field class="invoice-section-grid-field" appearance="outline">
                     <mat-label>طرف حساب</mat-label>
                     <mat-select formControlName="personCode" name="personCode" (opened)="personCodeSearch.focus()">
-                        <input class="mat-select-search" type="text" formControlName="personCodeSearch" #personCodeSearch placeholder="جستجو کردن..">
+                        <input class="mat-select-search" type="text" formControlName="personCodeSearch"
+                            #personCodeSearch placeholder="جستجو کردن..">
                         <mat-option *ngFor="let personCode of filteredPersonList"
                             [value]="personCode.code">{{personCode.personName}}</mat-option>
                         <mat-option [value]="null">
@@ -121,10 +124,18 @@
                 <div class="invoice-section-actions">
                     <key-button [disabled]="!dataFetchLoaded" (click)="onAddInvoiceProduct()">افزودن کالا و
                         خدمات</key-button>
+                    <div class="buttons-seperator"></div>
+                    <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable"
+                        [matTooltip]="tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
+                        <mat-icon *ngIf="tailedTable"
+                            class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>
+                        <mat-icon *ngIf="!tailedTable"
+                            class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>
+                    </button>
                 </div>
                 <div class="invoice-section">
                     <div class="content-table">
-                        <table *ngIf="dataFetchLoaded" mat-table [dataSource]="invoiceProducts" matTableResponsive>
+                        <table *ngIf="dataFetchLoaded" mat-table [dataSource]="invoiceProducts" keyTiledTable [tiledTable]="tailedTable">
                             <ng-container matColumnDef="کد کالا">
                                 <th mat-header-cell *matHeaderCellDef> کد کالا </th>
                                 <td mat-cell *matCellDef="let element"> {{ element.productCode }} </td>
@@ -182,7 +193,9 @@
                             <tr class="mat-row" *matNoDataRow>
                                 <td class="mat-cell table-no-data" [colSpan]="invoiceProductsTableColumns.length">
                                     هیچ داده ای یافت نشد
-                                    <span class="no-products-error" *ngIf="validationLastCheck && invoiceProducts.length < 1">فاکتور فروش کالا و خدماتی ندارد</span>
+                                    <span class="no-products-error"
+                                        *ngIf="validationLastCheck && invoiceProducts.length < 1">فاکتور فروش کالا و
+                                        خدماتی ندارد</span>
                                 </td>
                             </tr>
                         </table>
@@ -213,8 +226,10 @@
                     </div>
                     <mat-form-field class="invoice-section-grid-field" appearance="outline">
                         <mat-label>فاکتور مرجع</mat-label>
-                        <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode" (opened)="invoiceCodeSearchMobile.focus()">
-                            <input class="mat-select-search" type="text" formControlName="referenceInvoiceCodeSearch" #invoiceCodeSearchMobile placeholder="جستجو کردن...">
+                        <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode"
+                            (opened)="invoiceCodeSearchMobile.focus()">
+                            <input class="mat-select-search" type="text" formControlName="referenceInvoiceCodeSearch"
+                                #invoiceCodeSearchMobile placeholder="جستجو کردن...">
                             <mat-option *ngFor="let referenceInvoice of filteredReferenceInvoiceList"
                                 [value]="referenceInvoice.invoiceCode">
                                 <div class="mat-option-tabled">
@@ -230,7 +245,7 @@
                                     {{ referenceInvoice.invoiceDate | jdate }}
                                 </div>
                             </mat-option>
-                            <mat-option [value]="null" [disabled]="true"> 
+                            <mat-option [value]="null" [disabled]="true">
                                 <span *ngIf="filteredReferenceInvoiceList.length < 1">موردی برای نمایش پیدا نشد</span>
                             </mat-option>
                         </mat-select>
@@ -242,8 +257,10 @@
                 <div class="invoice-section-grid">
                     <mat-form-field class="invoice-section-grid-field" appearance="outline">
                         <mat-label>طرف حساب</mat-label>
-                        <mat-select formControlName="personCode" name="personCode" (opened)="personCodeSearchMobile.focus()">
-                            <input class="mat-select-search" type="text" formControlName="personCodeSearch" #personCodeSearchMobile placeholder="جستجو کردن...">
+                        <mat-select formControlName="personCode" name="personCode"
+                            (opened)="personCodeSearchMobile.focus()">
+                            <input class="mat-select-search" type="text" formControlName="personCodeSearch"
+                                #personCodeSearchMobile placeholder="جستجو کردن...">
                             <mat-option *ngFor="let personCode of filteredPersonList"
                                 [value]="personCode.code">{{personCode.personName}}</mat-option>
                             <mat-option [value]="null">

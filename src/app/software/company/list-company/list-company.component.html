@@ -8,18 +8,23 @@
         </span>
     </div>
     <div class="content-topbar-actions">
-        <key-button (click)="onAddCompany()">
-            <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> شرکت جدید
-        </key-button>
         <key-button appearance="raised" (click)="onReSelectCompany()">
             تغییر شرکت فعال
         </key-button>
+        <key-button (click)="onAddCompany()">
+            <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> شرکت جدید
+        </key-button>
+        <div class="buttons-seperator"></div>
+        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
+            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
+            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
+        </button>
     </div>
 </div>
 
 <div class="content-table">
     <div class="table">
-        <table *ngIf="companiesListLoaded" mat-table [dataSource]="companiesList" matTableResponsive>
+        <table *ngIf="companiesListLoaded" mat-table [dataSource]="companiesList" keyTiledTable [tiledTable]="tailedTable">
             <ng-container matColumnDef="شماره بسته">
                 <th mat-header-cell *matHeaderCellDef> شماره بسته </th>
                 <td mat-cell *matCellDef="let element"> {{element.packageNo}} </td>

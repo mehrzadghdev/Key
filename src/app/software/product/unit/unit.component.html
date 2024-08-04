@@ -7,13 +7,18 @@
             واحد کالا و خدمات
         </span>
     </div>
-    <div>
+    <div class="content-topbar-actions">
         <a routerLink="/software/product">
             <key-button>
                 <mat-icon class="list-add-button-icon">list</mat-icon>
                 لیست تمام کالا ها
             </key-button>
         </a>
+        <div class="buttons-seperator"></div>
+        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
+            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
+            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
+        </button>
     </div>
 </div>
 <div class="unit-container">
@@ -55,7 +60,7 @@
     </div>
     <div class="content-table">
         <div class="table">
-            <table *ngIf="unitListLoaded" mat-table [dataSource]="unitList" matTableResponsive>
+            <table *ngIf="unitListLoaded" mat-table [dataSource]="unitList" keyTiledTable [tiledTable]="tailedTable">
                 <ng-container matColumnDef="ایدی واحد">
                     <th mat-header-cell *matHeaderCellDef> ایدی واحد </th>
                     <td mat-cell *matCellDef="let element"> {{ element.id }} </td>
