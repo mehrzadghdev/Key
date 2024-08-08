@@ -1,5 +1,5 @@
 <form class="form-dialog" [formGroup]="updatePersonForm">
-    <div class="form-dialog-top-bar">
+    <div class="form-dialog-top-bar" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
         <h3>ویرایش طرف حساب</h3>
         <key-button content="icon" (click)="closeDialog()">
             <mat-icon class="icon-base">close</mat-icon>

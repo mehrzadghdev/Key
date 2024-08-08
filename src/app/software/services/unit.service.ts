@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { RequestService } from 'src/app/shared/services/request.service';
+import { RequestService } from 'src/app/shared/services/api/request.service';
 import { AddUnit, AddUnitBody, DeleteUnit, DeleteUnitBody, GetAllUnitList, GetAllUnitListBody, GetUnit, GetUnitBody, GetUnitList, GetUnitListBody, UpdateUnit, UpdateUnitBody } from '../types/unit.type';
 import { Observable } from 'rxjs';
 import { GetNewProductCodeBody, GetNewProductCode } from '../types/product.type';

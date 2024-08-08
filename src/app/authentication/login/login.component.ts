@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { LoginBody } from 'src/app/shared/types/authentication.type';
 
 @Component({
@@ -41,13 +41,10 @@ export class LoginComponent {
         next: (result) => {
           this.authentication.accessToken = result.accessToken;
           this.authentication.tokenExpireDate = result.expiresIn;
-          this.authentication.userInfo().subscribe(result => {
-            this.authentication.userDetails = result[0];
-            this.router.navigate(['/software']);
-            this.loginLoading = false;
-
-            this.utilityService.message("ورود به حساب کاربری با موفقیت انجام شد.", 'بستن')
-          })
+          
+          this.router.navigate(['/software']);
+          this.loginLoading = false;
+          this.utilityService.message("ورود به حساب کاربری با موفقیت انجام شد.", 'بستن')
         },
         error: (err) => {
           this.loginLoading = false;

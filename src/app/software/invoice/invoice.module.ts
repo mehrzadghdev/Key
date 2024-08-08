@@ -36,22 +36,6 @@ import { MatRippleModule } from '@angular/material/core';
     CommonModule,
     InvoiceRoutingModule,
     SharedModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatSelectModule,
-    MatTableModule,
-    MatSortModule,
-    MatCheckboxModule,
-    MatRadioModule,
-    MatMenuModule,
-    MatAutocompleteModule,
-    MatDialogModule,
-    MatTableModule,
-    MatTooltipModule,
-    MatProgressSpinnerModule,
-    MatRippleModule,
     NgxMaskDirective
   ]
 })

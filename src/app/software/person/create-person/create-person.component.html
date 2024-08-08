@@ -1,5 +1,5 @@
 <form class="form-dialog" [formGroup]="addPersonForm">
-    <div class="form-dialog-top-bar">
+    <div class="form-dialog-top-bar" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
         <h3>ایجاد طرف حساب جدید</h3>
         <key-button content="icon" (click)="closeDialog()">
             <mat-icon class="icon-base">close</mat-icon>

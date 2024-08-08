@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Theme } from '../types/theme.type';
+import { Theme } from '../../types/theme.type';
+import { Crypto } from '../../helpers/crypto.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ThemeService {
   }
 
   public getColorTheme(): Theme {
-    const theme = localStorage.getItem("theme");
+    const theme = Crypto.decrypt(localStorage.getItem(Crypto.encrypt("theme")) ?? '');
 
     if (theme !== null && theme === 'default' || theme === 'dark') {
       return theme;
@@ -28,6 +29,6 @@ export class ThemeService {
 
   public setColorTheme(value: Theme): void {
     document.body.setAttribute("theme", value);
-    localStorage.setItem("theme", value);
+    localStorage.setItem(Crypto.encrypt("theme"), Crypto.encrypt(value));
   }
 }

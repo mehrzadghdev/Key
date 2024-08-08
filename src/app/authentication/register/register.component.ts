@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { AddUserBody, LoginBody } from 'src/app/shared/types/authentication.type';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 

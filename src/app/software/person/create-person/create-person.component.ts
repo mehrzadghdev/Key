@@ -3,11 +3,11 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonType } from '../../enums/person-type.enum';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { AddPersonBody } from '../../types/person.type';
 import { PersonService } from '../../services/person.service';
 import { Company } from '../../types/company.type';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 
 @Component({
   selector: 'app-create-person',

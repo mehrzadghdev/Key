@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from './shared/services/authentication.service';
-import { ThemeService } from './shared/services/theme.service';
-import { RequestService } from './shared/services/request.service';
-import { VersioningService } from './shared/services/versioning.service';
+import { AuthenticationService } from './shared/services/api/authentication.service';
+import { ThemeService } from './shared/services/theme/theme.service';
+import { RequestService } from './shared/services/api/request.service';
+import { VersioningService } from './shared/services/others/versioning.service';
+import { Crypto } from './shared/helpers/crypto.helper';
 
 @Component({
   selector: 'app-root',

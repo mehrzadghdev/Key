@@ -2,10 +2,10 @@ import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { AddCompanyBody } from '../../types/company.type';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { CompanyService } from '../../services/company.service';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 
 @Component({
   selector: 'app-create-company',

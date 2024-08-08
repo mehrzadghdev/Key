@@ -2,8 +2,8 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { take } from 'rxjs';
-import { DialogResult, dialogCssClasses, DialogConfig } from '../types/dialog.type';
-import { AcceptDeleteComponent } from '../components/accept-delete/accept-delete.component';
+import { DialogResult, dialogCssClasses, DialogConfig } from '../../types/dialog.type';
+import { AcceptDeleteComponent } from '../../components/accept-delete/accept-delete.component';
 
 @Injectable({
   providedIn: 'root'

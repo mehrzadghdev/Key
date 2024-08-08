@@ -13,7 +13,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatBadgeModule } from '@angular/material/badge';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { DialogService } from './services/dialog.service';
+import { DialogService } from './services/utilities/dialog.service';
 import { LoadingComponent } from './components/loading/loading.component';
 import { LottieModule } from 'ngx-lottie';
 import { MatTableModule } from '@angular/material/table';
@@ -33,6 +33,12 @@ import { FarsiNumberPipe } from './pipes/farsi-number.pipe';
 import { SkeletonComponent } from './components/skeleton/skeleton.component';
 import { PercentageInputDirective } from './directives/percentage-input.directive';
 import { TiledTableDirective } from './directives/tiled-table.directive';
+import { MatSortModule } from '@angular/material/sort';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -68,11 +74,17 @@ export function playerFactory() {
     MatDialogModule,
     MatRippleModule,
     ReactiveFormsModule,
+    MatSortModule,
     MatSelectModule,
     MatInputModule,
     MatFormFieldModule,
     MatMenuModule,
     MatSnackBarModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    DragDropModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
     MatAutocompleteModule,
     LottieModule.forRoot({ player: playerFactory })
   ],
@@ -95,7 +107,22 @@ export function playerFactory() {
     RandomWidthDirective,
     AutoFocusDirective,
     PercentageInputDirective,
-    TiledTableDirective
+    TiledTableDirective,
+    MatIconModule,
+    MatRippleModule,
+    MatMenuModule,
+    MatTableModule,
+    MatDialogModule,
+    ReactiveFormsModule,
+    MatSelectModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSortModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatRadioModule,
+    DragDropModule,
   ] 
 })
 export class SharedModule { }

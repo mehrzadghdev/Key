@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DialogService } from 'src/app/shared/services/dialog.service';
+import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { CreateCompanyComponent } from '../create-company/create-company.component';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { Company, GetCompanyList, GetUsersCompanyListBody } from '../../types/company.type';
 import { AnimationOptions } from 'ngx-lottie';
 import { SelectCompanyComponent } from '../select-company/select-company.component';
@@ -9,7 +9,7 @@ import { UserDetails } from 'src/app/shared/types/authentication.type';
 import { KeyModules } from 'src/app/shared/types/modules.type';
 import { CompanyService } from '../../services/company.service';
 import { UpdateCompanyComponent } from '../update-company/update-company.component';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 
 @Component({
   selector: 'app-list-product-person-company',

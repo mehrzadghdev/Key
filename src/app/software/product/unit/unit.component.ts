@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AddUnitBody, Unit, UpdateUnitBody } from '../../types/unit.type';
 import { UnitService } from '../../services/unit.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UtilityService } from 'src/app/shared/services/utility.service';
-import { DialogService } from 'src/app/shared/services/dialog.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
+import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 
 @Component({

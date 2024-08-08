@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, ComponentRef, OnInit } from '@angular/core';
 import { Theme } from '../shared/types/theme.type';
-import { ThemeService } from '../shared/services/theme.service';
-import { AuthenticationService } from '../shared/services/authentication.service';
-import { DialogService } from '../shared/services/dialog.service';
+import { ThemeService } from '../shared/services/theme/theme.service';
+import { AuthenticationService } from '../shared/services/api/authentication.service';
+import { DialogService } from '../shared/services/utilities/dialog.service';
 import { Router, RouterOutlet } from '@angular/router';
 import { SelectCompanyComponent } from './company/select-company/select-company.component';
 import { CreateCompanyComponent } from './company/create-company/create-company.component';
@@ -10,7 +10,7 @@ import { CreatePersonComponent } from './person/create-person/create-person.comp
 import { CreateProductComponent } from './product/create-product/create-product.component';
 import { CompanyService } from './services/company.service';
 import { UserDetails } from '../shared/types/authentication.type';
-import { GetUsersCompanyListBody } from './types/company.type';
+import { Company, GetUsersCompanyListBody } from './types/company.type';
 import { ListProductComponent } from './product/list-product/list-product.component';
 import { ListPersonComponent } from './person/list-person/list-person.component';
 import { ListCompanyComponent } from './company/list-company/list-company.component';
@@ -19,8 +19,8 @@ import { UnitComponent } from './product/unit/unit.component';
 import { fader, routeTransitionAnimations } from '../shared/animations/route-animations';
 import { CreateInvoiceComponent } from './invoice/create-invoice/create-invoice.component';
 import { ListInvoiceComponent } from './invoice/list-invoice/list-invoice.component';
-import { VersioningService } from '../shared/services/versioning.service';
-import { HistoryService } from '../shared/services/history.service';
+import { VersioningService } from '../shared/services/others/versioning.service';
+import { HistoryService } from '../shared/services/others/history.service';
 import { SearchHistory, SearchHistoryItem } from '../shared/types/history.type';
 
 @Component({
@@ -35,6 +35,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
 
   public searchHistory: SearchHistory = [];
   public searchOpened: boolean = false;
+  public searchDisable: boolean = false;
 
   get authDone(): boolean {
     return this.authentication.userLoggedIn;
@@ -58,7 +59,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     return this.versioningService.version as number;
   }
 
-  public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent>;
+  public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent | UnitComponent>;
   public currentActivatedRouteLoaded: boolean = false;
   public searchQuery: string = "";
   public fullscreen: boolean = true;
@@ -84,18 +85,47 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       this.isExpanded = false;
     }
 
+    if (this.authDone) {
+
+      if (this.authentication.userDetails) {
+        this.initCompanySelection(this.authentication.userDetails.packageNo);
+      }
+      
+      if (!this.authentication.userDetails) {
+        this.authentication.userInfo().subscribe(result => {
+          this.authentication.userDetails = result[0];
+          this.initCompanySelection(this.authentication.userDetails.packageNo);
+        })
+      }
+
+    }
+  }
+
+  ngAfterViewInit(): void {
+    this.currentActivatedRouteLoaded = true;
+  }
+
+  private initCompanySelection(currentUserPackageNoValue: number): void {
     const currentUserPackageNo: GetUsersCompanyListBody = {
-      packageNo: (this.authentication.userDetails as UserDetails).packageNo
+      packageNo: currentUserPackageNoValue
     } as const;
 
-    if (this.authDone && !this.authentication.currentCompanySelected() && this.authentication.userDetails) {
-      this.companyService.getUsersCompanyList(currentUserPackageNo).subscribe(res => {
-        if (!res.length) {
-          this.dialog.openFullScreenDialog(CreateCompanyComponent, {
-            data: {
-              firstCompany: true
-            }
-          }).afterClosed().subscribe(() => this.companySelected = true);
+    this.companyService.getUsersCompanyList(currentUserPackageNo).subscribe(res => {
+      if (!res.length) {
+        this.dialog.openFullScreenDialog(CreateCompanyComponent, {
+          data: {
+            firstCompany: true
+          }
+        }).afterClosed().subscribe(() => this.companySelected = true);
+      }
+      else {
+        console.log("reached here")
+        if (
+          this.authentication.currentCompanySelected() 
+          && res.find(company => company.databaseId === (this.authentication.currentCompany as Company).databaseId)
+        ) {
+          console.log("reached here and founded");
+          this.companySelected = true
         }
         else {
           this.dialog.openFullScreenDialog(SelectCompanyComponent, {
@@ -107,15 +137,29 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
             this.companySelected = true
           });
         }
-      })
-    }
-    else if (this.authDone && this.authentication.currentCompanySelected()) {
-      this.companySelected = true;
-    }
+      }
+    })
   }
 
-  ngAfterViewInit(): void {
-    this.currentActivatedRouteLoaded = true;
+  private loadSearchHistory(): void {
+    this.searchHistory = this.historyService.getHistory().filter(history => history.module === this.getCurrentModule());
+  }
+
+  private addToHistory(searchHistoryItem: SearchHistoryItem): void {
+    this.historyService.addToHistory(searchHistoryItem);
+    this.loadSearchHistory();
+  }
+
+  private getCurrentModule(): KeyModules {
+    let activeRoute: KeyModules = 'company'
+
+    if (this.currentActivatedRoute instanceof ListCompanyComponent) activeRoute = 'company';
+    if (this.currentActivatedRoute instanceof ListPersonComponent) activeRoute = 'person';
+    if (this.currentActivatedRoute instanceof ListProductComponent) activeRoute = 'product';
+    if (this.currentActivatedRoute instanceof UnitComponent) activeRoute = 'unit';
+    if (this.currentActivatedRoute instanceof ListInvoiceComponent) activeRoute = 'invoice';
+
+    return activeRoute;
   }
 
   public prepareRoute(outlet: RouterOutlet) {
@@ -124,21 +168,27 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
 
   public onSearch(): void {
     if (
-      this.currentActivatedRoute instanceof ListCompanyComponent 
+      this.currentActivatedRoute instanceof ListCompanyComponent
       || this.currentActivatedRoute instanceof ListPersonComponent
       || this.currentActivatedRoute instanceof ListProductComponent
       || this.currentActivatedRoute instanceof UnitComponent
       || this.currentActivatedRoute instanceof ListInvoiceComponent
     ) {
-      this.searchOpened = false
-      this.addToHistory({ value: this.searchQuery })
+      this.searchOpened = false;
+
+      const searchHistoryItem: SearchHistoryItem = {
+        value: this.searchQuery,
+        module: this.getCurrentModule()
+      }
+
+      this.addToHistory(searchHistoryItem);
       this.currentActivatedRoute.onSearch(this.searchQuery);
     }
   }
 
   public onSearchFromHistory(searchHistoryItem: SearchHistoryItem): void {
     if (
-      this.currentActivatedRoute instanceof ListCompanyComponent 
+      this.currentActivatedRoute instanceof ListCompanyComponent
       || this.currentActivatedRoute instanceof ListPersonComponent
       || this.currentActivatedRoute instanceof ListProductComponent
       || this.currentActivatedRoute instanceof UnitComponent
@@ -147,15 +197,6 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       this.searchOpened = false;
       this.currentActivatedRoute.onSearch(searchHistoryItem.value);
     }
-  }
-  
-  private loadSearchHistory(): void {
-    this.searchHistory = this.historyService.getHistory();
-  }
-  
-  private addToHistory(searchHistoryItem: SearchHistoryItem): void {
-    this.historyService.addToHistory(searchHistoryItem);
-    this.loadSearchHistory();
   }
 
   public removeFormHistory(searchHistoryItem: SearchHistoryItem): void {
@@ -192,6 +233,21 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
 
   public onRouteActivated(componentRef: ComponentRef<any>) {
     this.currentActivatedRoute = componentRef;
+
+    if (
+      this.currentActivatedRoute instanceof ListCompanyComponent
+      || this.currentActivatedRoute instanceof ListPersonComponent
+      || this.currentActivatedRoute instanceof ListProductComponent
+      || this.currentActivatedRoute instanceof UnitComponent
+      || this.currentActivatedRoute instanceof ListInvoiceComponent
+    ) {
+      this.searchDisable = false;
+    }
+    else {
+      this.searchDisable = true;
+    }
+
+    this.loadSearchHistory();
   }
 
   public onReSelectCompany(): void {

@@ -4,7 +4,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CompanyService } from '../../services/company.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { UpdateCompanyBody } from '../../types/company.type';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 
 @Component({
   selector: 'app-update-company',

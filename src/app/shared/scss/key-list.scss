@@ -31,10 +31,9 @@
     }
 
     .tiled-table-toggle {
-        padding: 8px;
         cursor: pointer;
         width: 36px;
-        height: 37px;
+        height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -101,7 +100,6 @@
         & td {
             color: var(--text-secondary-color);
         }
-
     }
 
     .table-no-data {

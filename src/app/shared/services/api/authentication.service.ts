@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, catchError, first, of, throwError } from 'rxjs';
-import { AddUser, AddUserBody, ForgetPassword, ForgetPasswordBody, Login, LoginBody, ResetPassword, ResetPasswordBody, UpdateUser, UpdateUserBody, UserDetails, UserInfo } from '../types/authentication.type';
+import { AddUser, AddUserBody, ForgetPassword, ForgetPasswordBody, Login, LoginBody, ResetPassword, ResetPasswordBody, UpdateUser, UpdateUserBody, UserDetails, UserInfo } from '../../types/authentication.type';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import * as moment from 'jalali-moment';
 import { Router } from '@angular/router';
 import { Company } from 'src/app/software/types/company.type';
-import { UtilityService } from './utility.service';
+import { UtilityService } from '../utilities/utility.service';
+import { Crypto } from '../../helpers/crypto.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -18,9 +19,9 @@ export class AuthenticationService {
   private _tokenExpireDate: string | null = null;
   
   get currentCompany(): Company | "" {
-    const currentLocalCompany: string | null = localStorage.getItem('current-company');
+    const currentLocalCompany: string | null = Crypto.decrypt(localStorage.getItem(Crypto.encrypt('current-company')) ?? '');
     
-    if (currentLocalCompany !== null) {
+    if (currentLocalCompany !== null && currentLocalCompany !== '') {
       return JSON.parse(currentLocalCompany);
     }
 
@@ -28,14 +29,14 @@ export class AuthenticationService {
   }
 
   set currentCompany(item: Company) {
-    localStorage.setItem("current-company", JSON.stringify(item));
+    localStorage.setItem(Crypto.encrypt("current-company"), Crypto.encrypt(JSON.stringify(item)));
     this._company = JSON.stringify(item);
   }
 
   get userDetails(): UserDetails | "" {
-    const currentLocalUserDetails: string | null = localStorage.getItem('user-details');
+    const currentLocalUserDetails: string | null = Crypto.decrypt(localStorage.getItem(Crypto.encrypt('user-details')) ?? '');
 
-    if (currentLocalUserDetails !== null) {
+    if (currentLocalUserDetails !== null && currentLocalUserDetails !== '') {
       return JSON.parse(currentLocalUserDetails);
     }
 
@@ -43,14 +44,14 @@ export class AuthenticationService {
   }
 
   set userDetails(item: UserDetails) {
-    localStorage.setItem("user-details", JSON.stringify(item));
+    localStorage.setItem(Crypto.encrypt("user-details"), Crypto.encrypt(JSON.stringify(item)));
   }
 
   public get userLoggedIn(): boolean {
-    const localExpireDate = localStorage.getItem("token-expire");
-    const localToken = localStorage.getItem("auth-token");
+    const localExpireDate = Crypto.decrypt(localStorage.getItem(Crypto.encrypt("token-expire")) ?? '');
+    const localToken = Crypto.decrypt(localStorage.getItem(Crypto.encrypt("auth-token")) ?? '');
 
-    if (localExpireDate !== null && localToken !== null && !this.isTokenExpired(localExpireDate)) {
+    if (localExpireDate !== null && localExpireDate !== '' && localToken !== null && localToken !== '' && !this.isTokenExpired(localExpireDate)) {
       return true;
     }
 
@@ -58,7 +59,7 @@ export class AuthenticationService {
   }
 
   get accessToken(): string | null {
-    const localToken = localStorage.getItem("auth-token");
+    const localToken = Crypto.decrypt(localStorage.getItem(Crypto.encrypt("auth-token")) ?? '');
 
     if (this.userLoggedIn) {
       return localToken;
@@ -70,7 +71,7 @@ export class AuthenticationService {
   }
 
   set accessToken(token: string) {
-    localStorage.setItem('auth-token', token);
+    localStorage.setItem(Crypto.encrypt("auth-token"), Crypto.encrypt(token));
     this._accessToken = token;
   }
 
@@ -78,14 +79,14 @@ export class AuthenticationService {
     const now = moment()
     const expirationDate = now.add(seconds, 'seconds');
 
-    localStorage.setItem("token-expire", expirationDate.format('YYYY-MM-DD HH:mm:ss'));
+    localStorage.setItem(Crypto.encrypt("token-expire"), Crypto.encrypt(expirationDate.format('YYYY-MM-DD HH:mm:ss')));
     this._tokenExpireDate = expirationDate.format('YYYY-MM-DD HH:mm:ss');
   }
 
   constructor(private http: HttpClient, private router: Router, private utility: UtilityService) { }
 
   public currentCompanySelected(): boolean {
-    const currentLocalCompany: string | null = localStorage.getItem('current-company');
+    const currentLocalCompany: string | null = Crypto.decrypt(localStorage.getItem(Crypto.encrypt('current-company')) ?? '');
 
     if (currentLocalCompany && currentLocalCompany !== null && currentLocalCompany !== "") {
       return true
@@ -110,13 +111,13 @@ export class AuthenticationService {
   }
 
   private clearCurrentCompany(): void {
-    localStorage.removeItem("current-company");
+    localStorage.removeItem(Crypto.encrypt("current-company"));
   }
 
   private clearAccessToken(): void {
-    localStorage.removeItem("auth-token");
-    localStorage.removeItem("token-expire");
-    localStorage.removeItem("user-details");
+    localStorage.removeItem(Crypto.encrypt("auth-token"));
+    localStorage.removeItem(Crypto.encrypt("token-expire"));
+    localStorage.removeItem(Crypto.encrypt("user-details"));
     this._accessToken = null;
     this._tokenExpireDate = null
   }

@@ -169,7 +169,7 @@
             </mat-menu>
             <div class="search-box" [ngClass]="{'search-box-opened': searchOpened}">
                 <form class="search-form" (ngSubmit)="searchInput.blur(); onSearch()">
-                    <input placeholder="جستجو کردن..." type="text" #searchInput (click)="searchOpened = true;" (keydown.esc)="searchOpened = false; searchInput.blur()" [ngClass]="{'search-opened': searchOpened}" class="search" [(ngModel)]="searchQuery" name="search-input">
+                    <input placeholder="جستجو کردن..." type="text" #searchInput (click)="searchOpened = true;" (keydown.esc)="searchOpened = false; searchInput.blur()" [ngClass]="{'search-opened': searchOpened}" class="search" [(ngModel)]="searchQuery" name="search-input" [disabled]="searchDisable">
                     <div class="search-form-history" *ngIf="searchOpened">
                         <span class="search-history-item" *ngFor="let searchHistoryItem of searchHistory">
                             <div class="history-item-value" (click)="searchQuery = searchHistoryItem.value; onSearch();">

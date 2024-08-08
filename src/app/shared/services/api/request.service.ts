@@ -4,7 +4,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { environment } from 'src/environment/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UtilityService } from './utility.service';
+import { UtilityService } from '../utilities/utility.service';
 import { Router } from '@angular/router';
 import { Company } from 'src/app/software/types/company.type';
 

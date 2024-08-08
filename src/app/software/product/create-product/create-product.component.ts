@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductType } from '../../enums/product-type.enum';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { AddProductBody } from '../../types/product.type';
 import { ProductService } from '../../services/product.service';
 import { Company } from '../../types/company.type';
 import { UnitService } from '../../services/unit.service';
 import { Unit } from '../../types/unit.type';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 
 @Component({

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { LoginBody } from 'src/app/shared/types/authentication.type';
 
 @Component({

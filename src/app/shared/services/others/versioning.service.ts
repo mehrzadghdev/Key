@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environment/environment';
+import { Crypto } from '../../helpers/crypto.helper';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VersioningService {
   public get version(): number {
-    return Number(localStorage.getItem('version') ?? 1.0) as number;
+    return Number(Crypto.decrypt(localStorage.getItem(Crypto.encrypt('version')) ?? '1.0')) as number;
   }
 
   constructor(private http: HttpClient) { }
@@ -32,7 +33,7 @@ export class VersioningService {
   }
 
   private setVersion(version: number): void {
-    localStorage.setItem("version", version.toString());
+    localStorage.setItem(Crypto.encrypt("version"), Crypto.encrypt(version.toString()));
   }
 
   private getCurrentVersion(): Observable<number> {

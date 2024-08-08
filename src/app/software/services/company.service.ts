@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { RequestService } from 'src/app/shared/services/request.service';
+import { RequestService } from 'src/app/shared/services/api/request.service';
 import { AddCompany, AddCompanyBody, DeleteCompany, DeleteCompanyBody, GetCompany, GetCompanyBody, GetCompanyList, GetUsersCompanyList, GetUsersCompanyListBody, UpdateCompany, UpdateCompanyBody } from '../types/company.type';
 import { HttpClient } from '@angular/common/http';
 

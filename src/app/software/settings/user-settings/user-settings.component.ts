@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
-import { ThemeService } from 'src/app/shared/services/theme.service';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
+import { ThemeService } from 'src/app/shared/services/theme/theme.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { UpdateUserBody, UserDetails } from 'src/app/shared/types/authentication.type';
 import { Theme } from 'src/app/shared/types/theme.type';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';

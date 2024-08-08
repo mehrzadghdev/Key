@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { SearchHistory, SearchHistoryItem } from '../types/history.type';
+import { SearchHistory, SearchHistoryItem } from '../../types/history.type';
+import { Crypto } from '../../helpers/crypto.helper';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +10,13 @@ export class HistoryService {
   constructor() { }
 
   private setHistory(searchHistory: SearchHistory): void {
-    localStorage.setItem("search-history", JSON.stringify(searchHistory));
+    localStorage.setItem(Crypto.encrypt("search-history"), Crypto.encrypt(JSON.stringify(searchHistory)));
   }
 
   public getHistory(): SearchHistory {
-    const searchHistory = localStorage.getItem("search-history");
+    const searchHistory = Crypto.decrypt(localStorage.getItem(Crypto.encrypt("search-history")) ?? '');
     
-    if (searchHistory !== null) {
+    if (searchHistory !== null && searchHistory !== '') {
       return JSON.parse(searchHistory);
     }
     

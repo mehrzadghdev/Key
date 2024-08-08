@@ -168,7 +168,7 @@ body[theme='dark'] {
 
     // Icon color filters
     --icon-base: invert(96%) sepia(4%) saturate(195%) hue-rotate(187deg) brightness(104%) contrast(93%); // #F1F2F6, --text-primary-color
-    --icon-medium: invert(79%) sepia(13%) saturate(301%) hue-rotate(172deg) brightness(88%) contrast(87%); // #A4B0BE, --text-secondary-color
+    --icon-medium: brightness(0) saturate(100%) invert(76%) sepia(7%) saturate(636%) hue-rotate(172deg) brightness(95%) contrast(79%); // #A4B0BE, --text-secondary-color
     --icon-light: invert(49%) sepia(8%) saturate(702%) hue-rotate(179deg) brightness(97%) contrast(84%); // #747D8C, --text-tertiary-color
     --icon-primary: brightness(0) saturate(100%) invert(66%) sepia(78%) saturate(355%) hue-rotate(121deg) brightness(96%) contrast(86%); // #3D9EFF, --dark-primary-color
     --icon-accent: invert(17%) sepia(14%) saturate(886%) hue-rotate(183deg) brightness(98%) contrast(89%); // #2F3542, --text-primary-color on lightTheme

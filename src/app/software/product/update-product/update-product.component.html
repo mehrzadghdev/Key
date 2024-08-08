@@ -1,5 +1,5 @@
 <form [formGroup]="updateProductForm">
-    <div class="form-dialog-top-bar">
+    <div class="form-dialog-top-bar" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
         <h3>ایجاد کالای جدید</h3>
         <key-button content="icon" (click)="closeDialog()">
             <mat-icon class="icon-base">close</mat-icon>

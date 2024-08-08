@@ -5,10 +5,10 @@ import { Unit } from '../../types/unit.type';
 import { ProductType } from '../../enums/product-type.enum';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ProductService } from '../../services/product.service';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { UnitService } from '../../services/unit.service';
 import { Company } from '../../types/company.type';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 
 @Component({

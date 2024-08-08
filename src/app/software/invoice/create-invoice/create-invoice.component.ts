@@ -7,15 +7,15 @@ import { AddInvoiceBody, AddInvoiceProductItem, GetInvoiceListInvoiceItem, Invoi
 import { PersonService } from '../../services/person.service';
 import { ProductService } from '../../services/product.service';
 import { forkJoin } from 'rxjs';
-import { AuthenticationService } from 'src/app/shared/services/authentication.service';
+import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { Company } from '../../types/company.type';
 import { GetCompaniesProductListBody, Product } from '../../types/product.type';
 import { GetCompaniesPersonListBody, Person } from '../../types/person.type';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
-import { DialogService } from 'src/app/shared/services/dialog.service';
+import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { CreatePersonComponent } from '../../person/create-person/create-person.component';
 import { AddInvoiceProductComponent } from '../add-invoice-product/add-invoice-product.component';
-import { UtilityService } from 'src/app/shared/services/utility.service';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { InvoiceService } from '../../services/invoice.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 
