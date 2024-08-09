@@ -39,6 +39,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { ChartComponent } from './components/chart/chart.component';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -58,7 +59,8 @@ export function playerFactory() {
     FarsiNumberPipe,
     SkeletonComponent,
     PercentageInputDirective,
-    TiledTableDirective
+    TiledTableDirective,
+    ChartComponent
   ],
   imports: [
     CommonModule,
@@ -99,6 +101,7 @@ export function playerFactory() {
     LoadingComponent,
     TableLoadingComponent,
     ButtonComponent,
+    ChartComponent,
     DatePickerComponent,
     SkeletonComponent,
     JdatePipe,

@@ -13,6 +13,10 @@ export class ThemeService {
     document.body.setAttribute("theme", this.getColorTheme());
   }
 
+  public variable(colorVarName: string): string {
+    return getComputedStyle(document.body).getPropertyValue(colorVarName);
+  }
+
   public getColorTheme(): Theme {
     const theme = Crypto.decrypt(localStorage.getItem(Crypto.encrypt("theme")) ?? '');
 

@@ -1,0 +1,53 @@
+<div class="dashboard-topbar">
+    <div class="welcome-message">
+        <h1>پیشخوان</h1>
+        <span>{{ currentUser.name + " " + currentUser.family }} عزیز، خوش آمدید.</span>
+    </div>
+    <div class="software-status" (click)="isAccountActive = !isAccountActive" [ngClass]="{'not-active': !isAccountActive}">وضعیت حساب: <span><ng-container *ngIf="!isAccountActive">غیر</ng-container> فعال</span></div>
+</div>
+
+<div class="dashboard-counts">
+    <div class="dashboard-count-item key-section">
+        <span class="key-section-topbar minimal">فاکتور ارسالی</span>
+        <span class="count-item-value">
+            {{ 60 | farsiNumber }}%
+        </span>
+        <span class="count-item-current-status nagetive-status">{{ 20 | farsiNumber }}%</span>
+    </div>
+    <div class="dashboard-count-item key-section">
+        <span class="key-section-topbar minimal">فروش ماه جاری</span>
+        <span class="count-item-value">
+            {{ 56000000 | price }} ریال
+        </span>
+        <span class="count-item-current-status">{{ 2000000 | price }} ریال</span>
+    </div>
+    <div class="dashboard-count-item key-section">
+        <span class="key-section-topbar minimal">طرف حساب جدید</span>
+        <span class="count-item-value">
+            {{ 40 | farsiNumber }}
+        </span>
+        <span class="count-item-current-status">{{ 3 | farsiNumber }}</span>
+    </div>
+    <div class="dashboard-count-item key-section">
+        <span class="key-section-topbar minimal">کالا و خدمات فروخته شده</span>
+        <span class="count-item-value">
+            {{ 466 | farsiNumber }}
+        </span>
+        <span class="count-item-current-status">{{ 102 | farsiNumber }}</span>
+    </div>
+</div>
+
+<div class="dashboard-charts">
+    <div class="key-section main-chart">
+        <key-chart labels="months" [dataSets]="productPersonChartData"></key-chart>
+    </div>
+    <div class="key-section pie-chart">
+        <h3>وضعیت فاکتور های فروش</h3>
+        <ul>
+            <li>ارسالی: 23</li>
+            <li>ابطالی: 21</li>
+            <li>فاکتور عادی: 5</li>
+        </ul>
+        <key-chart [labels]="['فاکتور ارسالی', 'فاکتور ابطالی', 'فاکتور فروش عادی']" [dataSets]="factorChartData" type="pie"></key-chart>
+    </div>
+</div>

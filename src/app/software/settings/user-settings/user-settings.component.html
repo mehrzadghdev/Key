@@ -1,5 +1,5 @@
-<div class="user-settings">
-    <div class="user-settings-topbar">
+<div class="user-settings key-section">
+    <div class="key-section-topbar">
         <a routerLink="/software">
             <key-button content="icon" appearance="flat">
                 <mat-icon class="icon-primary">arrow_forward</mat-icon>
@@ -68,7 +68,7 @@
             <div class="form-chip" matRipple [ngClass]="{'selected-chip': activeTheme === 'dark'}" (click)="setActiveTheme('dark')">تاریک</div>
         </div>
     </form>
-    <div class="user-settings-footer">
+    <div class="key-section-footer">
         <div class="logout-button">
             <key-button [block]="true" appearance="error" (click)="onLogout()">
                 <mat-icon class="logout-icon">logout</mat-icon>

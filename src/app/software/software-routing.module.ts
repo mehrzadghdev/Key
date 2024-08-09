@@ -5,7 +5,7 @@ import { SoftwareComponent } from './software.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'company',
+    redirectTo: 'dashboard',
     pathMatch: 'full'
   },
   {
@@ -36,6 +36,11 @@ const routes: Routes = [
         path: "settings",
         loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
         data: { animation: 'Five' }
+      },
+      {
+        path: "dashboard",
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+        data: { animation: 'Six' }
       },
     ]
   }

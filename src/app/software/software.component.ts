@@ -22,6 +22,7 @@ import { ListInvoiceComponent } from './invoice/list-invoice/list-invoice.compon
 import { VersioningService } from '../shared/services/others/versioning.service';
 import { HistoryService } from '../shared/services/others/history.service';
 import { SearchHistory, SearchHistoryItem } from '../shared/types/history.type';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @Component({
   selector: 'app-software',
@@ -59,7 +60,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     return this.versioningService.version as number;
   }
 
-  public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent | UnitComponent>;
+  public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent | UnitComponent | DashboardComponent>;
   public currentActivatedRouteLoaded: boolean = false;
   public searchQuery: string = "";
   public fullscreen: boolean = true;
@@ -316,10 +317,13 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   }
 
   public activeRouteIs(value: KeyModules): boolean {
+    console.log(this.currentActivatedRoute instanceof DashboardComponent);
     if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
     if (value === 'person') return this.currentActivatedRoute instanceof ListPersonComponent;
     if (value === 'product') return this.currentActivatedRoute instanceof ListProductComponent || this.currentActivatedRoute instanceof UnitComponent;
-    if (value === 'invoice') return this.currentActivatedRoute instanceof ListInvoiceComponent;;
+    if (value === 'invoice') return this.currentActivatedRoute instanceof ListInvoiceComponent;
+    if (value === 'dashboard') return this.currentActivatedRoute instanceof DashboardComponent;
+
 
     return false;
   }

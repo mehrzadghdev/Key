@@ -186,4 +186,14 @@ body[theme='dark'] {
 
     // Box Shadows
     --base-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+
+    // Chart
+    --chart-border-color-1: var(--primary-color);
+    --chart-border-color-2: var(--dark-violet);
+    --chart-border-color-3: var(--dark-peanut-butter);
+    --chart-border-color-4: var(--dark-jam);
+    --chart-background-color-1: color-mix(in srgb, var(--primary-color), transparent 40%);
+    --chart-background-color-2: color-mix(in srgb, var(--dark-violet), transparent 40%);
+    --chart-background-color-3: color-mix(in srgb, var(--dark-peanut-butter), transparent 40%);
+    --chart-background-color-4: color-mix(in srgb, var(--dark-jam), transparent 40%);
 }

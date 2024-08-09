@@ -49,7 +49,20 @@
         </div>
         <ul class="panel-sidebar__menu">
             <li class="menu-title">منو اصلی</li>
-            <li class="nav-item accordion opened" #companyAccordion (click)="toggleAccordion(companyAccordion)"
+            <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('dashboard')}">
+                <a routerLink="/software">
+                    <div class="accordion-header" matRipple>
+                        <div class="accordion-title">
+                            <div class="nav-item__icon">
+                                <mat-icon class="material-icons-outlined">poll_outline</mat-icon>
+                            </div>
+                            <span *ngIf="isExpanded" class="nav-item__title unselectable">داشبورد</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+            <li class="menu-title">موجودیت ها</li>
+            <li class="nav-item accordion" #companyAccordion (click)="toggleAccordion(companyAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? companyMenu : null">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
@@ -169,17 +182,22 @@
             </mat-menu>
             <div class="search-box" [ngClass]="{'search-box-opened': searchOpened}">
                 <form class="search-form" (ngSubmit)="searchInput.blur(); onSearch()">
-                    <input placeholder="جستجو کردن..." type="text" #searchInput (click)="searchOpened = true;" (keydown.esc)="searchOpened = false; searchInput.blur()" [ngClass]="{'search-opened': searchOpened}" class="search" [(ngModel)]="searchQuery" name="search-input" [disabled]="searchDisable">
+                    <input placeholder="جستجو کردن..." type="text" #searchInput (click)="searchOpened = true;"
+                        (keydown.esc)="searchOpened = false; searchInput.blur()"
+                        [ngClass]="{'search-opened': searchOpened}" class="search" [(ngModel)]="searchQuery"
+                        name="search-input" [disabled]="searchDisable">
                     <div class="search-form-history" *ngIf="searchOpened">
                         <span class="search-history-item" *ngFor="let searchHistoryItem of searchHistory">
-                            <div class="history-item-value" (click)="searchQuery = searchHistoryItem.value; onSearch();">
+                            <div class="history-item-value"
+                                (click)="searchQuery = searchHistoryItem.value; onSearch();">
                                 <mat-icon class="icon-medium">history</mat-icon>
                                 <span>
                                     {{ searchHistoryItem.value }}
                                 </span>
                             </div>
                             <div class="close-icon">
-                                <mat-icon (click)="removeFormHistory(searchHistoryItem)" class="icon-medium">close</mat-icon>
+                                <mat-icon (click)="removeFormHistory(searchHistoryItem)"
+                                    class="icon-medium">close</mat-icon>
                             </div>
                         </span>
                     </div>
