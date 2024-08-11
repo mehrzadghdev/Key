@@ -1,5 +1,5 @@
 <form class="form-dialog" [formGroup]="addInvoiceProductForm">
-    <div class="form-dialog-top-bar">
+    <div class="form-dialog-top-bar" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
         <h3>افزودن کالا به فاکتور فروش</h3>
         <key-button content="icon" (click)="closeDialog()">
             <mat-icon class="icon-base">close</mat-icon>

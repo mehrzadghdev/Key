@@ -63,7 +63,7 @@
             </li>
             <li class="menu-title">موجودیت ها</li>
             <li class="nav-item accordion" #companyAccordion (click)="toggleAccordion(companyAccordion)"
-                [mat-menu-trigger-for]="!isExpanded ? companyMenu : null">
+                [mat-menu-trigger-for]="!isExpanded ? companyMenu : null" [ngClass]="{'opened': activeRouteIs('company')}">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
@@ -88,7 +88,7 @@
             </mat-menu>
 
             <li class="nav-item accordion" #contactAccordion (click)="toggleAccordion(contactAccordion)"
-                [mat-menu-trigger-for]="!isExpanded ? contactMenu : null">
+                [mat-menu-trigger-for]="!isExpanded ? contactMenu : null" [ngClass]="{'opened': activeRouteIs('person')}">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
@@ -111,7 +111,7 @@
             </mat-menu>
 
             <li class="nav-item accordion" #productAccordion (click)="toggleAccordion(productAccordion)"
-                [mat-menu-trigger-for]="!isExpanded ? productMenu : null">
+                [mat-menu-trigger-for]="!isExpanded ? productMenu : null" [ngClass]="{'opened': activeRouteIs('product')}">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
@@ -136,7 +136,7 @@
             </mat-menu>
 
             <li class="nav-item accordion" #factorAccordion (click)="toggleAccordion(factorAccordion)"
-                [mat-menu-trigger-for]="!isExpanded ? factor : null">
+                [mat-menu-trigger-for]="!isExpanded ? factor : null" [ngClass]="{'opened': activeRouteIs('invoice')}">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
