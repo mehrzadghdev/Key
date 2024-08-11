@@ -23,6 +23,7 @@ import { VersioningService } from '../shared/services/others/versioning.service'
 import { HistoryService } from '../shared/services/others/history.service';
 import { SearchHistory, SearchHistoryItem } from '../shared/types/history.type';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CurrencyComponent } from './invoice/currency/currency.component';
 
 @Component({
   selector: 'app-software',
@@ -60,7 +61,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     return this.versioningService.version as number;
   }
 
-  public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent | UnitComponent | DashboardComponent>;
+  public currentActivatedRoute!: ComponentRef< ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent | UnitComponent | DashboardComponent | CurrencyComponent>;
   public currentActivatedRouteLoaded: boolean = false;
   public searchQuery: string = "";
   public fullscreen: boolean = true;
@@ -158,6 +159,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     if (this.currentActivatedRoute instanceof ListPersonComponent) activeRoute = 'person';
     if (this.currentActivatedRoute instanceof ListProductComponent) activeRoute = 'product';
     if (this.currentActivatedRoute instanceof UnitComponent) activeRoute = 'unit';
+    if (this.currentActivatedRoute instanceof CurrencyComponent) activeRoute = 'currency';
     if (this.currentActivatedRoute instanceof ListInvoiceComponent) activeRoute = 'invoice';
 
     return activeRoute;
@@ -174,6 +176,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       || this.currentActivatedRoute instanceof ListProductComponent
       || this.currentActivatedRoute instanceof UnitComponent
       || this.currentActivatedRoute instanceof ListInvoiceComponent
+      || this.currentActivatedRoute instanceof CurrencyComponent
     ) {
       this.searchOpened = false;
 
@@ -194,6 +197,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       || this.currentActivatedRoute instanceof ListProductComponent
       || this.currentActivatedRoute instanceof UnitComponent
       || this.currentActivatedRoute instanceof ListInvoiceComponent
+      || this.currentActivatedRoute instanceof CurrencyComponent
     ) {
       this.searchOpened = false;
       this.currentActivatedRoute.onSearch(searchHistoryItem.value);
@@ -241,6 +245,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       || this.currentActivatedRoute instanceof ListProductComponent
       || this.currentActivatedRoute instanceof UnitComponent
       || this.currentActivatedRoute instanceof ListInvoiceComponent
+      || this.currentActivatedRoute instanceof CurrencyComponent
     ) {
       this.searchDisable = false;
     }
@@ -271,6 +276,9 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       }
       if (this.currentActivatedRoute instanceof ListInvoiceComponent) {
         this.currentActivatedRoute.loadInvoiceList();
+      }
+      if (this.currentActivatedRoute instanceof CurrencyComponent) {
+        this.currentActivatedRoute.loadCurrencyList();
       }
     })
   }
@@ -317,11 +325,10 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   }
 
   public activeRouteIs(value: KeyModules): boolean {
-    console.log(this.currentActivatedRoute instanceof DashboardComponent);
     if (value === 'company') return this.currentActivatedRoute instanceof ListCompanyComponent;
     if (value === 'person') return this.currentActivatedRoute instanceof ListPersonComponent;
     if (value === 'product') return this.currentActivatedRoute instanceof ListProductComponent || this.currentActivatedRoute instanceof UnitComponent;
-    if (value === 'invoice') return this.currentActivatedRoute instanceof ListInvoiceComponent;
+    if (value === 'invoice') return this.currentActivatedRoute instanceof ListInvoiceComponent || this.currentActivatedRoute instanceof CurrencyComponent;
     if (value === 'dashboard') return this.currentActivatedRoute instanceof DashboardComponent;
 
 

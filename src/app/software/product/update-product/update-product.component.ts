@@ -23,6 +23,7 @@ export class UpdateProductComponent {
   public getUnitListLoading: boolean = true;
   public getProductLoading: boolean = true;
   public unitList: Unit[] = [];
+  public filteredUnitList: Unit[] = [];
   public productTypes = [
     { display: 'کالا', value: ProductType.Product },
     { display: 'خدمات', value: ProductType.Service },
@@ -45,6 +46,7 @@ export class UpdateProductComponent {
       price: [null, Validators.required],
       taxPercent: [10, [Validators.required, Validators.min(0), Validators.max(100)]],
       unitCode: [null, Validators.required],
+      unitCodeSearch: [null],
       otherLegalFunds: [''],
       otherLegalFundsPercent: [0, [Validators.required, Validators.min(0), Validators.max(100)]],
       otherTax: [""],
@@ -53,9 +55,10 @@ export class UpdateProductComponent {
   }
 
   ngOnInit(): void {
-    this.unitSerivce.getUnitList({}).subscribe(res => {
+    this.unitSerivce.getUnitList({ pageSize: 9999 }).subscribe(res => {
       this.getUnitListLoading = false;
-      this.unitList = res;
+      this.filteredUnitList = res.result;
+      this.unitList = res.result;
     })
 
     this.updateProductForm.get("code")?.disable();
@@ -75,6 +78,11 @@ export class UpdateProductComponent {
       })
 
       this.getProductLoading = false;
+    })
+
+    this.updateProductForm.get("unitCodeSearch")?.valueChanges.subscribe(value => {
+      console.log("called");
+      this.filteredUnitList = this.unitList.filter(unit => unit.name.includes(value));
     })
   }
 

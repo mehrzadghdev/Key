@@ -12,8 +12,9 @@
         </div>
         <mat-form-field class="form-dialog-field" appearance="outline">
             <mat-label>واحد کالا و خدمات</mat-label>
-            <mat-select formControlName="unitCode" name="unitCode">
-                <mat-option *ngFor="let unit of unitList" [value]="unit.code">{{unit.name}}</mat-option>
+            <mat-select formControlName="unitCode" name="unitCode" (opened)="unitCodeSearch.focus()">
+                <input class="mat-select-search" type="text" formControlName="unitCodeSearch" #unitCodeSearch placeholder="جستجو کردن...">
+                <mat-option *ngFor="let unit of filteredUnitList" [value]="unit.code">{{unit.name}}</mat-option>
             </mat-select>
             <mat-error *ngIf="updateProductForm.get('unitCode')?.invalid && validationLastCheck">
                 این فیلد الزامیست

@@ -112,8 +112,8 @@ export class ListProductComponent {
   public loadUnitList(): void {
     this.unitListLoaded = false;
 
-    this.unitService.getUnitList({}).subscribe(res => {
-      this.unitList = res;
+    this.unitService.getUnitList({ pageSize: 9999 }).subscribe(res => {
+      this.unitList = res.result;
       this.unitListLoaded = true;
     })
   }

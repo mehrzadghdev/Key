@@ -22,11 +22,11 @@ export class AddInvoiceProductComponent implements OnInit {
   public filteredProducts: Product[] = []
 
   public get totalPrice(): number {
-    return this.pricebeforeTax + this.taxPrice
+    return this.pricebeforeTax + this.taxPrice;
   }
 
   public get pricebeforeTax(): number {
-    return this.addInvoiceProductForm.get("price")?.value - this.addInvoiceProductForm.get("discount")?.value
+    return (this.addInvoiceProductForm.get("price")?.value * this.addInvoiceProductForm.get("amount")?.value) - this.addInvoiceProductForm.get("discount")?.value
   }
 
   public get taxPrice(): number {

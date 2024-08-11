@@ -5,6 +5,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
+import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
+import { Sort } from '@angular/material/sort';
+import { GetCompaniesPersonListBody, GetPersonListBody } from '../../types/person.type';
 
 @Component({
   selector: 'app-unit',
@@ -15,7 +18,18 @@ export class UnitComponent implements OnInit {
   public tailedTable: boolean = false;
   public date: string = new Date().toISOString();
 
+  public tablePagination: Partial<Pagination> = {
+    totalCount: 0,
+    pageSize: 0,
+    currentPage: 0,
+    totalPages: 0,
+    hasNext: false,
+    hasPrev: false
+  };
+  public tableSearchQuery: string = '';
+
   public unitListLoaded: boolean = false;
+  public tableSortField: string = '';
   public unitList: Unit[] = [];
   public tableColumns: string[] = ['ایدی واحد', 'نام واحد', 'کد واحد', 'عملیات'];
   public addUnitForm: FormGroup;
@@ -40,13 +54,70 @@ export class UnitComponent implements OnInit {
     this.loadUnitList()
   }
 
-  public loadUnitList(): void {
-    this.unitListLoaded = false;
+  public onTableSortChanged(sort: Sort): void {
+    switch (sort.active) {
+      case 'ایدی واحد':
+        if (sort.direction === 'asc') this.tableSortField = 'id';
+        if (sort.direction === 'desc') this.tableSortField = 'id_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case 'نام واحد':
+        if (sort.direction === 'asc') this.tableSortField = 'name';
+        if (sort.direction === 'desc') this.tableSortField = 'name_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+      case 'کد واحد':
+        if (sort.direction === 'asc') this.tableSortField = 'code';
+        if (sort.direction === 'desc') this.tableSortField = 'code_desc';
+        if (sort.direction === '') this.tableSortField = '';
+      break;
+    }
 
-    this.unitService.getUnitList({}).subscribe(res => {
-      this.unitList = res;
+    this.sortUnitList({ pageSize: this.tablePagination.pageSize, page: 1, sortFieldName: this.tableSortField });
+  }
+
+  public sortUnitList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
+    const unitListBody: GetPersonListBody = {
+      ...pagination
+    }
+
+    this.unitService.getUnitList(unitListBody).subscribe(res => {
+      this.unitList = res.result;
+      this.tablePagination.totalCount = res.totalCount,
+      this.tablePagination.pageSize = res.pageSize,
+      this.tablePagination.currentPage = res.currentPage,
+      this.tablePagination.totalPages = res.totalPages,
+      this.tablePagination.hasNext = res.hasNext,
+      this.tablePagination.hasPrev = res.hasPrev
       this.unitListLoaded = true;
     })
+  }
+
+  public loadUnitList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
+    this.unitListLoaded = false;
+
+    const unitListBody: GetPersonListBody = {
+      ...pagination
+    }
+
+    this.unitService.getUnitList(unitListBody).subscribe(res => {
+      this.unitList = res.result;
+      this.tablePagination.totalCount = res.totalCount,
+      this.tablePagination.pageSize = res.pageSize,
+      this.tablePagination.currentPage = res.currentPage,
+      this.tablePagination.totalPages = res.totalPages,
+      this.tablePagination.hasNext = res.hasNext,
+      this.tablePagination.hasPrev = res.hasPrev
+      this.unitListLoaded = true;
+    })
+  }
+
+  public onItemPerPageChanged(itemsPerPage: 10 | 25 | 40 | 60): void {
+    this.loadUnitList({ pageSize: itemsPerPage, page: 1, searchTerm: this.tableSearchQuery, sortFieldName: this.tableSortField });
+  }
+
+  public onPaginationChanged(pagetoGo: number): void {
+    this.loadUnitList({ pageSize: this.tablePagination.pageSize, page: pagetoGo, searchTerm: this.tableSearchQuery, sortFieldName: this.tableSortField });
   }
 
   public onDeleteUnit(unitCodeToDelete: number): void {
@@ -74,9 +145,9 @@ export class UnitComponent implements OnInit {
         this.utility.message('واحد با موفقیت ایجاد شد.', 'بستن');
         this.loadUnitList();
       },
-      err => {
-        this.addUnitLoading = false
-      })
+        err => {
+          this.addUnitLoading = false
+        })
     }
     else {
       this.validationLastCheck = true;
@@ -132,24 +203,7 @@ export class UnitComponent implements OnInit {
   }
 
   public onSearch(searchQuery: string) {
-    if (searchQuery && this.unitListLoaded) {
-      const filteredData = this.unitList.filter(unit => {
-        for (const [key, value] of Object.entries(unit)) {
-          if (typeof value === 'string' && value.includes(searchQuery)) {
-            return true
-          }
-          if (typeof value === 'number'&& value.toString().includes(searchQuery)) {
-            return true
-          }
-        }
-  
-        return;
-      })
-  
-      this.unitList = filteredData;
-    }
-    else {
-      this.loadUnitList();
-    }
+    this.tableSearchQuery = searchQuery
+    this.loadUnitList({ pageSize: 10, page: 1, searchTerm: searchQuery, sortFieldName: this.tableSortField });
   }
 }

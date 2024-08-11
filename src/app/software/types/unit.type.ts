@@ -1,6 +1,7 @@
 // Unit Base
 
 import { GetNewCode, GetNewCodeBody, HasDatabase } from "src/app/shared/types/common.type";
+import { Pagination, PaginationBody } from "src/app/shared/types/pagination.type";
 
 
 export interface Unit extends HasDatabase {
@@ -17,9 +18,13 @@ export type GetAllUnitListBody = null;
 
 // Unit/GetUnitList
 
-export type GetUnitList = Unit[];
+export interface GetUnitListItem extends HasDatabase, Unit {};
 
-export interface GetUnitListBody extends HasDatabase {};
+export interface GetUnitList extends Pagination {
+    result: GetUnitListItem[];
+};
+
+export interface GetUnitListBody extends HasDatabase, PaginationBody {};
 
 // Unit/GetUnit
 

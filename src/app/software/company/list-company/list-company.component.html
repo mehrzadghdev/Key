@@ -15,9 +15,9 @@
             <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> شرکت جدید
         </key-button>
         <div class="buttons-seperator"></div>
-        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
-            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
-            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
+        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="!tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
+            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
+            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
         </button>
     </div>
 </div>

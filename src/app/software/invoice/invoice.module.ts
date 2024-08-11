@@ -23,6 +23,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { UpdateInvoiceComponent } from './update-invoice/update-invoice.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
+import { CurrencyComponent } from './currency/currency.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { MatRippleModule } from '@angular/material/core';
     CreateInvoiceComponent,
     AddInvoiceProductComponent,
     ListInvoiceComponent,
-    UpdateInvoiceComponent
+    UpdateInvoiceComponent,
+    CurrencyComponent
   ],
   imports: [
     CommonModule,

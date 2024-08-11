@@ -52,10 +52,10 @@ export class CreateProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.unitSerivce.getUnitList({}).subscribe(res => {
+    this.unitSerivce.getUnitList({ pageSize: 9999 }).subscribe(res => {
       this.getUnitListLoading = false;
-      this.unitList = res;
-      this.filteredUnitList = res;
+      this.unitList = res.result;
+      this.filteredUnitList = res.result;
     })
 
     this.productService.getNewProductCode({}).subscribe(res => {

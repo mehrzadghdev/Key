@@ -872,7 +872,7 @@ textarea {
     .mdc-data-table__content {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        gap: 20px;
+        gap: 10px;
     }
 
     .mat-mdc-header-row {
@@ -904,6 +904,9 @@ textarea {
     .mat-mdc-row {
         height: auto;
         display: block;
+        padding: 10px 5px 5px 5px;
+        border: 1.5px dashed var(--border-color-medium);
+        border-radius: 3px;
 
         td.mat-mdc-cell {
             border-bottom-color: var(--mat-table-row-item-outline-color, rgba(0, 0, 0, 0.12)) !important;
@@ -914,6 +917,10 @@ textarea {
             padding: 0.5rem;
             text-align: left;
             word-break: break-word;
+
+            &:last-child {
+                border-width: 0 !important;
+            }
 
             &>* {
                 grid-column: 2;

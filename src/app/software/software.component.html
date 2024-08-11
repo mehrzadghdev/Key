@@ -56,7 +56,7 @@
                             <div class="nav-item__icon">
                                 <mat-icon class="material-icons-outlined">poll_outline</mat-icon>
                             </div>
-                            <span *ngIf="isExpanded" class="nav-item__title unselectable">داشبورد</span>
+                            <span *ngIf="isExpanded" class="nav-item__title unselectable">پیشخوان</span>
                         </div>
                     </div>
                 </a>
@@ -151,11 +151,13 @@
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
                     <li matRipple class="unselectable" (click)="onAddInvoice()">ایجاد فاکتور فروش جدید</li>
                     <li matRipple class="unselectable"><a routerLink="/software/invoice">لیست فاکتور های فروش</a></li>
+                    <li matRipple class="unselectable"><a routerLink="/software/invoice/currency">لیست تمام ارز ها</a></li>
                 </ul>
             </li>
             <mat-menu #factor="matMenu" xPosition="before">
-                <button mat-menu-item>ایجاد فاکتور جدید</button>
-                <button mat-menu-item>لیست تمام فاکتور ها</button>
+                <button mat-menu-item (click)="onAddInvoice()">ایجاد فاکتور جدید</button>
+                <button mat-menu-item><a routerLink="/software/invoice">لیست فاکتور های فروش</a></button>
+                <button mat-menu-item><a routerLink="/software/invoice/currency">لیست تمام ارز ها</a></button>
             </mat-menu>
         </ul>
         <span class="software-version">
@@ -235,6 +237,16 @@
 
     <div class="mobile-bottom-menu">
         <ul>
+            <a routerLink="/software/dashboard">
+                <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('dashboard')}">
+                    <div class="bottom-menu-icon">
+                        <img class="icon-light"
+                            [src]="activeRouteIs('dashboard') ? 'assets/images/software/home-solid.svg' : 'assets/images/software/home-outlined.svg'"
+                            alt="dashboard icon">
+                    </div>
+                    <span>خانه</span>
+                </li>
+            </a>
             <a routerLink="/software/company">
                 <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('company')}">
                     <div class="bottom-menu-icon">

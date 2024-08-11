@@ -8,6 +8,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { UnitComponent } from './unit/unit.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { UpdateProductComponent } from './update-product/update-product.component';
+import { MatTableModule } from '@angular/material/table';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { UpdateProductComponent } from './update-product/update-product.componen
     ProductRoutingModule,
     SharedModule,
     NgxMaskDirective,
+    MatTableModule
   ],
   providers: [
     provideNgxMask(),

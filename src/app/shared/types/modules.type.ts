@@ -1,1 +1,1 @@
-export type KeyModules = 'company' | 'person' | 'product' | 'invoice' | 'unit' | 'dashboard';
+export type KeyModules = 'company' | 'person' | 'product' | 'invoice' | 'unit' | 'dashboard' | 'currency';

@@ -8,13 +8,18 @@
         </span>
     </div>
     <div class="content-topbar-actions">
+        <a routerLink="/software/invoice/currency">
+            <key-button appearance="raised">
+                لیست تمام ارز ها   
+            </key-button>
+        </a>
         <key-button (click)="onAddInvoice()">
             <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> فاکتور فروش جدید 
         </key-button>
         <div class="buttons-seperator"></div>
-        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
-            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
-            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
+        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="!tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
+            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
+            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
         </button>
     </div>
 </div>
