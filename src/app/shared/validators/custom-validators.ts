@@ -55,9 +55,17 @@ export abstract class CustomValidators {
 
         if (!value.toString().length) return null;
 
-        if (value.toString().startsWith("09")) return null;
-
         return value.toString().length !== 10 ? { phoneNumber: true } : null;
+    }
+
+    public static homePhoneNumber(formControl: AbstractControl): ValidationErrors | null {
+        const value = formControl.value as number;
+
+        if (!value) return null;
+
+        if (!value.toString().length) return null;
+
+        return value.toString().length !== 8 ? { phoneNumber: true } : null;
     }
 
     public static economicCode(formControl: AbstractControl): ValidationErrors | null {

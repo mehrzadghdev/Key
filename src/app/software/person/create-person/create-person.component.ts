@@ -39,7 +39,7 @@ export class CreatePersonComponent implements OnInit {
       personName: ["", [Validators.required]],
       nationalId: [null, [Validators.required, CustomValidators.nationalId]],
       economicCode: [111111111111, [Validators.required, CustomValidators.economicCode]],
-      tel: [null, CustomValidators.phoneNumber],
+      tel: [null, CustomValidators.homePhoneNumber],
       mobile: [null, CustomValidators.phoneNumber],
       zipCode: [null, CustomValidators.zipCode],
       address: [null]

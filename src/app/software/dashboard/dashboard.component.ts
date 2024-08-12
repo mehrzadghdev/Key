@@ -17,14 +17,16 @@ export class DashboardComponent implements OnInit {
   public productPersonChartData: KeyChartData[] = [
     {
       data: [13, 15, 5, 10, 5, 10, 15, 5, 14, 5, 10, 6],
-      label: 'کالا و خدمات فروخته شده'
+      label: 'کالا و خدمات فروخته شده',
+      fill: true
     }
   ]
 
   public factorChartData: KeyChartData[] = [
     {
       data: [23, 21, 5],
-      label: 'فاکتور فروش'
+      label: 'فاکتور فروش',
+      fill: false
     },
   ]
 

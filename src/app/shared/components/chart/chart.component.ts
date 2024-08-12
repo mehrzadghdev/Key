@@ -59,7 +59,6 @@ export class ChartComponent implements OnInit, AfterViewInit {
       const dataSet = inputDataSets[i];
 
       this.chartData.datasets.push({
-        fill: false,
         borderColor: chartColors[i % chartColors.length].borderColor,
         backgroundColor: chartColors[i % chartColors.length].backgroundColor,
         ...dataSet

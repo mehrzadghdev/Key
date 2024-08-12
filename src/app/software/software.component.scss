@@ -365,6 +365,10 @@
             justify-content: center;
             border-radius: 2px;
 
+            &.mobile-only-icon {
+                display: none;
+            }
+
 
             mat-icon {
                 font-size: 24px;
@@ -592,52 +596,6 @@
     animation: sidebar-overlay-animation .5s ease;
 }
 
-.panel-sidebar__mobile-only-search {
-    padding-right: 10px 20px;
-    width: 100%;
-    display: none;
-    position: relative;
-
-    .search-form {
-        display: flex;
-        align-items: center;
-        position: relative;
-        margin-top: 20px;
-        padding: 0 10px;
-
-        .search {
-            padding: 8px 20px;
-            background-color: var(--sidebar-active-accordion);
-            border-radius: 50px;
-            border: none;
-            outline: none;
-            color: #ffffff;
-            transition: width .3s ease;
-            width: 100%;
-
-            &::placeholder {
-                color: #A4B0BE !important;
-            }
-        }
-
-        .search-icon {
-            position: absolute;
-            top: 50%;
-            left: 30px;
-            transform: translate(-50%, -50%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            mat-icon {
-                font-size: 20px;
-                width: 20px;
-                height: 20px;
-            }
-        }
-    }
-}
-
 .mobile-bottom-menu {
     border-top: 1px solid var(--border-color-medium);
     border-radius: 10px 10px 0 0;
@@ -736,10 +694,6 @@
         margin: 0 !important;
     }
 
-    .panel-sidebar__mobile-only-search {
-        display: block;
-    }
-
     .main-content {
         padding-bottom: 5px;
         position: relative;
@@ -779,6 +733,14 @@
                         }
                     }
                 }
+            }
+
+            .icon.windows-only-icon {
+                display: none;
+            }
+
+            .icon.mobile-only-icon {
+                display: flex;
             }
 
             .full-screen-icon {

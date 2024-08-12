@@ -16,7 +16,6 @@ export class UserSettingsComponent implements OnInit {
   public userDetails!: UserDetails;
   public beforeSaveUserDetails!: UserDetails;
   public userSettingsForm: FormGroup;
-  public beforeSaveActiveTheme: Theme = 'default';
   public activeTheme: Theme = 'default';
   public validationLastCheck: boolean = true;
   public detailsChanged: boolean = true;
@@ -42,7 +41,6 @@ export class UserSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeTheme = this.themeService.getColorTheme();
-    this.beforeSaveActiveTheme = this.themeService.getColorTheme();
     this.beforeSaveUserDetails = this.authenticationService.userDetails as UserDetails;
     this.userDetails = this.authenticationService.userDetails as UserDetails;
     this.autoFillForm(this.userDetails)
@@ -61,13 +59,12 @@ export class UserSettingsComponent implements OnInit {
   public setActiveTheme(theme: Theme): void {
     if (this.activeTheme !== theme) {
       this.activeTheme = theme;
-      this.enableResetButton();
+      this.themeService.setColorTheme(theme)
     }
   }
 
   public onResetToDefault(): void {
     this.userDetails = this.beforeSaveUserDetails;
-    this.activeTheme = this.beforeSaveActiveTheme;
     this.autoFillForm(this.userDetails);
 
     this.detailsChanged = true;
@@ -84,7 +81,6 @@ export class UserSettingsComponent implements OnInit {
       } 
   
       this.authenticationService.updateUser(this.userDetails.id ,updateUserBody).subscribe(res => {
-        this.themeService.setColorTheme(this.activeTheme);
         this.detailsChanged = true;
         this.utility.message("تنظیمات کاربری با موفقیت ذخیره شد", "بستن");
 

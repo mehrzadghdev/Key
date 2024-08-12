@@ -10,7 +10,7 @@ button {
     width: 100%;
 }
 
-.primary-button {
+.primary-button {   
     min-width: 8rem;
     border-radius: 3px;
     background-color: var(--primary-color);
@@ -341,7 +341,7 @@ button {
     display: flex;
     align-items: center;
     justify-content: start;
-    gap: 10px;
+    gap: 10px;  
     
     span {
         font-size: 13px;

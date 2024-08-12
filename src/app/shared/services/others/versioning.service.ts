@@ -15,7 +15,7 @@ export class VersioningService {
   constructor(private http: HttpClient) { }
 
   public initVersioning(): void {
-    const localVersion: number = Number(localStorage.getItem('version')) as number;
+    const localVersion: number = Number(Crypto.decrypt(localStorage.getItem(Crypto.encrypt('version')) ?? '1.0')) as number;
 
     this.getCurrentVersion().subscribe(version => {
       if (!localVersion) {

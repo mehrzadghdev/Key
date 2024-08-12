@@ -1,6 +1,7 @@
 export interface KeyChartData {
     label: string,
-    data: number[]
+    data: number[],
+    fill: boolean,
 }
 
 export interface KeyChartColor {

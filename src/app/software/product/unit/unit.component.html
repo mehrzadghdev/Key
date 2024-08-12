@@ -83,12 +83,12 @@
             <div class="dropdown-button">
                 <span>جهت مرتب سازی: </span>
                 <button mat-ripple [matMenuTriggerFor]="mobileSortDirection">
-                    {{ mobileActiveSortMode === 'asc' ? "صعودی" : "نزولی" }}
+                    {{ mobileActiveSortMode === 'asc' ? "اول به آخر" : "آخر به اول" }}
                     <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
                 </button>
                 <mat-menu #mobileSortDirection="matMenu">
-                    <button mat-menu-item (click)="mobileActiveSortMode = 'asc'; onTableSortChanged({ active: activeSort, direction: 'asc' })">صعودی</button>
-                    <button mat-menu-item (click)="mobileActiveSortMode = 'desc'; onTableSortChanged({ active: activeSort, direction: 'desc' })">نزولی</button>
+                    <button mat-menu-item (click)="mobileActiveSortMode = 'asc'; onTableSortChanged({ active: activeSort, direction: 'asc' })">اول به آخر</button>
+                    <button mat-menu-item (click)="mobileActiveSortMode = 'desc'; onTableSortChanged({ active: activeSort, direction: 'desc' })">آخر به اول</button>
                 </mat-menu>
             </div>
         </div>
