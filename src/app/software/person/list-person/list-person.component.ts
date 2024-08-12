@@ -11,7 +11,7 @@ import { Company } from '../../types/company.type';
 import { UpdatePersonComponent } from '../update-person/update-person.component';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort, Sort, SortDirection } from '@angular/material/sort';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { SelectionModel } from '@angular/cdk/collections';
 
@@ -35,6 +35,9 @@ export class ListPersonComponent implements OnInit {
   public personsList: GetCompaniesPersonListItem[] = [];
   public personListLoaded: boolean = false;
   public tableColumns: string[] = ["نوع", "نام", "کد ملی یا شماره اقتصادی", "تاریخ ساخت", "تلفن", "کد پستی", "عملیات"];
+  public activeSort: string = 'پیش فرض';
+  public mobileActiveSortMode: SortDirection = 'asc';
+
   public personTypes = [
     { display: 'حقیقی', value: PersonType.Genuine },
     { display: 'حقوقی', value: PersonType.Legal },
@@ -64,7 +67,11 @@ export class ListPersonComponent implements OnInit {
   }
 
   public onTableSortChanged(sort: Sort): void {
+    this.activeSort = sort.active;
     switch (sort.active) {
+      case 'پیش فرض':
+        this.tableSortField = 'پیش فرض';
+      break;
       case "نوع":
         if (sort.direction === 'asc') this.tableSortField = 'personType';
         if (sort.direction === 'desc') this.tableSortField = 'personType_desc';

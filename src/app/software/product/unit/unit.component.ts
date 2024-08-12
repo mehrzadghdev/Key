@@ -6,7 +6,7 @@ import { UtilityService } from 'src/app/shared/services/utilities/utility.servic
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
-import { Sort } from '@angular/material/sort';
+import { Sort, SortDirection } from '@angular/material/sort';
 import { GetCompaniesPersonListBody, GetPersonListBody } from '../../types/person.type';
 
 @Component({
@@ -37,6 +37,8 @@ export class UnitComponent implements OnInit {
   public addUnitLoading: boolean = false;
   public updateMode: boolean = false
   public updateUnitLoading: boolean = false;
+  public activeSort: string = 'پیش فرض';
+  public mobileActiveSortMode: SortDirection = 'asc';
 
   constructor(private unitService: UnitService, private fb: FormBuilder, private utility: UtilityService, private dialog: DialogService) {
     this.addUnitForm = fb.group({
@@ -55,7 +57,11 @@ export class UnitComponent implements OnInit {
   }
 
   public onTableSortChanged(sort: Sort): void {
+    this.activeSort = sort.active;
     switch (sort.active) {
+      case 'پیش فرض':
+        this.tableSortField = 'پیش فرض';
+      break;
       case 'ایدی واحد':
         if (sort.direction === 'asc') this.tableSortField = 'id';
         if (sort.direction === 'desc') this.tableSortField = 'id_desc';

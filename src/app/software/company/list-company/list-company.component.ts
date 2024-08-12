@@ -10,6 +10,7 @@ import { KeyModules } from 'src/app/shared/types/modules.type';
 import { CompanyService } from '../../services/company.service';
 import { UpdateCompanyComponent } from '../update-company/update-company.component';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
+import { SortDirection } from '@angular/material/sort';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -20,7 +21,7 @@ export class ListCompanyComponent implements OnInit {
   public tailedTable: boolean = false;
   public companiesList: Company[] = [];
   public companiesListLoaded: boolean = false;
-  public tableColumns: string[] = ["شماره بسته", "نام شرکت", "کد شعبه", "تلفن", "وضعیت", "توضیحات شرکت", "عملیات"]
+  public tableColumns: string[] = ["شماره بسته", "نام شرکت", "کد شعبه", "تلفن", "وضعیت", "توضیحات شرکت", "عملیات"];
 
   constructor(
     private dialog: DialogService, 

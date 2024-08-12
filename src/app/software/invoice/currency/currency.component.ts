@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Sort } from '@angular/material/sort';
+import { Sort, SortDirection } from '@angular/material/sort';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { CurrencyService } from '../../services/currency.service';
@@ -25,6 +25,8 @@ export class CurrencyComponent {
   public currencyList: Currency[] = [];
   public currencyListLoaded: boolean = false;
   public tableColumns: string[] = ["موجودیت", "نام ارز", "شناسه حروفی", "شناسه عددی", "عملیات"];
+  public activeSort: string = 'پیش فرض';
+  public mobileActiveSortMode: SortDirection = 'asc';
 
   constructor(
     private currencyService: CurrencyService,
@@ -40,7 +42,11 @@ export class CurrencyComponent {
   }
 
   public onTableSortChanged(sort: Sort): void {
+    this.activeSort = sort.active;
     switch (sort.active) {
+      case 'پیش فرض':
+        this.tableSortField = 'پیش فرض';
+      break;
       case "موجودیت":
         if (sort.direction === 'asc') this.tableSortField = 'entity';
         if (sort.direction === 'desc') this.tableSortField = 'entity_desc';

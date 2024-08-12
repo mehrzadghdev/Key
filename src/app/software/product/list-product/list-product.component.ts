@@ -12,7 +12,7 @@ import { UnitService } from '../../services/unit.service';
 import { UpdateProductComponent } from '../update-product/update-product.component';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
-import { Sort } from '@angular/material/sort';
+import { Sort, SortDirection } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
@@ -37,6 +37,9 @@ export class ListProductComponent {
   public productListLoaded: boolean = false;
   public unitListLoaded: boolean = false;
   public tableColumns: string[] = ["نوع", "نام", "شناسه کالا", "واحد کالا", "قیمت", "کد کالا", "عملیات"];
+  public activeSort: string = 'پیش فرض';
+  public mobileActiveSortMode: SortDirection = 'asc';
+
   public productTypes = [
     { display: 'کالا', value: ProductType.Product },
     { display: 'خدمات', value: ProductType.Service },
@@ -65,7 +68,11 @@ export class ListProductComponent {
   }
 
   public onTableSortChanged(sort: Sort): void {
+    this.activeSort = sort.active;
     switch (sort.active) {
+      case 'پیش فرض':
+        this.tableSortField = 'پیش فرض';
+      break;
       case "نوع":
         if (sort.direction === 'asc') this.tableSortField = 'productType';
         if (sort.direction === 'desc') this.tableSortField = 'productType_desc';

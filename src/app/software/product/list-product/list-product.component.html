@@ -24,6 +24,33 @@
     </div>
 </div>
 <div class="content-table">
+    <div class="table-mobile-sort" *ngIf="tailedTable">
+        <div class="dropdown-button">
+            <span>مرتب سازی بر اساس: </span>
+            <button mat-ripple [matMenuTriggerFor]="sortItems">
+                {{ activeSort }}
+                <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #sortItems="matMenu">
+                <button mat-menu-item (click)="onTableSortChanged({ active: 'پیش فرض', direction: '' })">پیش فرض</button>
+                <ng-container *ngFor="let sortItem of tableColumns; let i = index">
+                    <button mat-menu-item *ngIf="i !== tableColumns.length-1" (click)="onTableSortChanged({ active: sortItem, direction: mobileActiveSortMode })">{{ sortItem }}</button>
+                </ng-container>
+            </mat-menu>
+        </div>
+
+        <div class="dropdown-button">
+            <span>جهت مرتب سازی: </span>
+            <button mat-ripple [matMenuTriggerFor]="mobileSortDirection">
+                {{ mobileActiveSortMode === 'asc' ? "صعودی" : "نزولی" }}
+                <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
+            </button>
+            <mat-menu #mobileSortDirection="matMenu">
+                <button mat-menu-item (click)="mobileActiveSortMode = 'asc'; onTableSortChanged({ active: activeSort, direction: 'asc' })">صعودی</button>
+                <button mat-menu-item (click)="mobileActiveSortMode = 'desc'; onTableSortChanged({ active: activeSort, direction: 'desc' })">نزولی</button>
+            </mat-menu>
+        </div>
+    </div>
     <div class="table">
         <table *ngIf="productListLoaded && unitListLoaded" mat-table [dataSource]="productList" matSort (matSortChange)="onTableSortChanged($event)" keyTiledTable [tiledTable]="tailedTable">
             <ng-container matColumnDef="نوع">

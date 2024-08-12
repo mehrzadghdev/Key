@@ -8,7 +8,7 @@ import { InvoiceService } from '../../services/invoice.service';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from '../../enums/invoice-type.enum';
-import { Sort } from '@angular/material/sort';
+import { Sort, SortDirection } from '@angular/material/sort';
 import { CreateInvoiceComponent } from '../create-invoice/create-invoice.component';
 import { UpdatePersonComponent } from '../../person/update-person/update-person.component';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
@@ -32,6 +32,8 @@ export class ListInvoiceComponent implements OnInit {
   public tableSearchQuery: string = '';
   public tableSortField: string = '';
   public checkInvoiceValidityLoading: boolean = false;
+  public activeSort: string = 'پیش فرض';
+  public mobileActiveSortMode: SortDirection = 'asc';
 
   public invoiceList: GetInvoiceListInvoiceItem[] = [];
   public invoiceListLoaded: boolean = false;
@@ -87,7 +89,11 @@ export class ListInvoiceComponent implements OnInit {
   }
 
   public onTableSortChanged(sort: Sort): void {
+    this.activeSort = sort.active;
     switch (sort.active) {
+      case 'پیش فرض':
+        this.tableSortField = 'پیش فرض';
+      break;
       case "کد":
         if (sort.direction === 'asc') this.tableSortField = 'invoiceCode';
         if (sort.direction === 'desc') this.tableSortField = 'invoiceCode_desc';

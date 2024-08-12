@@ -872,7 +872,7 @@ textarea {
     .mdc-data-table__content {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-        gap: 10px;
+        gap: 0 10px;
     }
 
     .mat-mdc-header-row {
@@ -899,6 +899,8 @@ textarea {
                 display: none;
             }
         }
+
+        display: none !important;
     }
 
     .mat-mdc-row {
@@ -907,6 +909,7 @@ textarea {
         padding: 10px 5px 5px 5px;
         border: 1.5px dashed var(--border-color-medium);
         border-radius: 3px;
+        margin-bottom: 10px;
 
         td.mat-mdc-cell {
             border-bottom-color: var(--mat-table-row-item-outline-color, rgba(0, 0, 0, 0.12)) !important;
@@ -972,12 +975,6 @@ textarea {
         .mdc-data-table__content {
             display: grid;
             grid-template-columns: 1fr;
-        }
-
-        .mat-mdc-row {
-            &:not(:last-of-type) td:last-of-type {
-                border-bottom: 2px solid var(--border-color-medium) !important;
-            }
         }
     }
 }

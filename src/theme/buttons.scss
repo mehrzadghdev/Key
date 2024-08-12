@@ -31,11 +31,9 @@ button {
     &:focus,
     &:focus-visible,
     &:focus-within {
-        background-color: color-mix(
-            in srgb,
-            var(--primary-color),
-            var(--base-opposite-color) 6%
-        ) !important;
+        background-color: color-mix(in srgb,
+                var(--primary-color),
+                var(--base-opposite-color) 6%) !important;
         box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.24);
         -webkit-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.24);
         -moz-box-shadow: 0px 1px 4px 0px rgba(0, 0, 0, 0.24);
@@ -109,11 +107,9 @@ button {
     &:focus,
     &:focus-visible,
     &:focus-within {
-        background-color: color-mix(
-            in srgb,
-            var(--base-color),
-            var(--primary-color) 8%
-        ) !important;
+        background-color: color-mix(in srgb,
+                var(--base-color),
+                var(--primary-color) 8%) !important;
     }
 
     &:disabled {
@@ -168,11 +164,9 @@ button {
     &:focus,
     &:focus-visible,
     &:focus-within {
-        background-color: color-mix(
-            in srgb,
-            var(--base-color),
-            var(--primary-color) 4%
-        ) !important;
+        background-color: color-mix(in srgb,
+                var(--base-color),
+                var(--primary-color) 4%) !important;
         box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.16);
         -webkit-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.16);
         -moz-box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.16);
@@ -202,11 +196,9 @@ button {
     &:focus,
     &:focus-visible,
     &:focus-within {
-        background-color: color-mix(
-            in srgb,
-            var(--base-color),
-            var(--primary-color) 8%
-        ) !important;
+        background-color: color-mix(in srgb,
+                var(--base-color),
+                var(--primary-color) 8%) !important;
     }
 
     &:disabled {
@@ -230,11 +222,9 @@ button {
     &:focus,
     &:focus-visible,
     &:focus-within {
-        background-color: color-mix(
-            in srgb,
-            var(--base-color),
-            var(--primary-color) 8%
-        ) !important;
+        background-color: color-mix(in srgb,
+                var(--base-color),
+                var(--primary-color) 8%) !important;
     }
 
     &:disabled {
@@ -257,11 +247,9 @@ button {
     &:focus,
     &:focus-visible,
     &:focus-within {
-        background-color: color-mix(
-            in srgb,
-            var(--base-color),
-            var(--primary-color) 8%
-        ) !important;
+        background-color: color-mix(in srgb,
+                var(--base-color),
+                var(--primary-color) 8%) !important;
     }
 
     &:disabled {
@@ -284,11 +272,9 @@ button {
     &:focus,
     &:focus-visible,
     &:focus-within {
-        background-color: color-mix(
-            in srgb,
-            transparent,
-            var(--base-opposite-color) 4%
-        ) !important;
+        background-color: color-mix(in srgb,
+                transparent,
+                var(--base-opposite-color) 4%) !important;
     }
 
     &:disabled {
@@ -348,5 +334,44 @@ button {
     &:disabled {
         opacity: 0.4;
         cursor: default;
+    }
+}
+
+.dropdown-button {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 10px;
+    
+    span {
+        font-size: 13px;
+        white-space: nowrap;
+    }
+    
+    button {
+        padding: 5px 10px 5px 5px;
+        cursor: pointer;
+        font-size: 13px;
+        color: var(--text-secondary-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border: 1px solid var(--border-color-medium);
+        transition: all .3s ease;
+        border-radius: 2px;
+        max-width: 100px;
+        text-overflow: ellipsis;
+        overflow: hidden; 
+        white-space: nowrap;
+        
+        &:hover {
+            border-color: var(--primary-color);
+        }
+
+        mat-icon {
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+        }
     }
 }
