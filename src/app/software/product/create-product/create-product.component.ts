@@ -10,6 +10,8 @@ import { UnitService } from '../../services/unit.service';
 import { Unit } from '../../types/unit.type';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
+import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
+import { ProductIdSearchComponent } from '../product-id-search/product-id-search.component';
 
 @Component({
   selector: 'app-create-product',
@@ -33,12 +35,13 @@ export class CreateProductComponent implements OnInit {
     private productService: ProductService, private fb: FormBuilder, 
     private authentication: AuthenticationService,
     private unitSerivce: UnitService,
+    private dialogService: DialogService,
     private utility: UtilityService
   ) {
     this.addProductForm = fb.group({
       code: [null, [Validators.required, CustomValidators.code]],
       productCode: ["", Validators.required],
-      productType: [0, Validators.required],
+      productType: [null, Validators.required],
       name: ["", Validators.required],
       price: [null, Validators.required],
       taxPercent: [10, [Validators.required, Validators.min(0), Validators.max(100)]],
@@ -95,6 +98,20 @@ export class CreateProductComponent implements OnInit {
     }
     else {
       this.validationLastCheck = true;
+    }
+  }
+
+  public onSearchProductId(): void {
+    if (this.addProductForm.get("productType")?.value) {
+      this.dialogService.openFormDialog(ProductIdSearchComponent, {
+        width: '456px',
+        data: {
+          productName: this.addProductForm.controls["name"].value
+        }
+      })
+    }
+    else {
+      this.addProductForm.get("productType")?.markAsTouched();
     }
   }
 

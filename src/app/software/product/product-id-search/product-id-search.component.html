@@ -1,0 +1,23 @@
+<form class="form-dialog" [formGroup]="productIdSearchForm">
+    <div class="form-dialog-top-bar" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+        <h3>جستجو شناسه کالا</h3>
+        <key-button content="icon" (click)="closeDialog()">
+            <mat-icon class="icon-base">close</mat-icon>
+        </key-button>
+    </div>
+
+    <div class="form-dialog-content">
+        <mat-form-field class="form-dialog-field" appearance="outline">
+            <mat-label>جستجو شناسه / نام کالا</mat-label>
+            <input keyAutoFocus type="text" matInput formControlName="searchQuery">
+            <mat-error *ngIf="productIdSearchForm.get('searchQuery')?.invalid && validationLastCheck">
+                این فیلد الزامیست
+            </mat-error>
+        </mat-form-field>
+    </div>
+
+    <mat-dialog-actions class="form-dialog-footer">
+        <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
+        <key-button (click)="onProductIdSelected()" type="submit">تایید</key-button>
+    </mat-dialog-actions>
+</form>

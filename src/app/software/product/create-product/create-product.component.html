@@ -55,6 +55,9 @@
                 <mat-error *ngIf="addProductForm.get('productCode')?.invalid && validationLastCheck">
                     این فیلد الزامیست
                 </mat-error>
+                <key-button matSuffix (click)="onSearchProductId()" content="icon" matTooltip="جستجو شناسه کالا">
+                    <mat-icon class="icon-primary date-picker__picker-icon">key</mat-icon>
+                </key-button>
             </mat-form-field>
         </div>
         <div class="form-dialog-field-row">

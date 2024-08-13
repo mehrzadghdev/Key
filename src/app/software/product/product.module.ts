@@ -9,6 +9,7 @@ import { UnitComponent } from './unit/unit.component';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { MatTableModule } from '@angular/material/table';
+import { ProductIdSearchComponent } from './product-id-search/product-id-search.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { MatTableModule } from '@angular/material/table';
     ListProductComponent,
     CreateProductComponent,
     UnitComponent,
-    UpdateProductComponent
+    UpdateProductComponent,
+    ProductIdSearchComponent
   ],
   imports: [
     CommonModule,

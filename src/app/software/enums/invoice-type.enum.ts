@@ -4,7 +4,7 @@ export enum InvoicePatternType {
     GoldAndPlatinum = 3, // طلا و جواهر و پلاتینیوم 
     Contract = 4, // قرارداد پیمان کاری 
     UtilityBills = 5, // قبوض خدماتی 
-    Export = 6, // صادرات  
+    Export = 6, // صادرات
 }
 
 export enum InvoiceType {
