@@ -14,7 +14,7 @@
                 این فیلد الزامیست
             </mat-error>
         </mat-form-field>
-        <div class="search-staff-type-chips">
+        <div class="search-staff-type-chips" *ngIf="data.independent">
             <span>جستجو برای: </span>
 
             <div class="form-chip-group">
@@ -54,11 +54,11 @@
                     <tr class="mat-row" *matNoDataRow>
                         <td class="mat-cell table-no-data" [colSpan]="tableColumns.length">
                             <!-- <img src="assets/images/software/no-data.svg" alt="no data found"> -->
-                            هیچ داده ای یافت نشد
+                            نتایج جستجو برای: {{ dialogTitle }}
                         </td>
                     </tr>
                 </table>
-                <key-table-loading *ngIf="staffIdSearchLoading" [columns]="tableColumns"></key-table-loading>
+                <key-table-loading *ngIf="staffIdSearchLoading" [columns]="loadingTableColumns"></key-table-loading>
                 <div class="table-pagination">
                     <div class="table-pagination__paginator">
                         <key-button content="icon" [disabled]="staffIdSearchLoading || tablePagination.currentPage === 1" (click)="tablePagination.currentPage !== 1 && onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">
@@ -75,7 +75,7 @@
                     </div>
                     <div class="table-pagination__page-size">
                         <span>نمایش در هر صفحه: </span>
-                        <button mat-ripple [matMenuTriggerFor]="pageSizes">
+                        <button mat-ripple [matMenuTriggerFor]="pageSizes" [disabled]="staffIdSearchLoading">
                             {{ (tablePagination.pageSize ?? 0) | farsiNumber }}
                             <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
                         </button>

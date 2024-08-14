@@ -25,7 +25,8 @@ export class ProductIdSearchComponent implements OnInit {
   };
   public get dialogTitle(): 'خدمات' | 'کالا' | 'کالا و خدمات' {
     if (this.data.independent) {
-      return 'کالا و خدمات'
+      if (this.currentIndependentSearchMode === ProductType.Product) return 'کالا';
+      if (this.currentIndependentSearchMode === ProductType.Service) return 'خدمات';
     }
 
     if (this.data.isService) {
@@ -39,6 +40,17 @@ export class ProductIdSearchComponent implements OnInit {
   public staffIdSearchLoading: boolean = false;
   public staffIdList: (TaxSystem.StaffID | TaxSystem.ServiceID)[] = [];
   public tableColumns: string[] = ['شناسه کالا', 'توضیحات کالا', 'انتخاب'];
+  public get loadingTableColumns(): string[] {
+    if (this.data.independent) {
+      return [
+        `شناسه ${this.currentIndependentSearchMode === ProductType.Product ? 'کالا' : 'خدمات'}`, 
+        `توضیحات ${this.currentIndependentSearchMode === ProductType.Product ? 'کالا' : 'خدمات'}`, 
+        'کپی'
+      ]
+    }
+
+    return [`شناسه ${this.dialogTitle}`, `توضیحات ${this.dialogTitle}`, 'انتخاب']
+  } 
   private _currentIndependentSearchMode: ProductType = ProductType.Product;
   public get currentIndependentSearchMode(): ProductType {
     return this._currentIndependentSearchMode;

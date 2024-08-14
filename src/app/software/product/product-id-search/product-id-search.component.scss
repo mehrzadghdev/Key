@@ -17,6 +17,7 @@
     table {
         width: 100% !important;
         background-color: var(--base-color);
+        min-height: 280px;
 
         & th {
             color: var(--text-primary-color);
