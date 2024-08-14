@@ -839,7 +839,7 @@ textarea {
 
 .form-chip-group {
     display: flex;
-    gap: 10px;
+    gap: 6px;
     align-items: center;
     flex-wrap: wrap;
 }
@@ -850,6 +850,7 @@ textarea {
     font-size: 12px;
     border-radius: 50px;
     border: 1px solid transparent;
+    border: 1px solid var(--border-color-strong);
     transition: all .1s ease;
     color: var(--text-primary-color);
     cursor: pointer;

@@ -1,6 +1,7 @@
 @import url('../../../shared/scss/key-form-dialog.scss');
 
 .content-table {
+    padding-top: 10px;
     overflow-x: auto;
 
     .table-mobile-sort {
@@ -140,4 +141,17 @@
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
+}
+
+.search-staff-type-chips {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: start;
+    padding-top: 20px;
+
+    span {
+        font-size: 12px;
+        color: var(--text-secondary-color);
+    }
 }

@@ -14,6 +14,7 @@ import { UtilityService } from 'src/app/shared/services/utilities/utility.servic
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { Sort, SortDirection } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
+import { ProductIdSearchComponent } from '../product-id-search/product-id-search.component';
 
 @Component({
   selector: 'app-list-product',
@@ -44,16 +45,16 @@ export class ListProductComponent {
     { display: 'کالا', value: ProductType.Product },
     { display: 'خدمات', value: ProductType.Service },
   ]
-  
+
   constructor(
-    private authentication: AuthenticationService, 
-    private router: Router, 
-    private productSerivce: ProductService, 
+    private authentication: AuthenticationService,
+    private router: Router,
+    private productSerivce: ProductService,
     private unitService: UnitService,
     private dialog: DialogService,
     private utility: UtilityService
-  ) {}
-    
+  ) { }
+
   public productTypeTextByNumber(productType: ProductType): string {
     return this.productTypes.find(product => product.value === productType)?.display ?? "نامشخص";
   }
@@ -72,37 +73,37 @@ export class ListProductComponent {
     switch (sort.active) {
       case 'پیش فرض':
         this.tableSortField = 'پیش فرض';
-      break;
+        break;
       case "نوع":
         if (sort.direction === 'asc') this.tableSortField = 'productType';
         if (sort.direction === 'desc') this.tableSortField = 'productType_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "نام":
         if (sort.direction === 'asc') this.tableSortField = 'name';
         if (sort.direction === 'desc') this.tableSortField = 'name_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "شناسه کالا":
         if (sort.direction === 'asc') this.tableSortField = 'productCode';
         if (sort.direction === 'desc') this.tableSortField = 'productCode_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "واحد کالا":
         if (sort.direction === 'asc') this.tableSortField = 'unitCode';
         if (sort.direction === 'desc') this.tableSortField = 'unitCode_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "قیمت":
         if (sort.direction === 'asc') this.tableSortField = 'price';
         if (sort.direction === 'desc') this.tableSortField = 'price_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
       case "کد کالا":
         if (sort.direction === 'asc') this.tableSortField = 'code';
         if (sort.direction === 'desc') this.tableSortField = 'code_desc';
         if (sort.direction === '') this.tableSortField = '';
-      break;
+        break;
     }
 
     this.sortProductList({ pageSize: this.tablePagination.pageSize, page: 1, sortFieldName: this.tableSortField });
@@ -133,18 +134,18 @@ export class ListProductComponent {
     this.productSerivce.getCompaniesProductList(productListBody).subscribe(res => {
       this.productList = res.result;
       this.tablePagination.totalCount = res.totalCount,
-      this.tablePagination.pageSize = res.pageSize,
-      this.tablePagination.currentPage = res.currentPage,
-      this.tablePagination.totalPages = res.totalPages,
-      this.tablePagination.hasNext = res.hasNext,
-      this.tablePagination.hasPrev = res.hasPrev
+        this.tablePagination.pageSize = res.pageSize,
+        this.tablePagination.currentPage = res.currentPage,
+        this.tablePagination.totalPages = res.totalPages,
+        this.tablePagination.hasNext = res.hasNext,
+        this.tablePagination.hasPrev = res.hasPrev
       this.productListLoaded = true;
     })
   }
 
   public loadProductList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
     this.productListLoaded = false;
-  
+
     const productListBody: GetCompaniesProductListBody = {
       ...pagination
     }
@@ -152,11 +153,11 @@ export class ListProductComponent {
     this.productSerivce.getCompaniesProductList(productListBody).subscribe(res => {
       this.productList = res.result;
       this.tablePagination.totalCount = res.totalCount,
-      this.tablePagination.pageSize = res.pageSize,
-      this.tablePagination.currentPage = res.currentPage,
-      this.tablePagination.totalPages = res.totalPages,
-      this.tablePagination.hasNext = res.hasNext,
-      this.tablePagination.hasPrev = res.hasPrev
+        this.tablePagination.pageSize = res.pageSize,
+        this.tablePagination.currentPage = res.currentPage,
+        this.tablePagination.totalPages = res.totalPages,
+        this.tablePagination.hasNext = res.hasNext,
+        this.tablePagination.hasPrev = res.hasPrev
       this.productListLoaded = true;
     })
   }
@@ -203,5 +204,15 @@ export class ListProductComponent {
   public onSearch(searchQuery: string) {
     this.tableSearchQuery = searchQuery
     this.loadProductList({ pageSize: 10, page: 1, searchTerm: searchQuery, sortFieldName: this.tableSortField });
+  }
+
+
+  public onSearchProductId(): void {
+    this.dialog.openFormDialog(ProductIdSearchComponent, {
+      width: '556px',
+      data: {
+        independent: true
+      }
+    })
   }
 }

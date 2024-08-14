@@ -10,6 +10,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { UpdateProductComponent } from './update-product/update-product.component';
 import { MatTableModule } from '@angular/material/table';
 import { ProductIdSearchComponent } from './product-id-search/product-id-search.component';
+import {ClipboardModule} from '@angular/cdk/clipboard';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { ProductIdSearchComponent } from './product-id-search/product-id-search.
     ProductRoutingModule,
     SharedModule,
     NgxMaskDirective,
-    MatTableModule
+    MatTableModule,
+    ClipboardModule
   ],
   providers: [
     provideNgxMask(),

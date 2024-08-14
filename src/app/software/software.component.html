@@ -118,12 +118,14 @@
                     <li matRipple class="unselectable" (click)="onAddProduct()">ایجاد کالای جدید</li>
                     <li matRipple class="unselectable"><a routerLink="/software/product/unit">واحد کالا و خدمات</a></li>
                     <li matRipple class="unselectable"><a routerLink="/software/product">لیست تمام کالا ها</a></li>
+                    <li matRipple class="unselectable" (click)="onSearchForProductId()">جستجو شناسه کالا و خدمات</li>
                 </ul>
             </li>
             <mat-menu #productMenu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="onAddProduct()">ایجاد کالای جدید</button>
                 <button mat-menu-item><a routerLink="/software/product">لیست تمام کالا و خدمات</a></button>
                 <button mat-menu-item><a routerLink="/software/product/unit">واحد کالا و خدمات</a></button>
+                <button mat-menu-item (click)="onSearchForProductId()">جستجو شناسه کالا و خدمات</button>
             </mat-menu>
 
             <li class="nav-item accordion" #factorAccordion (click)="toggleAccordion(factorAccordion)"

@@ -314,6 +314,12 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     })
   }
 
+  public onSearchForProductId(): void {
+    if (this.currentActivatedRoute instanceof ListProductComponent) {
+      this.currentActivatedRoute.onSearchProductId();
+    }
+  }
+
   public onAddInvoice(): void {
     this.dialog.openFullScreenDialog(CreateInvoiceComponent).afterClosed().subscribe(res => {
       if (res && this.currentActivatedRoute instanceof ListInvoiceComponent) {
@@ -328,7 +334,6 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     if (value === 'product') return this.currentActivatedRoute instanceof ListProductComponent || this.currentActivatedRoute instanceof UnitComponent;
     if (value === 'invoice') return this.currentActivatedRoute instanceof ListInvoiceComponent || this.currentActivatedRoute instanceof CurrencyComponent;
     if (value === 'dashboard') return this.currentActivatedRoute instanceof DashboardComponent;
-
 
     return false;
   }

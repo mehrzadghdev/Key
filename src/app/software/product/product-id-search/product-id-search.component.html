@@ -7,13 +7,21 @@
     </div>
 
     <div class="form-dialog-content">
-        <mat-form-field class="form-dialog-field" appearance="outline">
+        <mat-form-field class="form-dialog-field" appearance="outline" subscriptSizing="dynamic">
             <mat-label>جستجو شناسه / نام {{ dialogTitle }}</mat-label>
             <input keyAutoFocus type="text" matInput formControlName="searchQuery">
             <mat-error *ngIf="productIdSearchForm.get('searchQuery')?.invalid && validationLastCheck">
                 این فیلد الزامیست
             </mat-error>
         </mat-form-field>
+        <div class="search-staff-type-chips">
+            <span>جستجو برای: </span>
+
+            <div class="form-chip-group">
+                <div class="form-chip" matRipple [ngClass]="{'selected-chip': currentIndependentSearchMode === ProductTypeEnum.Product}" (click)="currentIndependentSearchMode = ProductTypeEnum.Product">کالا</div>
+                <div class="form-chip" matRipple [ngClass]="{'selected-chip': currentIndependentSearchMode === ProductTypeEnum.Service}" (click)="currentIndependentSearchMode = ProductTypeEnum.Service">خدمات</div>
+            </div>
+        </div>
         <div class="content-table">
             <div class="table">
                 <table *ngIf="!staffIdSearchLoading" mat-table [dataSource]="staffIdList">
@@ -28,11 +36,14 @@
                     </ng-container>
 
                     <ng-container matColumnDef="انتخاب">
-                        <th mat-header-cell *matHeaderCellDef> انتخاب </th>
+                        <th mat-header-cell *matHeaderCellDef> {{ data.independent ? 'کپی' : 'انتخاب' }} </th>
                         <td mat-cell *matCellDef="let element">
                             <div class="table-action-buttons">
-                                <key-button matTooltip="انتخاب" (click)="selectStaffId(element.stuffId)" content="icon">
+                                <key-button *ngIf="!data.independent" matTooltip="انتخاب" (click)="selectStaffId(element.stuffId)" content="icon">
                                     <mat-icon class="icon-primary material-icons-outlined">add</mat-icon>                       
+                                </key-button>
+                                <key-button *ngIf="data.independent" matTooltip="کپی شناسه" (click)="copyStaffId(element.stuffId)" content="icon">
+                                    <mat-icon class="icon-primary material-icons-outlined">content_copy</mat-icon>                       
                                 </key-button>
                             </div>
                         </td>
@@ -42,31 +53,25 @@
                     <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
                     <tr class="mat-row" *matNoDataRow>
                         <td class="mat-cell table-no-data" [colSpan]="tableColumns.length">
-                            <img src="assets/images/software/no-data.svg" alt="no data found">
+                            <!-- <img src="assets/images/software/no-data.svg" alt="no data found"> -->
                             هیچ داده ای یافت نشد
                         </td>
                     </tr>
                 </table>
                 <key-table-loading *ngIf="staffIdSearchLoading" [columns]="tableColumns"></key-table-loading>
-                <div class="table-pagination" *ngIf="!staffIdSearchLoading">
+                <div class="table-pagination">
                     <div class="table-pagination__paginator">
-                        <key-button content="icon" [disabled]="!tablePagination.hasPrev" (click)="tablePagination.hasPrev && onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">
+                        <key-button content="icon" [disabled]="staffIdSearchLoading || tablePagination.currentPage === 1" (click)="tablePagination.currentPage !== 1 && onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">
                             <mat-icon class="paginator-icon icon-medium">arrow_forward_ios</mat-icon>
                         </key-button>
                         <div>
                             <span>{{ (tablePagination.currentPage ?? 0) | farsiNumber }}</span>
                             <span>از</span>
-                            <span>{{ (tablePagination.totalPages ?? 0) | farsiNumber }}</span>
+                            <span>نامشخص</span>
                         </div>
-                        <key-button content="icon" [disabled]="!tablePagination.hasNext" (click)="tablePagination.hasNext && onPaginationChanged((tablePagination.currentPage ?? 1) + 1)">
+                        <key-button content="icon" [disabled]="staffIdSearchLoading || !staffIdList" (click)="staffIdList && onPaginationChanged((tablePagination.currentPage ?? 1) + 1)">
                             <mat-icon class="paginator-icon icon-medium">arrow_back_ios_new</mat-icon>
                         </key-button>
-                    </div>
-                    <div class="table-pagination__total-count">
-                        <ng-container *ngIf="(tablePagination.totalCount ?? 0) <= 0">موردی یافت نشد</ng-container>
-                        <ng-container *ngIf="(tablePagination.totalCount ?? 0) > 0">
-                            {{ tablePagination.totalCount ?? 0 | price }} مورد یافت شد
-                        </ng-container>
                     </div>
                     <div class="table-pagination__page-size">
                         <span>نمایش در هر صفحه: </span>
@@ -75,6 +80,7 @@
                             <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
                         </button>
                         <mat-menu #pageSizes="matMenu">
+                            <button mat-menu-item (click)="onItemPerPageChanged(5)">{{ 5 | farsiNumber }} مورد</button>
                             <button mat-menu-item (click)="onItemPerPageChanged(10)">{{ 10 | farsiNumber }} مورد</button>
                             <button mat-menu-item (click)="onItemPerPageChanged(25)">{{ 25 | farsiNumber }} مورد</button>
                             <button mat-menu-item (click)="onItemPerPageChanged(40)">{{ 40 | farsiNumber }} مورد</button>
