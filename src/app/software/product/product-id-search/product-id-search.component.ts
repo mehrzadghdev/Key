@@ -31,7 +31,7 @@ export class ProductIdSearchComponent implements OnInit {
   public productIdSearchForm: FormGroup;
   public validationLastCheck: boolean = false;
   public staffIdSearchLoading: boolean = false;
-  public staffIdList: TaxSystem.StaffID[] = [];
+  public staffIdList: (TaxSystem.StaffID | TaxSystem.ServiceID)[] = [];
   public tableColumns: string[] = ['شناسه کالا', 'توضیحات کالا', 'انتخاب']
 
   constructor(
@@ -52,16 +52,16 @@ export class ProductIdSearchComponent implements OnInit {
       this.searchForStaffId();
     }
 
-    this.productIdSearchForm.get("searchQuery")?.valueChanges.subscribe(res => {
-      this.staffIdSearchLoading = true;
-    })
+    // this.productIdSearchForm.get("searchQuery")?.valueChanges.subscribe(res => {
+    //   this.staffIdSearchLoading = true;
+    // })
 
     this.productIdSearchForm.get("searchQuery")?.valueChanges.pipe(
-      debounceTime(500) 
+      debounceTime(200)
     )
-    .subscribe(res => {
-      this.searchForStaffId();
-    })
+      .subscribe(res => {
+        this.searchForStaffId();
+      })
   }
 
   public onItemPerPageChanged(itemsPerPage: 10 | 25 | 40 | 60): void {
@@ -75,21 +75,40 @@ export class ProductIdSearchComponent implements OnInit {
   public searchForStaffId(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
     this.staffIdSearchLoading = true;
 
-    const getStaffIdBody: TaxSystem.GetStaffIDBody = {
-      ...pagination,
-      searchTerm: this.productIdSearchForm.get("searchQuery")?.value ?? ''
-    }
+    if (this.data.isService) {
+      const getServiceIdBody: TaxSystem.GetServiceIDBody = {
+        ...pagination,
+        searchTerm: this.productIdSearchForm.get("searchQuery")?.value ?? ''
+      }
 
-    this.taxSystem.getStaffID(getStaffIdBody).subscribe(res => {
-      this.staffIdList = res.systemstaffs;
-      this.tablePagination.totalCount = res.totalCount,
-        this.tablePagination.pageSize = res.pageSize,
-        this.tablePagination.currentPage = res.currentPage,
-        this.tablePagination.totalPages = res.totalPages,
-        this.tablePagination.hasNext = res.hasNext,
-        this.tablePagination.hasPrev = res.hasPrev
-      this.staffIdSearchLoading = false;
-    })
+      this.taxSystem.getServiceID(getServiceIdBody).subscribe(res => {
+        this.staffIdList = res.systemservices;
+        this.tablePagination.totalCount = res.totalCount,
+          this.tablePagination.pageSize = res.pageSize,
+          this.tablePagination.currentPage = res.currentPage,
+          this.tablePagination.totalPages = res.totalPages,
+          this.tablePagination.hasNext = res.hasNext,
+          this.tablePagination.hasPrev = res.hasPrev
+        this.staffIdSearchLoading = false;
+      })
+    }
+    else {
+      const getStaffIdBody: TaxSystem.GetStaffIDBody = {
+        ...pagination,
+        searchTerm: this.productIdSearchForm.get("searchQuery")?.value ?? ''
+      }
+
+      this.taxSystem.getStaffID(getStaffIdBody).subscribe(res => {
+        this.staffIdList = res.systemstaffs;
+        this.tablePagination.totalCount = res.totalCount,
+          this.tablePagination.pageSize = res.pageSize,
+          this.tablePagination.currentPage = res.currentPage,
+          this.tablePagination.totalPages = res.totalPages,
+          this.tablePagination.hasNext = res.hasNext,
+          this.tablePagination.hasPrev = res.hasPrev
+        this.staffIdSearchLoading = false;
+      })
+    }
   }
 
   public selectStaffId(staffId: string): void {

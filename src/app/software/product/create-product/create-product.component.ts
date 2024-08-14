@@ -104,7 +104,7 @@ export class CreateProductComponent implements OnInit {
   public onSearchProductId(): void {
     if (this.addProductForm.get("productType")?.value) {
       this.dialogService.openFormDialog(ProductIdSearchComponent, {
-        width: '456px',
+        width: '556px',
         data: {
           productName: this.addProductForm.controls["name"].value,
           isService: this.addProductForm.get("productType")?.value === ProductType.Service

@@ -24,6 +24,13 @@
         & td {
             color: var(--text-secondary-color);
         }
+
+    }
+    
+    .mdc-data-table__content {
+        max-height: 300px !important;
+        display: block !important;
+        background-color: red !important;
     }
 
     .table-no-data {
@@ -129,7 +136,7 @@
 
 .staff-name {
     display: inline-block;
-    max-width: 120px !important;
+    max-width: 280px !important;
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;

@@ -367,7 +367,7 @@ mat-nav-list.mobile-buttons-nav-list {
 }
 
 .skeleton {
-    background: linear-gradient(90deg, var(--background-color), var(--background-color-light), var(--background-color));
+    background: linear-gradient(90deg, var(--mouse-hover-data-entry), var(--select-background), var(--mouse-hover-data-entry));
     animation: leftToRight 1.5s infinite reverse;
     background-size: 200%;
 

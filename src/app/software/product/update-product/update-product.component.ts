@@ -120,7 +120,7 @@ export class UpdateProductComponent {
   public onSearchProductId(): void {
     if (this.updateProductForm.get("productType")?.value) {
       this.dialogService.openFormDialog(ProductIdSearchComponent, {
-        width: '456px',
+        width: '656px',
         data: {
           productName: this.updateProductForm.controls["name"].value,
           isService: this.updateProductForm.get("productType")?.value === ProductType.Service
