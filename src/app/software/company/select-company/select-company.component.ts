@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Company } from '../../types/company.type';
+import { Company } from '../../types/definitions/company.type';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { CreateCompanyComponent } from '../create-company/create-company.component';
-import { CompanyService } from '../../services/company.service';
+import { CompanyService } from '../../services/definitions/company.service';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 
 @Component({

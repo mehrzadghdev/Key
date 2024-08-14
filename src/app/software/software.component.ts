@@ -8,9 +8,8 @@ import { SelectCompanyComponent } from './company/select-company/select-company.
 import { CreateCompanyComponent } from './company/create-company/create-company.component';
 import { CreatePersonComponent } from './person/create-person/create-person.component';
 import { CreateProductComponent } from './product/create-product/create-product.component';
-import { CompanyService } from './services/company.service';
 import { UserDetails } from '../shared/types/authentication.type';
-import { Company, GetUsersCompanyListBody } from './types/company.type';
+import { Company, GetUsersCompanyListBody } from './types/definitions/company.type';
 import { ListProductComponent } from './product/list-product/list-product.component';
 import { ListPersonComponent } from './person/list-person/list-person.component';
 import { ListCompanyComponent } from './company/list-company/list-company.component';
@@ -24,6 +23,7 @@ import { HistoryService } from '../shared/services/others/history.service';
 import { SearchHistory, SearchHistoryItem } from '../shared/types/history.type';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CurrencyComponent } from './invoice/currency/currency.component';
+import { CompanyService } from './services/definitions/company.service';
 
 @Component({
   selector: 'app-software',
@@ -121,12 +121,10 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
         }).afterClosed().subscribe(() => this.companySelected = true);
       }
       else {
-        console.log("reached here")
         if (
           this.authentication.currentCompanySelected() 
-          && res.find(company => company.databaseId === (this.authentication.currentCompany as Company).databaseId)
+          && res.find((company: Company) => company.databaseId === (this.authentication.currentCompany as Company).databaseId)
         ) {
-          console.log("reached here and founded");
           this.companySelected = true
         }
         else {

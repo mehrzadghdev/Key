@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { AddUnitBody, Unit, UpdateUnitBody } from '../../types/unit.type';
-import { UnitService } from '../../services/unit.service';
+import { AddUnitBody, Unit, UpdateUnitBody } from '../../types/definitions/unit.type';
+import { UnitService } from '../../services/definitions/unit.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { Sort, SortDirection } from '@angular/material/sort';
-import { GetCompaniesPersonListBody, GetPersonListBody } from '../../types/person.type';
+import { GetCompaniesPersonListBody, GetPersonListBody } from '../../types/definitions/person.type';
 
 @Component({
   selector: 'app-unit',

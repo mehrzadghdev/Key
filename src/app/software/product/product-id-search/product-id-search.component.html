@@ -1,6 +1,6 @@
 <form class="form-dialog" [formGroup]="productIdSearchForm">
     <div class="form-dialog-top-bar" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
-        <h3>جستجو شناسه کالا</h3>
+        <h3>جستجو شناسه {{ dialogTitle }}</h3>
         <key-button content="icon" (click)="closeDialog()">
             <mat-icon class="icon-base">close</mat-icon>
         </key-button>
@@ -8,16 +8,81 @@
 
     <div class="form-dialog-content">
         <mat-form-field class="form-dialog-field" appearance="outline">
-            <mat-label>جستجو شناسه / نام کالا</mat-label>
+            <mat-label>جستجو شناسه / نام {{ dialogTitle }}</mat-label>
             <input keyAutoFocus type="text" matInput formControlName="searchQuery">
             <mat-error *ngIf="productIdSearchForm.get('searchQuery')?.invalid && validationLastCheck">
                 این فیلد الزامیست
             </mat-error>
         </mat-form-field>
-    </div>
+        <div class="content-table">
+            <div class="table">
+                <table *ngIf="!staffIdSearchLoading" mat-table [dataSource]="staffIdList">
+                    <ng-container matColumnDef="شناسه کالا">
+                        <th mat-header-cell *matHeaderCellDef> شناسه {{ dialogTitle }} </th>
+                        <td mat-cell *matCellDef="let element"> {{ element.stuffId }} </td>
+                    </ng-container>
+        
+                    <ng-container matColumnDef="توضیحات کالا">
+                        <th mat-header-cell *matHeaderCellDef> توضیحات {{ dialogTitle }} </th>
+                        <td mat-cell *matCellDef="let element"> <span class="staff-name" [matTooltip]="element.descript">{{ element.descript }}</span> </td>
+                    </ng-container>
 
-    <mat-dialog-actions class="form-dialog-footer">
-        <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
-        <key-button (click)="onProductIdSelected()" type="submit">تایید</key-button>
-    </mat-dialog-actions>
+                    <ng-container matColumnDef="انتخاب">
+                        <th mat-header-cell *matHeaderCellDef> انتخاب </th>
+                        <td mat-cell *matCellDef="let element">
+                            <div class="table-action-buttons">
+                                <key-button matTooltip="انتخاب" (click)="selectStaffId(element.stuffId)" content="icon">
+                                    <mat-icon class="icon-primary material-icons-outlined">add</mat-icon>                       
+                                </key-button>
+                            </div>
+                        </td>
+                    </ng-container>
+        
+                    <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+                    <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell table-no-data" [colSpan]="tableColumns.length">
+                            <img src="assets/images/software/no-data.svg" alt="no data found">
+                            هیچ داده ای یافت نشد
+                        </td>
+                    </tr>
+                </table>
+                <key-table-loading *ngIf="staffIdSearchLoading" [columns]="tableColumns"></key-table-loading>
+                <div class="table-pagination" *ngIf="!staffIdSearchLoading">
+                    <div class="table-pagination__paginator">
+                        <key-button content="icon" [disabled]="!tablePagination.hasPrev" (click)="tablePagination.hasPrev && onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">
+                            <mat-icon class="paginator-icon icon-medium">arrow_forward_ios</mat-icon>
+                        </key-button>
+                        <div>
+                            <span>{{ (tablePagination.currentPage ?? 0) | farsiNumber }}</span>
+                            <span>از</span>
+                            <span>{{ (tablePagination.totalPages ?? 0) | farsiNumber }}</span>
+                        </div>
+                        <key-button content="icon" [disabled]="!tablePagination.hasNext" (click)="tablePagination.hasNext && onPaginationChanged((tablePagination.currentPage ?? 1) + 1)">
+                            <mat-icon class="paginator-icon icon-medium">arrow_back_ios_new</mat-icon>
+                        </key-button>
+                    </div>
+                    <div class="table-pagination__total-count">
+                        <ng-container *ngIf="(tablePagination.totalCount ?? 0) <= 0">موردی یافت نشد</ng-container>
+                        <ng-container *ngIf="(tablePagination.totalCount ?? 0) > 0">
+                            {{ tablePagination.totalCount ?? 0 | price }} مورد یافت شد
+                        </ng-container>
+                    </div>
+                    <div class="table-pagination__page-size">
+                        <span>نمایش در هر صفحه: </span>
+                        <button mat-ripple [matMenuTriggerFor]="pageSizes">
+                            {{ (tablePagination.pageSize ?? 0) | farsiNumber }}
+                            <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
+                        </button>
+                        <mat-menu #pageSizes="matMenu">
+                            <button mat-menu-item (click)="onItemPerPageChanged(10)">{{ 10 | farsiNumber }} مورد</button>
+                            <button mat-menu-item (click)="onItemPerPageChanged(25)">{{ 25 | farsiNumber }} مورد</button>
+                            <button mat-menu-item (click)="onItemPerPageChanged(40)">{{ 40 | farsiNumber }} مورد</button>
+                            <button mat-menu-item (click)="onItemPerPageChanged(60)">{{ 60 | farsiNumber }} مورد</button>
+                        </mat-menu>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>

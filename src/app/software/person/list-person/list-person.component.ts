@@ -1,13 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
-import { GetCompaniesPersonListBody, GetCompaniesPersonListItem, GetPersonListBody, Person } from '../../types/person.type';
+import { GetCompaniesPersonListBody, GetCompaniesPersonListItem, GetPersonListBody, Person } from '../../types/definitions/person.type';
 import { PersonType } from '../../enums/person-type.enum';
 import { CreatePersonComponent } from '../create-person/create-person.component';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { KeyModules } from 'src/app/shared/types/modules.type';
-import { PersonService } from '../../services/person.service';
-import { Company } from '../../types/company.type';
+import { PersonService } from '../../services/definitions/person.service';
+import { Company } from '../../types/definitions/company.type';
 import { UpdatePersonComponent } from '../update-person/update-person.component';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';

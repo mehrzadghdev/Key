@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GetAllCurrencyList, GetAllCurrencyListBody, GetCurrencyList, GetCurrencyListBody } from '../types/currency.type';
+import { GetAllCurrencyList, GetAllCurrencyListBody, GetCurrencyList, GetCurrencyListBody } from '../../types/definitions/currency.type';
 import { RequestService } from 'src/app/shared/services/api/request.service';
 
 @Injectable({

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/api/request.service';
-import { AddProduct, AddProductBody, DeleteProduct, DeleteProductBody, GetCompaniesProductList, GetCompaniesProductListBody, GetNewProductCode, GetNewProductCodeBody, GetProduct, GetProductBody, GetProductList, GetProductListBody, UpdateProduct, UpdateProductBody } from '../types/product.type';
+import { AddProduct, AddProductBody, DeleteProduct, DeleteProductBody, GetCompaniesProductList, GetCompaniesProductListBody, GetNewProductCode, GetNewProductCodeBody, GetProduct, GetProductBody, GetProductList, GetProductListBody, UpdateProduct, UpdateProductBody } from '../../types/definitions/product.type';
 
 @Injectable({
   providedIn: 'root'

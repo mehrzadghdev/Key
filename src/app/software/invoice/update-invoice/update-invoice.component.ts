@@ -1,14 +1,14 @@
 import { Component, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { GetInvoiceListInvoiceItem, InvoiceProductItem, UpdateInvoiceBody, UpdateInvoiceProductItem } from '../../types/invoice.type';
-import { GetCompaniesProductListBody, Product } from '../../types/product.type';
-import { GetCompaniesPersonListBody, Person } from '../../types/person.type';
+import { GetInvoiceListInvoiceItem, InvoiceProductItem, UpdateInvoiceBody, UpdateInvoiceProductItem } from '../../types/definitions/invoice.type';
+import { GetCompaniesProductListBody, Product } from '../../types/definitions/product.type';
+import { GetCompaniesPersonListBody, Person } from '../../types/definitions/person.type';
 import { SelectOption } from 'src/app/shared/types/common.type';
 import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from '../../enums/invoice-type.enum';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PersonService } from '../../services/person.service';
-import { ProductService } from '../../services/product.service';
-import { InvoiceService } from '../../services/invoice.service';
+import { PersonService } from '../../services/definitions/person.service';
+import { ProductService } from '../../services/definitions/product.service';
+import { InvoiceService } from '../../services/definitions/invoice.service';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
@@ -16,7 +16,7 @@ import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { forkJoin } from 'rxjs';
 import { CreatePersonComponent } from '../../person/create-person/create-person.component';
 import { AddInvoiceProductComponent } from '../add-invoice-product/add-invoice-product.component';
-import { UpdateCompanyBody } from '../../types/company.type';
+import { UpdateCompanyBody } from '../../types/definitions/company.type';
 
 @Component({
   selector: 'app-update-invoice',

@@ -4,9 +4,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonType } from '../../enums/person-type.enum';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
-import { AddPersonBody } from '../../types/person.type';
-import { PersonService } from '../../services/person.service';
-import { Company } from '../../types/company.type';
+import { AddPersonBody } from '../../types/definitions/person.type';
+import { PersonService } from '../../services/definitions/person.service';
+import { Company } from '../../types/definitions/company.type';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 
 @Component({
@@ -35,7 +35,7 @@ export class CreatePersonComponent implements OnInit {
   ) {
     this.addPersonForm = fb.group({
       code: [null, [Validators.required, CustomValidators.code]], 
-      personType: [0, [Validators.required]],
+      personType: [1, [Validators.required]],
       personName: ["", [Validators.required]],
       nationalId: [null, [Validators.required, CustomValidators.nationalId]],
       economicCode: [111111111111, [Validators.required, CustomValidators.economicCode]],

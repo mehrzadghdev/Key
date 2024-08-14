@@ -3,11 +3,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ProductType } from '../../enums/product-type.enum';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
-import { AddProductBody } from '../../types/product.type';
-import { ProductService } from '../../services/product.service';
-import { Company } from '../../types/company.type';
-import { UnitService } from '../../services/unit.service';
-import { Unit } from '../../types/unit.type';
+import { AddProductBody } from '../../types/definitions/product.type';
+import { ProductService } from '../../services/definitions/product.service';
+import { Company } from '../../types/definitions/company.type';
+import { UnitService } from '../../services/definitions/unit.service';
+import { Unit } from '../../types/definitions/unit.type';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
@@ -41,7 +41,7 @@ export class CreateProductComponent implements OnInit {
     this.addProductForm = fb.group({
       code: [null, [Validators.required, CustomValidators.code]],
       productCode: ["", Validators.required],
-      productType: [null, Validators.required],
+      productType: [1, Validators.required],
       name: ["", Validators.required],
       price: [null, Validators.required],
       taxPercent: [10, [Validators.required, Validators.min(0), Validators.max(100)]],
@@ -106,7 +106,12 @@ export class CreateProductComponent implements OnInit {
       this.dialogService.openFormDialog(ProductIdSearchComponent, {
         width: '456px',
         data: {
-          productName: this.addProductForm.controls["name"].value
+          productName: this.addProductForm.controls["name"].value,
+          isService: this.addProductForm.get("productType")?.value === ProductType.Service
+        }
+      }).afterClosed().subscribe(result => {
+        if (result) {
+          this.addProductForm.get("productCode")?.patchValue(result);
         }
       })
     }

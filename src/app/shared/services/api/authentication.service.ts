@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environment/environment';
 import * as moment from 'jalali-moment';
 import { Router } from '@angular/router';
-import { Company } from 'src/app/software/types/company.type';
+import { Company } from 'src/app/software/types/definitions/company.type';
 import { UtilityService } from '../utilities/utility.service';
 import { Crypto } from '../../helpers/crypto.helper';
 

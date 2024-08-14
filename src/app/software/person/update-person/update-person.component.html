@@ -20,7 +20,7 @@
                     این فیلد الزامیست
                 </mat-error>
             </mat-form-field>
-            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value === 0" class="form-dialog-field" appearance="outline">
+            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value === 1" class="form-dialog-field" appearance="outline">
                 <mat-label>کد ملی</mat-label>
                 <input type="number" matInput formControlName="nationalId">
                 <mat-error *ngIf="updatePersonForm.get('nationalId')?.invalid && validationLastCheck">
@@ -32,7 +32,7 @@
                     </ng-container>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value !== 0" class="form-dialog-field" appearance="outline">
+            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value !== 1" class="form-dialog-field" appearance="outline">
                 <mat-label>کد اقتصادی</mat-label>
                 <input type="type" matInput formControlName="economicCode">
                 <mat-error *ngIf="updatePersonForm.get('economicCode')?.invalid && validationLastCheck">

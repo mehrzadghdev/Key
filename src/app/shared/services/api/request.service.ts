@@ -6,7 +6,7 @@ import { environment } from 'src/environment/environment';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { UtilityService } from '../utilities/utility.service';
 import { Router } from '@angular/router';
-import { Company } from 'src/app/software/types/company.type';
+import { Company } from 'src/app/software/types/definitions/company.type';
 
 @Injectable({
   providedIn: 'root'

@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { Sort, SortDirection } from '@angular/material/sort';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
-import { CurrencyService } from '../../services/currency.service';
-import { Currency, GetCurrencyListBody } from '../../types/currency.type';
+import { CurrencyService } from '../../services/definitions/currency.service';
+import { Currency, GetCurrencyListBody } from '../../types/definitions/currency.type';
 
 @Component({
   selector: 'app-currency',

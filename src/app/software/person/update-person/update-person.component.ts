@@ -2,11 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersonType } from '../../enums/person-type.enum';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { PersonService } from '../../services/person.service';
+import { PersonService } from '../../services/definitions/person.service';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
-import { Company } from '../../types/company.type';
-import { AddPersonBody, UpdatePersonBody } from '../../types/person.type';
+import { Company } from '../../types/definitions/company.type';
+import { AddPersonBody, UpdatePersonBody } from '../../types/definitions/person.type';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class UpdatePersonComponent implements OnInit {
   ) {
     this.updatePersonForm = fb.group({
       code: [null, [Validators.required, CustomValidators.code]], 
-      personType: [0, [Validators.required]],
+      personType: [1, [Validators.required]],
       personName: ["", [Validators.required]],
       nationalId: [null, [Validators.required, CustomValidators.nationalId]],
       economicCode: [111111111111, [Validators.required, CustomValidators.economicCode]],

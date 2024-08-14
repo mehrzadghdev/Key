@@ -1,5 +1,5 @@
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from "@angular/forms";
-import { Person } from "src/app/software/types/person.type";
+import { Person } from "src/app/software/types/definitions/person.type";
 
 export abstract class CustomValidators {
     public static confirmPassword(password: string, confirmPassword: string) {

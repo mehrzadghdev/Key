@@ -1,10 +1,10 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { SelectOption } from 'src/app/shared/types/common.type';
-import { GetCompaniesInvoiceList, GetCompaniesInvoiceListBody, GetInvoiceListInvoiceItem } from '../../types/invoice.type';
+import { GetCompaniesInvoiceList, GetCompaniesInvoiceListBody, GetInvoiceListInvoiceItem } from '../../types/definitions/invoice.type';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { Router } from '@angular/router';
-import { InvoiceService } from '../../services/invoice.service';
+import { InvoiceService } from '../../services/definitions/invoice.service';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from '../../enums/invoice-type.enum';

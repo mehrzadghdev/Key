@@ -110,15 +110,17 @@
     }
 
     .table-no-data {
-        padding: 0 20px 20px 20px;
+        padding: 20px 20px 20px 20px;
         text-align: center;
         font-size: 14px;
         font-weight: 400;
         color: var(--text-secondary-color);
 
         img {
+            margin: auto auto 10px auto;
             display: block;
-            margin: auto;
+            width: 70px;
+            height: 70px;
         }
     }
 

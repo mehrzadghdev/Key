@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CompanyService } from '../../services/company.service';
+import { CompanyService } from '../../services/definitions/company.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
-import { UpdateCompanyBody } from '../../types/company.type';
+import { UpdateCompanyBody } from '../../types/definitions/company.type';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 
 @Component({

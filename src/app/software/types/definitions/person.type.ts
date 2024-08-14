@@ -1,7 +1,7 @@
 // Person Base
 
 import { GetNewCode, GetNewCodeBody, HasDatabase } from "src/app/shared/types/common.type";
-import { PersonType } from "../enums/person-type.enum";
+import { PersonType } from "../../enums/person-type.enum";
 import { Pagination, PaginationBody } from "src/app/shared/types/pagination.type";
 
 
