@@ -24,6 +24,7 @@ import { SearchHistory, SearchHistoryItem } from '../shared/types/history.type';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { CurrencyComponent } from './invoice/currency/currency.component';
 import { CompanyService } from './services/definitions/company.service';
+import { ProductIdSearchComponent } from './product/product-id-search/product-id-search.component';
 
 @Component({
   selector: 'app-software',
@@ -315,9 +316,12 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   }
 
   public onSearchForProductId(): void {
-    if (this.currentActivatedRoute instanceof ListProductComponent) {
-      this.currentActivatedRoute.onSearchProductId();
-    }
+    this.dialog.openFormDialog(ProductIdSearchComponent, {
+      width: '556px',
+      data: {
+        independent: true
+      }
+    })
   }
 
   public onAddInvoice(): void {

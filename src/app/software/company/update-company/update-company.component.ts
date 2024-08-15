@@ -57,25 +57,25 @@ export class UpdateCompanyComponent implements OnInit {
 
   public onUpdateCompany(): void {
     if (this.updateCompanyForm.valid) {
-      this.updateCompanyLoading = true;
-      const updateCompanyBody: UpdateCompanyBody = {
-        databaseId: this.data.databaseId, 
-        companyName: this.updateCompanyForm.controls['companyName'].value + '', 
-        taxIdentity: this.updateCompanyForm.controls['taxIdentity'].value + '', 
-        privateKey: this.updateCompanyForm.controls['privateKey'].value + '', 
-        companyZipCode: this.updateCompanyForm.controls['companyZipCode'].value + '', 
-        companyAddress: this.updateCompanyForm.controls['companyAddress'].value + '', 
-        companyTel: this.updateCompanyForm.controls['companyTel'].value + '', 
-        companyBranchNo: this.updateCompanyForm.controls['companyBranchNo'].value + '', 
-        companyStatus: this.updateCompanyForm.controls['companyStatus'].value, 
-        companyDesc: this.updateCompanyForm.controls['companyDesc'].value + '' 
-      }
+      // this.updateCompanyLoading = true;
+      // const updateCompanyBody: UpdateCompanyBody = {
+      //   databaseId: this.data.databaseId, 
+      //   companyName: this.updateCompanyForm.controls['companyName'].value + '', 
+      //   taxIdentity: this.updateCompanyForm.controls['taxIdentity'].value + '', 
+      //   privateKey: this.updateCompanyForm.controls['privateKey'].value + '', 
+      //   companyZipCode: this.updateCompanyForm.controls['companyZipCode'].value + '', 
+      //   companyAddress: this.updateCompanyForm.controls['companyAddress'].value + '', 
+      //   companyTel: this.updateCompanyForm.controls['companyTel'].value + '', 
+      //   companyBranchNo: this.updateCompanyForm.controls['companyBranchNo'].value + '', 
+      //   companyStatus: this.updateCompanyForm.controls['companyStatus'].value, 
+      //   companyDesc: this.updateCompanyForm.controls['companyDesc'].value + '' 
+      // }
 
-      this.companyService.updateCompany(updateCompanyBody).subscribe(res => {
-        this.updateCompanyLoading = false;
-        this.utility.message('شرکت با موفقیت ویرایش شد.', 'بستن');
-        this.closeDialog(updateCompanyBody.databaseId);
-      })
+      // this.companyService.updateCompany(updateCompanyBody).subscribe(res => {
+      //   this.updateCompanyLoading = false;
+      //   this.utility.message('شرکت با موفقیت ویرایش شد.', 'بستن');
+      //   this.closeDialog(updateCompanyBody.databaseId);
+      // })
     }
     else {
       this.validationLastCheck = true;

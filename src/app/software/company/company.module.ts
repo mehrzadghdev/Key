@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { CreateCompanyComponent } from './create-company/create-company.component';
 import { SelectCompanyComponent } from './select-company/select-company.component'
 import { UpdateCompanyComponent } from './update-company/update-company.component';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { UpdateCompanyComponent } from './update-company/update-company.componen
     CommonModule,
     CompanyRoutingModule,
     SharedModule,
+    MatProgressBarModule
   ]
 })
 export class CompanyModule { }

@@ -200,6 +200,20 @@ button {
     gap: 8px;
     height: 36px;
 
+    .button-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+
+        mat-icon {
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+        }
+    }
+
     &:enabled:hover,
     &:focus,
     &:focus-visible,
