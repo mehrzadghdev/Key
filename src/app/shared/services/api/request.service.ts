@@ -35,6 +35,9 @@ export class RequestService {
         else if ([409].includes(err.status)) {
           this.utilityService.message("کد وارد شده تکراری است، لطفا از کد دیگری استفاده کنید.", 'بستن')
         }
+        else if ([400].includes(err.status)) {
+          null;
+        }
         else if (!navigator.onLine) {
           this.utilityService.message("ارتباط با سرور برقرار نیست! لطفا اتصال اینترنت را بررسی کنید.", 'بستن')
         }
@@ -42,8 +45,7 @@ export class RequestService {
           this.utilityService.message("خطای سمت سرور، لطفا بعدا سعی کنید یا با پشتیبانی ارتباط بگیرید.", 'بستن')
         }
 
-        const error = err.error?.message || err.statusText;
-        return throwError(() => error);
+        return throwError(() => err);
       })
     ) as Observable<Result>;
 

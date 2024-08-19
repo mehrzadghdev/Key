@@ -1,4 +1,4 @@
-import { DateISO, GetNewCode, GetNewCodeBody, HasDatabase, Percentage } from "src/app/shared/types/common.type";
+import { DateISO, GetNewCode, GetNewCodeBody, HasApiError, HasDatabase, Percentage } from "src/app/shared/types/common.type";
 import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from "../../enums/invoice-type.enum";
 import { Pagination, PaginationBody } from "src/app/shared/types/pagination.type";
 
@@ -165,7 +165,7 @@ export interface UpdateInvoiceProductItem {
 
 // Invoice/DeleteSaleInvoice 
 
-export type DeleteInvoice = null;
+export type DeleteInvoice = null | HasApiError;;
 
 export interface DeleteInvoiceBody extends HasDatabase {
     invoiceId: number,

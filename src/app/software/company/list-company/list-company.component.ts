@@ -11,6 +11,7 @@ import { CompanyService } from '../../services/definitions/company.service';
 import { UpdateCompanyComponent } from '../update-company/update-company.component';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { SortDirection } from '@angular/material/sort';
+import { HasApiError } from 'src/app/shared/types/common.type';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -58,12 +59,27 @@ export class ListCompanyComponent implements OnInit {
     })
   }
 
-  public onDeleteCompany(idToDelete: number): void {
+  public onDeleteCompany(companyToDelete: Company): void {
     this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
       if (result) {
-        this.companyService.deleteCompany({ databaseId: idToDelete }).subscribe(res => {
-          this.utility.message('شرکت با موفقیت حذف شد.', 'بستن');
-          this.loadCompanyList();
+        this.companyService.deleteCompany({ databaseId: companyToDelete.databaseId }).subscribe({
+          next: () => {
+            this.utility.message('شرکت با موفقیت حذف شد.', 'بستن');
+            this.loadCompanyList();
+          },
+          error: (err) => {
+            if (err.status === 400) {
+              const validationErrors: string[] = []
+
+              for (const errItem of err.error) {
+                for (const errItemError of errItem.errors) {
+                  validationErrors.push(errItemError)
+                }
+              }
+
+              this.utility.message(`حذف مودی ${companyToDelete.companyName} به دلیل داشتن زیر مجموعه های زیر امکان پذیر نمی باشد: ` + '\n' + validationErrors.join(), "تایید");
+            }
+          }
         })
       }
     })

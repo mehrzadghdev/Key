@@ -1,5 +1,7 @@
 // Company Base
 
+import { HasApiError } from "src/app/shared/types/common.type";
+
 export interface Company {
     id: number,
     packageNo: number, //////////
@@ -104,10 +106,10 @@ export interface UpdateCompanyBody {
 
 // Company/DeleteCompany 
 
-export type DeleteCompany = null;
+export type DeleteCompany = null | HasApiError;
 
 export interface DeleteCompanyBody {
-    databaseId: number
+    databaseId: number,
 }
 
 // Company/GenerateKeys

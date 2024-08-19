@@ -1,6 +1,6 @@
 // Product Base
 
-import { GetNewCode, GetNewCodeBody, HasDatabase } from "src/app/shared/types/common.type";
+import { GetNewCode, GetNewCodeBody, HasApiError, HasDatabase } from "src/app/shared/types/common.type";
 import { Pagination, PaginationBody } from "src/app/shared/types/pagination.type";
 
 
@@ -102,7 +102,7 @@ export interface UpdateProductBody {
 
 // Product/DeleteProduct 
 
-export type DeleteProduct = null;
+export type DeleteProduct = null | HasApiError;;
 
 export interface DeleteProductBody extends HasDatabase {
     code: number

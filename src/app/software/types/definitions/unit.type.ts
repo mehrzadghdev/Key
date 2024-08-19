@@ -1,6 +1,6 @@
 // Unit Base
 
-import { GetNewCode, GetNewCodeBody, HasDatabase } from "src/app/shared/types/common.type";
+import { GetNewCode, GetNewCodeBody, HasApiError, HasDatabase } from "src/app/shared/types/common.type";
 import { Pagination, PaginationBody } from "src/app/shared/types/pagination.type";
 
 
@@ -58,7 +58,7 @@ export interface UpdateUnitBody extends HasDatabase {
 
 // Unit/UpdateUnit 
 
-export type DeleteUnit = null;
+export type DeleteUnit = null | HasApiError;;
 
 export interface DeleteUnitBody extends HasDatabase {
     code: number

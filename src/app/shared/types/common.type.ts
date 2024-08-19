@@ -11,6 +11,13 @@ export interface HasDatabase {
     databaseId?: number;
 }
 
+export type HasApiError = ApiError[];
+
+export interface ApiError {
+    propertyName: string,
+    errors: string[]
+}
+
 export interface GetNewCodeBody extends HasDatabase {};
 
 export interface GetNewCode {
