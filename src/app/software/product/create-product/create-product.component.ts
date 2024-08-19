@@ -103,7 +103,7 @@ export class CreateProductComponent implements OnInit {
 
   public onSearchProductId(): void {
     if (this.addProductForm.get("productType")?.value) {
-      this.dialogService.openFormDialog(ProductIdSearchComponent, {
+      this.dialogService.openDialog(ProductIdSearchComponent, {
         width: '556px',
         data: {
           productName: this.addProductForm.controls["name"].value,

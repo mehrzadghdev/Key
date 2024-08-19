@@ -8,6 +8,10 @@
         </span>
     </div>
     <div class="content-topbar-actions">
+        <key-button appearance="raised" (click)="onGenerateKeysDialog()">
+            <mat-icon class="material-icons-outlined list-add-button-icon">key</mat-icon>
+            دریافت CSR
+        </key-button>
         <key-button appearance="raised" (click)="onReSelectCompany()">
             تغییر شرکت فعال
         </key-button>
@@ -70,6 +74,9 @@
                     <div class="table-action-buttons">
                         <key-button matTooltip="حذف شرکت" (click)="onDeleteCompany(element.databaseId)" content="icon">
                             <mat-icon class="icon-red material-icons-outlined">delete</mat-icon>
+                        </key-button>
+                        <key-button matTooltip="کپی CSR" (click)="onCopyCompanyCSR(element)" content="icon">
+                            <mat-icon class="icon-medium material-icons-outlined">description</mat-icon>
                         </key-button>
                         <key-button matTooltip="ویرایش" (click)="onUpdateCompany(element.databaseId)" content="icon">
                             <mat-icon class="icon-primary material-icons-outlined">edit_square</mat-icon>

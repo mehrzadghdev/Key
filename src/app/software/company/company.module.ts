@@ -8,13 +8,15 @@ import { CreateCompanyComponent } from './create-company/create-company.componen
 import { SelectCompanyComponent } from './select-company/select-company.component'
 import { UpdateCompanyComponent } from './update-company/update-company.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
+import { GenerateKeysComponent } from './generate-keys/generate-keys.component';
 
 @NgModule({
   declarations: [
     ListCompanyComponent,
     CreateCompanyComponent,
     SelectCompanyComponent,
-    UpdateCompanyComponent
+    UpdateCompanyComponent,
+    GenerateKeysComponent
   ],
   imports: [
     CommonModule,

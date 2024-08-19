@@ -25,6 +25,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { CurrencyComponent } from './invoice/currency/currency.component';
 import { CompanyService } from './services/definitions/company.service';
 import { ProductIdSearchComponent } from './product/product-id-search/product-id-search.component';
+import { GenerateKeysComponent } from './company/generate-keys/generate-keys.component';
 
 @Component({
   selector: 'app-software',
@@ -316,7 +317,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   }
 
   public onSearchForProductId(): void {
-    this.dialog.openFormDialog(ProductIdSearchComponent, {
+    this.dialog.openDialog(ProductIdSearchComponent, {
       width: '556px',
       data: {
         independent: true
@@ -340,5 +341,11 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     if (value === 'dashboard') return this.currentActivatedRoute instanceof DashboardComponent;
 
     return false;
+  }
+
+  public onGenerateKeysDialog(): void {
+    this.dialog.openDialog(GenerateKeysComponent, {
+      width: "456px",
+    })
   }
 }

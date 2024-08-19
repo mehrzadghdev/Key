@@ -43,14 +43,14 @@ export class ProductIdSearchComponent implements OnInit {
   public get loadingTableColumns(): string[] {
     if (this.data.independent) {
       return [
-        `شناسه ${this.currentIndependentSearchMode === ProductType.Product ? 'کالا' : 'خدمات'}`, 
-        `توضیحات ${this.currentIndependentSearchMode === ProductType.Product ? 'کالا' : 'خدمات'}`, 
+        `شناسه ${this.currentIndependentSearchMode === ProductType.Product ? 'کالا' : 'خدمات'}`,
+        `توضیحات ${this.currentIndependentSearchMode === ProductType.Product ? 'کالا' : 'خدمات'}`,
         'کپی'
       ]
     }
 
     return [`شناسه ${this.dialogTitle}`, `توضیحات ${this.dialogTitle}`, 'انتخاب']
-  } 
+  }
   private _currentIndependentSearchMode: ProductType = ProductType.Product;
   public get currentIndependentSearchMode(): ProductType {
     return this._currentIndependentSearchMode;
@@ -80,21 +80,19 @@ export class ProductIdSearchComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.searchForStaffId();
+
     if (this.data.productName) {
       this.productIdSearchForm.get("searchQuery")?.patchValue(this.data.productName);
       this.searchForStaffId();
     }
 
-    // this.productIdSearchForm.get("searchQuery")?.valueChanges.subscribe(res => {
-    //   this.staffIdSearchLoading = true;
-    // })
-
     this.productIdSearchForm.get("searchQuery")?.valueChanges.pipe(
       debounceTime(200)
     )
-      .subscribe(res => {
-        this.searchForStaffId();
-      })
+    .subscribe(res => {
+      this.searchForStaffId();
+    })
   }
 
   public onItemPerPageChanged(itemsPerPage: 5 | 10 | 25 | 40 | 60): void {

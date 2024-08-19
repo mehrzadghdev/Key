@@ -16,6 +16,22 @@ export class UpdateCompanyComponent implements OnInit {
   public validationLastCheck: boolean = false;
   public updateCompanyLoading: boolean = false;
   public getCompanyLoading: boolean = true;
+
+  public updateCompanyStep: 'base' | 'information' | 'tax' | 'keys' = 'base';
+  public get stepsProgress(): 0 | 20 | 40 | 60 | 80 {
+    switch (this.updateCompanyStep) {
+      case 'base':
+        return 20;
+      case 'information':
+        return 40;
+      case 'tax':
+        return 60;
+      case 'keys':
+        return 80;
+    }
+
+    return 0
+  }
   
   constructor(
     private dialgoRef: MatDialogRef<UpdateCompanyComponent>, 
@@ -26,8 +42,11 @@ export class UpdateCompanyComponent implements OnInit {
   ) {
     this.updateCompanyForm = fb.group({
       companyName: ['', [Validators.required]], 
+      companyNameEn: ['', [Validators.required, CustomValidators.englishOnly]],
       taxIdentity: ['', [Validators.required, CustomValidators.taxIdentity]],
       privateKey: ['', Validators.required],
+      publicKey: ['', Validators.required], 
+      economicCode: ['', [Validators.required, CustomValidators.economicCode]],
       companyZipCode: ['', CustomValidators.zipCode],
       companyAddress: [''],
       companyTel: ['', CustomValidators.phoneNumber],
@@ -41,7 +60,10 @@ export class UpdateCompanyComponent implements OnInit {
     this.companyService.getCompany({ databaseId: this.data.databaseId }).subscribe(res => {
       this.updateCompanyForm.patchValue({
         companyName: res[0].companyName ?? '', 
+        companyNameEn: res[0].companyNameEn,
+        economicCode: res[0].economicCode,
         taxIdentity: res[0].taxIdentity,
+        publicKey: res[0].publicKey,
         privateKey: res[0].privateKey,
         companyZipCode: res[0].companyZipCode,
         companyAddress: res[0].companyAddress,

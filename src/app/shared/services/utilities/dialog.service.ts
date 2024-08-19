@@ -37,6 +37,18 @@ export class DialogService {
     return dialogRef;
   }
 
+  public openDialog<T, R = any>(component: ComponentType<unknown>, config?: DialogConfig<T>): MatDialogRef<unknown, DialogResult<R>> {
+    const dialogRef = this.open<T, R>(component, {
+      data: config?.data,
+      autoFocus: false,
+      disableClose: false,
+      hasBackdrop: true,
+      width: config?.width,
+    });
+
+    return dialogRef;
+  }
+
   public openAcceptDeleteDialog(): MatDialogRef<any> {
     const dialogRef = this.dialog.open(AcceptDeleteComponent, {
       autoFocus: true,

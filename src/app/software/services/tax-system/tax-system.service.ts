@@ -17,4 +17,8 @@ export class TaxSystemService {
   public getServiceID(getServiceID: TaxSystem.GetServiceIDBody): Observable<TaxSystem.GetServiceID> {
     return this.request.post<TaxSystem.GetServiceID, TaxSystem.GetServiceIDBody>("TaxSystem/GetServiceID", getServiceID)
   }
+
+  public generateCompanyKeys(generateKeysBody: TaxSystem.GenerateKeysBody): Observable<TaxSystem.GenerateKeys> {
+    return this.request.post<TaxSystem.GenerateKeys, TaxSystem.GenerateKeysBody>("TaxSystem/GenerateKeys", generateKeysBody);
+  }
 }

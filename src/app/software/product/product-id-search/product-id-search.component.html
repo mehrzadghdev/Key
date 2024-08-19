@@ -61,21 +61,27 @@
                 <key-table-loading *ngIf="staffIdSearchLoading" [columns]="loadingTableColumns"></key-table-loading>
                 <div class="table-pagination">
                     <div class="table-pagination__paginator">
-                        <key-button content="icon" [disabled]="staffIdSearchLoading || tablePagination.currentPage === 1" (click)="tablePagination.currentPage !== 1 && onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">
+                        <key-button content="icon" [disabled]="!tablePagination.hasPrev" (click)="tablePagination.hasPrev && onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">
                             <mat-icon class="paginator-icon icon-medium">arrow_forward_ios</mat-icon>
                         </key-button>
                         <div>
                             <span>{{ (tablePagination.currentPage ?? 0) | farsiNumber }}</span>
                             <span>از</span>
-                            <span>نامشخص</span>
+                            <span>{{ (tablePagination.totalPages ?? 0) | farsiNumber }}</span>
                         </div>
-                        <key-button content="icon" [disabled]="staffIdSearchLoading || !staffIdList" (click)="staffIdList && onPaginationChanged((tablePagination.currentPage ?? 1) + 1)">
+                        <key-button content="icon" [disabled]="!tablePagination.hasNext" (click)="tablePagination.hasNext && onPaginationChanged((tablePagination.currentPage ?? 1) + 1)">
                             <mat-icon class="paginator-icon icon-medium">arrow_back_ios_new</mat-icon>
                         </key-button>
                     </div>
+                    <div class="table-pagination__total-count">
+                        <ng-container *ngIf="(tablePagination.totalCount ?? 0) <= 0">موردی یافت نشد</ng-container>
+                        <ng-container *ngIf="(tablePagination.totalCount ?? 0) > 0">
+                            {{ tablePagination.totalCount ?? 0 | price }} مورد یافت شد
+                        </ng-container>
+                    </div>
                     <div class="table-pagination__page-size">
                         <span>نمایش در هر صفحه: </span>
-                        <button mat-ripple [matMenuTriggerFor]="pageSizes" [disabled]="staffIdSearchLoading">
+                        <button mat-ripple [matMenuTriggerFor]="pageSizes">
                             {{ (tablePagination.pageSize ?? 0) | farsiNumber }}
                             <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
                         </button>

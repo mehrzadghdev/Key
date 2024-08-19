@@ -11,6 +11,7 @@ export interface Company {
     privateKey: string, //
     publicKey: string,
     economicCode: string,
+    certificateKey: string,
     companyZipCode: string,
     companyAddress: string,
     companyTel: string,
@@ -55,6 +56,7 @@ export interface AddCompany {
     economicCode: string
     companyZipCode: string,
     companyAddress: string,
+    certificateKey: string,
     companyTel: string,
     companyBranchNo: string,
     companyStatus: true,
@@ -75,6 +77,7 @@ export interface AddCompanyBody {
     companyNameEn: string,
     companyAddress: string,
     companyTel: string,
+    certificateKey: string,
     publicKey: string,
     economicCode: string
     companyBranchNo: string,
@@ -91,6 +94,7 @@ export interface UpdateCompanyBody {
     companyName: string, 
     companyNameEn: string,
     taxIdentity: string, 
+    certificateKey: string,
     privateKey: string, 
     publicKey: string,
     economicCode: string
@@ -108,19 +112,4 @@ export type DeleteCompany = null;
 
 export interface DeleteCompanyBody {
     databaseId: number
-}
-
-// Company/GenerateKeys
-
-export interface GenerateCompanyKeysBody {
-    companyName: string,
-    companyNameEn: string,
-    economicCode: string,
-    companyType: string
-}
-
-export interface GenerateCompanyKeys {
-    privateKey: string,
-    publicKey: string,
-    certificateKey: string
 }

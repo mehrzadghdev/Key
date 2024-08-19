@@ -208,7 +208,7 @@ export class ListProductComponent {
 
 
   public onSearchProductId(): void {
-    this.dialog.openFormDialog(ProductIdSearchComponent, {
+    this.dialog.openDialog(ProductIdSearchComponent, {
       width: '556px',
       data: {
         independent: true

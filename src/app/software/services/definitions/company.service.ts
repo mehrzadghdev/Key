@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/api/request.service';
-import { AddCompany, AddCompanyBody, DeleteCompany, DeleteCompanyBody, GenerateCompanyKeys, GenerateCompanyKeysBody, GetCompany, GetCompanyBody, GetCompanyList, GetUsersCompanyList, GetUsersCompanyListBody, UpdateCompany, UpdateCompanyBody } from '../../types/definitions/company.type';
+import { AddCompany, AddCompanyBody, DeleteCompany, DeleteCompanyBody, GetCompany, GetCompanyBody, GetCompanyList, GetUsersCompanyList, GetUsersCompanyListBody, UpdateCompany, UpdateCompanyBody } from '../../types/definitions/company.type';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -33,9 +33,5 @@ export class CompanyService {
 
   public deleteCompany(deleteCompanyBody: DeleteCompanyBody): Observable<DeleteCompany> {
     return this.request.post<DeleteCompany, DeleteCompanyBody>("Company/DeleteCompany", deleteCompanyBody)
-  }
-
-  public generateCompanyKeys(generateCompanyKeys: GenerateCompanyKeysBody): Observable<GenerateCompanyKeys> {
-    return this.request.post<GenerateCompanyKeys, GenerateCompanyKeysBody>("Company/GenerateKeys", generateCompanyKeys);
   }
 }

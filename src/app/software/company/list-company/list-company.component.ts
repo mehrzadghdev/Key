@@ -11,6 +11,8 @@ import { CompanyService } from '../../services/definitions/company.service';
 import { UpdateCompanyComponent } from '../update-company/update-company.component';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { SortDirection } from '@angular/material/sort';
+import { GenerateKeysComponent } from '../generate-keys/generate-keys.component';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -27,6 +29,7 @@ export class ListCompanyComponent implements OnInit {
     private dialog: DialogService, 
     private companyService: CompanyService, 
     private authentication: AuthenticationService,
+    private clipboard: Clipboard,
     private utility: UtilityService
   ) {}
 
@@ -93,6 +96,18 @@ export class ListCompanyComponent implements OnInit {
         this.loadCompanyList()
       }
     })
+  }
+
+  public onGenerateKeysDialog(): void {
+    this.dialog.openDialog(GenerateKeysComponent, {
+      width: "456px",
+    })
+  }
+
+  public onCopyCompanyCSR(csr: string): void {
+    this.clipboard.copy(csr);
+    console.log(csr);
+    this.utility.message("CSR با موفقیت کپی شد", 'بستن')
   }
 
   public onSearch(searchQuery: string) {

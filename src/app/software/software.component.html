@@ -54,7 +54,8 @@
             </li>
             <li class="menu-title">تعاریف پایه</li>
             <li class="nav-item accordion" #companyAccordion (click)="toggleAccordion(companyAccordion)"
-                [mat-menu-trigger-for]="!isExpanded ? companyMenu : null" [ngClass]="{'opened': activeRouteIs('company')}">
+                [mat-menu-trigger-for]="!isExpanded ? companyMenu : null"
+                [ngClass]="{'opened': activeRouteIs('company')}">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
@@ -70,16 +71,19 @@
                     <li matRipple class="unselectable" (click)="onAddCompany()">ایجاد شرکت جدید</li>
                     <li matRipple class="unselectable" (click)="onReSelectCompany()">تغییر شرکت فعال</li>
                     <li matRipple class="unselectable"><a routerLink="/software/company">لیست تمام شرکت ها</a></li>
+                    <li matRipple class="unselectable" (click)="onGenerateKeysDialog()">دریافت CSR</li>
                 </ul>
             </li>
             <mat-menu #companyMenu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="onAddCompany()">ایجاد شرکت جدید</button>
                 <button mat-menu-item (click)="onReSelectCompany()">تغییر شرکت فعال</button>
                 <button mat-menu-item><a routerLink="/software/company">لیست تمام شرکت ها</a></button>
+                <button mat-menu-item (click)="onGenerateKeysDialog()">دریافت CSR</button>
             </mat-menu>
 
             <li class="nav-item accordion" #contactAccordion (click)="toggleAccordion(contactAccordion)"
-                [mat-menu-trigger-for]="!isExpanded ? contactMenu : null" [ngClass]="{'opened': activeRouteIs('person')}">
+                [mat-menu-trigger-for]="!isExpanded ? contactMenu : null"
+                [ngClass]="{'opened': activeRouteIs('person')}">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
@@ -102,7 +106,8 @@
             </mat-menu>
 
             <li class="nav-item accordion" #productAccordion (click)="toggleAccordion(productAccordion)"
-                [mat-menu-trigger-for]="!isExpanded ? productMenu : null" [ngClass]="{'opened': activeRouteIs('product')}">
+                [mat-menu-trigger-for]="!isExpanded ? productMenu : null"
+                [ngClass]="{'opened': activeRouteIs('product')}">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
@@ -144,7 +149,8 @@
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
                     <li matRipple class="unselectable" (click)="onAddInvoice()">ایجاد فاکتور فروش جدید</li>
                     <li matRipple class="unselectable"><a routerLink="/software/invoice">لیست فاکتور های فروش</a></li>
-                    <li matRipple class="unselectable"><a routerLink="/software/invoice/currency">لیست تمام ارز ها</a></li>
+                    <li matRipple class="unselectable"><a routerLink="/software/invoice/currency">لیست تمام ارز ها</a>
+                    </li>
                 </ul>
             </li>
             <mat-menu #factor="matMenu" xPosition="before">
