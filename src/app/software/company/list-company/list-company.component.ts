@@ -12,6 +12,7 @@ import { UpdateCompanyComponent } from '../update-company/update-company.compone
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { SortDirection } from '@angular/material/sort';
 import { HasApiError } from 'src/app/shared/types/common.type';
+import { AlertDialogType } from 'src/app/shared/types/dialog.type';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -77,7 +78,13 @@ export class ListCompanyComponent implements OnInit {
                 }
               }
 
-              this.utility.message(`حذف مودی ${companyToDelete.companyName} به دلیل داشتن زیر مجموعه های زیر امکان پذیر نمی باشد: ` + '\n' + validationErrors.join(), "تایید");
+              this.dialog.openAlertDialog({ 
+                alertType: AlertDialogType.Error,
+                message: 'این شرکت در بخش ' + validationErrors.join(' و ') + ' ' + 'درحال استفاده است و حذف آن ممکن نیست، ابتدا موارد استفاده مرتبط را بررسی و مدیریت نمایید', 
+                title: `امکان حذف شرکت "${companyToDelete.companyName}" وجود ندارد`, 
+                hasCancel: false,
+                dialogName: 'خطا در حذف شرکت'  
+              });
             }
           }
         })

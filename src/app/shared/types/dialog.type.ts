@@ -15,3 +15,18 @@ export enum dialogCssClasses {
     fullScreenClass = 'full-screen-dialog',
     transformClass = 'transform-dialog',
 }
+
+export enum AlertDialogType {
+    Info = 1,
+    Success = 2,
+    Warning = 3,
+    Error = 4,
+}
+
+export interface AlertDialogData {
+    hasCancel: boolean,
+    alertType: AlertDialogType,
+    title: string,
+    dialogName?: string;
+    message: string,
+}

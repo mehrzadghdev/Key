@@ -40,6 +40,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ChartComponent } from './components/chart/chart.component';
+import { AlertComponent } from './components/alert/alert.component';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -60,7 +61,8 @@ export function playerFactory() {
     SkeletonComponent,
     PercentageInputDirective,
     TiledTableDirective,
-    ChartComponent
+    ChartComponent,
+    AlertComponent
   ],
   imports: [
     CommonModule,

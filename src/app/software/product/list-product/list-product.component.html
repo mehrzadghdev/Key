@@ -90,7 +90,7 @@
                 <th mat-header-cell *matHeaderCellDef> عملیات </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="table-action-buttons">
-                        <key-button [matTooltip]="'حذف ' + productTypeTextByNumber(element.productType)" (click)="onDeleteProduct(element.code)" content="icon">
+                        <key-button [matTooltip]="'حذف ' + productTypeTextByNumber(element.productType)" (click)="onDeleteProduct(element)" content="icon">
                             <mat-icon class="icon-red material-icons-outlined">delete</mat-icon>
                         </key-button>
                         <key-button matTooltip="ویرایش" (click)="onUpdateProduct(element.code)" content="icon">
