@@ -17,15 +17,11 @@ export class UpdateCompanyComponent implements OnInit {
   public updateCompanyLoading: boolean = false;
   public getCompanyLoading: boolean = true;
 
-  public updateCompanyStep: 'base' | 'information' | 'tax' | 'keys' = 'base';
+  public updateCompanyStep: 'base' | 'keys' = 'base';
   public get stepsProgress(): 0 | 20 | 40 | 60 | 80 {
     switch (this.updateCompanyStep) {
       case 'base':
-        return 20;
-      case 'information':
         return 40;
-      case 'tax':
-        return 60;
       case 'keys':
         return 80;
     }
@@ -65,6 +61,7 @@ export class UpdateCompanyComponent implements OnInit {
         taxIdentity: res[0].taxIdentity,
         publicKey: res[0].publicKey,
         privateKey: res[0].privateKey,
+        certificateKey: res[0].certificateKey,
         companyZipCode: res[0].companyZipCode,
         companyAddress: res[0].companyAddress,
         companyTel: res[0].companyTel,
@@ -77,27 +74,60 @@ export class UpdateCompanyComponent implements OnInit {
     })
   }
 
+  public onNextStep(): void {
+    if (
+      this.updateCompanyForm.get("companyName")?.invalid ||
+      this.updateCompanyForm.get("companyNameEn")?.invalid ||
+      this.updateCompanyForm.get("taxIdentity")?.invalid ||
+      this.updateCompanyForm.get("economicCode")?.invalid ||
+      this.updateCompanyForm.get("companyZipCode")?.invalid ||
+      this.updateCompanyForm.get("companyAddress")?.invalid ||
+      this.updateCompanyForm.get("companyTel")?.invalid ||
+      this.updateCompanyForm.get("companyBranchNo")?.invalid ||
+      this.updateCompanyForm.get("companyStatus")?.invalid ||
+      this.updateCompanyForm.get("companyDesc")?.invalid
+    ) {
+      this.updateCompanyForm.get("companyName")?.markAsTouched();
+      this.updateCompanyForm.get("companyNameEn")?.markAsTouched();
+      this.updateCompanyForm.get("taxIdentity")?.markAsTouched();
+      this.updateCompanyForm.get("economicCode")?.markAsTouched();
+      this.updateCompanyForm.get("companyZipCode")?.markAsTouched();
+      this.updateCompanyForm.get("companyAddress")?.markAsTouched();
+      this.updateCompanyForm.get("companyTel")?.markAsTouched();
+      this.updateCompanyForm.get("companyBranchNo")?.markAsTouched();
+      this.updateCompanyForm.get("companyStatus")?.markAsTouched();
+      this.updateCompanyForm.get("companyDesc")?.markAsTouched();
+    }
+    else {
+      this.updateCompanyStep = 'keys'
+    }
+  }
+
   public onUpdateCompany(): void {
     if (this.updateCompanyForm.valid) {
-      // this.updateCompanyLoading = true;
-      // const updateCompanyBody: UpdateCompanyBody = {
-      //   databaseId: this.data.databaseId, 
-      //   companyName: this.updateCompanyForm.controls['companyName'].value + '', 
-      //   taxIdentity: this.updateCompanyForm.controls['taxIdentity'].value + '', 
-      //   privateKey: this.updateCompanyForm.controls['privateKey'].value + '', 
-      //   companyZipCode: this.updateCompanyForm.controls['companyZipCode'].value + '', 
-      //   companyAddress: this.updateCompanyForm.controls['companyAddress'].value + '', 
-      //   companyTel: this.updateCompanyForm.controls['companyTel'].value + '', 
-      //   companyBranchNo: this.updateCompanyForm.controls['companyBranchNo'].value + '', 
-      //   companyStatus: this.updateCompanyForm.controls['companyStatus'].value, 
-      //   companyDesc: this.updateCompanyForm.controls['companyDesc'].value + '' 
-      // }
+      this.updateCompanyLoading = true;
+      const updateCompanyBody: UpdateCompanyBody = {
+        databaseId: this.data.databaseId, 
+        companyName: this.updateCompanyForm.controls['companyName'].value + '', 
+        companyNameEn: this.updateCompanyForm.controls['companyNameEn'].value + '', 
+        taxIdentity: this.updateCompanyForm.controls['taxIdentity'].value + '', 
+        privateKey: this.updateCompanyForm.controls['privateKey'].value + '', 
+        publicKey: this.updateCompanyForm.controls['publicKey'].value + '', 
+        economicCode: this.updateCompanyForm.controls['economicCode'].value + '', 
+        certificateKey: this.updateCompanyForm.controls['certificateKey'].value + '', 
+        companyZipCode: this.updateCompanyForm.controls['companyZipCode'].value + '', 
+        companyAddress: this.updateCompanyForm.controls['companyAddress'].value + '', 
+        companyTel: this.updateCompanyForm.controls['companyTel'].value + '', 
+        companyBranchNo: this.updateCompanyForm.controls['companyBranchNo'].value + '', 
+        companyStatus: this.updateCompanyForm.controls['companyStatus'].value, 
+        companyDesc: this.updateCompanyForm.controls['companyDesc'].value + '' 
+      }
 
-      // this.companyService.updateCompany(updateCompanyBody).subscribe(res => {
-      //   this.updateCompanyLoading = false;
-      //   this.utility.message('شرکت با موفقیت ویرایش شد.', 'بستن');
-      //   this.closeDialog(updateCompanyBody.databaseId);
-      // })
+      this.companyService.updateCompany(updateCompanyBody).subscribe(res => {
+        this.updateCompanyLoading = false;
+        this.utility.message('شرکت با موفقیت ویرایش شد.', 'بستن');
+        this.closeDialog(updateCompanyBody.databaseId);
+      })
     }
     else {
       this.validationLastCheck = true;

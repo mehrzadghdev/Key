@@ -22,18 +22,17 @@
                 <mat-form-field class="form-dialog-field" appearance="outline">
                     <mat-label>نام انگلیسی شرکت</mat-label>
                     <input matInput formControlName="companyNameEn" type="text" />
-                    <mat-error *ngIf="updateCompanyForm.get('companyNameEn')?.invalid && updateCompanyForm.get('companyNameEn')?.invalid">
+                    <mat-error
+                        *ngIf="updateCompanyForm.get('companyNameEn')?.invalid && updateCompanyForm.get('companyNameEn')?.invalid">
                         <ng-container *ngIf="updateCompanyForm.get('companyNameEn')?.hasError('required')">
                             این فیلد الزامیست
                         </ng-container>
                         <ng-container *ngIf="updateCompanyForm.get('companyNameEn')?.hasError('englishOnly')">
-                            نام شرکت انگلیسی نامعتبر است 
-                        </ng-container>  
+                            نام شرکت انگلیسی نامعتبر است
+                        </ng-container>
                     </mat-error>
                 </mat-form-field>
             </div>
-        </div>
-        <div class="form-dialog-field-row">
             <mat-form-field class="form-dialog-field" appearance="outline" hideRequiredMarker>
                 <mat-label>توضیحات شرکت</mat-label>
                 <textarea matInput formControlName="companyDesc" rows="1"></textarea>
@@ -41,57 +40,79 @@
                     این فیلد الزامیست
                 </mat-error>
             </mat-form-field>
-            <mat-form-field class="form-dialog-field" appearance="outline" hideRequiredMarker>
-                <mat-label>آدرس و مکان</mat-label>
-                <textarea matInput formControlName="companyAddress" rows="1"></textarea>
-                <mat-error *ngIf="updateCompanyForm.get('companyAddress')?.invalid && validationLastCheck">
-                    این فیلد الزامیست
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div class="form-dialog-field-row">
-            <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>شماره تلفن</mat-label>
-                <input type="number" matInput formControlName="companyTel">
-                <mat-error *ngIf="updateCompanyForm.get('companyTel')?.invalid && validationLastCheck">
-                    شماره تلفن نامعتبر است
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>کد پستی</mat-label>
-                <input type="number" matInput formControlName="companyZipCode">
-                <mat-error *ngIf="updateCompanyForm.get('companyZipCode')?.invalid && validationLastCheck">
-                    کد پستی نامعتبر است
-                </mat-error>
-            </mat-form-field>
-        </div>
-        <div class="form-dialog-field-row">
-            <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>شناسه یکتا مالیاتی</mat-label>
-                <input type="text" matInput formControlName="taxIdentity">
-                <mat-error *ngIf="updateCompanyForm.get('taxIdentity')?.invalid && validationLastCheck">
-                    <ng-container *ngIf="updateCompanyForm.get('taxIdentity')?.hasError('required')">
+            <div class="form-dialog-field-row">
+                <mat-form-field class="form-dialog-field" appearance="outline" hideRequiredMarker>
+                    <mat-label>کد شعبه</mat-label>
+                    <textarea matInput formControlName="companyBranchNo" rows="1"></textarea>
+                    <mat-error *ngIf="updateCompanyForm.get('companyBranchNo')?.invalid && validationLastCheck">
+                        <ng-container *ngIf="updateCompanyForm.get('companyBranchNo')?.hasError('required')">
+                            این فیلد الزامیست
+                        </ng-container>
+                        <ng-container *ngIf="updateCompanyForm.get('companyBranchNo')?.hasError('ذranchNo')">
+                            کد شعبه نامعتبر است
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-dialog-field" appearance="outline" hideRequiredMarker>
+                    <mat-label>آدرس و مکان</mat-label>
+                    <textarea matInput formControlName="companyAddress" rows="1"></textarea>
+                    <mat-error *ngIf="updateCompanyForm.get('companyAddress')?.invalid && validationLastCheck">
                         این فیلد الزامیست
-                    </ng-container>
-                    <ng-container *ngIf="updateCompanyForm.get('taxIdentity')?.hasError('taxIdentity')">
-                        شناسه یکتا نامعتبر است
-                    </ng-container>
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>کلید خصوصی</mat-label>
-                <input type="text" matInput formControlName="privateKey">
-                <mat-error *ngIf="updateCompanyForm.get('privateKey')?.invalid && validationLastCheck">
-                    این فیلد الزامیست
-                </mat-error>
-            </mat-form-field>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-dialog-field-row">
+                <mat-form-field class="form-dialog-field" appearance="outline">
+                    <mat-label>شماره تلفن</mat-label>
+                    <input type="number" matInput formControlName="companyTel">
+                    <mat-error *ngIf="updateCompanyForm.get('companyTel')?.invalid && validationLastCheck">
+                        شماره تلفن نامعتبر است
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-dialog-field" appearance="outline">
+                    <mat-label>کد پستی</mat-label>
+                    <input type="number" matInput formControlName="companyZipCode">
+                    <mat-error *ngIf="updateCompanyForm.get('companyZipCode')?.invalid && validationLastCheck">
+                        کد پستی نامعتبر است
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-dialog-field-row">
+                <mat-form-field class="form-dialog-field" appearance="outline">
+                    <mat-label>شناسه یکتا مالیاتی</mat-label>
+                    <input type="text" matInput formControlName="taxIdentity">
+                    <mat-error *ngIf="updateCompanyForm.get('taxIdentity')?.invalid && validationLastCheck">
+                        <ng-container *ngIf="updateCompanyForm.get('taxIdentity')?.hasError('required')">
+                            این فیلد الزامیست
+                        </ng-container>
+                        <ng-container *ngIf="updateCompanyForm.get('taxIdentity')?.hasError('taxIdentity')">
+                            شناسه یکتا نامعتبر است
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="form-dialog-field" appearance="outline">
+                    <mat-label>کد اقتصادی</mat-label>
+                    <input matInput formControlName="economicCode" type="text" />
+                    <mat-error
+                        *ngIf="updateCompanyForm.get('economicCode')?.invalid && updateCompanyForm.get('economicCode')?.invalid">
+                        <ng-container *ngIf="updateCompanyForm.get('economicCode')?.hasError('required')">
+                            این فیلد الزامیست
+                        </ng-container>
+                        <ng-container *ngIf="updateCompanyForm.get('economicCode')?.hasError('economicCode')">
+                            کد اقتصادی نامعتبر است
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <mat-checkbox formControlName="companyStatus" [disabled]="true" class="example-margin">فعال بودن
+                شرکت</mat-checkbox>
         </div>
-        <mat-checkbox formControlName="companyStatus" [disabled]="true" class="example-margin">فعال بودن
-            شرکت</mat-checkbox>
     </div>
 
     <mat-dialog-actions class="form-dialog-footer">
         <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
-        <key-button [loading]="updateCompanyLoading" (click)="onUpdateCompany()" type="submit">ویرایش</key-button>
+        <key-button *ngIf="updateCompanyStep === 'base'" (click)="onNextStep()" type="button">ادامه</key-button>
+        <key-button *ngIf="updateCompanyStep === 'keys'" [loading]="updateCompanyLoading" (click)="onUpdateCompany()"
+            type="submit">ویرایش</key-button>
     </mat-dialog-actions>
 </form>
