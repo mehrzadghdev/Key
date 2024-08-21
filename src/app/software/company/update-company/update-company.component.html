@@ -107,6 +107,34 @@
             <mat-checkbox formControlName="companyStatus" [disabled]="true" class="example-margin">فعال بودن
                 شرکت</mat-checkbox>
         </div>
+        <div class="step" *ngIf="updateCompanyStep === 'keys'">
+            <h2 class="add-company-field-title">کلید عمومی و خصوصی</h2>
+            <key-button (click)="null" appearance="text">
+                <mat-icon class="material-icons-outlined list-add-button-icon">key</mat-icon> ایجاد کلید
+            </key-button>
+            <div class="form-dialog-field-row">
+                <mat-form-field class="add-company-field" appearance="outline">
+                    <mat-label>کلید خصوصی</mat-label>
+                    <textarea matInput formControlName="privateKey" rows="5"></textarea>
+                    <mat-error
+                        *ngIf="updateCompanyForm.get('privateKey')?.invalid && updateCompanyForm.get('privateKey')?.invalid">
+                        <ng-container *ngIf="updateCompanyForm.get('privateKey')?.hasError('required')">
+                            این فیلد الزامیست
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+                <mat-form-field class="add-company-field" appearance="outline">
+                    <mat-label>کلید عمومی</mat-label>
+                    <textarea matInput formControlName="publicKey" rows="5"></textarea>
+                    <mat-error
+                        *ngIf="updateCompanyForm.get('publicKey')?.invalid && updateCompanyForm.get('publicKey')?.invalid">
+                        <ng-container *ngIf="updateCompanyForm.get('publicKey')?.hasError('required')">
+                            این فیلد الزامیست
+                        </ng-container>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
     </div>
 
     <mat-dialog-actions class="form-dialog-footer">
