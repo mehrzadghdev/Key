@@ -13,6 +13,7 @@ import { UtilityService } from 'src/app/shared/services/utilities/utility.servic
 import { SortDirection } from '@angular/material/sort';
 import { GenerateKeysComponent } from '../generate-keys/generate-keys.component';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { AlertDialogType } from 'src/app/shared/types/dialog.type';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -61,12 +62,33 @@ export class ListCompanyComponent implements OnInit {
     })
   }
 
-  public onDeleteCompany(idToDelete: number): void {
+  public onDeleteCompany(companyToDelete: Company): void {
     this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
       if (result) {
-        this.companyService.deleteCompany({ databaseId: idToDelete }).subscribe(res => {
-          this.utility.message('شرکت با موفقیت حذف شد.', 'بستن');
-          this.loadCompanyList();
+        this.companyService.deleteCompany({ databaseId: companyToDelete.databaseId }).subscribe({
+          next: () => {
+            this.utility.message('شرکت با موفقیت حذف شد.', 'بستن');
+            this.loadCompanyList();
+          },
+          error: (err) => {
+            if (err.status === 400) {
+              const validationErrors: string[] = []
+
+              for (const errItem of err.error) {
+                for (const errItemError of errItem.errors) {
+                  validationErrors.push(errItemError)
+                }
+              }
+
+              this.dialog.openAlertDialog({ 
+                alertType: AlertDialogType.Error,
+                message: 'این شرکت در بخش ' + validationErrors.join(' و ') + ' ' + 'درحال استفاده است و حذف آن ممکن نیست، ابتدا موارد استفاده مرتبط را بررسی و مدیریت نمایید', 
+                title: `امکان حذف شرکت "${companyToDelete.companyName}" وجود ندارد`, 
+                hasCancel: false,
+                dialogName: 'خطا در حذف شرکت'  
+              });
+            }
+          }
         })
       }
     })
@@ -104,9 +126,8 @@ export class ListCompanyComponent implements OnInit {
     })
   }
 
-  public onCopyCompanyCSR(csr: string): void {
-    this.clipboard.copy(csr);
-    console.log(csr);
+  public onCopyCompanyCSR(csr: Company): void {
+    this.clipboard.copy(csr.certificateKey);
     this.utility.message("CSR با موفقیت کپی شد", 'بستن')
   }
 

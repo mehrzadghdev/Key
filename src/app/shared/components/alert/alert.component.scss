@@ -1,0 +1,41 @@
+@import url('../../scss/key-form-dialog.scss');
+
+.alert-dialog-content {
+    padding: 0 0px 15px 0px;
+
+    .alert-dialog {        
+        &.info-alert {
+            background-color: color-mix(in srgb, var(--primary-color), transparent 90%);
+            color: var(--primary-color);
+            border-inline-start: 3px solid var(--primary-color);
+        }
+
+        &.success-alert {
+            background-color: color-mix(in srgb, var(--success-color), transparent 90%);
+            color: var(--success-color);
+            border-inline-start: 3px solid var(--success-color);
+        }
+
+        &.error-alert {
+            background-color: color-mix(in srgb, var(--error-color), transparent 90%);
+            color: var(--error-color);
+            border-inline-start: 3px solid var(--error-color);
+        }
+
+        &.warning-alert {
+            background-color: color-mix(in srgb, var(--warn-color), transparent 90%);
+            color: var(--warn-color);
+            border-inline-start: 3px solid var(--warn-color);
+        }
+
+        padding: 15px 20px;
+        border-radius: 3px;
+
+        span {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+    }
+}

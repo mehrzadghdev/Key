@@ -72,7 +72,7 @@
                 <th mat-header-cell *matHeaderCellDef> عملیات </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="table-action-buttons">
-                        <key-button matTooltip="حذف شرکت" (click)="onDeleteCompany(element.databaseId)" content="icon">
+                        <key-button matTooltip="حذف شرکت" (click)="onDeleteCompany(element)" content="icon">
                             <mat-icon class="icon-red material-icons-outlined">delete</mat-icon>
                         </key-button>
                         <key-button matTooltip="کپی CSR" (click)="onCopyCompanyCSR(element)" content="icon">

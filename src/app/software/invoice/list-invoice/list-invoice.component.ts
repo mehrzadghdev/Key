@@ -1,7 +1,7 @@
 import { SelectionModel } from '@angular/cdk/collections';
 import { Component, OnInit } from '@angular/core';
 import { SelectOption } from 'src/app/shared/types/common.type';
-import { GetCompaniesInvoiceList, GetCompaniesInvoiceListBody, GetInvoiceListInvoiceItem } from '../../types/definitions/invoice.type';
+import { GetCompaniesInvoiceList, GetCompaniesInvoiceListBody, GetInvoiceListInvoiceItem, Invoice } from '../../types/definitions/invoice.type';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import { Router } from '@angular/router';
 import { InvoiceService } from '../../services/definitions/invoice.service';
@@ -13,6 +13,7 @@ import { CreateInvoiceComponent } from '../create-invoice/create-invoice.compone
 import { UpdatePersonComponent } from '../../person/update-person/update-person.component';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { UpdateInvoiceComponent } from '../update-invoice/update-invoice.component';
+import { AlertDialogType } from 'src/app/shared/types/dialog.type';
 
 @Component({
   selector: 'app-list-invoice',
@@ -173,12 +174,33 @@ export class ListInvoiceComponent implements OnInit {
     })
   }
 
-  public onDeleteInvoice(invoiceCodeToDelete: number, invoiceIdToDelete: number): void {
+  public onDeleteInvoice(invoiceToDelete: Invoice): void {
     this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
       if (result) {
-        this.invoiceSerivce.deleteInvoice({ invoiceCode: invoiceCodeToDelete, invoiceId: invoiceIdToDelete }).subscribe(res => {
-          this.utility.message('فاکتور فروش با موفقیت حذف شد.', 'بستن');
-          this.loadInvoiceList();
+        this.invoiceSerivce.deleteInvoice({ invoiceCode: invoiceToDelete.invoiceCode, invoiceId: invoiceToDelete.invoiceId }).subscribe({
+          next: () => {
+            this.utility.message('فاکتور فروش با موفقیت حذف شد.', 'بستن');
+            this.loadInvoiceList();
+          },
+          error: (err) => {
+            if (err.status === 400) {
+              const validationErrors: string[] = []
+
+              for (const errItem of err.error) {
+                for (const errItemError of errItem.errors) {
+                  validationErrors.push(errItemError)
+                }
+              }
+
+              this.dialog.openAlertDialog({ 
+                alertType: AlertDialogType.Error,
+                message: 'این فاکتور فروش در بخش ' + validationErrors.join(' و ') + ' ' + 'درحال استفاده است و حذف آن ممکن نیست، ابتدا موارد استفاده مرتبط را بررسی و مدیریت نمایید', 
+                title: `امکان حذف فاکتور فروش "${invoiceToDelete.invoiceCode}" وجود ندارد`, 
+                hasCancel: false ,
+                dialogName: 'خطا در حذف فاکتور فروش' 
+              });
+            }
+          }
         })
       }
     })

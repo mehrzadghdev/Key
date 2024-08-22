@@ -2,8 +2,9 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { take } from 'rxjs';
-import { DialogResult, dialogCssClasses, DialogConfig } from '../../types/dialog.type';
+import { DialogResult, dialogCssClasses, DialogConfig, AlertDialogData } from '../../types/dialog.type';
 import { AcceptDeleteComponent } from '../../components/accept-delete/accept-delete.component';
+import { AlertComponent } from '../../components/alert/alert.component';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,22 @@ export class DialogService {
       disableClose: true,
       hasBackdrop: true,
       width: config?.width,
+    });
+
+    return dialogRef;
+  }
+
+  public openAlertDialog(alertData: AlertDialogData): MatDialogRef<any> {
+    const dialogRef = this.dialog.open(AlertComponent, {
+      autoFocus: true,
+      disableClose: false,
+      hasBackdrop: true,
+      data: alertData,
+      width:"456px",
+      height: "auto",
+      panelClass: [
+        dialogCssClasses.mobileFriendlyClass,
+      ],
     });
 
     return dialogRef;

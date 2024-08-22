@@ -108,10 +108,12 @@
                 شرکت</mat-checkbox>
         </div>
         <div class="step" *ngIf="updateCompanyStep === 'keys'">
-            <h2 class="add-company-field-title">کلید عمومی و خصوصی</h2>
-            <key-button (click)="null" appearance="text">
-                <mat-icon class="material-icons-outlined list-add-button-icon">key</mat-icon> ایجاد کلید
-            </key-button>
+            <div class="tow-columns-title">
+                <h2 class="add-company-field-title">کلید عمومی و خصوصی</h2>
+                <key-button (click)="onGeneratePublicAndPrivateKeys()" appearance="text">
+                    <mat-icon class="material-icons-outlined list-add-button-icon">key</mat-icon> ایجاد کلید
+                </key-button>
+            </div>
             <div class="form-dialog-field-row">
                 <mat-form-field class="add-company-field" appearance="outline">
                     <mat-label>کلید خصوصی</mat-label>
@@ -140,7 +142,7 @@
     <mat-dialog-actions class="form-dialog-footer">
         <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
         <key-button *ngIf="updateCompanyStep === 'base'" (click)="onNextStep()" type="button">ادامه</key-button>
-        <key-button *ngIf="updateCompanyStep === 'keys'" [loading]="updateCompanyLoading" (click)="onUpdateCompany()"
+        <key-button *ngIf="updateCompanyStep === 'keys'" [disabled]="getCompanyLoading" [loading]="updateCompanyLoading" (click)="onUpdateCompany()"
             type="submit">ویرایش</key-button>
     </mat-dialog-actions>
 </form>

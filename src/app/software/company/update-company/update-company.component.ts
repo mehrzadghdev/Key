@@ -5,6 +5,8 @@ import { CompanyService } from '../../services/definitions/company.service';
 import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { UpdateCompanyBody } from '../../types/definitions/company.type';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
+import { TaxSystem } from '../../types/tax-system/tax-system';
+import { TaxSystemService } from '../../services/tax-system/tax-system.service';
 
 @Component({
   selector: 'app-update-company',
@@ -34,6 +36,7 @@ export class UpdateCompanyComponent implements OnInit {
     private companyService: CompanyService, 
     private fb: FormBuilder,
     private utility: UtilityService,
+    private taxSystem: TaxSystemService,
     @Inject(MAT_DIALOG_DATA) private data: { databaseId: number }
   ) {
     this.updateCompanyForm = fb.group({
@@ -45,6 +48,7 @@ export class UpdateCompanyComponent implements OnInit {
       economicCode: ['', [Validators.required, CustomValidators.economicCode]],
       companyZipCode: ['', CustomValidators.zipCode],
       companyAddress: [''],
+      certificateKey: [''],
       companyTel: ['', CustomValidators.phoneNumber],
       companyBranchNo: ['', CustomValidators.branchNo],
       companyStatus: [false, Validators.required],
@@ -101,6 +105,29 @@ export class UpdateCompanyComponent implements OnInit {
     else {
       this.updateCompanyStep = 'keys'
     }
+  }
+
+  public onGeneratePublicAndPrivateKeys(): void {
+    this.getCompanyLoading = true;
+    const generateCompanyKeysBody: TaxSystem.GenerateKeysBody = {
+      companyName: (this.updateCompanyForm.controls["companyName"].value) + "",
+      companyNameEn: (this.updateCompanyForm.controls["companyNameEn"].value) + "",
+      economicCode: (this.updateCompanyForm.controls["economicCode"].value) + "",
+      companyType: "Non-Governmental"
+    }
+
+    this.taxSystem.generateCompanyKeys(generateCompanyKeysBody).subscribe(res => {
+      this.getCompanyLoading = false;
+      
+      this.updateCompanyForm.get("privateKey")?.patchValue(res.privateKey);
+      this.updateCompanyForm.get("publicKey")?.patchValue(res.publicKey);
+      this.updateCompanyForm.get("certificateKey")?.patchValue(res.certificateKey);
+
+      this.utility.message("کلید خصوصی و عمومی با موفقیت ایجاد شد", 'بستن');
+    },
+    error => {
+      this.getCompanyLoading = false;
+    })
   }
 
   public onUpdateCompany(): void {

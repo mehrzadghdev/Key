@@ -14,6 +14,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort, Sort, SortDirection } from '@angular/material/sort';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { SelectionModel } from '@angular/cdk/collections';
+import { AlertDialogType } from 'src/app/shared/types/dialog.type';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -151,12 +152,33 @@ export class ListPersonComponent implements OnInit {
     })
   }
 
-  public onDeletePerson(personCodeToDelete: number): void {
+  public onDeletePerson(personToDelete: Person): void {
     this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
       if (result) {
-        this.personSerivce.deletePerson({ code: personCodeToDelete }).subscribe(res => {
-          this.utility.message('طرف حساب با موفقیت حذف شد.', 'بستن');
-          this.loadPersonList();
+        this.personSerivce.deletePerson({ code: personToDelete.code }).subscribe({
+          next: () => {
+            this.utility.message('طرف حساب با موفقیت حذف شد.', 'بستن');
+            this.loadPersonList();
+          },
+          error: (err) => {
+            if (err.status === 400) {
+              const validationErrors: string[] = []
+
+              for (const errItem of err.error) {
+                for (const errItemError of errItem.errors) {
+                  validationErrors.push(errItemError)
+                }
+              }
+
+              this.dialog.openAlertDialog({ 
+                alertType: AlertDialogType.Error,
+                message: 'این طرف حساب در بخش ' + validationErrors.join(' و ') + ' ' + 'درحال استفاده است و حذف آن ممکن نیست، ابتدا موارد استفاده مرتبط را بررسی و مدیریت نمایید', 
+                title: `امکان حذف طرف حساب "${personToDelete.personName}" وجود ندارد`, 
+                hasCancel: false ,
+                dialogName: 'خطا در حذف طرف حساب' 
+              });
+            }
+          }
         })
       }
     })

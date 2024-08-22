@@ -1,1 +1,14 @@
 @import url('../../../shared/scss/key-form-dialog.scss');
+
+.tow-columns-title {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 5px;
+
+    .add-company-field-title {
+        margin-bottom: 0px;
+    }
+}

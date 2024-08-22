@@ -1,0 +1,32 @@
+<form class="form-dialog">
+    <div class="form-dialog-top-bar" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+        <h3>
+            <ng-container *ngIf="data.dialogName">{{ data.dialogName }}</ng-container>
+            <ng-container *ngIf="!data.dialogName">{{ data.title }}</ng-container>
+        </h3>
+        <key-button content="icon" (click)="data.hasCancel ? denyAlert() : acceptAlert()">
+            <mat-icon class="icon-base">close</mat-icon>
+        </key-button>
+    </div>
+
+    <div class="form-dialog-content">
+        <div class="alert-dialog-content">
+            <div class="alert-dialog" [ngClass]="{
+                'info-alert': data.alertType === AlertTypeEnum.Info,
+                'success-alert': data.alertType === AlertTypeEnum.Success,
+                'error-alert': data.alertType === AlertTypeEnum.Error,
+                'warning-alert': data.alertType === AlertTypeEnum.Warning
+            }">
+                <div class="alert-content">
+                    <span>{{ data.title }}</span>
+                    <p>{{ data.message }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <mat-dialog-actions class="form-dialog-footer">
+        <key-button appearance="stroked" *ngIf="data.hasCancel" (click)="denyAlert()">لغو</key-button>
+        <key-button (click)="acceptAlert()" type="submit">تایید</key-button>
+    </mat-dialog-actions>
+</form>
