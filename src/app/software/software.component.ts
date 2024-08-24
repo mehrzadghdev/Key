@@ -101,7 +101,6 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
           this.initCompanySelection(this.authentication.userDetails.packageNo);
         })
       }
-
     }
   }
 

@@ -48,7 +48,7 @@ export class CreateCompanyComponent {
       companyName: ['', Validators.required],
       companyNameEn: ['', [Validators.required, CustomValidators.englishOnly]],
       taxIdentity: ['', [Validators.required, CustomValidators.taxIdentity]],
-      economicCode: ['', [Validators.required, CustomValidators.economicCode]],
+      economicCode: ['', [Validators.required, CustomValidators.economicOrNationalCode]],
       privateKey: ['', Validators.required],
       publicKey: ['', Validators.required],
       certificateKey: [''],

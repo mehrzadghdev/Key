@@ -15,6 +15,7 @@ import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type
 import { Sort, SortDirection } from '@angular/material/sort';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ProductIdSearchComponent } from '../product-id-search/product-id-search.component';
+import { AlertDialogType } from 'src/app/shared/types/dialog.type';
 
 @Component({
   selector: 'app-list-product',
@@ -162,12 +163,33 @@ export class ListProductComponent {
     })
   }
 
-  public onDeleteProduct(productCodeToDelete: number): void {
+  public onDeleteProduct(productToDelete: Product): void {
     this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
       if (result) {
-        this.productSerivce.deleteProduct({ code: productCodeToDelete }).subscribe(res => {
-          this.utility.message('کالا یا خدمات با موفقیت حذف شد.', 'بستن');
-          this.loadProductList();
+        this.productSerivce.deleteProduct({ code: productToDelete.code }).subscribe({
+          next: () => {
+            this.utility.message('کالا یا خدمات با موفقیت حذف شد.', 'بستن');
+            this.loadProductList();
+          },
+          error: (err) => {
+            if (err.status === 400) {
+              const validationErrors: string[] = []
+
+              for (const errItem of err.error) {
+                for (const errItemError of errItem.errors) {
+                  validationErrors.push(errItemError)
+                }
+              }
+
+              this.dialog.openAlertDialog({ 
+                alertType: AlertDialogType.Error,
+                message: `این ${this.productTypeTextByNumber(productToDelete.productType)} در بخش ` + validationErrors.join(' و ') + ' ' + 'درحال استفاده است و حذف آن ممکن نیست، ابتدا موارد استفاده مرتبط را بررسی و مدیریت نمایید', 
+                title: `امکان حذف ${this.productTypeTextByNumber(productToDelete.productType)} "${productToDelete.productType}" وجود ندارد`, 
+                hasCancel: false,
+                dialogName: 'خطا در حذف' + this.productTypeTextByNumber(productToDelete.productType) 
+              });
+            }
+          }
         })
       }
     })

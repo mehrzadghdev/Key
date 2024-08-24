@@ -8,6 +8,7 @@ import { CustomValidators } from 'src/app/shared/validators/custom-validators';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { Sort, SortDirection } from '@angular/material/sort';
 import { GetCompaniesPersonListBody, GetPersonListBody } from '../../types/definitions/person.type';
+import { AlertDialogType } from 'src/app/shared/types/dialog.type';
 
 @Component({
   selector: 'app-unit',
@@ -126,16 +127,38 @@ export class UnitComponent implements OnInit {
     this.loadUnitList({ pageSize: this.tablePagination.pageSize, page: pagetoGo, searchTerm: this.tableSearchQuery, sortFieldName: this.tableSortField });
   }
 
-  public onDeleteUnit(unitCodeToDelete: number): void {
+  public onDeleteUnit(unitToDelete: Unit): void {
     this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
       if (result) {
-        this.unitService.deleteUnit({ code: unitCodeToDelete }).subscribe(res => {
-          this.utility.message('واحد با موفقیت حذف شد.', 'بستن');
-          this.loadUnitList();
+        this.unitService.deleteUnit({ code: unitToDelete.code }).subscribe({
+          next: () => {
+            this.utility.message('واحد با موفقیت حذف شد.', 'بستن');
+            this.loadUnitList();
+          },
+          error: (err) => {
+            if (err.status === 400) {
+              const validationErrors: string[] = []
+
+              for (const errItem of err.error) {
+                for (const errItemError of errItem.errors) {
+                  validationErrors.push(errItemError)
+                }
+              }
+
+              this.dialog.openAlertDialog({ 
+                alertType: AlertDialogType.Error,
+                message: 'این واحد در بخش ' + validationErrors.join(' و ') + ' ' + 'درحال استفاده است و حذف آن ممکن نیست، ابتدا موارد استفاده مرتبط را بررسی و مدیریت نمایید', 
+                title: `امکان حذف واحد "${unitToDelete.name}" وجود ندارد`, 
+                hasCancel: false,
+                dialogName: 'خطا در حذف واحد' 
+              });
+            }
+          }
         })
       }
     })
   }
+
 
   public onAddUnit(): void {
     if (this.addUnitForm.valid) {

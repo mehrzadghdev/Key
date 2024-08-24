@@ -45,7 +45,7 @@ export class UpdateCompanyComponent implements OnInit {
       taxIdentity: ['', [Validators.required, CustomValidators.taxIdentity]],
       privateKey: ['', Validators.required],
       publicKey: ['', Validators.required], 
-      economicCode: ['', [Validators.required, CustomValidators.economicCode]],
+      economicCode: ['', [Validators.required, CustomValidators.economicOrNationalCode]],
       companyZipCode: ['', CustomValidators.zipCode],
       companyAddress: [''],
       certificateKey: [''],

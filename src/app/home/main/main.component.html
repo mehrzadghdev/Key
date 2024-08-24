@@ -26,24 +26,6 @@
     </div>
 </div>
 
-<div class="why-us-section__wrapper">
-    <div class="why-us-section container">
-        <div class="why-us-section__column">
-            <img src="assets/images/home/home-pic-1.jpg" alt="home pic 2">
-        </div>
-        <div class="why-us-section__column">
-            <span>~ چرا کلید</span>
-            <h2>دلیل استفاده از نرم افزار واسط</h2>
-            <p>با توجه به تصویب قانون پایانه های فروشگاهی و سامانه مودیان (صندوق مکانیزه فروش) در مهر ماه سال 1398، که
-                با هدف شفاف سازی اقتصادی ایجاد شد، کلیه افراد مشمول این قانون می بایست در سامانه مودیان ثبت نام کنند و
-                بعد از عضویت در این سامانه اقدام به ارسال صورت حساب الکترونیکی برای فروش کالا و یا خدمات نمایند. ارسال
-                صورت حساب های الکترونیکی یا از طریق شرکت های معتمد مالیاتی و یا از طریق نرم افزار واسط سامانه مودیان
-                توسط اشخاص صورت می گیرد.</p>
-            <key-button appearance="raised">شروع ارسال صورت حساب الکترونیکی</key-button>
-        </div>
-    </div>
-</div>
-
 <div class="software-download__wrapper">
     <div class="software-download container">
         <span>~ نصب نرم افزار ~</span>
@@ -97,6 +79,24 @@
     </div>
 </div>
 
+<div class="why-us-section__wrapper">
+    <div class="why-us-section container">
+        <div class="why-us-section__column">
+            <img src="assets/images/home/home-pic-1.jpg" alt="home pic 2">
+        </div>
+        <div class="why-us-section__column">
+            <span>~ چرا کلید</span>
+            <h2>دلیل استفاده از نرم افزار واسط</h2>
+            <p>با توجه به تصویب قانون پایانه های فروشگاهی و سامانه مودیان (صندوق مکانیزه فروش) در مهر ماه سال 1398، که
+                با هدف شفاف سازی اقتصادی ایجاد شد، کلیه افراد مشمول این قانون می بایست در سامانه مودیان ثبت نام کنند و
+                بعد از عضویت در این سامانه اقدام به ارسال صورت حساب الکترونیکی برای فروش کالا و یا خدمات نمایند. ارسال
+                صورت حساب های الکترونیکی یا از طریق شرکت های معتمد مالیاتی و یا از طریق نرم افزار واسط سامانه مودیان
+                توسط اشخاص صورت می گیرد.</p>
+            <key-button appearance="raised">شروع ارسال صورت حساب الکترونیکی</key-button>
+        </div>
+    </div>
+</div>
+
 <div class="faq__wrapper">
     <div class="faq">
         <span>~ سوالات متداول ~</span>
@@ -116,5 +116,23 @@
     </div>
 </div>
 
+<div class="packages__wrapper">
+    <div class="packages">
+        <span>~ نرم افزار واسط کلید ~</span>
+        <h3 class="packages-title">تهیه بسته نرم افزاری و ارسال صورت حساب</h3>
+        <div class="packages-items">
+            <div class="packages-item" *ngFor="let package of packageItems">
+                <div class="package-item__title">{{ package.title }}</div>
+                <span class="package-item__price">{{ package.priceInRials | price }} ریال</span>
+                <ul class="package-item__options">
+                    <li class="package-item__option">ایجاد {{ package.numberOfCompanies }} شرکت</li>
+                    <li class="package-item__option">ارسال {{ package.numberOfInvoice }} فاکتور فروش به سامانه</li>
+                    <li class="package-item__option"> {{ package.numberOfCompanies }} </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
 <br><br><br><br><br><br>
-.
+-

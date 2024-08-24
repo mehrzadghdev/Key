@@ -44,6 +44,33 @@ export class MainComponent {
       در کلید هزینه اولیه و پشتیبانی سالیانه پرداخت نمی کنید.`
     }
   ]
+
+  public packageItems: any[] = [
+    {
+      title: 'بسته فروشگاهی',
+      priceInRials: 27_300_000,
+      numberOfCompanies: 1,
+      numberOfInvoice: 300,
+      canSeachProductCode: false,
+      createCustomCSR: false,
+    },
+    {
+      title: 'بسته شرکتی',
+      priceInRials: 56_980_000,
+      numberOfCompanies: 3,
+      numberOfInvoice: -1,
+      canSeachProductCode: true,
+      createCustomCSR: false,
+    },
+    {
+      title: 'بسته هلدینگ',
+      priceInRials: 12_950_000,
+      numberOfCompanies: 10,
+      numberOfInvoice: -1,
+      canSeachProductCode: true,
+      createCustomCSR: true,
+    }
+  ]
   constructor(private utility: UtilityService) { }
 
   @HostListener('window:beforeinstallprompt', ['$event'])
@@ -55,7 +82,7 @@ export class MainComponent {
   public onInstallPwa(): void {
     if (!this.promptEvent) {
       this.utility.message("نرم افزار در سیستم عامل فعلی نصب میباشد", "تایید");
-      return
+      return;
     }
 
     this.promptEvent.prompt();

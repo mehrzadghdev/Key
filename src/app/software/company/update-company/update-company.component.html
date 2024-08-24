@@ -91,15 +91,15 @@
                     </mat-error>
                 </mat-form-field>
                 <mat-form-field class="form-dialog-field" appearance="outline">
-                    <mat-label>کد اقتصادی</mat-label>
+                    <mat-label>کد ملی یا اقتصادی</mat-label>
                     <input matInput formControlName="economicCode" type="text" />
                     <mat-error
                         *ngIf="updateCompanyForm.get('economicCode')?.invalid && updateCompanyForm.get('economicCode')?.invalid">
                         <ng-container *ngIf="updateCompanyForm.get('economicCode')?.hasError('required')">
                             این فیلد الزامیست
                         </ng-container>
-                        <ng-container *ngIf="updateCompanyForm.get('economicCode')?.hasError('economicCode')">
-                            کد اقتصادی نامعتبر است
+                        <ng-container *ngIf="updateCompanyForm.get('economicCode')?.hasError('economicOrNationalCode')">
+                            کد ملی یا اقتصادی نامعتبر است
                         </ng-container>
                     </mat-error>
                 </mat-form-field>

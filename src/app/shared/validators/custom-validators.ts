@@ -28,93 +28,103 @@ export abstract class CustomValidators {
         if (formControl.value == null) {
             return null;
         }
-        const pattern = /^[a-zA-Z0-9\s]*$/;  
+        const pattern = /^[a-zA-Z0-9\s]*$/;
         const valid = pattern.test(formControl.value);
         return !valid ? { englishOnly: true } : null;
     }
-        
+
 
     public static nationalId(formControl: AbstractControl): ValidationErrors | null {
-    const value = formControl.value as number;
+        const value = formControl.value as number;
 
-    if (!value) return null;
+        if (!value) return null;
 
-    if (!value.toString().length) return null;
+        if (!value.toString().length) return null;
 
-    return value.toString().length !== 10 ? { nationalId: true } : null;
-}
+        return value.toString().length !== 10 ? { nationalId: true } : null;
+    }
 
     public static zipCode(formControl: AbstractControl): ValidationErrors | null {
-    const value = formControl.value as number;
+        const value = formControl.value as number;
 
-    if (!value) return null;
+        if (!value) return null;
 
-    if (!value.toString().length) return null;
+        if (!value.toString().length) return null;
 
-    return value.toString().length !== 10 ? { zipCode: true } : null;
-}
+        return value.toString().length !== 10 ? { zipCode: true } : null;
+    }
 
     public static invalid(formControl: AbstractControl): ValidationErrors {
-    return { invalid: true }
-}
+        return { invalid: true }
+    }
 
     public static phoneNumber(formControl: AbstractControl): ValidationErrors | null {
-    const value = formControl.value as number;
+        const value = formControl.value as number;
 
-    if (!value) return null;
+        if (!value) return null;
 
-    if (!value.toString().length) return null;
+        if (!value.toString().length) return null;
 
-    return value.toString().length !== 10 ? { phoneNumber: true } : null;
-}
+        return value.toString().length !== 10 ? { phoneNumber: true } : null;
+    }
 
     public static homePhoneNumber(formControl: AbstractControl): ValidationErrors | null {
-    const value = formControl.value as number;
+        const value = formControl.value as number;
 
-    if (!value) return null;
+        if (!value) return null;
 
-    if (!value.toString().length) return null;
+        if (!value.toString().length) return null;
 
-    return value.toString().length !== 8 ? { phoneNumber: true } : null;
-}
+        return value.toString().length !== 8 ? { phoneNumber: true } : null;
+    }
 
     public static economicCode(formControl: AbstractControl): ValidationErrors | null {
-    const value = formControl.value as number;
+        const value = formControl.value as number;
 
-    if (!value) return null;
+        if (!value) return null;
 
-    if (!value.toString().length) return null;
+        if (!value.toString().length) return null;
 
-    return value.toString().length !== 12 ? { economicCode: true } : null;
-}
+        return value.toString().length !== 12 ? { economicCode: true } : null;
+    }
+
+    public static economicOrNationalCode(formControl: AbstractControl): ValidationErrors | null {
+        const value = formControl.value as number;
+
+        if (!value) return null;
+
+        if (!value.toString().length) return null;
+
+        return value.toString().length < 10 ? { economicOrNationalCode: true } : null;
+    }
 
     public static taxIdentity(formControl: AbstractControl): ValidationErrors | null {
-    const value = formControl.value as number;
+        const value = formControl.value as number;
 
-    if (!value) return null;
+        if (!value) return null;
 
-    if (!value.toString().length) return null;
+        if (!value.toString().length) return null;
 
-    return value.toString().length > 6 ? { taxIdentity: true } : null;
-}
+        return value.toString().length > 6 ? { taxIdentity: true } : null;
+    }
 
     public static branchNo(formControl: AbstractControl): ValidationErrors | null {
-    const value = formControl.value as number;
+        const value = formControl.value as number;
 
-    if (!value) return null;
+        if (!value) return null;
 
-    if (!value.toString().length) return null;
+        if (!value.toString().length) return null;
 
-    return value.toString().length > 4 ? { economicCode: true } : null;
-}
+        return value.toString().length > 4 ? { economicCode: true } : null;
+    }
 
     public static code(formControl: AbstractControl): ValidationErrors | null {
-    const value = formControl.value as number;
+        const value = formControl.value as number;
 
-    if (!value) return null;
+        if (!value) return null;
 
-    if (!value.toString().length) return null;
+        if (!value.toString().length) return null;
 
-    return value.toString().length > 10 ? { code: true } : null;
-}
+        return value.toString().length > 10 ? { code: true } : null;
+    }
 }
