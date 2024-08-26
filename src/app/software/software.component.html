@@ -41,7 +41,7 @@
         <ul class="panel-sidebar__menu">
             <li class="menu-title">منو اصلی</li>
             <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('dashboard')}">
-                <a routerLink="/software">
+                <a routerLink="/software" tabindex="1">
                     <div class="accordion-header" matRipple>
                         <div class="accordion-title">
                             <div class="nav-item__icon">
@@ -53,7 +53,7 @@
                 </a>
             </li>
             <li class="menu-title">تعاریف پایه</li>
-            <li class="nav-item accordion" #companyAccordion (click)="toggleAccordion(companyAccordion)"
+            <li class="nav-item accordion" tabindex="1" #companyAccordion (keydown.enter)="toggleAccordion(companyAccordion)" (click)="toggleAccordion(companyAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? companyMenu : null"
                 [ngClass]="{'opened': activeRouteIs('company')}">
                 <div class="accordion-header" matRipple>
@@ -68,20 +68,20 @@
                     </div>
                 </div>
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
-                    <li matRipple class="unselectable" (click)="onAddCompany()">ایجاد شرکت جدید</li>
-                    <li matRipple class="unselectable" (click)="onReSelectCompany()">تغییر شرکت فعال</li>
-                    <li matRipple class="unselectable"><a routerLink="/software/company">لیست تمام شرکت ها</a></li>
-                    <li matRipple class="unselectable" (click)="onGenerateKeysDialog()">دریافت CSR</li>
+                    <li tabindex="1" matRipple class="unselectable" (keydown.enter)="onAddCompany()" (click)="onAddCompany()">ایجاد شرکت جدید</li>
+                    <li tabindex="1" matRipple class="unselectable" (keydown.enter)="onReSelectCompany()" (click)="onReSelectCompany()">تغییر شرکت فعال</li>
+                    <li matRipple class="unselectable"><a routerLink="/software/company" tabindex="1">لیست تمام شرکت ها</a></li>
+                    <li tabindex="1" matRipple class="unselectable" (keydown.enter)="onGenerateKeysDialog()" (click)="onGenerateKeysDialog()">دریافت CSR</li>
                 </ul>
             </li>
             <mat-menu #companyMenu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="onAddCompany()">ایجاد شرکت جدید</button>
-                <button mat-menu-item (click)="onReSelectCompany()">تغییر شرکت فعال</button>
-                <button mat-menu-item><a routerLink="/software/company">لیست تمام شرکت ها</a></button>
-                <button mat-menu-item (click)="onGenerateKeysDialog()">دریافت CSR</button>
+                <button mat-menu-item tabindex="1" (keydown.enter)="onAddCompany()" (click)="onAddCompany()">ایجاد شرکت جدید</button>
+                <button mat-menu-item tabindex="1" (keydown.enter)="onReSelectCompany()" (click)="onReSelectCompany()">تغییر شرکت فعال</button>
+                <button mat-menu-item><a routerLink="/software/company" tabindex="1">لیست تمام شرکت ها</a></button>
+                <button mat-menu-item tabindex="1" (keydown.enter)="onGenerateKeysDialog()" (click)="onGenerateKeysDialog()">دریافت CSR</button>
             </mat-menu>
 
-            <li class="nav-item accordion" #contactAccordion (click)="toggleAccordion(contactAccordion)"
+            <li class="nav-item accordion" #contactAccordion tabindex="1" (keydown.enter)="toggleAccordion(contactAccordion)" (click)="toggleAccordion(contactAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? contactMenu : null"
                 [ngClass]="{'opened': activeRouteIs('person')}">
                 <div class="accordion-header" matRipple>
@@ -96,16 +96,16 @@
                     </div>
                 </div>
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
-                    <li matRipple class="unselectable" (click)="onAddPerson()">ایجاد طرف حساب جدید</li>
-                    <li matRipple class="unselectable"><a routerLink="/software/person">لیست تمام طرف حساب ها</a></li>
+                    <li matRipple class="unselectable" tabindex="1" (keydown.enter)="onAddPerson()" (click)="onAddPerson()">ایجاد طرف حساب جدید</li>
+                    <li matRipple class="unselectable"><a routerLink="/software/person" tabindex="1">لیست تمام طرف حساب ها</a></li>
                 </ul>
             </li>
             <mat-menu #contactMenu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="onAddPerson()">ایجاد طرف حساب جدید</button>
-                <button mat-menu-item><a routerLink="/software/person">لیست تمام طرف حساب ها</a></button>
+                <button mat-menu-item tabindex="1" (keydown.enter)="onAddPerson()" (click)="onAddPerson()">ایجاد طرف حساب جدید</button>
+                <button mat-menu-item><a routerLink="/software/person" tabindex="1">لیست تمام طرف حساب ها</a></button>
             </mat-menu>
 
-            <li class="nav-item accordion" #productAccordion (click)="toggleAccordion(productAccordion)"
+            <li class="nav-item accordion" tabindex="1" #productAccordion (keydown.enter)="toggleAccordion(productAccordion)" (click)="toggleAccordion(productAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? productMenu : null"
                 [ngClass]="{'opened': activeRouteIs('product')}">
                 <div class="accordion-header" matRipple>
@@ -120,20 +120,22 @@
                     </div>
                 </div>
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
-                    <li matRipple class="unselectable" (click)="onAddProduct()">ایجاد کالای جدید</li>
-                    <li matRipple class="unselectable"><a routerLink="/software/product/unit">واحد کالا و خدمات</a></li>
-                    <li matRipple class="unselectable"><a routerLink="/software/product">لیست تمام کالا ها</a></li>
-                    <li matRipple class="unselectable" (click)="onSearchForProductId()">جستجو شناسه</li>
+                    <li matRipple class="unselectable" tabindex="1" (keydown.enter)="onAddProduct()" (click)="onAddProduct()">ایجاد کالای جدید</li>
+                    <li matRipple class="unselectable"><a routerLink="/software/product/unit" tabindex="1">واحد کالا و خدمات</a></li>
+                    <li matRipple class="unselectable"><a routerLink="/software/product" tabindex="1">لیست تمام کالا ها</a></li>
+                    <li matRipple class="unselectable" tabindex="1" (keydown.enter)="onSearchForProductId(ProductTypeEnum.Product)" (click)="onSearchForProductId(ProductTypeEnum.Product)">جستجو شناسه کالا</li>
+                    <li matRipple class="unselectable" tabindex="1" (keydown.enter)="onSearchForProductId(ProductTypeEnum.Service)" (click)="onSearchForProductId(ProductTypeEnum.Service)">جستجو شناسه خدمات</li>
                 </ul>
             </li>
             <mat-menu #productMenu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="onAddProduct()">ایجاد کالای جدید</button>
-                <button mat-menu-item><a routerLink="/software/product">لیست تمام کالا و خدمات</a></button>
-                <button mat-menu-item><a routerLink="/software/product/unit">واحد کالا و خدمات</a></button>
-                <button mat-menu-item (click)="onSearchForProductId()">جستجو شناسه</button>
+                <button mat-menu-item tabindex="1" (keydown.enter)="onAddProduct()" (click)="onAddProduct()">ایجاد کالای جدید</button>
+                <button mat-menu-item><a routerLink="/software/product" tabindex="1">لیست تمام کالا و خدمات</a></button>
+                <button mat-menu-item><a routerLink="/software/product/unit" tabindex="1">واحد کالا و خدمات</a></button>
+                <button mat-menu-item tabindex="1" (keydown.enter)="onSearchForProductId(ProductTypeEnum.Product)" (click)="onSearchForProductId(ProductTypeEnum.Product)">جستجو شناسه کالا</button>
+                <button mat-menu-item tabindex="1" (keydown.enter)="onSearchForProductId(ProductTypeEnum.Service)" (click)="onSearchForProductId(ProductTypeEnum.Service)">جستجو شناسه خدمات</button>
             </mat-menu>
 
-            <li class="nav-item accordion" #factorAccordion (click)="toggleAccordion(factorAccordion)"
+            <li class="nav-item accordion" tabindex="1" #factorAccordion (keydown.enter)="toggleAccordion(factorAccordion)" (click)="toggleAccordion(factorAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? factor : null" [ngClass]="{'opened': activeRouteIs('invoice')}">
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
@@ -147,16 +149,16 @@
                     </div>
                 </div>
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
-                    <li matRipple class="unselectable" (click)="onAddInvoice()">ایجاد فاکتور فروش جدید</li>
-                    <li matRipple class="unselectable"><a routerLink="/software/invoice">لیست فاکتور های فروش</a></li>
-                    <li matRipple class="unselectable"><a routerLink="/software/invoice/currency">لیست تمام ارز ها</a>
+                    <li matRipple class="unselectable" tabindex="1" (keydown.enter)="onAddInvoice()" (click)="onAddInvoice()">ایجاد فاکتور فروش جدید</li>
+                    <li matRipple class="unselectable"><a routerLink="/software/invoice" tabindex="1">لیست فاکتور های فروش</a></li>
+                    <li matRipple class="unselectable"><a routerLink="/software/invoice/currency" tabindex="1">لیست تمام ارز ها</a>
                     </li>
                 </ul>
             </li>
             <mat-menu #factor="matMenu" xPosition="before">
-                <button mat-menu-item (click)="onAddInvoice()">ایجاد فاکتور جدید</button>
-                <button mat-menu-item><a routerLink="/software/invoice">لیست فاکتور های فروش</a></button>
-                <button mat-menu-item><a routerLink="/software/invoice/currency">لیست تمام ارز ها</a></button>
+                <button mat-menu-item tabindex="1" (keydown.enter)="onAddInvoice()" (click)="onAddInvoice()">ایجاد فاکتور جدید</button>
+                <button mat-menu-item><a routerLink="/software/invoice" tabindex="1">لیست فاکتور های فروش</a></button>
+                <button mat-menu-item><a routerLink="/software/invoice/currency" tabindex="1">لیست تمام ارز ها</a></button>
             </mat-menu>
         </ul>
         <span class="software-version">
@@ -211,11 +213,11 @@
                     <div class="search-form-overlay" (click)="searchOpened = false"></div>
                 </form>
             </div>
-            <div class="theme-select" mat-ripple [mat-menu-trigger-for]="themeMenu">
+            <button class="theme-select" mat-ripple [mat-menu-trigger-for]="themeMenu" tabindex="1">
                 <ng-container *ngIf="currentTheme === 'default'">پیش فرض</ng-container>
                 <ng-container *ngIf="currentTheme === 'dark'">تاریک</ng-container>
                 <mat-icon>keyboard_arrow_down</mat-icon>
-            </div>
+            </button>
             <mat-menu #themeMenu="matMenu">
                 <button mat-menu-item (click)="changeTheme('default')">حالت پیشفرض</button>
                 <button mat-menu-item (click)="changeTheme('dark')">حالت تاریک</button>
@@ -226,9 +228,9 @@
                 <mat-icon *ngIf="!fullscreen" class="material-icons-outlined"
                     matTooltip="خروج از حالت تمام صفحه">fullscreen_exit</mat-icon>
             </key-button>
-            <a routerLink="/software/settings">
+            <a routerLink="/software/settings" tabindex="1">
                 <key-button content="icon" class="icon">
-                    <mat-icon matTooltip="تنظیمات کاربری" class="settings-icons">settings</mat-icon>
+                    <mat-icon tabindex="-1" matTooltip="تنظیمات کاربری" class="settings-icons">settings</mat-icon>
                 </key-button>
             </a>
         </div>

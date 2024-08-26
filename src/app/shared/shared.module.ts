@@ -18,6 +18,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { LottieModule } from 'ngx-lottie';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
@@ -41,6 +42,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ChartComponent } from './components/chart/chart.component';
 import { AlertComponent } from './components/alert/alert.component';
+import { HideTabsDirective } from './directives/hide-tabs.directive';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -62,7 +64,8 @@ export function playerFactory() {
     PercentageInputDirective,
     TiledTableDirective,
     ChartComponent,
-    AlertComponent
+    AlertComponent,
+    HideTabsDirective
   ],
   imports: [
     CommonModule,
@@ -72,6 +75,7 @@ export function playerFactory() {
     MatMenuModule,
     FormsModule,
     MatBadgeModule,
+    MatTabsModule,
     MatDialogModule,
     MatIconModule,
     MatTableModule,
@@ -127,6 +131,7 @@ export function playerFactory() {
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatRadioModule,
+    HideTabsDirective,
     DragDropModule,
   ] 
 })

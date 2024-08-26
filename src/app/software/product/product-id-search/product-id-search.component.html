@@ -14,14 +14,6 @@
                 این فیلد الزامیست
             </mat-error>
         </mat-form-field>
-        <div class="search-staff-type-chips" *ngIf="data.independent">
-            <span>جستجو برای: </span>
-
-            <div class="form-chip-group">
-                <div class="form-chip" matRipple [ngClass]="{'selected-chip': currentIndependentSearchMode === ProductTypeEnum.Product}" (click)="currentIndependentSearchMode = ProductTypeEnum.Product">کالا</div>
-                <div class="form-chip" matRipple [ngClass]="{'selected-chip': currentIndependentSearchMode === ProductTypeEnum.Service}" (click)="currentIndependentSearchMode = ProductTypeEnum.Service">خدمات</div>
-            </div>
-        </div>
         <div class="content-table">
             <div class="table">
                 <table *ngIf="!staffIdSearchLoading" mat-table [dataSource]="staffIdList">

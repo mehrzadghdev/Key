@@ -117,13 +117,15 @@
 </div>
 
 <div class="packages__wrapper">
-    <div class="packages">
-        <span>~ نرم افزار واسط کلید ~</span>
+    <div class="packages container">
+        <span class="title">~ نرم افزار واسط کلید ~</span>
         <h3 class="packages-title">تهیه بسته نرم افزاری و ارسال صورت حساب</h3>
         <div class="packages-items">
             <div class="packages-item" *ngFor="let package of packageItems">
                 <div class="package-item__title">{{ package.title }}</div>
-                <span class="package-item__price">{{ package.priceInRials | price }} ریال</span>
+                <div class="package-item__price-container">
+                    <span class="package-item__price">{{ package.priceInRials | price }} ریال</span>
+                </div>
                 <ul class="package-item__options">
                     <li class="package-item__option">ایجاد {{ package.numberOfCompanies }} شرکت</li>
                     <li class="package-item__option">ارسال {{ package.numberOfInvoice }} فاکتور فروش به سامانه</li>

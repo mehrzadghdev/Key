@@ -344,7 +344,7 @@
 }
 
 .packages__wrapper {
-    padding: 75px 0;
+    padding: 100px 0 150px 0;
     background-color: var(--border-color-light);
 }
 
@@ -353,7 +353,7 @@
     align-items: center;
     flex-direction: column;
     
-    span {
+    .title {
         font-size: 18px;
         font-weight: 500;
         display: flex;
@@ -373,38 +373,50 @@
     }
 
     .packages-items {
+        margin-top: 10px;
         width: 100%;
         align-items: center;
         display: flex;
-        flex-direction: column;
-        gap: 15px;
+        gap: 25px;
     }
 
     .packages-item {
         width: 70%;
         max-width: 700px;
-        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+        box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+        background-color: var(--base-color);
+        border-radius: 10px;
 
-        ::ng-deep {
-            .mat-expansion-panel {
-                border: 2px solid var(--primary-color);
-    
-                .mat-expansion-panel-header {
-                    height: auto !important;
-                    padding: 10px 30px !important;
-                    background-color: var(--border-color-light);
-    
-                    .mat-expansion-panel-header-title {
-                        margin-left: 20px !important;
-                        font-size: 16px !important;
-                        font-weight: 400 !important;
-                    }
-                }
+        .package-item__title {
+            background-color: var(--primary-color);
+            padding: 20px 20px 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px 10px 0 0;
+            color: var(--base-color);
+            font-size: 24px;
+            font-weight: 600;
+        }
 
-                .mat-expansion-panel-body {
-                    padding: 10px 30px !important;
-                }
-            }
+        .package-item__price-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .package-item__price {
+            padding: 15px 25px;
+            background-color: var(--border-color-light);
+            border-radius: 5px;
+            outline: 2px dashed var(--border-color-medium);
+            outline-offset: -5px;
+            margin-bottom: -20px;
+            transform: translateY(-25px);
+        }
+
+        .package-item__options {
+            padding: 20px;
         }
     }
 }

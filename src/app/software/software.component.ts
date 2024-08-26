@@ -26,6 +26,7 @@ import { CurrencyComponent } from './invoice/currency/currency.component';
 import { CompanyService } from './services/definitions/company.service';
 import { ProductIdSearchComponent } from './product/product-id-search/product-id-search.component';
 import { GenerateKeysComponent } from './company/generate-keys/generate-keys.component';
+import { ProductType } from './enums/product-type.enum';
 
 @Component({
   selector: 'app-software',
@@ -67,6 +68,10 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   public currentActivatedRouteLoaded: boolean = false;
   public searchQuery: string = "";
   public fullscreen: boolean = true;
+
+  public get ProductTypeEnum(): typeof ProductType {
+    return ProductType;
+  }
 
   constructor(
     private themeService: ThemeService,
@@ -315,11 +320,12 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     })
   }
 
-  public onSearchForProductId(): void {
+  public onSearchForProductId(productType: ProductType): void {
     this.dialog.openDialog(ProductIdSearchComponent, {
       width: '556px',
       data: {
-        independent: true
+        independent: true,
+        isService: productType === ProductType.Service ? true : false
       }
     })
   }

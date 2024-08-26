@@ -47,6 +47,10 @@ export class ListProductComponent {
     { display: 'خدمات', value: ProductType.Service },
   ]
 
+  public get ProductTypeEnum(): typeof ProductType {
+    return ProductType;
+  }
+  
   constructor(
     private authentication: AuthenticationService,
     private router: Router,
@@ -229,11 +233,12 @@ export class ListProductComponent {
   }
 
 
-  public onSearchProductId(): void {
+  public onSearchForProductId(productType: ProductType): void {
     this.dialog.openDialog(ProductIdSearchComponent, {
       width: '556px',
       data: {
-        independent: true
+        independent: true,
+        isService: productType === ProductType.Service ? true : false
       }
     })
   }

@@ -13,8 +13,11 @@
                 واحد کالا و خدمات  
             </key-button>
         </a>
-        <key-button (click)="onSearchProductId()" appearance="raised">
-            <mat-icon class="material-icons-outlined list-add-button-icon">search</mat-icon> جستجو شناسه  
+        <key-button (click)="onSearchForProductId(ProductTypeEnum.Product)" appearance="raised">
+            <mat-icon class="material-icons-outlined list-add-button-icon">search</mat-icon> جستجو شناسه کالا  
+        </key-button>
+        <key-button (click)="onSearchForProductId(ProductTypeEnum.Service)" appearance="raised">
+            <mat-icon class="material-icons-outlined list-add-button-icon">search</mat-icon> جستجو شناسه خدمات  
         </key-button>
         <key-button (click)="onAddProduct()">
             <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> کالا و خدمات جدید

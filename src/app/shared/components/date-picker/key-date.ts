@@ -70,8 +70,23 @@ export class KeyDatePicker {
         this.loadDatePicker();
     }
 
+    
     public subtractMonth(number: number = 1): void {
         this.momentDate.subtract(number, 'jMonth');
+        this.loadDatePicker();
+    }
+    
+    public setMonth(monthNumber: MonthNumber) {
+        this.momentDate.jMonth(monthNumber)
+    }
+    
+    public addYear(number: number = 1): void {
+        this.momentDate.add(number, 'jYear');
+        this.loadDatePicker();
+    }
+
+    public subtractYear(number: number = 1): void {
+        this.momentDate.subtract(number, 'jYear');
         this.loadDatePicker();
     }
 
@@ -119,3 +134,10 @@ export interface KeyDatePickerDay {
     weekdayNumber: number;
     today: boolean;
 }
+
+export enum DatePickerMode {
+    Calendar = 0,
+    SelectYear = 1
+}
+
+export type MonthNumber = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10| 11;

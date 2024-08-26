@@ -4,7 +4,7 @@
     }
 
     100% {
-        max-height: 125px;
+        max-height: 160px;
     }
 }
 
@@ -19,7 +19,7 @@
     height: 100vh;
     width: 60px;
     color: #ffffff;
-    transition: width .5s ease;
+    transition: width .3s ease;
     background-color: var(--sidebar-background);
     z-index: 1000;
 
@@ -132,7 +132,7 @@
 
                 li {
                     padding: 6px 49px 6px 24px;
-                    transition: all .3s ease;
+                    transition: all .1s ease;
                     color: #A4B0BE;
                     font-size: 13px;
                     cursor: pointer;
@@ -211,7 +211,7 @@
                     height: 18px;
                     color: #A4B0BE;
                     transform: rotate(-90deg);
-                    transition: all .3s ease;
+                    transition: all .1s ease;
                 }
             }
         }
@@ -292,7 +292,7 @@
 }
 
 .panel-application-not-enabled {
-    transition: all .5s ease;
+    transition: all .1s ease;
     padding: 4px 10px;
     display: flex;
     justify-content: start;
@@ -329,7 +329,7 @@
 .main-content {
     margin-right: 60px;
     width: calc(100% - 60px);
-    transition: all .5s ease;
+    transition: all .3s ease;
 
     .panel-header {
         position: sticky;
@@ -482,7 +482,7 @@
                     border: none;
                     outline: none;
                     color: var(--text-secondary-color);
-                    transition: width .3s ease;
+                    transition: width .1s ease;
                     width: 200px;
                     
                     &.search-opened {
@@ -627,14 +627,14 @@
             padding: 2px;
             align-items: center;
             gap: 5px;
-            transition: all .3s ease;
+            transition: all .1s ease;
 
             .bottom-menu-icon {
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 aspect-ratio: 1 / 1;
-                transition: all .3s ease;
+                transition: all .1s ease;
 
                 img {
                     width: 28px;
@@ -645,7 +645,7 @@
             span {
                 font-size: 10px;
                 text-align: center;
-                transition: all .3s ease;
+                transition: all .1s ease;
                 color: var(--text-tertiary-color);
             }
 

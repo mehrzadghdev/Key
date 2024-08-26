@@ -10,31 +10,57 @@
     <mat-menu #menu="matMenu" class="date-picker__wrapper" xPosition="before" yPosition="below">
         <div class="date-picker__menu">
             <div (click)="$event.stopPropagation()" class="date-picker__header">
-                <span (click)="$event.stopPropagation()" (click)="keyDate.subtractMonth()">
+                <span *ngIf="datePickerMode === DatePickerModeEnum.Calendar" (click)="$event.stopPropagation()" (click)="keyDate.subtractMonth()">
                     <key-button content="icon">
                         <mat-icon class="icon-white date-picker__navigation-icon">keyboard_arrow_right</mat-icon>
                     </key-button>
                 </span>
-                <span class="date-picker__date-title" (click)="$event.stopPropagation()">{{ keyDate.monthName }} {{ keyDate.year | farsiNumber }}</span>
-                <span (click)="$event.stopPropagation()" (click)="keyDate.addMonth()">
+                <span *ngIf="datePickerMode === DatePickerModeEnum.SelectYear" (click)="$event.stopPropagation()" (click)="keyDate.subtractYear()">
+                    <key-button content="icon">
+                        <mat-icon class="icon-white date-picker__navigation-icon">keyboard_double_arrow_right</mat-icon>
+                    </key-button>
+                </span>
+                <span class="date-picker__date-title" mat-ripple (click)="$event.stopPropagation(); toggleDatePickerTabs()">
+                    <ng-container *ngIf="datePickerMode === DatePickerModeEnum.Calendar">
+                        {{ keyDate.monthName }} 
+                    </ng-container>
+                    {{ keyDate.year | farsiNumber }}
+                </span>
+                <span *ngIf="datePickerMode === DatePickerModeEnum.SelectYear" (click)="$event.stopPropagation()" (click)="keyDate.addYear()">
+                    <key-button content="icon">
+                        <mat-icon class="icon-white date-picker__navigation-icon">keyboard_double_arrow_left</mat-icon>
+                    </key-button>
+                </span>
+                <span *ngIf="datePickerMode === DatePickerModeEnum.Calendar" (click)="$event.stopPropagation()" (click)="keyDate.addMonth()">
                     <key-button content="icon">
                         <mat-icon class="icon-white date-picker__navigation-icon">keyboard_arrow_left</mat-icon>
                     </key-button>
                 </span>
             </div>
-            <div class="date-picker__main">
-                <div (click)="$event.stopPropagation()" class="date-picker__weekday-item"
-                    *ngFor="let weekday of keyDate.weekdayList; let i = index" [ngClass]="{'holiday': i === 6}">{{ weekday | slice: 0 : 1 }}</div>
-
-                <div (click)="$event.stopPropagation()"
-                    *ngFor="let emptyDate of [].constructor(this.keyDate.monthStartWeekDay); let i = index"></div>
-
-                <div mat-ripple class="date-picker__day-item" [ngClass]="{'today': date.today, 'holiday': date.weekdayNumber === 6}" (click)="onDateSelected(date.day)" *ngFor="let date of keyDate.datePicker">
-                    {{date.day| farsiNumber}}
-                </div>
+            <div class="date-picker-tabs">
+                <mat-tab-group #datePickerTabs keyHideTabsTitle>
+                    <mat-tab label="تقویم">
+                        <div class="date-picker__main">
+                            <div (click)="$event.stopPropagation()" class="date-picker__weekday-item"
+                                *ngFor="let weekday of keyDate.weekdayList; let i = index" [ngClass]="{'holiday': i === 6}">{{ weekday | slice: 0 : 1 }}</div>
+            
+                            <div (click)="$event.stopPropagation()"
+                                *ngFor="let emptyDate of [].constructor(this.keyDate.monthStartWeekDay); let i = index"></div>
+            
+                            <div mat-ripple class="date-picker__day-item" [ngClass]="{'today': date.today, 'holiday': date.weekdayNumber === 6}" (click)="onDateSelected(date.day)" *ngFor="let date of keyDate.datePicker">
+                                {{date.day| farsiNumber}}
+                            </div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="تغییر سال">
+                        <div class="date-picker__months-main" (click)="$event.stopPropagation()">
+                            <div class="date-picker__month-item" (click)="onSelectDatePickerMonth(i)" [ngClass]="{'current-month': keyDate.month === i}" mat-ripple *ngFor="let month of keyDate.monthList; let i = index">{{ month }}</div>
+                        </div>
+                    </mat-tab>
+                </mat-tab-group>
             </div>
             <div class="date-picker__actions" (click)="$event.stopPropagation()">
-                <span mat-ripple (click)="keyDate.goToday()">برو به امروز</span>
+                <span mat-ripple (click)="onGoToday()">برو به امروز</span>
             </div> 
         </div>
     </mat-menu>

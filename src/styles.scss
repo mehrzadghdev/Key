@@ -84,6 +84,15 @@ body {
     box-sizing: border-box;
     font-family: Vazirmatn, sans-serif !important;
     letter-spacing: 1 !important;
+    transition: border .1s ease;
+
+    &:focus-visible {
+        outline-style: none;
+        box-shadow: none;
+        border-color: transparent;
+        border: 2px dashed color-mix(in srgb, var(--primary-color), var(--base-color) 20%);
+        border-radius: 5px;
+    }
 }
 
 a:any-link {

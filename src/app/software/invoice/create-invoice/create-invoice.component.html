@@ -75,8 +75,6 @@
                         این فیلد الزامیست
                     </mat-error>
                 </mat-form-field> -->
-            </div>
-            <div class="invoice-section-grid">
                 <mat-form-field class="invoice-section-grid-field" appearance="outline">
                     <mat-label>طرف حساب</mat-label>
                     <mat-select formControlName="personCode" name="personCode" (opened)="personCodeSearch.focus()">
@@ -217,44 +215,6 @@
                     </mat-form-field>
                     <key-date-picker (dateSelected)="invoiceForm.get('invoiceDate')?.patchValue($event)">تاریخ
                         فاکتور</key-date-picker>
-                    <div class="radio-form-field">
-                        <label>نوع فاکتور: </label>
-                        <mat-radio-group formControlName="invoiceType">
-                            <mat-radio-button *ngFor="let invoiceType of invoiceTypeList"
-                                [value]="invoiceType.value">{{invoiceType.display}}</mat-radio-button>
-                        </mat-radio-group>
-                    </div>
-                    <mat-form-field class="invoice-section-grid-field" appearance="outline">
-                        <mat-label>فاکتور مرجع</mat-label>
-                        <mat-select formControlName="referenceInvoiceCode" name="referenceInvoiceCode"
-                            (opened)="invoiceCodeSearchMobile.focus()">
-                            <input class="mat-select-search" type="text" formControlName="referenceInvoiceCodeSearch"
-                                #invoiceCodeSearchMobile placeholder="جستجو کردن...">
-                            <mat-option *ngFor="let referenceInvoice of filteredReferenceInvoiceList"
-                                [value]="referenceInvoice.invoiceCode">
-                                <div class="mat-option-tabled">
-                                    <span>کد فاکتور: </span>
-                                    {{ referenceInvoice.invoiceCode }}
-                                </div>
-                                <div class="mat-option-tabled">
-                                    <span>طرف حساب: </span>
-                                    {{referenceInvoice.personName}}
-                                </div>
-                                <div class="mat-option-tabled">
-                                    <span>تاریخ: </span>
-                                    {{ referenceInvoice.invoiceDate | jdate }}
-                                </div>
-                            </mat-option>
-                            <mat-option [value]="null" [disabled]="true">
-                                <span *ngIf="filteredReferenceInvoiceList.length < 1">موردی برای نمایش پیدا نشد</span>
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="invoiceForm.get('referenceInvoiceCode')?.invalid && validationLastCheck">
-                            این فیلد الزامیست
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-                <div class="invoice-section-grid">
                     <mat-form-field class="invoice-section-grid-field" appearance="outline">
                         <mat-label>طرف حساب</mat-label>
                         <mat-select formControlName="personCode" name="personCode"
