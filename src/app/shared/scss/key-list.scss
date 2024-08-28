@@ -42,6 +42,10 @@
         border-radius: 3px;
         border: 1px solid var(--border-color-medium);
 
+        &:focus {
+            border: 1px solid var(--primary-color);
+        }
+        
         .tiled-table-toggle-icon {
             width: 20px;
             height: 20px;
