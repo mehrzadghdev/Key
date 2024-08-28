@@ -38,9 +38,9 @@
         align-items: center;
         justify-content: center;
         background-color: var(--base-color);
-        box-shadow: 0 -3px 31px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.02);
+        box-shadow: var(--light-shadow);
         border-radius: 3px;
-        border: 1px solid var(--border-color-light);
+        border: 1px solid var(--border-color-medium);
 
         .tiled-table-toggle-icon {
             width: 20px;
@@ -48,6 +48,19 @@
             font-size: 20px;
             margin-inline: -4px;
         }
+    }
+
+    .list-more-options {
+        cursor: pointer;
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--base-color);
+        box-shadow: var(--light-shadow);
+        border-radius: 3px;
+        border: 1px solid var(--border-color-medium);  
     }
 
     .buttons-seperator {
@@ -80,11 +93,11 @@
 
 .content-table {
     margin-top: 17px;
-    box-shadow: 0 -3px 31px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.02); 
+    box-shadow: var(--light-shadow); 
     overflow-x: auto;
     background-color: var(--base-color); 
     border-radius: 3px;
-    border: 1px solid var(--border-color-light); 
+    border: 1px solid var(--border-color-medium); 
 
     .table-mobile-sort {
         display: flex;

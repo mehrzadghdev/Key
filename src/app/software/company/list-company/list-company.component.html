@@ -8,21 +8,29 @@
         </span>
     </div>
     <div class="content-topbar-actions">
-        <key-button appearance="raised" (click)="onGenerateKeysDialog()">
+        <!-- <key-button appearance="raised" (click)="onGenerateKeysDialog()">
             <mat-icon class="material-icons-outlined list-add-button-icon">key</mat-icon>
             دریافت CSR
         </key-button>
         <key-button appearance="raised" (click)="onReSelectCompany()">
             تغییر شرکت فعال
-        </key-button>
+        </key-button> -->
         <key-button (click)="onAddCompany()">
             <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> شرکت جدید
         </key-button>
         <div class="buttons-seperator"></div>
-        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="!tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
+        <!-- <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="!tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
             <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
             <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
+        </button> -->
+        <button mat-ripple class="list-more-options" type="button" [matMenuTriggerFor]="moreOptionsMenu">
+            <mat-icon class="material-icons-outlined list-more-options-icon icon-primary">more_vert_outlined</mat-icon>  
         </button>
+        <mat-menu #moreOptionsMenu="matMenu">
+            <button mat-menu-item>یک</button>
+            <button mat-menu-item>دو</button>
+            <button mat-menu-item>سه</button>
+        </mat-menu>
     </div>
 </div>
 
