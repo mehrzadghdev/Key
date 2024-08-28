@@ -29,6 +29,14 @@ export class CreateProductComponent implements OnInit {
     { display: 'کالا', value: ProductType.Product },
     { display: 'خدمات', value: ProductType.Service },
   ]
+
+  public get productTypeTitle(): string {
+    if (this.addProductForm.get("productType")?.value === ProductType.Service) {
+      return 'خدمات';
+    }
+
+    return 'کالا';
+  }
   
   constructor(
     private dialgoRef: MatDialogRef<CreateProductComponent>, 
@@ -63,6 +71,20 @@ export class CreateProductComponent implements OnInit {
 
     this.productService.getNewProductCode({}).subscribe(res => {
       this.addProductForm.get('code')?.patchValue(res.newCode);
+    })
+
+    this.addProductForm.get("productType")?.valueChanges.subscribe(value => {
+      if (value === ProductType.Product) {
+        this.addProductForm.get("unitCode")?.setValidators(Validators.required);
+        this.addProductForm.get("unitCode")?.updateValueAndValidity();
+        this.addProductForm.get("unitCode")?.enable();
+      }
+      if (value === ProductType.Service) {
+        this.addProductForm.get("unitCode")?.patchValue(null);
+        this.addProductForm.get("unitCode")?.clearValidators();
+        this.addProductForm.get("unitCode")?.updateValueAndValidity();
+        this.addProductForm.get("unitCode")?.disable();
+      }
     })
 
     this.addProductForm.get("unitCodeSearch")?.valueChanges.subscribe(value => {

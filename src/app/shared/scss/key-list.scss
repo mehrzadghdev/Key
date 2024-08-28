@@ -60,7 +60,17 @@
         background-color: var(--base-color);
         box-shadow: var(--light-shadow);
         border-radius: 3px;
-        border: 1px solid var(--border-color-medium);  
+        border: 1px solid var(--border-color-medium);
+
+        &:focus {
+            border: 1px solid var(--primary-color);
+        }
+        
+        .list-more-options-icon {
+            width: 22px;
+            height: 22px;
+            font-size: 22px;
+        }
     }
 
     .buttons-seperator {

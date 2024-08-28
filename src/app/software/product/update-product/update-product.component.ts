@@ -30,11 +30,19 @@ export class UpdateProductComponent {
     { display: 'کالا', value: ProductType.Product },
     { display: 'خدمات', value: ProductType.Service },
   ]
-  
+
+  public get productTypeTitle(): string {
+    if (this.updateProductForm.get("productType")?.value === ProductType.Service) {
+      return 'خدمات';
+    }
+
+    return 'کالا';
+  }
+
   constructor(
-    private dialgoRef: MatDialogRef<UpdateProductComponent>, 
-    private productService: ProductService, 
-    private fb: FormBuilder, 
+    private dialgoRef: MatDialogRef<UpdateProductComponent>,
+    private productService: ProductService,
+    private fb: FormBuilder,
     private utility: UtilityService,
     private authentication: AuthenticationService,
     private dialogService: DialogService,
@@ -67,7 +75,7 @@ export class UpdateProductComponent {
     this.updateProductForm.get("code")?.disable();
     this.productService.getProduct({ code: this.data.code }).subscribe(res => {
       this.updateProductForm.patchValue({
-        code: this.data.code ?? '', 
+        code: this.data.code ?? '',
         productCode: res[0].productCode,
         productType: res[0].productType,
         name: res[0].name,
@@ -75,12 +83,38 @@ export class UpdateProductComponent {
         taxPercent: res[0].taxPercent,
         unitCode: res[0].unitCode,
         otherLegalFunds: res[0].otherLegalFunds,
-        otherLegalFundsPercent:  res[0].otherLegalFundsPercent,
-        otherTax:  res[0].otherTax,
-        otherTaxPercent:  res[0].otherLegalFundsPercent
+        otherLegalFundsPercent: res[0].otherLegalFundsPercent,
+        otherTax: res[0].otherTax,
+        otherTaxPercent: res[0].otherLegalFundsPercent
       })
 
+      if (res[0].productType === ProductType.Product) {
+        this.updateProductForm.get("unitCode")?.setValidators(Validators.required);
+        this.updateProductForm.get("unitCode")?.updateValueAndValidity();
+        this.updateProductForm.get("unitCode")?.enable();
+      }
+      if (res[0].productType === ProductType.Service) {
+        this.updateProductForm.get("unitCode")?.patchValue(null);
+        this.updateProductForm.get("unitCode")?.clearValidators();
+        this.updateProductForm.get("unitCode")?.updateValueAndValidity();
+        this.updateProductForm.get("unitCode")?.disable();
+      }
+
       this.getProductLoading = false;
+    })
+
+    this.updateProductForm.get("productType")?.valueChanges.subscribe(value => {
+      if (value === ProductType.Product) {
+        this.updateProductForm.get("unitCode")?.setValidators(Validators.required);
+        this.updateProductForm.get("unitCode")?.updateValueAndValidity();
+        this.updateProductForm.get("unitCode")?.enable();
+      }
+      if (value === ProductType.Service) {
+        this.updateProductForm.get("unitCode")?.patchValue(null);
+        this.updateProductForm.get("unitCode")?.clearValidators();
+        this.updateProductForm.get("unitCode")?.updateValueAndValidity();
+        this.updateProductForm.get("unitCode")?.disable();
+      }
     })
 
     this.updateProductForm.get("unitCodeSearch")?.valueChanges.subscribe(value => {

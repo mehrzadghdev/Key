@@ -26,17 +26,29 @@ export class UpdatePersonComponent implements OnInit {
     { display: 'اتباع غیر ایرانی', value: PersonType.NonIranianNotionals },
     { display: 'مصرف کننده نهایی', value: PersonType.FinalConsumer },
   ]
-  
+
+  public get nationalTitle(): string {
+    if (this.updatePersonForm.get("personType")?.value === PersonType.NonIranianNotionals) {
+      return 'اطباع'
+    }
+
+    return 'ملی'
+  }
+
+  public get PersonTypeEnum(): typeof PersonType {
+    return PersonType;
+  }
+
   constructor(
-    private dialgoRef: MatDialogRef<UpdatePersonComponent>, 
-    private personService: PersonService, 
-    private fb: FormBuilder, 
+    private dialgoRef: MatDialogRef<UpdatePersonComponent>,
+    private personService: PersonService,
+    private fb: FormBuilder,
     private utility: UtilityService,
     private authentication: AuthenticationService,
     @Inject(MAT_DIALOG_DATA) private data: { code: number }
   ) {
     this.updatePersonForm = fb.group({
-      code: [null, [Validators.required, CustomValidators.code]], 
+      code: [null, [Validators.required, CustomValidators.code]],
       personType: [1, [Validators.required]],
       personName: ["", [Validators.required]],
       nationalId: [null, [Validators.required, CustomValidators.nationalId]],
@@ -52,7 +64,7 @@ export class UpdatePersonComponent implements OnInit {
     this.updatePersonForm.get("code")?.disable();
     this.personService.getPerson({ code: this.data.code }).subscribe(res => {
       this.updatePersonForm.patchValue({
-        code: this.data.code ?? '', 
+        code: this.data.code ?? '',
         personType: res[0].personType ?? '',
         personName: res[0].personName ?? '',
         nationalId: res[0].nationalId ?? '',
@@ -68,11 +80,25 @@ export class UpdatePersonComponent implements OnInit {
   }
 
   public updateValidityOfForm(personType: PersonType) {
-    if (personType === PersonType.Genuine) {
+    if (personType === PersonType.FinalConsumer) {
+      this.updatePersonForm.get("economicCode")?.clearValidators();
+      this.updatePersonForm.get("nationalId")?.clearValidators();
+      this.updatePersonForm.get("economicCode")?.updateValueAndValidity();
+      this.updatePersonForm.get("nationalId")?.updateValueAndValidity();
+    }
+    if (personType === PersonType.Genuine || personType === PersonType.NonIranianNotionals) {
+      this.updatePersonForm.get("economicCode")?.setValidators([Validators.required, CustomValidators.economicCode]);
+      this.updatePersonForm.get("nationalId")?.setValidators([Validators.required, CustomValidators.nationalId]);
+      this.updatePersonForm.get("economicCode")?.updateValueAndValidity();
+      this.updatePersonForm.get("nationalId")?.updateValueAndValidity();
       this.updatePersonForm.get("economicCode")?.patchValue(111111111111);
       this.updatePersonForm.get("nationalId")?.patchValue(null);
     }
     else {
+      this.updatePersonForm.get("economicCode")?.setValidators([Validators.required, CustomValidators.economicCode]);
+      this.updatePersonForm.get("nationalId")?.setValidators([Validators.required, CustomValidators.nationalId]);
+      this.updatePersonForm.get("economicCode")?.updateValueAndValidity();
+      this.updatePersonForm.get("nationalId")?.updateValueAndValidity();
       this.updatePersonForm.get("economicCode")?.patchValue(null);
       this.updatePersonForm.get("nationalId")?.patchValue(1111111111);
     }

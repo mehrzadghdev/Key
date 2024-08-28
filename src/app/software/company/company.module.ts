@@ -9,6 +9,7 @@ import { SelectCompanyComponent } from './select-company/select-company.componen
 import { UpdateCompanyComponent } from './update-company/update-company.component';
 import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { GenerateKeysComponent } from './generate-keys/generate-keys.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { GenerateKeysComponent } from './generate-keys/generate-keys.component';
   imports: [
     CommonModule,
     CompanyRoutingModule,
+    FormsModule,
     SharedModule,
     MatProgressBarModule
   ]

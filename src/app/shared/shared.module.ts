@@ -127,6 +127,7 @@ export function playerFactory() {
     MatInputModule,
     MatFormFieldModule,
     MatSortModule,
+    FormsModule,
     MatCheckboxModule,
     MatTooltipModule,
     MatProgressSpinnerModule,

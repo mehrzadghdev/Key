@@ -252,9 +252,9 @@
     align-items: center;
     justify-content: center;
     background-color: var(--base-color);
-    box-shadow: 0 -3px 31px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.02);
+    box-shadow: var(--shadow-light);
     border-radius: 3px;
-    border: 1px solid var(--border-color-lightx);
+    border: 1px solid var(--border-color-medium);
 
     .tiled-table-toggle-icon {
         width: 20px;

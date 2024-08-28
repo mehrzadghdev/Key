@@ -1003,3 +1003,21 @@ textarea {
         }
     }
 }
+
+.menu-icon-container {
+    display: flex !important;
+    justify-content: start !important;
+    gap: 7px !important;
+    align-items: center !important;
+
+    .mat-icon {
+        width: 18px !important;
+        height: 18px !important;
+        font-size: 18px !important;
+        margin: 0 !important;
+    }
+}
+
+.mat-menu-item-submenu-trigger::after {
+    border-style: unset !important;
+}

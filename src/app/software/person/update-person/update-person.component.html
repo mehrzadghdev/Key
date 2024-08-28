@@ -20,9 +20,9 @@
                     این فیلد الزامیست
                 </mat-error>
             </mat-form-field>
-            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value === 1" class="form-dialog-field" appearance="outline">
-                <mat-label>کد ملی</mat-label>
-                <input type="number" matInput formControlName="nationalId">
+            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value === PersonTypeEnum.Genuine || updatePersonForm.get('personType')?.value === PersonTypeEnum.NonIranianNotionals" class="form-dialog-field" appearance="outline">
+                <mat-label>کد {{ nationalTitle }}</mat-label>
+                <input type="text" mask="0000000000" inputmode="numeric" matInput formControlName="nationalId">
                 <mat-error *ngIf="updatePersonForm.get('nationalId')?.invalid && validationLastCheck">
                     <ng-container *ngIf="updatePersonForm.get('nationalId')?.hasError('required')">
                         این فیلد الزامیست
@@ -32,9 +32,9 @@
                     </ng-container>
                 </mat-error>
             </mat-form-field>
-            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value !== 1" class="form-dialog-field" appearance="outline">
+            <mat-form-field *ngIf="updatePersonForm.get('personType')?.value !== PersonTypeEnum.Genuine && updatePersonForm.get('personType')?.value !== PersonTypeEnum.NonIranianNotionals" class="form-dialog-field" appearance="outline">
                 <mat-label>کد اقتصادی</mat-label>
-                <input type="type" matInput formControlName="economicCode">
+                <input type="text" mask="0000000000000" inputmode="numeric" matInput formControlName="economicCode">
                 <mat-error *ngIf="updatePersonForm.get('economicCode')?.invalid && validationLastCheck">
                     <ng-container *ngIf="updatePersonForm.get('economicCode')?.hasError('required')">
                         این فیلد الزامیست

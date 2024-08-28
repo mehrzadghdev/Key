@@ -35,7 +35,7 @@ export abstract class CustomValidators {
 
 
     public static nationalId(formControl: AbstractControl): ValidationErrors | null {
-        const value = formControl.value as number;
+        const value = formControl.value;
 
         if (!value) return null;
 
@@ -45,7 +45,7 @@ export abstract class CustomValidators {
     }
 
     public static zipCode(formControl: AbstractControl): ValidationErrors | null {
-        const value = formControl.value as number;
+        const value = formControl.value;
 
         if (!value) return null;
 
@@ -59,7 +59,7 @@ export abstract class CustomValidators {
     }
 
     public static phoneNumber(formControl: AbstractControl): ValidationErrors | null {
-        const value = formControl.value as number;
+        const value = formControl.value;
 
         if (!value) return null;
 
@@ -69,17 +69,17 @@ export abstract class CustomValidators {
     }
 
     public static homePhoneNumber(formControl: AbstractControl): ValidationErrors | null {
-        const value = formControl.value as number;
+        const value = formControl.value;
 
         if (!value) return null;
 
         if (!value.toString().length) return null;
 
-        return value.toString().length !== 8 ? { phoneNumber: true } : null;
+        return value.toString().length < 5 ? { phoneNumber: true } : null;
     }
 
     public static economicCode(formControl: AbstractControl): ValidationErrors | null {
-        const value = formControl.value as number;
+        const value = formControl.value;
 
         if (!value) return null;
 
@@ -89,7 +89,7 @@ export abstract class CustomValidators {
     }
 
     public static economicOrNationalCode(formControl: AbstractControl): ValidationErrors | null {
-        const value = formControl.value as number;
+        const value = formControl.value;
 
         if (!value) return null;
 
@@ -99,7 +99,7 @@ export abstract class CustomValidators {
     }
 
     public static taxIdentity(formControl: AbstractControl): ValidationErrors | null {
-        const value = formControl.value as number;
+        const value = formControl.value;
 
         if (!value) return null;
 
@@ -109,7 +109,7 @@ export abstract class CustomValidators {
     }
 
     public static branchNo(formControl: AbstractControl): ValidationErrors | null {
-        const value = formControl.value as number;
+        const value = formControl.value;
 
         if (!value) return null;
 
@@ -119,7 +119,7 @@ export abstract class CustomValidators {
     }
 
     public static code(formControl: AbstractControl): ValidationErrors | null {
-        const value = formControl.value as number;
+        const value = formControl.value;
 
         if (!value) return null;
 

@@ -8,28 +8,44 @@
         </span>
     </div>
     <div class="content-topbar-actions">
-        <!-- <key-button appearance="raised" (click)="onGenerateKeysDialog()">
-            <mat-icon class="material-icons-outlined list-add-button-icon">key</mat-icon>
-            دریافت CSR
-        </key-button>
-        <key-button appearance="raised" (click)="onReSelectCompany()">
-            تغییر شرکت فعال
-        </key-button> -->
         <key-button (click)="onAddCompany()">
             <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> شرکت جدید
         </key-button>
         <div class="buttons-seperator"></div>
-        <!-- <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="!tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
-            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
-            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
-        </button> -->
-        <button mat-ripple class="list-more-options" type="button" [matMenuTriggerFor]="moreOptionsMenu">
+        <button mat-ripple class="list-more-options" type="button" tabindex="1" [matMenuTriggerFor]="moreOptionsMenu">
             <mat-icon class="material-icons-outlined list-more-options-icon icon-primary">more_vert_outlined</mat-icon>  
         </button>
         <mat-menu #moreOptionsMenu="matMenu">
-            <button mat-menu-item>یک</button>
-            <button mat-menu-item>دو</button>
-            <button mat-menu-item>سه</button>
+            <button mat-menu-item [matMenuTriggerFor]="tiledTableToggleMenu">
+                <div class="menu-icon-container">
+                    <mat-icon class="material-icons-outlined icon-primary">format_list_bulleted</mat-icon>
+                    نمایش لیست
+                </div>
+            </button>
+            <mat-menu #tiledTableToggleMenu="matMenu">
+                <mat-radio-group [(ngModel)]="tailedTable">
+                    <button mat-menu-item (click)="tailedTable = false">
+                        <mat-radio-button [value]="false" [checked]="!tailedTable">حالت جدول</mat-radio-button>
+                    </button>
+                    <button mat-menu-item (click)="tailedTable = true">
+                        <mat-radio-button [value]="true" [checked]="tailedTable">حالت کاشی</mat-radio-button>
+                    </button>
+                </mat-radio-group>
+            </mat-menu>
+
+            <button mat-menu-item (click)="onReSelectCompany()">
+                <div class="menu-icon-container">
+                    <mat-icon class="material-icons-outlined icon-primary">business</mat-icon>
+                    تغییر شرکت فعال
+                </div>
+            </button>
+
+            <button mat-menu-item (click)="onGenerateKeysDialog()">
+                <div class="menu-icon-container">
+                    <mat-icon class="material-icons-outlined icon-primary">key</mat-icon>
+                    دریافت CSR
+                </div>
+            </button>
         </mat-menu>
     </div>
 </div>

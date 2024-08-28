@@ -8,25 +8,53 @@
         </span>
     </div>
     <div class="content-topbar-actions">
-        <a routerLink="/software/product/unit">
-            <key-button appearance="raised">
-                واحد کالا و خدمات  
-            </key-button>
-        </a>
-        <key-button (click)="onSearchForProductId(ProductTypeEnum.Product)" appearance="raised">
-            <mat-icon class="material-icons-outlined list-add-button-icon">search</mat-icon> جستجو شناسه کالا  
-        </key-button>
-        <key-button (click)="onSearchForProductId(ProductTypeEnum.Service)" appearance="raised">
-            <mat-icon class="material-icons-outlined list-add-button-icon">search</mat-icon> جستجو شناسه خدمات  
-        </key-button>
         <key-button (click)="onAddProduct()">
             <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> کالا و خدمات جدید
         </key-button>
         <div class="buttons-seperator"></div>
-        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="!tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
-            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
-            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
+        <button mat-ripple class="list-more-options" type="button" tabindex="1" [matMenuTriggerFor]="moreOptionsMenu">
+            <mat-icon class="material-icons-outlined list-more-options-icon icon-primary">more_vert_outlined</mat-icon>  
         </button>
+        <mat-menu #moreOptionsMenu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="tiledTableToggleMenu">
+                <div class="menu-icon-container">
+                    <mat-icon class="material-icons-outlined icon-primary">format_list_bulleted</mat-icon>
+                    نمایش لیست
+                </div>
+            </button>
+            <mat-menu #tiledTableToggleMenu="matMenu">
+                <mat-radio-group [(ngModel)]="tailedTable">
+                    <button mat-menu-item (click)="tailedTable = false">
+                        <mat-radio-button [value]="false" [checked]="!tailedTable">حالت جدول</mat-radio-button>
+                    </button>
+                    <button mat-menu-item (click)="tailedTable = true">
+                        <mat-radio-button [value]="true" [checked]="tailedTable">حالت کاشی</mat-radio-button>
+                    </button>
+                </mat-radio-group>
+            </mat-menu>
+
+            <a routerLink="/software/product/unit">
+                <button mat-menu-item>
+                    <div class="menu-icon-container">
+                        <mat-icon class="material-icons-outlined icon-primary">grid_view</mat-icon>
+                        واحد کالا و خدمات
+                    </div>
+                </button>
+            </a>
+            
+            <button mat-menu-item (click)="onSearchForProductId(ProductTypeEnum.Product)">
+                <div class="menu-icon-container">
+                    <mat-icon class="material-icons-outlined icon-primary">manage_search</mat-icon>
+                    جستجو شناسه کالا
+                </div>
+            </button>
+            <button mat-menu-item (click)="onSearchForProductId(ProductTypeEnum.Service)">
+                <div class="menu-icon-container">
+                    <mat-icon class="material-icons-outlined icon-primary">content_paste_search</mat-icon>
+                    جستجو شناسه خدمات
+                </div>
+            </button>
+        </mat-menu>
     </div>
 </div>
 <div class="content-table">

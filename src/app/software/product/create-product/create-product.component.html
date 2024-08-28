@@ -9,27 +9,27 @@
     <div class="form-dialog-content">
         <div class="form-dialog-content-loading" *ngIf="getUnitListLoading"></div>
         <mat-form-field class="form-dialog-field" appearance="outline">
-            <mat-label>واحد کالا و خدمات</mat-label>
-            <mat-select formControlName="unitCode" name="unitCode" (opened)="unitCodeSearch.focus()">
-                <input class="mat-select-search" type="text" formControlName="unitCodeSearch" #unitCodeSearch placeholder="جستجو کردن...">
-                <mat-option *ngFor="let unit of filteredUnitList" [value]="unit.code">{{unit.name}}</mat-option>
+            <mat-label>نوع</mat-label>
+            <mat-select formControlName="productType" name="productType">
+                <mat-option *ngFor="let productType of productTypes" [value]="productType.value">{{productType.display}}</mat-option>
             </mat-select>
-            <mat-error *ngIf="addProductForm.get('unitCode')?.invalid && validationLastCheck">
+            <mat-error *ngIf="addProductForm.get('productType')?.invalid && validationLastCheck">
                 این فیلد الزامیست
             </mat-error>
-        </mat-form-field> 
+        </mat-form-field>
         <div class="form-dialog-field-row">
             <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>نوع کالا </mat-label>
-                <mat-select formControlName="productType" name="productType">
-                    <mat-option *ngFor="let productType of productTypes" [value]="productType.value">{{productType.display}}</mat-option>
+                <mat-label>واحد کالا</mat-label>
+                <mat-select formControlName="unitCode" name="unitCode" (opened)="unitCodeSearch.focus()">
+                    <input class="mat-select-search" type="text" formControlName="unitCodeSearch" #unitCodeSearch placeholder="جستجو کردن...">
+                    <mat-option *ngFor="let unit of filteredUnitList" [value]="unit.code">{{unit.name}}</mat-option>
                 </mat-select>
-                <mat-error *ngIf="addProductForm.get('productType')?.invalid && validationLastCheck">
+                <mat-error *ngIf="addProductForm.get('unitCode')?.invalid && validationLastCheck">
                     این فیلد الزامیست
                 </mat-error>
-            </mat-form-field>
+            </mat-form-field> 
             <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>کد کالا</mat-label>
+                <mat-label>کد {{ productTypeTitle }}</mat-label>
                 <input type="number" matInput formControlName="code">
                 <mat-error *ngIf="addProductForm.get('code')?.invalid && validationLastCheck">
                     <ng-container *ngIf="addProductForm.get('code')?.hasError('required')">
@@ -43,14 +43,14 @@
         </div>
         <div class="form-dialog-field-row">
             <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>نام کالا</mat-label>
+                <mat-label>نام {{ productTypeTitle }}</mat-label>
                 <input type="text" matInput formControlName="name">
                 <mat-error *ngIf="addProductForm.get('name')?.invalid && validationLastCheck">
                     این فیلد الزامیست
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="form-dialog-field" appearance="outline">
-                <mat-label>شناسه کالا</mat-label>
+                <mat-label>شناسه {{ productTypeTitle }}</mat-label>
                 <input type="string" matInput formControlName="productCode">
                 <mat-error *ngIf="addProductForm.get('productCode')?.invalid && validationLastCheck">
                     این فیلد الزامیست

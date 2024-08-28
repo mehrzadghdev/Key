@@ -25,7 +25,19 @@ export class CreatePersonComponent implements OnInit {
     { display: 'اتباع غیر ایرانی', value: PersonType.NonIranianNotionals },
     { display: 'مصرف کننده نهایی', value: PersonType.FinalConsumer },
   ]
+
+  public get nationalTitle(): string {
+    if (this.addPersonForm.get("personType")?.value === PersonType.NonIranianNotionals) {
+      return 'اطباع'
+    }
+
+    return 'ملی'
+  }
   
+  public get PersonTypeEnum(): typeof PersonType {
+    return PersonType;
+  }
+
   constructor(
     private dialgoRef: MatDialogRef<CreatePersonComponent>, 
     private personService: PersonService, 
@@ -53,28 +65,44 @@ export class CreatePersonComponent implements OnInit {
   }
 
   public updateValidityOfForm(personType: PersonType) {
-    if (personType === PersonType.Genuine) {
+    if (personType === PersonType.FinalConsumer) {
+      this.addPersonForm.get("economicCode")?.clearValidators();
+      this.addPersonForm.get("nationalId")?.clearValidators();
+      this.addPersonForm.get("economicCode")?.updateValueAndValidity();
+      this.addPersonForm.get("nationalId")?.updateValueAndValidity();
+    }
+    if (personType === PersonType.Genuine || personType === PersonType.NonIranianNotionals) {
+      this.addPersonForm.get("economicCode")?.setValidators([Validators.required, CustomValidators.economicCode]);
+      this.addPersonForm.get("nationalId")?.setValidators([Validators.required, CustomValidators.nationalId]);
+      this.addPersonForm.get("economicCode")?.updateValueAndValidity();
+      this.addPersonForm.get("nationalId")?.updateValueAndValidity();
       this.addPersonForm.get("economicCode")?.patchValue(111111111111);
       this.addPersonForm.get("nationalId")?.patchValue(null);
     }
     else {
+      this.addPersonForm.get("economicCode")?.setValidators([Validators.required, CustomValidators.economicCode]);
+      this.addPersonForm.get("nationalId")?.setValidators([Validators.required, CustomValidators.nationalId]);
+      this.addPersonForm.get("economicCode")?.updateValueAndValidity();
+      this.addPersonForm.get("nationalId")?.updateValueAndValidity();
       this.addPersonForm.get("economicCode")?.patchValue(null);
       this.addPersonForm.get("nationalId")?.patchValue(1111111111);
     }
   }
 
   public onAddPerson(): void {
+    console.log(this.addPersonForm);
+
     if (this.addPersonForm.valid) {
       this.addPersonLoading = true;
       const addPersonBody: AddPersonBody = {
         code: this.addPersonForm.controls["code"].value,
         personType: this.addPersonForm.controls["personType"].value,
         personName: this.addPersonForm.controls["personName"].value,
-        nationalId: this.addPersonForm.controls["nationalId"].value + "",
-        economicCode: this.addPersonForm.controls["economicCode"].value + "",
-        tel: this.addPersonForm.controls["tel"].value + "",
-        mobile: this.addPersonForm.controls["mobile"].value + "",
-        zipCode: this.addPersonForm.controls["zipCode"].value + "",
+        nationalId: this.addPersonForm.controls["nationalId"].value ? this.addPersonForm.controls["nationalId"].value + "" : '',
+        economicCode: this.addPersonForm.controls["economicCode"].value ? this.addPersonForm.controls["economicCode"].value + "" : '',
+        tel: this.addPersonForm.controls["tel"].value  ? this.addPersonForm.controls["tel"].value  + "" : '',
+        mobile: this.addPersonForm.controls["mobile"].value ? this.addPersonForm.controls["mobile"].value  + "" : '',
+        zipCode: this.addPersonForm.controls["zipCode"].value ? this.addPersonForm.controls["zipCode"].value  + "" : '',
         address: this.addPersonForm.controls["address"].value
       }
 

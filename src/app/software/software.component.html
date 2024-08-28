@@ -52,7 +52,7 @@
                     </div>
                 </a>
             </li>
-            <li class="menu-title">تعاریف پایه</li>
+            <li class="menu-title">مودی</li>
             <li class="nav-item accordion" tabindex="1" #companyAccordion (keydown.enter)="toggleAccordion(companyAccordion)" (click)="toggleAccordion(companyAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? companyMenu : null"
                 [ngClass]="{'opened': activeRouteIs('company')}">
@@ -80,6 +80,7 @@
                 <button mat-menu-item><a routerLink="/software/company" tabindex="1">لیست تمام شرکت ها</a></button>
                 <button mat-menu-item tabindex="1" (keydown.enter)="onGenerateKeysDialog()" (click)="onGenerateKeysDialog()">دریافت CSR</button>
             </mat-menu>
+            <li class="menu-title">تعاریف پایه</li>
 
             <li class="nav-item accordion" #contactAccordion tabindex="1" (keydown.enter)="toggleAccordion(contactAccordion)" (click)="toggleAccordion(contactAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? contactMenu : null"
@@ -134,6 +135,8 @@
                 <button mat-menu-item tabindex="1" (keydown.enter)="onSearchForProductId(ProductTypeEnum.Product)" (click)="onSearchForProductId(ProductTypeEnum.Product)">جستجو شناسه کالا</button>
                 <button mat-menu-item tabindex="1" (keydown.enter)="onSearchForProductId(ProductTypeEnum.Service)" (click)="onSearchForProductId(ProductTypeEnum.Service)">جستجو شناسه خدمات</button>
             </mat-menu>
+
+            <li class="menu-title">عملیات</li>
 
             <li class="nav-item accordion" tabindex="1" #factorAccordion (keydown.enter)="toggleAccordion(factorAccordion)" (click)="toggleAccordion(factorAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? factor : null" [ngClass]="{'opened': activeRouteIs('invoice')}">

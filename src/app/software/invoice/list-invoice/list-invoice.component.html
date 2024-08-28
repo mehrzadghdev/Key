@@ -8,19 +8,40 @@
         </span>
     </div>
     <div class="content-topbar-actions">
-        <a routerLink="/software/invoice/currency">
-            <key-button appearance="raised">
-                لیست تمام ارز ها   
-            </key-button>
-        </a>
         <key-button (click)="onAddInvoice()">
             <mat-icon class="material-icons-outlined list-add-button-icon">add</mat-icon> فاکتور فروش جدید 
         </key-button>
         <div class="buttons-seperator"></div>
-        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="!tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
-            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
-            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
+        <button mat-ripple class="list-more-options" type="button" tabindex="1" [matMenuTriggerFor]="moreOptionsMenu">
+            <mat-icon class="material-icons-outlined list-more-options-icon icon-primary">more_vert_outlined</mat-icon>  
         </button>
+        <mat-menu #moreOptionsMenu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="tiledTableToggleMenu">
+                <div class="menu-icon-container">
+                    <mat-icon class="material-icons-outlined icon-primary">format_list_bulleted</mat-icon>
+                    نمایش لیست
+                </div>
+            </button>
+            <mat-menu #tiledTableToggleMenu="matMenu">
+                <mat-radio-group [(ngModel)]="tailedTable">
+                    <button mat-menu-item (click)="tailedTable = false">
+                        <mat-radio-button [value]="false" [checked]="!tailedTable">حالت جدول</mat-radio-button>
+                    </button>
+                    <button mat-menu-item (click)="tailedTable = true">
+                        <mat-radio-button [value]="true" [checked]="tailedTable">حالت کاشی</mat-radio-button>
+                    </button>
+                </mat-radio-group>
+            </mat-menu>
+
+            <a routerLink="/software/invoice/currency">
+                <button mat-menu-item>
+                    <div class="menu-icon-container">
+                        <mat-icon class="material-icons-outlined icon-primary">attach_money</mat-icon>
+                        لیست تمام ارز ها
+                    </div>
+                </button>
+            </a>
+        </mat-menu>
     </div>
 </div>
 <div class="content-table">
