@@ -386,7 +386,7 @@ button {
         overflow: hidden; 
         white-space: nowrap;
         
-        &:hover {
+        &:hover, &:focus {
             border-color: var(--primary-color);
         }
 

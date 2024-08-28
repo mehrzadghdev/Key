@@ -73,7 +73,7 @@
                     </div>
                     <div class="table-pagination__page-size">
                         <span>نمایش در هر صفحه: </span>
-                        <button mat-ripple [matMenuTriggerFor]="pageSizes">
+                        <button mat-ripple tabindex="1" [matMenuTriggerFor]="pageSizes">
                             {{ (tablePagination.pageSize ?? 0) | farsiNumber }}
                             <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
                         </button>

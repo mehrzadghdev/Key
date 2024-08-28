@@ -33,7 +33,7 @@
     <div class="table-mobile-sort" *ngIf="tailedTable">
         <div class="dropdown-button">
             <span>مرتب سازی بر اساس: </span>
-            <button mat-ripple [matMenuTriggerFor]="sortItems">
+            <button mat-ripple tabindex="1" [matMenuTriggerFor]="sortItems">
                 {{ activeSort }}
                 <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
             </button>
@@ -47,7 +47,7 @@
 
         <div class="dropdown-button">
             <span>جهت مرتب سازی: </span>
-            <button mat-ripple [matMenuTriggerFor]="mobileSortDirection">
+            <button mat-ripple tabindex="1" [matMenuTriggerFor]="mobileSortDirection">
                 {{ mobileActiveSortMode === 'asc' ? "اول به آخر" : "آخر به اول" }}
                 <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
             </button>
@@ -135,7 +135,7 @@
             </div>
             <div class="table-pagination__page-size">
                 <span>نمایش در هر صفحه: </span>
-                <button mat-ripple [matMenuTriggerFor]="pageSizes">
+                <button mat-ripple tabindex="1" [matMenuTriggerFor]="pageSizes">
                     {{ (tablePagination.pageSize ?? 0) | farsiNumber }}
                     <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
                 </button>

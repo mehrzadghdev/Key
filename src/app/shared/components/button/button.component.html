@@ -12,7 +12,7 @@
             'stroked-icon-button':  content === 'icon' && appearance === 'stroked',
             'flat-icon-button':  content === 'icon' && appearance === 'flat',
             'block-button': block
-        }" [disabled]="disabled" mat-ripple [type]="type">
+        }" [disabled]="disabled" mat-ripple [type]="type" tabindex="1">
     <div class="button-content center-button-content">
         <ng-content></ng-content>
     </div>
