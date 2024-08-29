@@ -370,6 +370,13 @@ button {
         white-space: nowrap;
     }
     
+    &.dropdown-no-width-limit {
+
+        button {
+            max-width: unset;
+        }
+    }
+    
     button {
         padding: 5px 10px 5px 5px;
         cursor: pointer;
@@ -385,6 +392,7 @@ button {
         text-overflow: ellipsis;
         overflow: hidden; 
         white-space: nowrap;
+
         
         &:hover, &:focus {
             border-color: var(--primary-color);

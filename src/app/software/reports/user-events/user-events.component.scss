@@ -1,0 +1,107 @@
+@import url('../../../shared/scss/key-section.scss');
+
+.user-events {
+    box-shadow: var(--light-shadow);
+    overflow-x: auto;
+    background-color: var(--base-color);
+    border-radius: 3px;
+    border: 1px solid var(--border-color-medium);
+    
+    .user-events-topbar {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 2px solid var(--border-color-light);
+
+        mat-icon {
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
+        }
+    }
+
+    .user-events-footer {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: end;
+        padding: 10px;
+        border-top: 2px solid var(--border-color-light);
+    }
+
+    .user-events-title {
+        font-size: 18px;
+        font-weight: 500;
+    }
+
+    .user-events-form {
+        padding: 20px;
+    }
+
+    .user-events-field-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    .user-events-field {
+        width: 100%;
+    }
+
+    .user-events-field-title {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-secondary-color);
+
+        &:first-child {
+            margin-bottom: 12px;
+        }
+    }
+
+    .logout-button {
+        margin-inline-end: auto;
+
+        .logout-icon {
+            width: 16px;
+            height: 16px;
+            font-size: 16px;
+            margin-inline-start: 5px;
+        }
+    }
+
+    .user-events-filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .user-events-filters__column {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .user-events {
+        .user-events-field-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .key-section-footer {
+            flex-direction: column-reverse;
+            align-items: stretch;
+        }
+
+        .logout-button {
+            margin-inline-end: unset;
+        }
+    }
+}

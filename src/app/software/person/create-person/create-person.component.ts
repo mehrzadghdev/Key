@@ -28,7 +28,7 @@ export class CreatePersonComponent implements OnInit {
 
   public get nationalTitle(): string {
     if (this.addPersonForm.get("personType")?.value === PersonType.NonIranianNotionals) {
-      return 'اطباع'
+      return 'اتباع'
     }
 
     return 'ملی'

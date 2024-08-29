@@ -27,6 +27,7 @@ import { CompanyService } from './services/definitions/company.service';
 import { ProductIdSearchComponent } from './product/product-id-search/product-id-search.component';
 import { GenerateKeysComponent } from './company/generate-keys/generate-keys.component';
 import { ProductType } from './enums/product-type.enum';
+import { UserEventsComponent } from './reports/user-events/user-events.component';
 
 @Component({
   selector: 'app-software',
@@ -344,6 +345,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     if (value === 'product') return this.currentActivatedRoute instanceof ListProductComponent || this.currentActivatedRoute instanceof UnitComponent;
     if (value === 'invoice') return this.currentActivatedRoute instanceof ListInvoiceComponent || this.currentActivatedRoute instanceof CurrencyComponent;
     if (value === 'dashboard') return this.currentActivatedRoute instanceof DashboardComponent;
+    if (value === 'reports') return this.currentActivatedRoute instanceof UserEventsComponent;
 
     return false;
   }

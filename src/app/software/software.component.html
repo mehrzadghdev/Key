@@ -80,8 +80,8 @@
                 <button mat-menu-item><a routerLink="/software/company" tabindex="1">لیست تمام شرکت ها</a></button>
                 <button mat-menu-item tabindex="1" (keydown.enter)="onGenerateKeysDialog()" (click)="onGenerateKeysDialog()">دریافت CSR</button>
             </mat-menu>
-            <li class="menu-title">تعاریف پایه</li>
 
+            <li class="menu-title">تعاریف پایه</li>
             <li class="nav-item accordion" #contactAccordion tabindex="1" (keydown.enter)="toggleAccordion(contactAccordion)" (click)="toggleAccordion(contactAccordion)"
                 [mat-menu-trigger-for]="!isExpanded ? contactMenu : null"
                 [ngClass]="{'opened': activeRouteIs('person')}">
@@ -163,6 +163,20 @@
                 <button mat-menu-item><a routerLink="/software/invoice" tabindex="1">لیست فاکتور های فروش</a></button>
                 <button mat-menu-item><a routerLink="/software/invoice/currency" tabindex="1">لیست تمام ارز ها</a></button>
             </mat-menu>
+
+            <li class="menu-title">گزارشات</li>
+            <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('reports')}">
+                <a routerLink="/software/reports" tabindex="1">
+                    <div class="accordion-header" matRipple>
+                        <div class="accordion-title">
+                            <div class="nav-item__icon">
+                                <mat-icon class="material-icons-outlined">history_outline</mat-icon>
+                            </div>
+                            <span *ngIf="isExpanded" class="nav-item__title unselectable">وقایع کاربری</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
         </ul>
         <span class="software-version">
             <ng-container *ngIf="isExpanded">

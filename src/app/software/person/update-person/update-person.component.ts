@@ -29,7 +29,7 @@ export class UpdatePersonComponent implements OnInit {
 
   public get nationalTitle(): string {
     if (this.updatePersonForm.get("personType")?.value === PersonType.NonIranianNotionals) {
-      return 'اطباع'
+      return 'اتباع'
     }
 
     return 'ملی'

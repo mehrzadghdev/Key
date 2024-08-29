@@ -5,6 +5,7 @@ import { ReportsRoutingModule } from './reports-routing.module';
 import { NgxMaskDirective } from 'ngx-mask';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { UserEventsComponent } from './user-events/user-events.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { UserEventsComponent } from './user-events/user-events.component';
     CommonModule,
     ReportsRoutingModule,
     NgxMaskDirective,
-    ClipboardModule
+    ClipboardModule,
+    SharedModule
   ]
 })
 export class ReportsModule { }

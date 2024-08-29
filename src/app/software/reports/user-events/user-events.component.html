@@ -1,1 +1,51 @@
-<p>user-events works!</p>
+<div class="user-events key-section">
+    <div class="key-section-topbar">
+        <a routerLink="/software">
+            <key-button content="icon" appearance="flat">
+                <mat-icon class="icon-primary">arrow_forward</mat-icon>
+            </key-button>
+        </a>
+        <h3 class="user-events-title">وقایع کاربری</h3>
+    </div>
+    <div class="user-events-form">
+        <div class="user-events-filters">
+            <div class="user-events-filters__column">
+                <div class="dropdown-button dropdown-no-width-limit">
+                    <span>بخش: </span>
+                    <button mat-ripple tabindex="1" [matMenuTriggerFor]="softwarePartsMenu">
+                        {{ activeSoftwarePart?.title ?? 'همه بخش ها' }}
+                        <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
+                    </button>
+                    <mat-menu #softwarePartsMenu="matMenu">
+                        <ng-container *ngFor="let softwarePart of softwareParts; let i = index">
+                            <button mat-menu-item (click)="activeSoftwarePart = softwarePart">{{ softwarePart.title }}</button>
+                        </ng-container>
+                    </mat-menu>
+                </div>
+                <div class="dropdown-button dropdown-no-width-limit">
+                    <span>عملیات: </span>
+                    <button mat-ripple tabindex="1" [matMenuTriggerFor]="permissionPartsMenu">
+                        {{ activePermissionPart?.title ?? 'تمام عملیات ها' }}
+                        <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
+                    </button>
+                    <mat-menu #permissionPartsMenu="matMenu">
+                        <button mat-menu-item (click)="activePermissionPart = undefined">تمام عملیات ها</button>
+                        <ng-container *ngFor="let permissionPart of permissionParts; let i = index">
+                            <button mat-menu-item (click)="activePermissionPart = permissionPart">{{ permissionPart.title }}</button>
+                        </ng-container>
+                    </mat-menu>
+                </div>
+            </div>
+            <div class="user-events-filters__column">
+                <key-date-picker (dateSelected)="eventFromDate = $event" [fullWidth]="false">از تاریخ</key-date-picker>
+                <key-date-picker (dateSelected)="eventToDate = $event" [fullWidth]="false">تا تاریخ</key-date-picker>
+            </div>
+        </div>
+    </div>
+    <div class="key-section-footer">
+        <key-button [block]="true">
+            <mat-icon class="material-icons-outlined">file_download_outlined</mat-icon>
+            خروجی اکسل 
+        </key-button>
+    </div>
+</div>

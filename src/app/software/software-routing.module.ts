@@ -42,6 +42,11 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
         data: { animation: 'Six' }
       },
+      {
+        path: "reports",
+        loadChildren: () => import('./reports/reports.module').then(m => m.ReportsModule),
+        data: { animation: 'Seven' }
+      },
     ]
   }
 ];
