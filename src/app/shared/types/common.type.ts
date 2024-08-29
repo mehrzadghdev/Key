@@ -11,6 +11,10 @@ export interface HasDatabase {
     databaseId?: number;
 }
 
+export interface HasUserID {
+    userId?: string,
+}
+
 export interface GetNewCodeBody extends HasDatabase {};
 
 export interface GetNewCode {
