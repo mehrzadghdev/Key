@@ -140,6 +140,11 @@
             color: var(--error-color);
         }
 
+        &.holiday.today {
+            color: var(--base-color);
+            background-color: var(--error-color);
+        }
+
         &.active {
             border: 1px solid var(--primary-color);
             background-color: var(--base-color);

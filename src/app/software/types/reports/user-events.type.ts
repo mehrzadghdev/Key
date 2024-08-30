@@ -33,10 +33,10 @@ export interface GetUserEventList extends Pagination {
 // UserEvent/GetCompaniesUserEventList
 
 export interface GetCompaniesUserEventListBody extends PaginationBody, HasUserID, HasDatabase {
-    softwarePartCode: number,
-    permissionPartId: number,
-    fromEventDate: DateISO,
-    toEventDate: DateISO,
+    softwarePartCode?: number,
+    permissionPartId?: number,
+    fromEventDate?: DateISO,
+    toEventDate?: DateISO,
 }
 
 export interface GetCompaniesUserEventList extends Pagination {
