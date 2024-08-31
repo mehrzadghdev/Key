@@ -45,9 +45,9 @@
         </div>
         <div class="user-events-items" *ngIf="!userEventListLoading">
             <div class="user-event-item" [ngClass]="{
-                    'info-item': userEvent.userEventType === UserEventTypeEnum.Edit || userEvent.userEventType === UserEventTypeEnum.Print,
-                    'error-item': userEvent.userEventType === UserEventTypeEnum.Delete,
-                    'warn-item': userEvent.userEventType === UserEventTypeEnum.Show || userEvent.userEventType === UserEventTypeEnum.Review,
+                    'info-item': userEvent.permissionPartType === UserEventTypeEnum.Edit || userEvent.permissionPartType === UserEventTypeEnum.Print,
+                    'error-item': userEvent.permissionPartType === UserEventTypeEnum.Delete,
+                    'warn-item': userEvent.permissionPartType === UserEventTypeEnum.Show || userEvent.permissionPartType === UserEventTypeEnum.Review,
                 }" *ngFor="let userEvent of userEventList; let i = index">
                 <div class="user-event-item__topbar" *ngIf="!toDatesSame(userEvent.eventDate, userEventList[i-1] ? userEventList[i-1].eventDate : undefined) || true">
                     <div class="user-event-item__dot"></div>
@@ -63,7 +63,7 @@
                                 عملیات
                                 <div class="opreation">{{ userEvent.permissionPartName }}</div>
                                 بر روی
-                                {{ userEvent.softwarePartName }} با کد {{ userEvent.operationCode }}
+                                {{ userEvent.softwarePartName }} <ng-container *ngIf="userEvent.operationTitle">"{{ userEvent.operationTitle}}"</ng-container> با کد {{ userEvent.operationCode }}
                                 اجرا شد
                             </div>
                             <div class="user-event-item__content-footer">

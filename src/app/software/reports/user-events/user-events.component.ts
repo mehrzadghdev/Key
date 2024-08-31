@@ -63,7 +63,7 @@ export class UserEventsComponent implements OnInit {
       getSoftwareParts: this.userEventsService.getSoftwareParts(null),
       getPermissionParts: this.userEventsService.getPermissionParts(null),
     }).subscribe(result => {
-      this.softwareParts = result.getSoftwareParts;
+      this.softwareParts = result.getSoftwareParts.filter(part => part.parentCode !== 0);
       this.permissionParts = result.getPermissionParts;
 
       this.dataLoaded = true;
@@ -79,6 +79,7 @@ export class UserEventsComponent implements OnInit {
 
     const userEventListBody: GetCompaniesUserEventListBody = {
       ...pagination,
+      sortFieldName: 'eventDate_desc',
       softwarePartCode: this.activeSoftwarePart?.code,
       permissionPartId: this.activePermissionPart?.id,
       fromEventDate: this.eventFromDate,

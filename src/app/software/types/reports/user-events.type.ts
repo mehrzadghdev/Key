@@ -14,9 +14,10 @@ export interface UserEvent extends HasDatabase, HasUserID {
     permissionPartName: string,
     success: boolean,
     eventDate: DateISO,
-    userEventType: UserEventType,
+    permissionPartType: UserEventType,
     comment: string,
-    operationCode: number
+    operationCode: number,
+    operationTitle: string,
 }
 
 // UserEvent/GetUserEventList
