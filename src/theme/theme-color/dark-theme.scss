@@ -13,7 +13,8 @@
     --athens-gray: #F1F2F6;
     --raven: #747D8C;
     --tangerine: #FFC969;
-    --mariner: #2E81D1;
+    --mariner: #08D1B5;
+    --info: #2E81D1;
     --white-12: #FFFFFF12;
     --white-16: #FFFFFF16;
 
@@ -39,7 +40,7 @@ body[theme='dark'] {
     --primary-color: var(--dark-blue-primary);
     --secondary-color: var(--blue-pale);
     --warn-color: var(--dark-yellow-warning);
-    --info-color: var(--mariner);
+    --info-color: var(--info);
     --error-color: var(--dark-red-error);
     --success-color: var(--dark-green-success);
     --base-color: var(--tuna);

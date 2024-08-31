@@ -18,7 +18,7 @@
                     </button>
                     <mat-menu #softwarePartsMenu="matMenu">
                         <ng-container *ngFor="let softwarePart of softwareParts; let i = index">
-                            <button mat-menu-item (click)="activeSoftwarePart = softwarePart">{{ softwarePart.title
+                            <button mat-menu-item (click)="setActiveSoftwarePart(softwarePart)">{{ softwarePart.title
                                 }}</button>
                         </ng-container>
                     </mat-menu>
@@ -30,17 +30,89 @@
                         <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
                     </button>
                     <mat-menu #permissionPartsMenu="matMenu">
-                        <button mat-menu-item (click)="activePermissionPart = undefined">تمام عملیات ها</button>
+                        <button mat-menu-item (click)="setActivePermissionPart(undefined)">تمام عملیات ها</button>
                         <ng-container *ngFor="let permissionPart of permissionParts; let i = index">
-                            <button mat-menu-item (click)="activePermissionPart = permissionPart">{{
+                            <button mat-menu-item (click)="setActivePermissionPart(permissionPart)">{{
                                 permissionPart.title }}</button>
                         </ng-container>
                     </mat-menu>
                 </div>
             </div>
             <div class="user-events-filters__column">
-                <key-date-picker (dateSelected)="eventFromDate = $event" [fullWidth]="false">از تاریخ</key-date-picker>
-                <key-date-picker (dateSelected)="eventToDate = $event" [fullWidth]="false">تا تاریخ</key-date-picker>
+                <key-date-picker (dateSelected)="setEventDateFrom($event)" [fullWidth]="false">از تاریخ</key-date-picker>
+                <key-date-picker (dateSelected)="setEventDateTo($event)" [fullWidth]="false">تا تاریخ</key-date-picker>
+            </div>
+        </div>
+        <div class="user-events-items" *ngIf="!userEventListLoading">
+            <div class="user-event-item info-item" *ngFor="let userEvent of userEventList; let i = index">
+                <div class="user-event-item__topbar" *ngIf="!toDatesSame(userEvent.eventDate, userEventList[i-1] ? userEventList[i-1].eventDate : undefined) || true">
+                    <div class="user-event-item__dot"></div>
+                    <div class="user-event-item__date">عملیات در تاریخ {{ userEvent.eventDate | jdate: { day: 'numeric', month: 'long', year: 'numeric' } }}</div>
+                </div>
+                <div class="user-event-item__content">
+                    <div class="user-event-item__divider-top">
+                        <div class="divider-line"></div>
+                    </div>
+                    <div class="user-event-item__columns">
+                        <div class="user-event-item__column">
+                            <div class="user-event-item__content-header">
+                                عملیات
+                                <div class="opreation">{{ userEvent.permissionPartName }}</div>
+                                بر روی
+                                {{ userEvent.softwarePartName }} با کد {{ userEvent.operationCode }}
+                                اجرا شد
+                            </div>
+                            <div class="user-event-item__content-footer">
+                                <div class="user-icon">
+                                    <mat-icon class="material-icons-outlined icon-medium">person_outline</mat-icon>
+                                </div>
+                                {{ username }}
+                                <span>-</span>
+                                <ng-container *ngIf="passedDaysFromNow(userEvent.eventDate)">
+                                    {{ passedDaysFromNow(userEvent.eventDate) }} روز پیش
+                                </ng-container>
+                                <ng-container *ngIf="!passedDaysFromNow(userEvent.eventDate)">
+                                    امروز
+                                </ng-container>
+                            </div>
+                        </div>
+                        <div class="user-event-item__column"></div>
+                    </div>
+                    <div class="user-event-item__divider-bottom">
+                        <div class="divider-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="user-events-loading" *ngIf="userEventListLoading">
+            <div class="user-events-loading__item-topbar">
+                <div class="skeleton" style="width: 20px; height: 20px; border-radius: 50%;"></div>
+                <div class="skeleton" style="width: 50%; height: 30px; border-radius: 5px;"></div>
+                <div class="skeleton" style="width: 50px; height: 20px; border-radius: 10px;"></div>
+            </div>
+            <div class="user-events-loading__loadings-divider">
+                <div class="skeleton" style="width: 5px; height: 60px; border-radius: 5px;"></div>
+            </div>
+            <div class="user-events-loading__item-topbar">
+                <div class="skeleton" style="width: 20px; height: 20px; border-radius: 50%;"></div>
+                <div class="skeleton" style="width: 50%; height: 30px; border-radius: 5px;"></div>
+                <div class="skeleton" style="width: 50px; height: 20px; border-radius: 10px;"></div>
+            </div>
+            <div class="user-events-loading__loadings-divider">
+                <div class="skeleton" style="width: 5px; height: 60px; border-radius: 5px;"></div>
+            </div>
+            <div class="user-events-loading__item-topbar">
+                <div class="skeleton" style="width: 20px; height: 20px; border-radius: 50%;"></div>
+                <div class="skeleton" style="width: 50%; height: 30px; border-radius: 5px;"></div>
+                <div class="skeleton" style="width: 50px; height: 20px; border-radius: 10px;"></div>
+            </div>
+            <div class="user-events-loading__loadings-divider">
+                <div class="skeleton" style="width: 5px; height: 60px; border-radius: 5px;"></div>
+            </div>
+            <div class="user-events-loading__item-topbar">
+                <div class="skeleton" style="width: 20px; height: 20px; border-radius: 50%;"></div>
+                <div class="skeleton" style="width: 50%; height: 30px; border-radius: 5px;"></div>
+                <div class="skeleton" style="width: 50px; height: 20px; border-radius: 10px;"></div>
             </div>
         </div>
     </div>
@@ -74,6 +146,7 @@
                     <mat-icon class="icon-light">keyboard_arrow_down</mat-icon>
                 </button>
                 <mat-menu #pageSizes="matMenu">
+                    <button mat-menu-item (click)="onItemPerPageChanged(5)">{{ 5 | farsiNumber }} مورد</button>
                     <button mat-menu-item (click)="onItemPerPageChanged(10)">{{ 10 | farsiNumber }} مورد</button>
                     <button mat-menu-item (click)="onItemPerPageChanged(25)">{{ 25 | farsiNumber }} مورد</button>
                     <button mat-menu-item (click)="onItemPerPageChanged(40)">{{ 40 | farsiNumber }} مورد</button>

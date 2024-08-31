@@ -7,6 +7,7 @@ import { UserEventsService } from '../../services/reports/user-events.service';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { UserDetails } from 'src/app/shared/types/authentication.type';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
+import * as moment from 'jalali-moment';
 
 @Component({
   selector: 'app-user-events',
@@ -38,6 +39,11 @@ export class UserEventsComponent implements OnInit {
   public eventFromDate?: DateISO;
   public eventToDate?: DateISO;
 
+  public get username(): string {
+    const userDetails = this.authenticationService.userDetails as UserDetails;
+    return userDetails.name + ' ' + userDetails.family;
+  }
+
   constructor(
     private userEventsService: UserEventsService,
     private authenticationService: AuthenticationService
@@ -57,7 +63,7 @@ export class UserEventsComponent implements OnInit {
     this.loadUserEventList();
   }
 
-  private loadUserEventList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
+  private loadUserEventList(pagination: PaginationBody = { pageSize: 5, page: 1 }): void {
     this.userEventListLoading = true;
 
     const userDetails: UserDetails = this.authenticationService.userDetails as UserDetails;
@@ -65,20 +71,72 @@ export class UserEventsComponent implements OnInit {
     const userEventListBody: GetCompaniesUserEventListBody = {
       ...pagination,
       softwarePartCode: this.activeSoftwarePart?.code,
-      permissionPartId: this.activeSoftwarePart?.code,
+      permissionPartId: this.activePermissionPart?.id,
       fromEventDate: this.eventFromDate,
       toEventDate: this.eventToDate,
       userId: userDetails.id
     }
 
-    this.userEventsService.getCompaniesUserEventList(userEventListBody);
+    this.userEventsService.getCompaniesUserEventList(userEventListBody).subscribe(res => {
+      this.userEventList = res.userEvents;
+      this.tablePagination.totalCount = res.totalCount;
+      this.tablePagination.pageSize = res.pageSize;
+      this.tablePagination.currentPage = res.currentPage;
+      this.tablePagination.totalPages = res.totalPages;
+      this.tablePagination.hasNext = res.hasNext;
+      this.tablePagination.hasPrev = res.hasPrev;
+
+      this.userEventListLoading = false
+    });
   }
 
-  public onItemPerPageChanged(itemsPerPage: 10 | 25 | 40 | 60): void {
+  public onItemPerPageChanged(itemsPerPage: 5 | 10 | 25 | 40 | 60): void {
     this.loadUserEventList({ pageSize: itemsPerPage, page: 1, sortFieldName: this.sortFieldname });
   }
 
   public onPaginationChanged(pagetoGo: number): void { 
     this.loadUserEventList({ pageSize: this.tablePagination.pageSize, page: pagetoGo, sortFieldName: this.sortFieldname });
+  }
+
+  public setActiveSoftwarePart(softwarePart: SoftwarePart): void {
+    this.activeSoftwarePart = softwarePart;
+    this.loadUserEventList();
+  }
+  
+  public setActivePermissionPart(permissionPart: PermissionPart | undefined): void {
+    this.activePermissionPart = permissionPart;
+    this.loadUserEventList();
+  }
+  
+  public setEventDateFrom(date: DateISO): void {
+    this.eventFromDate = date;
+    this.loadUserEventList();
+  }
+  
+  public setEventDateTo(date: DateISO): void {
+    this.eventToDate = date;
+    this.loadUserEventList();
+  }
+
+  public toDatesSame(firstDate: DateISO, secondDate: DateISO | undefined): boolean {
+    const jFirstDate: moment.Moment = moment(firstDate);
+    const jSecondDate: moment.Moment = moment(secondDate);
+
+    if (
+      secondDate
+      && jFirstDate.jDate() === jSecondDate.jDate()
+      && jFirstDate.jMonth() === jSecondDate.jMonth()
+      && jFirstDate.jYear() === jSecondDate.jYear()
+    ) {
+      return true;
+    }
+
+    return false
+  }
+
+  public passedDaysFromNow(date: DateISO): number {
+    const momentDate: moment.Moment = moment(date);
+
+    return moment().diff(momentDate, 'days');
   }
 }

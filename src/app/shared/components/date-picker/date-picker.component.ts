@@ -65,5 +65,5 @@ export class DatePickerComponent {
         this.datePickerTabs.selectedIndex = DatePickerMode.Calendar;
       }
     }
-  }
+  } 
 }

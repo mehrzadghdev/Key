@@ -11,4 +11,7 @@ export class SkeletonComponent {
 
   @Input("height")
   public height: string = '20px';
+
+  @Input("radius")
+  public radius: string = '5px';
 }

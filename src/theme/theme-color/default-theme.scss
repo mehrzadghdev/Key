@@ -16,6 +16,7 @@
     --black-12: #00000012;
     --black-16: #00000016;
     --mariner: #008a77;
+    --info: #2E81D1;
     --navy-blue: #008a77;
     --blue-primary: #008a77;
     --blue-pale: #b3dcd6;
@@ -40,7 +41,7 @@ body[theme='default'] {
     --primary-color: var(--blue-primary);
     --secondary-color: var(--blue-pale);
     --warn-color: var(--yellow-warning);
-    --info-color: var(--mariner);
+    --info-color: var(--info);
     --error-color: var(--red-error);
     --success-color: var(--green-success);
     --base-color: var(--white);

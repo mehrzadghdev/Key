@@ -7,7 +7,7 @@
     background-color: var(--base-color);
     border-radius: 3px;
     border: 1px solid var(--border-color-medium);
-    
+
     .user-events-topbar {
         display: flex;
         gap: 5px;
@@ -86,6 +86,250 @@
         align-items: center;
         gap: 20px;
     }
+
+    .user-events-loading {
+        margin-top: 25px;
+    }
+
+    .user-events-loading__item-topbar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .user-events-loading__loadings-divider {
+        margin: 5px 0;
+        width: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .user-events-items {
+        margin-top: 25px;
+    }
+
+    .user-event-item__topbar {
+        padding: 0 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .user-event-item__dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-color);
+            position: relative;
+            margin-left: 10px;
+
+            &:before {
+                content: '';
+                display: block;
+                width: 8px;
+                height: 2px;
+                border-radius: 0px;
+                background-color: var(--primary-color);
+                position: absolute;
+                top: 50%;
+                transform: translate(0, -50%);
+                left: -8px;
+            }
+
+            &:after {
+                content: '';
+                display: block;
+                width: 8px;
+                height: 2px;
+                border-radius: 0px;
+                background-color: var(--primary-color);
+                position: absolute;
+                top: 50%;
+                transform: translate(0, -50%);
+                right: -8px;
+            }
+        }
+
+        .user-event-item__date {
+            color: var(--text-tertiary-color);
+            font-size: 12px;
+            font-weight: 600;
+        }
+    }
+
+    .user-event-item__content {
+        margin-top: 16px;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: 1px solid var(--border-color-medium);
+        position: relative;
+
+        margin-bottom: 16px;
+        .user-event-item__divider-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 12px;
+            height: 16px;
+            position: absolute;
+            bottom: -16px;
+            right: 19px;
+
+            .divider-line {
+                width: 2px;
+                background-color: var(--border-color-medium);
+                height: 16px;
+            }
+        }
+
+        .user-event-item__divider-top {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 12px;
+            height: 16px;
+            position: absolute;
+            top: -16px;
+            right: 19px;
+
+            .divider-line {
+                width: 2px;
+                background-color: var(--border-color-medium);
+                height: 16px;
+            }
+        }
+    }
+
+    .user-event-item__columns {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .user-event-item__content-header {
+        font-size: 16px;
+        color: var(--text-secondary-color);
+        font-weight: 500;
+
+        .opreation {
+            padding: 2px 10px;
+            margin: 0 3px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 5px;
+            display: inline-block;
+            background-color: color-mix(in srgb, var(--primary-color), transparent 90%);
+            color: var(--primary-color);
+        }
+    }
+
+    .user-event-item__content-footer {
+        margin-top: 5px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+
+        color: var(--text-tertiary-color);
+        font-size: 12px;
+        font-weight: 400;
+
+        .user-icon {
+            border-radius: 50%;
+            background-color: var(--border-color-light);
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            mat-icon {
+                width: 14px;
+                height: 14px;
+                font-size: 14px;
+            }
+        }
+    }
+
+    .user-event-item {
+        &.info-item {
+            .user-event-item__topbar {
+                .user-event-item__dot {
+                    border-color: var(--info-color);
+
+                    &::before {
+                        background-color: var(--info-color);
+                    }
+
+                    &::after {
+                        background-color: var(--info-color);
+                    }
+                }
+            }
+
+            .user-event-item__content-header {
+                .opreation {
+                    background-color: color-mix(in srgb, var(--info-color), transparent 90%);
+                    color: var(--info-color);
+                }
+            }
+        }
+
+        &.error-item {
+            .user-event-item__topbar {
+                .user-event-item__dot {
+                    border-color: var(--error-color);
+
+                    &::before {
+                        background-color: var(--error-color);
+                    }
+
+                    &::after {
+                        background-color: var(--error-color);
+                    }
+                }
+            }
+
+            .user-event-item__content-header {
+                .opreation {
+                    background-color: color-mix(in srgb, var(--error-color), transparent 90%);
+                    color: var(--error-color);
+                }
+            }
+        }
+
+        &.warn-item {
+            .user-event-item__topbar {
+                .user-event-item__dot {
+                    border-color: var(--warn-color);
+
+                    &::before {
+                        background-color: var(--warn-color);
+                    }
+
+                    &::after {
+                        background-color: var(--warn-color);
+                    }
+                }
+            }
+
+            .user-event-item__content-header {
+                .opreation {
+                    background-color: color-mix(in srgb, var(--warn-color), transparent 90%);
+                    color: var(--warn-color);
+                }
+            }
+        }
+
+        &:last-child {
+            .user-event-item__content {
+                margin-bottom: 0px;
+
+                .user-event-item__divider-bottom {
+                    display: none !important;
+                }
+            }
+        }
+    }
 }
 
 @media only screen and (max-width: 576px) {
@@ -105,4 +349,9 @@
             margin-inline-end: unset;
         }
     }
+}
+
+.content-table {
+    border: unset;
+    box-shadow: unset;
 }
