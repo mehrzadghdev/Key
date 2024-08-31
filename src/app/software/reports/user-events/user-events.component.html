@@ -44,7 +44,11 @@
             </div>
         </div>
         <div class="user-events-items" *ngIf="!userEventListLoading">
-            <div class="user-event-item info-item" *ngFor="let userEvent of userEventList; let i = index">
+            <div class="user-event-item" [ngClass]="{
+                    'info-item': userEvent.userEventType === UserEventTypeEnum.Edit || userEvent.userEventType === UserEventTypeEnum.Print,
+                    'error-item': userEvent.userEventType === UserEventTypeEnum.Delete,
+                    'warn-item': userEvent.userEventType === UserEventTypeEnum.Show || userEvent.userEventType === UserEventTypeEnum.Review,
+                }" *ngFor="let userEvent of userEventList; let i = index">
                 <div class="user-event-item__topbar" *ngIf="!toDatesSame(userEvent.eventDate, userEventList[i-1] ? userEventList[i-1].eventDate : undefined) || true">
                     <div class="user-event-item__dot"></div>
                     <div class="user-event-item__date">عملیات در تاریخ {{ userEvent.eventDate | jdate: { day: 'numeric', month: 'long', year: 'numeric' } }}</div>
@@ -76,7 +80,15 @@
                                 </ng-container>
                             </div>
                         </div>
-                        <div class="user-event-item__column"></div>
+                        <div class="user-event-item__column">
+                            <key-button appearance="text">
+                                <mat-icon class="material-icons-outlined">visibility</mat-icon>
+                                اطلاعات بیشتر
+                            </key-button>
+                            <key-button content="icon" appearance="flat" (click)="copyUserEventCode(userEvent.operationCode, userEvent.softwarePartName)" [matTooltip]="'کپی کد ' + userEvent.softwarePartName">
+                                <mat-icon class="material-icons-outlined icon-primary">copy</mat-icon>
+                            </key-button>
+                        </div>
                     </div>
                     <div class="user-event-item__divider-bottom">
                         <div class="divider-line"></div>

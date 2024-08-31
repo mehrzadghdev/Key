@@ -1,6 +1,8 @@
 export enum UserEventType {
-    Primary = 1,
-    Info = 2,
-    Error = 3,
-    Warning = 4,
+    New = 1,
+    Edit = 2, //
+    Show = 3,
+    Review = 4,
+    Print = 5, //
+    Delete = 6
 }

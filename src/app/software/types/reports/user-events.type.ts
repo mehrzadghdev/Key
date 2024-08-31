@@ -1,5 +1,6 @@
 import { DateISO, HasDatabase, HasUserID, Percentage } from "src/app/shared/types/common.type";
 import { Pagination, PaginationBody } from "src/app/shared/types/pagination.type";
+import { UserEventType } from "../../enums/user-event-type.enum";
 
 // Base UserEvent
 
@@ -13,6 +14,7 @@ export interface UserEvent extends HasDatabase, HasUserID {
     permissionPartName: string,
     success: boolean,
     eventDate: DateISO,
+    userEventType: UserEventType,
     comment: string,
     operationCode: number
 }

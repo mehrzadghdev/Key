@@ -8,6 +8,9 @@ import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type
 import { UserDetails } from 'src/app/shared/types/authentication.type';
 import { AuthenticationService } from 'src/app/shared/services/api/authentication.service';
 import * as moment from 'jalali-moment';
+import { UserEventType } from '../../enums/user-event-type.enum';
+import { Clipboard } from '@angular/cdk/clipboard';
+import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 
 @Component({
   selector: 'app-user-events',
@@ -40,13 +43,19 @@ export class UserEventsComponent implements OnInit {
   public eventToDate?: DateISO;
 
   public get username(): string {
-    const userDetails = this.authenticationService.userDetails as UserDetails;
+    const userDetails = this.authentication.userDetails as UserDetails;
     return userDetails.name + ' ' + userDetails.family;
+  }
+
+  public get UserEventTypeEnum(): typeof UserEventType {
+    return UserEventType;
   }
 
   constructor(
     private userEventsService: UserEventsService,
-    private authenticationService: AuthenticationService
+    private clipboard: Clipboard,
+    private utility: UtilityService,
+    private authentication: AuthenticationService
   ) { }
 
   ngOnInit(): void {
@@ -66,7 +75,7 @@ export class UserEventsComponent implements OnInit {
   private loadUserEventList(pagination: PaginationBody = { pageSize: 5, page: 1 }): void {
     this.userEventListLoading = true;
 
-    const userDetails: UserDetails = this.authenticationService.userDetails as UserDetails;
+    const userDetails: UserDetails = this.authentication.userDetails as UserDetails;
 
     const userEventListBody: GetCompaniesUserEventListBody = {
       ...pagination,
@@ -94,7 +103,7 @@ export class UserEventsComponent implements OnInit {
     this.loadUserEventList({ pageSize: itemsPerPage, page: 1, sortFieldName: this.sortFieldname });
   }
 
-  public onPaginationChanged(pagetoGo: number): void { 
+  public onPaginationChanged(pagetoGo: number): void {
     this.loadUserEventList({ pageSize: this.tablePagination.pageSize, page: pagetoGo, sortFieldName: this.sortFieldname });
   }
 
@@ -102,17 +111,17 @@ export class UserEventsComponent implements OnInit {
     this.activeSoftwarePart = softwarePart;
     this.loadUserEventList();
   }
-  
+
   public setActivePermissionPart(permissionPart: PermissionPart | undefined): void {
     this.activePermissionPart = permissionPart;
     this.loadUserEventList();
   }
-  
+
   public setEventDateFrom(date: DateISO): void {
     this.eventFromDate = date;
     this.loadUserEventList();
   }
-  
+
   public setEventDateTo(date: DateISO): void {
     this.eventToDate = date;
     this.loadUserEventList();
@@ -138,5 +147,10 @@ export class UserEventsComponent implements OnInit {
     const momentDate: moment.Moment = moment(date);
 
     return moment().diff(momentDate, 'days');
+  }
+
+  public copyUserEventCode(operationCode: number, softwarePartName: string): void {
+    this.clipboard.copy(operationCode.toString());
+    this.utility.message(`کد ${softwarePartName} با موفقیت کپی شد`, 'بستن')
   }
 }
