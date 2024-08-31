@@ -51,7 +51,7 @@ export class DatePickerComponent {
   public toggleDatePickerTabs(tabToToggle?: DatePickerMode) {
     if (!this.datePickerTabs || !(this.datePickerTabs instanceof MatTabGroup)) return;
 
-    if (tabToToggle) {
+    if (tabToToggle !== undefined) {
       this.datePickerMode = tabToToggle;
       this.datePickerTabs.selectedIndex = tabToToggle;
     }

@@ -73,7 +73,7 @@
                                 {{ username }}
                                 <span>-</span>
                                 <ng-container *ngIf="passedDaysFromNow(userEvent.eventDate)">
-                                    {{ passedDaysFromNow(userEvent.eventDate) }} روز پیش
+                                    {{ passedDaysFromNow(userEvent.eventDate) | farsiNumber }} روز پیش
                                 </ng-container>
                                 <ng-container *ngIf="!passedDaysFromNow(userEvent.eventDate)">
                                     امروز

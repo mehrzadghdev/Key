@@ -360,6 +360,25 @@
         .logout-button {
             margin-inline-end: unset;
         }
+
+        .user-events-filters__column {
+            flex-wrap: wrap;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .user-events {
+        .user-event-item__columns {
+            flex-direction: column;
+            gap: 5px;
+            align-items: stretch;
+            justify-content: center;
+        }
+
+        .user-event-item__column:last-child {
+            justify-content: end;
+        }
     }
 }
 

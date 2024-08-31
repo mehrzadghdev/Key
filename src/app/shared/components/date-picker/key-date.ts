@@ -78,6 +78,7 @@ export class KeyDatePicker {
     
     public setMonth(monthNumber: MonthNumber) {
         this.momentDate.jMonth(monthNumber)
+        this.loadDatePicker();
     }
     
     public addYear(number: number = 1): void {
