@@ -49,7 +49,7 @@
                     'error-item': userEvent.permissionPartType === UserEventTypeEnum.Delete,
                     'warn-item': userEvent.permissionPartType === UserEventTypeEnum.Show || userEvent.permissionPartType === UserEventTypeEnum.Review,
                 }" *ngFor="let userEvent of userEventList; let i = index">
-                <div class="user-event-item__topbar" *ngIf="!toDatesSame(userEvent.eventDate, userEventList[i-1] ? userEventList[i-1].eventDate : undefined) || true">
+                <div class="user-event-item__topbar" *ngIf="hasDateBar(userEvent, userEventList[i-1])">
                     <div class="user-event-item__dot"></div>
                     <div class="user-event-item__date">عملیات در تاریخ {{ userEvent.eventDate | jdate: { day: 'numeric', month: 'long', year: 'numeric' } }}</div>
                 </div>
@@ -72,12 +72,7 @@
                                 </div>
                                 {{ username }}
                                 <span>-</span>
-                                <ng-container *ngIf="passedDaysFromNow(userEvent.eventDate)">
-                                    {{ passedDaysFromNow(userEvent.eventDate) | farsiNumber }} روز پیش
-                                </ng-container>
-                                <ng-container *ngIf="!passedDaysFromNow(userEvent.eventDate)">
-                                    امروز
-                                </ng-container>
+                                {{ (userEvent.eventDate | daysBetweenDates: false) > 0 ? ((userEvent.eventDate | daysBetweenDates: false) | farsiNumber) + ' روز پیش' : 'امروز' }}
                             </div>
                         </div>
                         <div class="user-event-item__column">

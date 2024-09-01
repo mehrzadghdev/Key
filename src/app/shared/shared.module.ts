@@ -43,6 +43,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ChartComponent } from './components/chart/chart.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HideTabsDirective } from './directives/hide-tabs.directive';
+import { DaysBetweenDatesPipe } from './pipes/days-between-dates.pipe';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -65,7 +66,8 @@ export function playerFactory() {
     TiledTableDirective,
     ChartComponent,
     AlertComponent,
-    HideTabsDirective
+    HideTabsDirective,
+    DaysBetweenDatesPipe
   ],
   imports: [
     CommonModule,
@@ -113,10 +115,12 @@ export function playerFactory() {
     JdatePipe,
     PricePipe,
     FarsiNumberPipe,
+    DaysBetweenDatesPipe,
     RandomWidthDirective,
     AutoFocusDirective,
     PercentageInputDirective,
     TiledTableDirective,
+    HideTabsDirective,
     MatIconModule,
     MatRippleModule,
     MatMenuModule,
@@ -132,7 +136,6 @@ export function playerFactory() {
     MatTooltipModule,
     MatProgressSpinnerModule,
     MatRadioModule,
-    HideTabsDirective,
     DragDropModule,
   ] 
 })

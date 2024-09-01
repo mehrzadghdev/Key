@@ -144,6 +144,37 @@ export class UserEventsComponent implements OnInit {
     return false
   }
 
+  public twoTypesSame(typeOne: UserEventType, TypeTwo: UserEventType | undefined) {
+    if (
+      TypeTwo
+      && typeOne === TypeTwo
+    ) {
+      return true;
+    }
+
+    return false
+  }
+
+  public hasDateBar(currentUserEvent: UserEvent, prevUserEvent: UserEvent | undefined) {
+    if (!prevUserEvent) {
+      return true;
+    }
+
+    const jCurrentUserEventDate: moment.Moment = moment(currentUserEvent.eventDate);
+    const jPrevUserEventDate: moment.Moment = moment(prevUserEvent.eventDate);
+
+    if (
+      prevUserEvent.permissionPartType === currentUserEvent.permissionPartType
+      && jCurrentUserEventDate.jDate() === jPrevUserEventDate.jDate()
+      && jCurrentUserEventDate.jMonth() === jPrevUserEventDate.jMonth()
+      && jCurrentUserEventDate.jYear() === jPrevUserEventDate.jYear()
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+
   public passedDaysFromNow(date: DateISO): number {
     const momentDate: moment.Moment = moment(date);
 
