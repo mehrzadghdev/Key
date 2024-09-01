@@ -6,11 +6,13 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { UserEventsComponent } from './user-events/user-events.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { UserEventMoreDetailsComponent } from './user-event-more-details/user-event-more-details.component';
 
 
 @NgModule({
   declarations: [
-    UserEventsComponent
+    UserEventsComponent,
+    UserEventMoreDetailsComponent
   ],
   imports: [
     CommonModule,

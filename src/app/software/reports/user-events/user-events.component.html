@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="user-event-item__column">
-                            <key-button appearance="text">
+                            <key-button appearance="text" (click)="onUserEventMoreDetails(userEvent)" [disabled]="!userEvent.comment">
                                 <mat-icon class="material-icons-outlined">visibility</mat-icon>
                                 اطلاعات بیشتر
                             </key-button>

@@ -127,14 +127,25 @@
                     <span class="package-item__price">{{ package.priceInRials | price }} ریال</span>
                 </div>
                 <ul class="package-item__options">
-                    <li class="package-item__option">ایجاد {{ package.numberOfCompanies }} شرکت</li>
-                    <li class="package-item__option">ارسال {{ package.numberOfInvoice }} فاکتور فروش به سامانه</li>
-                    <li class="package-item__option"> {{ package.numberOfCompanies }} </li>
+                    <li class="package-item__option">
+                        <mat-icon class="icon-primary">check</mat-icon>
+                        ایجاد {{ package.numberOfCompanies }} شرکت</li>
+                    <li class="package-item__option">
+                        <mat-icon class="icon-primary">check</mat-icon>
+                        ارسال {{ package.numberOfInvoice >= 0 ? package.numberOfInvoice : 'بینهایت ' }} فاکتور فروش به سامانه</li>
+                    <li class="package-item__option">
+                        <mat-icon class="icon-primary" *ngIf="package.canSeachProductCode">check</mat-icon>
+                        <mat-icon class="icon-red" *ngIf="!package.canSeachProductCode">close</mat-icon>
+                        قابلیت جستجو شناسه کالا و خدمات</li>
+                    <li class="package-item__option">
+                        <mat-icon class="icon-primary" *ngIf="package.createCustomCSR">check</mat-icon>
+                        <mat-icon class="icon-red" *ngIf="!package.createCustomCSR">close</mat-icon>
+                        ایجاد CSR بینهایت</li>
                 </ul>
+                <div class="package-item__buy-button">
+                    <key-button [block]="true">خرید بسته</key-button>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-<br><br><br><br><br><br>
--

@@ -418,6 +418,18 @@
         .package-item__options {
             padding: 20px;
         }
+
+        .package-item__option {
+            list-style: none;
+
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .package-item__buy-button {
+            padding: 20px;
+        }
     }
 }
 

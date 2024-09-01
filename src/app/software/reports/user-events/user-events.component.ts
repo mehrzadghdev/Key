@@ -11,6 +11,9 @@ import * as moment from 'jalali-moment';
 import { UserEventType } from '../../enums/user-event-type.enum';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
+import { IsType } from 'src/app/shared/helpers/isType.helper';
+import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
+import { UserEventMoreDetailsComponent } from '../user-event-more-details/user-event-more-details.component';
 
 @Component({
   selector: 'app-user-events',
@@ -55,7 +58,8 @@ export class UserEventsComponent implements OnInit {
     private userEventsService: UserEventsService,
     private clipboard: Clipboard,
     private utility: UtilityService,
-    private authentication: AuthenticationService
+    private authentication: AuthenticationService,
+    private dialog: DialogService,
   ) { }
 
   ngOnInit(): void {
@@ -128,33 +132,6 @@ export class UserEventsComponent implements OnInit {
     this.loadUserEventList();
   }
 
-  public toDatesSame(firstDate: DateISO, secondDate: DateISO | undefined): boolean {
-    const jFirstDate: moment.Moment = moment(firstDate);
-    const jSecondDate: moment.Moment = moment(secondDate);
-
-    if (
-      secondDate
-      && jFirstDate.jDate() === jSecondDate.jDate()
-      && jFirstDate.jMonth() === jSecondDate.jMonth()
-      && jFirstDate.jYear() === jSecondDate.jYear()
-    ) {
-      return true;
-    }
-
-    return false
-  }
-
-  public twoTypesSame(typeOne: UserEventType, TypeTwo: UserEventType | undefined) {
-    if (
-      TypeTwo
-      && typeOne === TypeTwo
-    ) {
-      return true;
-    }
-
-    return false
-  }
-
   public hasDateBar(currentUserEvent: UserEvent, prevUserEvent: UserEvent | undefined) {
     if (!prevUserEvent) {
       return true;
@@ -175,14 +152,18 @@ export class UserEventsComponent implements OnInit {
     return true;
   }
 
-  public passedDaysFromNow(date: DateISO): number {
-    const momentDate: moment.Moment = moment(date);
-
-    return moment().diff(momentDate, 'days');
-  }
-
   public copyUserEventCode(operationCode: number, softwarePartName: string): void {
     this.clipboard.copy(operationCode.toString());
     this.utility.message(`کد ${softwarePartName} با موفقیت کپی شد`, 'بستن')
+  }
+
+  public onUserEventMoreDetails(userEvent: UserEvent): void {
+    this.dialog.openDialog(UserEventMoreDetailsComponent, {
+      width: '456px',
+      data: {
+        moreDetailsJson: userEvent.comment,
+        softwarePartName: userEvent.softwarePartName
+      }
+    })
   }
 }
