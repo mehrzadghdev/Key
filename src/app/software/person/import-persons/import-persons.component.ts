@@ -21,7 +21,7 @@ export class ImportPersonsComponent implements OnInit {
   public addPersonsLoading: boolean = false;
   public tailedTable: boolean = false;
   public excelReaded: boolean = false;
-  public tableColumns: string[] = ["نوع", "نام", "کد ملی یا شماره اقتصادی", "تلفن", "تلفن ثابت", "کد پستی", "آدرس"];
+  public tableColumns: string[] = ["کد طرف حساب", "نوع", "نام", "کد ملی یا شماره اقتصادی", "تلفن", "تلفن ثابت", "کد پستی", "آدرس"];
 
   public personTypes = [
     { display: 'حقیقی', value: PersonType.Genuine },
@@ -93,23 +93,53 @@ export class ImportPersonsComponent implements OnInit {
     return false
   }
 
+  public isPersonCodeUniqueInExcel(personCode: number): boolean {
+    if (this.personsList.filter(person => person.code === personCode).length < 1) {
+      return true;
+    }
+
+    return false;
+  }
+
   public onImportPersons(): void {
     const validPersons = this.personsList.filter((person: Person) => {
       return this.isPersonTypeValid(person.personType) 
       && this.isNationalIdOrEconomicCodeValid(person.personType === PersonType.Genuine || person.personType === PersonType.NonIranianNotionals ? person.nationalId : person.economicCode)
       && this.isMobileValid(person.mobile)
       && this.isZipCodeValid(person.zipCode)
+      && this.isPersonCodeUniqueInExcel(person.code);
     })
 
-    if (validPersons.length === this.personsList.length) {
-      this.dialog.openAlertDialog({ dialogName: 'فراخوانی از اکسل', title: `تایید فراخوانی ${validPersons.length} طرف حساب`, message: 'در صورت تایید تمام طرف حساب های نمایش داده شده در پیش نمایش به لیست طرف حساب ها اصافه میشوند', alertType: AlertDialogType.Info, hasCancel: true }).afterClosed().subscribe(result => {
+    if (validPersons.length < 1) {
+      this.dialog.openAlertDialog({ 
+        dialogName: 'فراخوانی از اکسل', 
+        title: 'خطا: هیچ ردیف معتبری پیدا نشد', 
+        message: 'هیچ ردیف معتبری برای فراخوانی پیدا نشد، لطفا ابتدا خطا های مربوطه را رفع و سپس دوباره تلاش کنید', 
+        alertType: AlertDialogType.Error, 
+        hasCancel: false
+      })
+    }
+    else if (validPersons.length === this.personsList.length) {
+      this.dialog.openAlertDialog({ 
+        dialogName: 'فراخوانی از اکسل', 
+        title: `تایید فراخوانی ${validPersons.length} طرف حساب`, 
+        message: 'در صورت تایید تمام طرف حساب های نمایش داده شده در پیش نمایش به لیست طرف حساب ها اصافه میشوند', 
+        alertType: AlertDialogType.Info, 
+        hasCancel: true
+      }).afterClosed().subscribe(result => {
         if (result) {
           this.onAddPersons(validPersons);
         }
       });
     }
     else {
-      this.dialog.openAlertDialog({ dialogName: 'فراخوانی از اکسل', title: 'اخطار: بعضی از ردیف ها نامعتبر میباشند', message: 'بعضی از ردیف های انتخاب شده خطا دارند و در فراخوانی اضافه نمیشوند', alertType: AlertDialogType.Warning, hasCancel: true }).afterClosed().subscribe(result => {
+      this.dialog.openAlertDialog({ 
+        dialogName: 'فراخوانی از اکسل', 
+        title: 'اخطار: بعضی از ردیف ها نامعتبر میباشند', 
+        message: 'بعضی از ردیف های انتخاب شده خطا دارند و در فراخوانی اضافه نمیشوند', 
+        alertType: AlertDialogType.Warning,
+         hasCancel: true 
+      }).afterClosed().subscribe(result => {
         if (result) {
           this.onAddPersons(validPersons);
         }
@@ -185,5 +215,11 @@ export class ImportPersonsComponent implements OnInit {
   
   public closeDialog(value?: any): void {
     this.dialogRef.close(value ?? null);
+  }
+
+  public onRemoveReadedExcel(): void {
+    this.personsList = [];
+
+    this.excelReaded = false;
   }
 }

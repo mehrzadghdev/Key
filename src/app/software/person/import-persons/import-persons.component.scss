@@ -15,4 +15,18 @@
     color: var(--error-color);
     padding: 5px 15px;
     border-radius: 3px;
+    white-space: nowrap;
+}
+
+.excel-import-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.excel-import-text {
+    margin-top: 10px;
+    color: var(--text-secondary-color);
+    max-width: 65ch;
+    text-wrap: balance;
 }

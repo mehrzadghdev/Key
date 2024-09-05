@@ -1021,3 +1021,7 @@ textarea {
 .mat-menu-item-submenu-trigger::after {
     border-style: unset !important;
 }
+
+.mat-mdc-menu-submenu-icon {
+    filter: var(--icon-base) !important;
+}

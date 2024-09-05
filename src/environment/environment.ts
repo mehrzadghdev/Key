@@ -1,4 +1,9 @@
-export const environment = {
-    apiUrl: "https://api.keyacc.ir/" as const,
-    isDevMode: true
+export const environment: Environment = {
+    apiUrl: "https://api.keyacc.ir/",
+    isDevMode: true,
+}
+
+interface Environment {
+    readonly apiUrl: string;
+    readonly isDevMode: boolean;
 }

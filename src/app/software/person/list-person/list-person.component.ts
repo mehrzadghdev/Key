@@ -36,7 +36,7 @@ export class ListPersonComponent implements OnInit {
   public tableSortField: string = '';
   public personsList: GetCompaniesPersonListItem[] = [];
   public personListLoaded: boolean = false;
-  public tableColumns: string[] = ["نوع", "نام", "کد ملی یا شماره اقتصادی", "تاریخ ساخت", "تلفن", "کد پستی", "عملیات"];
+  public tableColumns: string[] = ["کد", "نوع", "نام", "کد ملی یا شماره اقتصادی", "تاریخ ساخت", "تلفن", "کد پستی", "عملیات"];
   public activeSort: string = 'پیش فرض';
   public mobileActiveSortMode: SortDirection = 'asc';
 

@@ -72,6 +72,11 @@
     </div>
     <div class="table">
         <table *ngIf="personListLoaded" mat-table [dataSource]="personsList" matSort (matSortChange)="onTableSortChanged($event)" keyTiledTable [tiledTable]="tailedTable">
+            <ng-container matColumnDef="کد">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> کد </th>
+                <td mat-cell *matCellDef="let element"> {{ element.code | farsiNumber }} </td>
+            </ng-container>
+
             <ng-container matColumnDef="نوع">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> نوع </th>
                 <td mat-cell *matCellDef="let element"> {{ personTypeTextByNumber(element.personType) }} </td>
@@ -85,8 +90,8 @@
             <ng-container matColumnDef="کد ملی یا شماره اقتصادی">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> کد ملی یا شماره اقتصادی </th>
                 <td mat-cell *matCellDef="let element">
-                    <ng-container *ngIf="element.personType === PersonTypeEnum.Genuine || element.personType === PersonTypeEnum.NonIranianNotionals">{{ element.nationalId }}</ng-container>
-                    <ng-container *ngIf="element.personType !== PersonTypeEnum.Genuine && element.personType !== PersonTypeEnum.NonIranianNotionals">{{ element.economicCode }}</ng-container>
+                    <ng-container *ngIf="element.personType === PersonTypeEnum.Genuine || element.personType === PersonTypeEnum.NonIranianNotionals">{{ element.nationalId | farsiNumber }}</ng-container>
+                    <ng-container *ngIf="element.personType !== PersonTypeEnum.Genuine && element.personType !== PersonTypeEnum.NonIranianNotionals">{{ element.economicCode | farsiNumber }}</ng-container>
                 </td>
             </ng-container>
 
@@ -98,7 +103,7 @@
             <ng-container matColumnDef="تلفن">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> تلفن </th>
                 <td mat-cell *matCellDef="let element">
-                    <ng-container *ngIf="element.tel && element.tel !== 'null'"> {{ element.mobile }} </ng-container>
+                    <ng-container *ngIf="element.tel && element.tel !== 'null'"> {{ element.mobile | farsiNumber }} </ng-container>
                     <ng-container *ngIf="!element.tel || element.tel === 'null'"> بدون تلفن </ng-container>
                 </td>
             </ng-container>
@@ -106,7 +111,7 @@
             <ng-container matColumnDef="کد پستی">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> کد پستی </th>
                 <td mat-cell *matCellDef="let element">
-                    <ng-container *ngIf="element.zipCode && element.zipCode !== 'null'"> {{ element.zipCode }}
+                    <ng-container *ngIf="element.zipCode && element.zipCode !== 'null'"> {{ element.zipCode | farsiNumber }}
                     </ng-container>
                     <ng-container *ngIf="!element.zipCode || element.zipCode === 'null'"> بدون کد پستی </ng-container>
                 </td>
