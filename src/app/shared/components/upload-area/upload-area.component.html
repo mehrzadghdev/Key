@@ -1,0 +1,28 @@
+<div class="key-upload-area-wrapper" [style.padding]="padding">
+    <div class="key-upload-area" [style.width]="width" [style.min-height]="height" [class.file-dragged]="fileDragged">
+        <ng-container *ngIf="!uploadedFile">
+            <input (dragenter)='fileDragged = true' (dragleave)="fileDragged = false" #fileInput type="file" (change)="onFileUpload($event)" [accept]="allowedFileTypes" class="key-upload-area__input" />
+            <img class="key-upload-area__icon" [style.width]="iconSize" src="assets/images/software/upload.svg" alt="آپلود">
+            <span class="key-upload-area__text">
+                برای بارگذاری، پیوست خود را اینجا رها کنید
+                <span>یا</span>
+            </span>
+            <key-button appearance="stroked" (click)="fileInput.click()">
+                <mat-icon class="material-icons-outlined">file_upload</mat-icon>
+                انتخاب پیوست
+            </key-button>
+        </ng-container>
+        <ng-container *ngIf="uploadedFile">
+            <div class="key-upload-area__file-details">
+                <span class="title">{{ uploadedFile.name }}</span>
+                <span class="sub-title">حجم فایل: {{ (uploadedFile.size | bytes) | farsiNumber }}</span>
+            </div>
+            <div class="key-upload-area__delete-button">
+                <key-button appearance="error" (click)="onRemoveUploadedFile()">
+                    <mat-icon class="material-icons-outlined">delete</mat-icon>
+                    حذف پیوست
+                </key-button>
+            </div>
+        </ng-container>
+    </div>
+</div>

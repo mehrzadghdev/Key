@@ -70,8 +70,6 @@ export interface AddPerson extends HasDatabase {
     mobile: string,
     zipCode: string,
     address: string,
-    // TODO: Must remove that database thing
-    database: any
 }
 
 export interface AddPersonBody extends HasDatabase {
@@ -84,6 +82,27 @@ export interface AddPersonBody extends HasDatabase {
     mobile: string,
     zipCode: string,
     address: string
+}
+
+// Person/AddPersons
+
+export interface AddPersons extends HasDatabase {
+    id: number,
+    code: number,
+    personType: number,
+    personName: string,
+    nationalId: string,
+    economicCode: string,
+    tel: string,
+    mobile: string,
+    zipCode: string,
+    address: string,
+    createdDate: string,
+    modifiedDate: string
+}
+
+export interface AddPersonsBody extends HasDatabase {
+    persons: Person[];
 }
 
 // Person/UpdatePerson

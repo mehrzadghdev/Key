@@ -15,6 +15,7 @@ import { MatSort, Sort, SortDirection } from '@angular/material/sort';
 import { Pagination, PaginationBody } from 'src/app/shared/types/pagination.type';
 import { SelectionModel } from '@angular/cdk/collections';
 import { AlertDialogType } from 'src/app/shared/types/dialog.type';
+import { ImportPersonsComponent } from '../import-persons/import-persons.component';
 
 @Component({
   selector: 'app-list-product-person-company',
@@ -46,6 +47,10 @@ export class ListPersonComponent implements OnInit {
     { display: 'اتباع غیر ایرانی', value: PersonType.NonIranianNotionals },
     { display: 'مصرف کننده نهایی', value: PersonType.FinalConsumer },
   ]
+
+  public get PersonTypeEnum(): typeof PersonType {
+    return PersonType;
+  }
 
   constructor(
     private authentication: AuthenticationService,
@@ -210,5 +215,15 @@ export class ListPersonComponent implements OnInit {
   public onSearch(searchQuery: string) {
     this.tableSearchQuery = searchQuery
     this.loadPersonList({ pageSize: 10, page: 1, searchTerm: searchQuery, sortFieldName: this.tableSortField });
+  }
+
+  public onImportPersonsFromExcel(): void {
+    this.dialog.openFormDialog(ImportPersonsComponent, {
+      width: "100%",
+    }).afterClosed().subscribe(res => {
+      if (res) {
+        this.loadPersonList()
+      }
+    })
   }
 }

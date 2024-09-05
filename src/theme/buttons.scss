@@ -77,6 +77,13 @@ button {
         animation: loading-spinner 1s ease infinite;
         transition: all 0.2s;
     }
+
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+        filter: var(--icon-white);
+    }
 }
 
 @keyframes loading-spinner {
@@ -103,6 +110,14 @@ button {
     height: 36px;
     cursor: pointer;
 
+    .button-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+    }
+
     &:enabled:hover,
     &:focus,
     &:focus-visible,
@@ -115,6 +130,13 @@ button {
     &:disabled {
         opacity: 0.4;
         cursor: default;
+    }
+    
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+        filter: var(--icon-primary);
     }
 }
 
@@ -132,6 +154,14 @@ button {
     gap: 8px;
     height: 36px;
 
+    .button-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+    }
+
     &:enabled:hover,
     &:focus,
     &:focus-visible,
@@ -142,6 +172,13 @@ button {
     &:disabled {
         opacity: 0.4;
         cursor: default;
+    }
+        
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+        filter: var(--icon-primary);
     }
 }
 
@@ -183,6 +220,13 @@ button {
     &:disabled {
         opacity: 0.4;
         cursor: default;
+    }
+  
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+        filter: var(--icon-primary);
     }
 }
 
@@ -227,6 +271,14 @@ button {
         opacity: 0.4;
         cursor: default;
     }
+
+        
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+        filter: var(--icon-primary);
+    }
 }
 
 .stroked-icon-button {
@@ -239,6 +291,14 @@ button {
     justify-content: center;
     border: 1px solid var(--border-color-medium);
     cursor: pointer;
+
+    .button-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+    }
 
     &:enabled:hover,
     &:focus,
@@ -264,6 +324,14 @@ button {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+
+    .button-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+    }
 
     &:enabled:hover,
     &:focus,
@@ -319,6 +387,14 @@ button {
     gap: 8px;
     height: 36px;
 
+    .button-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+    }
+
     &:enabled:hover,
     &:focus,
     &:focus-visible,
@@ -329,6 +405,13 @@ button {
     &:disabled {
         opacity: 0.4;
         cursor: default;
+    }
+
+    mat-icon {
+        width: 18px;
+        height: 18px;
+        font-size: 18px;
+        filter: var(--icon-red);
     }
 }
 
@@ -345,6 +428,14 @@ button {
     font-weight: 600;
     gap: 8px;
     height: 36px;
+
+    .button-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
+    }
 
     &:enabled:hover,
     &:focus,

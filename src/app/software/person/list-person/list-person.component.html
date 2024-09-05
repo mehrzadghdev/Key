@@ -12,10 +12,34 @@
             <mat-icon class="material-icons-outlined list-add-button-icon">person_add</mat-icon> طرف حساب جدید
         </key-button>
         <div class="buttons-seperator"></div>
-        <button mat-ripple class="tiled-table-toggle" type="button" (click)="tailedTable = !tailedTable" [matTooltip]="!tailedTable ? 'حالت نمایش: کاشی' : 'حالت نمایش: جدول'">
-            <mat-icon *ngIf="!tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">grid_on_outlined</mat-icon>  
-            <mat-icon *ngIf="tailedTable" class="material-icons-outlined tiled-table-toggle-icon icon-primary">format_list_bulleted_outlined</mat-icon>  
+        <button mat-ripple class="list-more-options" type="button" tabindex="1" [matMenuTriggerFor]="moreOptionsMenu">
+            <mat-icon class="material-icons-outlined list-more-options-icon icon-primary">more_vert_outlined</mat-icon>  
         </button>
+        <mat-menu #moreOptionsMenu="matMenu">
+            <button mat-menu-item [matMenuTriggerFor]="tiledTableToggleMenu">
+                <div class="menu-icon-container">
+                    <mat-icon class="material-icons-outlined icon-primary">format_list_bulleted</mat-icon>
+                    نمایش لیست
+                </div>
+            </button>
+            <mat-menu #tiledTableToggleMenu="matMenu">
+                <mat-radio-group [(ngModel)]="tailedTable">
+                    <button mat-menu-item (click)="tailedTable = false">
+                        <mat-radio-button [value]="false" [checked]="!tailedTable">حالت جدول</mat-radio-button>
+                    </button>
+                    <button mat-menu-item (click)="tailedTable = true">
+                        <mat-radio-button [value]="true" [checked]="tailedTable">حالت کاشی</mat-radio-button>
+                    </button>
+                </mat-radio-group>
+            </mat-menu>
+
+            <button mat-menu-item (click)="onImportPersonsFromExcel()">
+                <div class="menu-icon-container">
+                    <mat-icon class="material-icons-outlined icon-primary">file_upload</mat-icon>
+                    فراخوانی از اکسل
+                </div>
+            </button>
+        </mat-menu>
     </div>
 </div>
 <div class="content-table">
@@ -61,8 +85,8 @@
             <ng-container matColumnDef="کد ملی یا شماره اقتصادی">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> کد ملی یا شماره اقتصادی </th>
                 <td mat-cell *matCellDef="let element">
-                    <ng-container *ngIf="element.personType === 0">{{ element.nationalId }}</ng-container>
-                    <ng-container *ngIf="element.personType !== 0">{{ element.economicCode }}</ng-container>
+                    <ng-container *ngIf="element.personType === PersonTypeEnum.Genuine || element.personType === PersonTypeEnum.NonIranianNotionals">{{ element.nationalId }}</ng-container>
+                    <ng-container *ngIf="element.personType !== PersonTypeEnum.Genuine && element.personType !== PersonTypeEnum.NonIranianNotionals">{{ element.economicCode }}</ng-container>
                 </td>
             </ng-container>
 
@@ -74,7 +98,7 @@
             <ng-container matColumnDef="تلفن">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> تلفن </th>
                 <td mat-cell *matCellDef="let element">
-                    <ng-container *ngIf="element.tel && element.tel !== 'null'"> {{ element.tel }} </ng-container>
+                    <ng-container *ngIf="element.tel && element.tel !== 'null'"> {{ element.mobile }} </ng-container>
                     <ng-container *ngIf="!element.tel || element.tel === 'null'"> بدون تلفن </ng-container>
                 </td>
             </ng-container>
@@ -106,7 +130,6 @@
             <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
             <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell table-no-data" [colSpan]="tableColumns.length">
-                    <img src="assets/images/software/no-data.svg" alt="no data found">
                     هیچ داده ای یافت نشد
                 </td>
             </tr>

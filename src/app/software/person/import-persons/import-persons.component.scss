@@ -1,0 +1,18 @@
+@import url('../../../shared/scss/key-form-dialog.scss');
+@import url('../../../shared/scss/key-list.scss');
+
+.valid-person-type {
+    border: 1px solid var(--primary-color);
+    background-color: color-mix(in srgb, var(--primary-color), transparent 80%);
+    color: var(--primary-color);
+    padding: 5px 15px;
+    border-radius: 3px;
+}
+
+.invalid-person-type {
+    border: 1px solid var(--error-color);
+    background-color: color-mix(in srgb, var(--error-color), transparent 80%);
+    color: var(--error-color);
+    padding: 5px 15px;
+    border-radius: 3px;
+}

@@ -7,13 +7,15 @@ import { SharedModule } from '../../shared/shared.module';
 import { CreatePersonComponent } from './create-person/create-person.component';
 import { UpdatePersonComponent } from './update-person/update-person.component';
 import { NgxMaskDirective } from 'ngx-mask';
+import { ImportPersonsComponent } from './import-persons/import-persons.component';
 
 
 @NgModule({
   declarations: [
     ListPersonComponent,
     CreatePersonComponent,
-    UpdatePersonComponent
+    UpdatePersonComponent,
+    ImportPersonsComponent
   ],
   imports: [
     CommonModule,

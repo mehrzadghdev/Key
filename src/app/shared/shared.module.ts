@@ -44,6 +44,8 @@ import { ChartComponent } from './components/chart/chart.component';
 import { AlertComponent } from './components/alert/alert.component';
 import { HideTabsDirective } from './directives/hide-tabs.directive';
 import { DaysBetweenDatesPipe } from './pipes/days-between-dates.pipe';
+import { UploadAreaComponent } from './components/upload-area/upload-area.component';
+import { BytesPipe } from './pipes/bytes.pipe';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -67,7 +69,9 @@ export function playerFactory() {
     ChartComponent,
     AlertComponent,
     HideTabsDirective,
-    DaysBetweenDatesPipe
+    DaysBetweenDatesPipe,
+    UploadAreaComponent,
+    BytesPipe
   ],
   imports: [
     CommonModule,
@@ -110,6 +114,7 @@ export function playerFactory() {
     TableLoadingComponent,
     ButtonComponent,
     ChartComponent,
+    UploadAreaComponent,
     DatePickerComponent,
     SkeletonComponent,
     JdatePipe,

@@ -111,7 +111,12 @@
     overflow-x: auto;
     background-color: var(--base-color); 
     border-radius: 3px;
-    border: 1px solid var(--border-color-medium); 
+    border: 1px solid var(--border-color-medium);
+    
+    &.flat-table {
+        box-shadow: unset;
+        border: unset;
+    }
 
     .table-mobile-sort {
         display: flex;
