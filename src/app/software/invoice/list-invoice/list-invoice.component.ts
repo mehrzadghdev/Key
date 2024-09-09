@@ -41,9 +41,8 @@ export class ListInvoiceComponent implements OnInit {
   public tableColumns: string[] = ["کد", "تاریخ فاکتور", "نوع", "طرف حساب", "الگو فروش", "روش پرداخت", "عملیات"];
 
   public invoiceTypeList: SelectOption<InvoiceType>[] = [
-    { display: "اصلی", value: InvoiceType.Main },
-    { display: "ابطالی", value: InvoiceType.Cancellation },
-    { display: "اصلاحی", value: InvoiceType.Corrective }
+    { display: "نوع اول", value: InvoiceType.TypeOne },
+    { display: "نوع دوم", value: InvoiceType.TypeTwo },
   ]
 
   public invoicePaymentMethodList: SelectOption<InvoicePaymentMethod>[] = [

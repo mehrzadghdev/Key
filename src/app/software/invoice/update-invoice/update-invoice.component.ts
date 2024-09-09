@@ -40,9 +40,8 @@ export class UpdateInvoiceComponent {
   public invoiceProducts: UpdateInvoiceProductItem[] = [];
 
   public invoiceTypeList: SelectOption<InvoiceType>[] = [
-    { display: "اصلی", value: InvoiceType.Main },
-    { display: "ابطالی", value: InvoiceType.Cancellation },
-    { display: "اصلاحی", value: InvoiceType.Corrective }
+    { display: "نوع اول", value: InvoiceType.TypeOne },
+    { display: "نوع دوم", value: InvoiceType.TypeTwo }
   ]
 
   public invoicePaymentMethodList: SelectOption<InvoicePaymentMethod>[] = [
@@ -166,17 +165,7 @@ export class UpdateInvoiceComponent {
 
   private initFormFieldSubscriptions(): void {
     this.invoiceForm.get("invoiceType")?.valueChanges.subscribe(value => {
-      if (value === InvoiceType.Corrective) {
-        this.invoiceForm.get("referenceInvoiceCode")?.setValidators(Validators.required);
-        this.invoiceForm.get("referenceInvoiceCode")?.updateValueAndValidity();
-        this.invoiceForm.get("referenceInvoiceCode")?.enable();
-      }
-      else {
-        this.invoiceForm.get("referenceInvoiceCode")?.clearValidators();
-        this.invoiceForm.get("referenceInvoiceCode")?.updateValueAndValidity();
-        this.invoiceForm.get("referenceInvoiceCode")?.patchValue(null);
-        this.invoiceForm.get("referenceInvoiceCode")?.disable();
-      }
+
     })
 
     this.invoiceForm.get("patternType")?.valueChanges.subscribe(value => {

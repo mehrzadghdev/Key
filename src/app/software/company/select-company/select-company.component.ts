@@ -49,9 +49,6 @@ export class SelectCompanyComponent implements OnInit {
     if (this.data.reSelect) {
       this.utility.message('شرکت با موفقیت تغییر یافت.', 'بستن');
     }
-    else {
-      this.utility.message('به نرم افزار واسط کلید خوش آمدید.', 'بستن');
-    }
     this.dialogRef.close();
   }
 

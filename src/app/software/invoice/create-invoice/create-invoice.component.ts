@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { InvoicePatternType, InvoicePaymentMethod, InvoiceType } from '../../enums/invoice-type.enum';
+import { FlightType, InvoicePatternType, InvoicePaymentMethod, InvoiceType } from '../../enums/invoice-type.enum';
 import { SelectOption } from 'src/app/shared/types/common.type';
 import { AddInvoiceBody, AddInvoiceProductItem, GetInvoiceListInvoiceItem, Invoice, InvoiceProductItem } from '../../types/definitions/invoice.type';
 import { PersonService } from '../../services/definitions/person.service';
@@ -18,6 +18,8 @@ import { AddInvoiceProductComponent } from '../add-invoice-product/add-invoice-p
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { InvoiceService } from '../../services/definitions/invoice.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { CurrencyService } from '../../services/definitions/currency.service';
+import { Currency } from '../../types/definitions/currency.type';
 
 @Component({
   selector: 'app-create-invoice',
@@ -35,15 +37,16 @@ export class CreateInvoiceComponent implements OnInit {
   public personCodeAcDisplay: string = '';
   public personList: Person[] = [];
   public filteredPersonList: Person[] = [];
+  public currencyList: Currency[] = [];
+  public filteredCurrencyList: Currency[] = [];
   public addInvoiceLoading: boolean = false;
 
   public invoiceProductsTableColumns: string[] = ['کد کالا', 'نام کالا', 'تعداد', 'قیمت', 'تخفیف', 'درصد مالیات', 'مالیات', 'عملیات']
   public invoiceProducts: AddInvoiceProductItem[] = [];
 
   public invoiceTypeList: SelectOption<InvoiceType>[] = [
-    { display: "اصلی", value: InvoiceType.Main },
-    { display: "ابطالی", value: InvoiceType.Cancellation },
-    { display: "اصلاحی", value: InvoiceType.Corrective }
+    { display: "نوع اول", value: InvoiceType.TypeOne },
+    { display: "نوع دوم", value: InvoiceType.TypeTwo },
   ]
 
   public invoicePaymentMethodList: SelectOption<InvoicePaymentMethod>[] = [
@@ -59,10 +62,19 @@ export class CreateInvoiceComponent implements OnInit {
     { value: InvoicePatternType.Contract, display: "قرارداد پیمان کاری" },
     { value: InvoicePatternType.UtilityBills, display: "قبوض خدماتی" },
     { value: InvoicePatternType.Export, display: "صادرات" },
+    { value: InvoicePatternType.Ticket, display: "بلیط هواپیما" },
+  ]
+
+  public flightTypeList: SelectOption<FlightType>[] = [
+    { value: FlightType.Domestic, display: "پرواز های داخلی" },
+    { value: FlightType.Foreign, display: "پرواز های خارجی" },
   ]
 
   get InvoiceTypeEnum(): typeof InvoiceType {
     return InvoiceType
+  }
+  get InvoicePatternTypeEnum(): typeof InvoicePatternType {
+    return InvoicePatternType
   }
 
   constructor(
@@ -70,6 +82,7 @@ export class CreateInvoiceComponent implements OnInit {
     private personService: PersonService,
     private productService: ProductService,
     private invoiceService: InvoiceService,
+    private currencyService: CurrencyService,
     private authentication: AuthenticationService,
     private utility: UtilityService,
     private dialog: DialogService,
@@ -78,15 +91,27 @@ export class CreateInvoiceComponent implements OnInit {
     this.invoiceForm = this.fb.group({
       invoiceCode: [null, [Validators.required, CustomValidators.code]],
       invoiceDate: [new Date().toISOString(), Validators.required],
-      invoiceType: [1, Validators.required],
+      invoiceType: [InvoiceType.TypeOne, Validators.required],
       referenceInvoiceCode: [null, Validators.nullValidator],
       referenceInvoiceCodeSearch: [null],
       personCode: [null, Validators.required],
       personCodeSearch: [null],
       patternType: [null, Validators.required],
       vendorContractRegisterId: [null, Validators.nullValidator],
+      exploitationId: [null, Validators.nullValidator],
+      flightType: [null, Validators.nullValidator],
+      cottageNumberOfCustoms: [null, Validators.nullValidator],
+      cottageDateOfCustoms: [null, Validators.nullValidator],
+      constructionWages: [null, Validators.nullValidator],
+      sellersProfit: [null, Validators.nullValidator],
+      rightToWork: [null, Validators.nullValidator],
       paymentMethod: [null, Validators.required],
       creditAmount: [null, Validators.nullValidator],
+      currencyAmount: [null, Validators.nullValidator],
+      currencyType: [null, Validators.nullValidator],
+      currencyTypeSearch: [null, Validators.nullValidator],
+      exchangeRateRials: [null, Validators.nullValidator],
+      uniqueWorkRightIdentifier: [null, Validators.nullValidator],
       payerNationalId: [null, CustomValidators.nationalId],
       payCardNumber: [null],
       payReferenceNumber: [null]
@@ -121,13 +146,17 @@ export class CreateInvoiceComponent implements OnInit {
     forkJoin({
       persons: this.personService.getCompaniesPersonList(dataFetchBody),
       products: this.productService.getCompaniesProductList(dataFetchBody),
-      invoices: this.invoiceService.getCompaniesInvoiceList(dataFetchBody)
+      invoices: this.invoiceService.getCompaniesInvoiceList(dataFetchBody),
+      currencies: this.currencyService.getCurrencyList(dataFetchBody)
     })
       .subscribe(res => {
         this.productsList = res.products.result;
 
         this.personList = res.persons.result;
         this.filteredPersonList = res.persons.result;
+
+        this.currencyList = res.currencies.result;
+        this.filteredCurrencyList = res.currencies.result;
 
         this.referenceInvoiceList = res.invoices.saleInvoices;
         this.filteredReferenceInvoiceList = res.invoices.saleInvoices;
@@ -138,16 +167,26 @@ export class CreateInvoiceComponent implements OnInit {
 
   private initFormFieldSubscriptions(): void {
     this.invoiceForm.get("invoiceType")?.valueChanges.subscribe(value => {
-      if (value === InvoiceType.Corrective) {
-        this.invoiceForm.get("referenceInvoiceCode")?.setValidators(Validators.required);
-        this.invoiceForm.get("referenceInvoiceCode")?.updateValueAndValidity();
-        this.invoiceForm.get("referenceInvoiceCode")?.enable();
+      if (value === InvoiceType.TypeTwo) {
+        this.invoiceForm.get("personCode")?.clearValidators();
+        this.invoiceForm.get("personCode")?.updateValueAndValidity();
+
+        this.invoiceForm.get("paymentMethod")?.patchValue(InvoicePaymentMethod.Cash);
+        this.invoiceForm.get("paymentMethod")?.disable();
+
+        this.invoiceForm.get("patternType")?.patchValue(InvoicePatternType.GoldAndPlatinum);
+        this.invoiceForm.get("patternType")?.disable();
       }
       else {
-        this.invoiceForm.get("referenceInvoiceCode")?.clearValidators();
-        this.invoiceForm.get("referenceInvoiceCode")?.updateValueAndValidity();
-        this.invoiceForm.get("referenceInvoiceCode")?.patchValue(null);
-        this.invoiceForm.get("referenceInvoiceCode")?.disable();
+        this.invoiceForm.get("patternType")?.patchValue(null);
+        this.invoiceForm.get("patternType")?.enable();
+
+        if (this.invoiceForm.get("patternType")?.value !== InvoicePatternType.Export) {
+          this.invoiceForm.get("personCode")?.setValidators(Validators.required);
+          this.invoiceForm.get("personCode")?.updateValueAndValidity();
+          this.invoiceForm.get("paymentMethod")?.patchValue(null);
+          this.invoiceForm.get("paymentMethod")?.enable();
+        }
       }
     })
 
@@ -163,11 +202,109 @@ export class CreateInvoiceComponent implements OnInit {
         this.invoiceForm.get("vendorContractRegisterId")?.patchValue(null);
         this.invoiceForm.get("vendorContractRegisterId")?.disable();
       }
+
+      if (value === InvoicePatternType.UtilityBills) {
+        this.invoiceForm.get("exploitationId")?.setValidators(Validators.required);
+        this.invoiceForm.get("exploitationId")?.updateValueAndValidity();
+        this.invoiceForm.get("exploitationId")?.enable();
+      }
+      else {
+        this.invoiceForm.get("exploitationId")?.clearValidators();
+        this.invoiceForm.get("exploitationId")?.updateValueAndValidity();
+        this.invoiceForm.get("exploitationId")?.patchValue(null);
+        this.invoiceForm.get("exploitationId")?.disable();
+      }
+
+      if (value === InvoicePatternType.Ticket) {
+        this.invoiceForm.get("flightType")?.setValidators(Validators.required);
+        this.invoiceForm.get("flightType")?.updateValueAndValidity();
+        this.invoiceForm.get("flightType")?.enable();
+      }
+      else {
+        this.invoiceForm.get("flightType")?.clearValidators();
+        this.invoiceForm.get("flightType")?.updateValueAndValidity();
+        this.invoiceForm.get("flightType")?.patchValue(null);
+        this.invoiceForm.get("flightType")?.disable();
+      }
+
+      if (value === InvoicePatternType.CurrencySale) {
+        this.invoiceForm.get("currencyAmount")?.setValidators(Validators.required);
+        this.invoiceForm.get("currencyAmount")?.updateValueAndValidity();
+        this.invoiceForm.get("currencyAmount")?.enable();
+        this.invoiceForm.get("currencyType")?.setValidators(Validators.required);
+        this.invoiceForm.get("currencyType")?.updateValueAndValidity();
+        this.invoiceForm.get("currencyType")?.enable();
+        this.invoiceForm.get("exchangeRateRials")?.setValidators(Validators.required);
+        this.invoiceForm.get("exchangeRateRials")?.updateValueAndValidity();
+        this.invoiceForm.get("exchangeRateRials")?.enable();
+      }
+      else {
+        this.invoiceForm.get("currencyAmount")?.clearValidators();
+        this.invoiceForm.get("currencyAmount")?.updateValueAndValidity();
+        this.invoiceForm.get("currencyAmount")?.patchValue(null);
+        this.invoiceForm.get("currencyAmount")?.disable();
+        this.invoiceForm.get("currencyType")?.clearValidators();
+        this.invoiceForm.get("currencyType")?.updateValueAndValidity();
+        this.invoiceForm.get("currencyType")?.patchValue(null);
+        this.invoiceForm.get("currencyType")?.disable();
+        this.invoiceForm.get("exchangeRateRials")?.clearValidators();
+        this.invoiceForm.get("exchangeRateRials")?.updateValueAndValidity();
+        this.invoiceForm.get("exchangeRateRials")?.patchValue(null);
+        this.invoiceForm.get("exchangeRateRials")?.disable();
+      }
+
+      if (value === InvoicePatternType.GoldAndPlatinum) {
+        this.invoiceForm.get("constructionWages")?.setValidators(Validators.required);
+        this.invoiceForm.get("constructionWages")?.updateValueAndValidity();
+        this.invoiceForm.get("constructionWages")?.enable();
+        this.invoiceForm.get("sellersProfit")?.setValidators(Validators.required);
+        this.invoiceForm.get("sellersProfit")?.updateValueAndValidity();
+        this.invoiceForm.get("sellersProfit")?.enable();
+        this.invoiceForm.get("rightToWork")?.setValidators(Validators.required);
+        this.invoiceForm.get("rightToWork")?.updateValueAndValidity();
+        this.invoiceForm.get("rightToWork")?.enable();
+        this.invoiceForm.get("uniqueWorkRightIdentifier")?.setValidators(Validators.required);
+        this.invoiceForm.get("uniqueWorkRightIdentifier")?.updateValueAndValidity();
+        this.invoiceForm.get("uniqueWorkRightIdentifier")?.enable();
+      }
+      else {
+        this.invoiceForm.get("constructionWages")?.clearValidators();
+        this.invoiceForm.get("constructionWages")?.updateValueAndValidity();
+        this.invoiceForm.get("constructionWages")?.patchValue(null);
+        this.invoiceForm.get("constructionWages")?.disable();
+        this.invoiceForm.get("sellersProfit")?.clearValidators();
+        this.invoiceForm.get("sellersProfit")?.updateValueAndValidity();
+        this.invoiceForm.get("sellersProfit")?.patchValue(null);
+        this.invoiceForm.get("sellersProfit")?.disable();
+        this.invoiceForm.get("rightToWork")?.clearValidators();
+        this.invoiceForm.get("rightToWork")?.updateValueAndValidity();
+        this.invoiceForm.get("rightToWork")?.patchValue(null);
+        this.invoiceForm.get("rightToWork")?.disable();
+        this.invoiceForm.get("uniqueWorkRightIdentifier")?.clearValidators();
+        this.invoiceForm.get("uniqueWorkRightIdentifier")?.updateValueAndValidity();
+        this.invoiceForm.get("uniqueWorkRightIdentifier")?.patchValue(null);
+        this.invoiceForm.get("uniqueWorkRightIdentifier")?.disable();
+      }
+
+      if (value === InvoicePatternType.Export) {
+        this.invoiceForm.get("personCode")?.clearValidators();
+        this.invoiceForm.get("personCode")?.updateValueAndValidity();
+        this.invoiceForm.get("paymentMethod")?.patchValue(InvoicePaymentMethod.Cash);
+        this.invoiceForm.get("paymentMethod")?.disable();
+      }
+      else {
+        if (this.invoiceForm.get("invoiceType")?.value !== InvoiceType.TypeTwo) {
+          this.invoiceForm.get("personCode")?.setValidators(Validators.required);
+          this.invoiceForm.get("personCode")?.updateValueAndValidity();
+          this.invoiceForm.get("paymentMethod")?.patchValue(null);
+          this.invoiceForm.get("paymentMethod")?.enable();
+        }
+      }
     })
 
     this.invoiceForm.get("paymentMethod")?.valueChanges.subscribe(value => {
-      if (value !== InvoicePaymentMethod.Cash) {
-        this.invoiceForm.get("creditAmount")?.setValidators(Validators.required);
+      if (value === InvoicePaymentMethod.CashAndCredit) {
+        this.invoiceForm.get("creditAmount")?.setValidators([Validators.required, Validators.min(1)]);
         this.invoiceForm.get("creditAmount")?.updateValueAndValidity();
         this.invoiceForm.get("creditAmount")?.enable();
       }
@@ -177,10 +314,25 @@ export class CreateInvoiceComponent implements OnInit {
         this.invoiceForm.get("creditAmount")?.patchValue(null);
         this.invoiceForm.get("creditAmount")?.disable();
       }
+      
+      if (value === InvoicePaymentMethod.Credit) {
+        this.invoiceForm.get("payerNationalId")?.disable();
+        this.invoiceForm.get("payCardNumber")?.disable();
+        this.invoiceForm.get("payReferenceNumber")?.disable();
+      }
+      else {
+        this.invoiceForm.get("payerNationalId")?.enable();
+        this.invoiceForm.get("payCardNumber")?.enable();
+        this.invoiceForm.get("payReferenceNumber")?.enable();
+      }
     })
 
     this.invoiceForm.get("personCodeSearch")?.valueChanges.subscribe(value => {
       this.filteredPersonList = this.personList.filter(person => person.personName.includes(value));
+    })
+
+    this.invoiceForm.get("currencyTypeSearch")?.valueChanges.subscribe(value => {
+      this.filteredCurrencyList = this.currencyList.filter(currency => currency.currencyName.includes(value));
     })
 
     this.invoiceForm.get("referenceInvoiceCodeSearch")?.valueChanges.subscribe(value => {
