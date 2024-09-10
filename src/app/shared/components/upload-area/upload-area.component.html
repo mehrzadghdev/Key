@@ -18,7 +18,7 @@
                 <span class="sub-title">حجم فایل: {{ (uploadedFile.size | bytes) | farsiNumber }}</span>
             </div>
             <div class="key-upload-area__delete-button">
-                <key-button appearance="error" (click)="onRemoveUploadedFile()">
+                <key-button appearance="stroked" (click)="onRemoveUploadedFile()">
                     <mat-icon class="material-icons-outlined">delete</mat-icon>
                     حذف پیوست
                 </key-button>

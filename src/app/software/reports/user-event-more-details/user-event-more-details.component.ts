@@ -1,7 +1,7 @@
 import { Clipboard } from '@angular/cdk/clipboard';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { IsType } from 'src/app/shared/helpers/isType.helper';
+import { IsType } from 'src/app/shared/helpers/is-type.helper';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { SelectOption } from 'src/app/shared/types/common.type';
 

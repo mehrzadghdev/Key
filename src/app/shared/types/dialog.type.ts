@@ -9,7 +9,7 @@ export interface DialogResult<T> {
     data?: T;
 };
 
-export enum dialogCssClasses {
+export enum DialogCSSClasses {
     mobileFriendlyClass = 'mobile-like-dialog',
     tabFriendlyClass = 'tab-friendly-dialog',
     fullScreenClass = 'full-screen-dialog',

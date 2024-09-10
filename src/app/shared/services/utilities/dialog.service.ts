@@ -2,7 +2,7 @@ import { ComponentType } from '@angular/cdk/portal';
 import { Injectable } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { take } from 'rxjs';
-import { DialogResult, dialogCssClasses, DialogConfig, AlertDialogData } from '../../types/dialog.type';
+import { DialogResult, DialogCSSClasses, DialogConfig, AlertDialogData } from '../../types/dialog.type';
 import { AcceptDeleteComponent } from '../../components/accept-delete/accept-delete.component';
 import { AlertComponent } from '../../components/alert/alert.component';
 
@@ -20,7 +20,7 @@ export class DialogService {
       autoFocus: false,
       disableClose: true,
       hasBackdrop: true,
-      panelClass: [dialogCssClasses.fullScreenClass]
+      panelClass: [DialogCSSClasses.fullScreenClass]
     });
 
     return dialogRef;
@@ -47,7 +47,7 @@ export class DialogService {
       width:"456px",
       height: "auto",
       panelClass: [
-        dialogCssClasses.mobileFriendlyClass,
+        DialogCSSClasses.mobileFriendlyClass,
       ],
     });
 
@@ -74,7 +74,7 @@ export class DialogService {
       width:"300px",
       height: "auto",
       panelClass: [
-        dialogCssClasses.mobileFriendlyClass,
+        DialogCSSClasses.mobileFriendlyClass,
       ],
     });
 
@@ -89,7 +89,7 @@ export class DialogService {
       hasBackdrop: true,
       width: config?.width,
       height: config?.height,
-      panelClass: [dialogCssClasses.transformClass]
+      panelClass: [DialogCSSClasses.transformClass]
     });
 
     return dialogRef;
@@ -105,7 +105,7 @@ export class DialogService {
       width: config?.width || "auto",
       height: config?.height || "auto",
       panelClass: [
-        dialogCssClasses.mobileFriendlyClass,
+        DialogCSSClasses.mobileFriendlyClass,
         ...config.panelClass || []
       ],
     });

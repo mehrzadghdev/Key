@@ -11,7 +11,6 @@ import * as moment from 'jalali-moment';
 import { UserEventType } from '../../enums/user-event-type.enum';
 import { Clipboard } from '@angular/cdk/clipboard';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
-import { IsType } from 'src/app/shared/helpers/isType.helper';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { UserEventMoreDetailsComponent } from '../user-event-more-details/user-event-more-details.component';
 

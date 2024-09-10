@@ -5,13 +5,15 @@
             <mat-icon class="icon-base">close</mat-icon>
         </key-button>
     </div>
-    
+
     <div class="form-dialog-content">
         <div class="form-dialog-content-loading" *ngIf="!productListLoaded"></div>
         <mat-form-field class="form-dialog-field" appearance="outline">
             <mat-label>کالا یا خدمات</mat-label>
-            <mat-select formControlName="productCode" name="productCode" (valueChange)="onAutoFillData($event)" (opened)="productCodeSearchMobile.focus()">
-                <input class="mat-select-search" type="text" formControlName="productCodeSearch" #productCodeSearchMobile placeholder="جستجو کردن...">
+            <mat-select formControlName="productCode" name="productCode" (valueChange)="onAutoFillData($event)"
+                (opened)="productCodeSearchMobile.focus()">
+                <input class="mat-select-search" type="text" formControlName="productCodeSearch"
+                    #productCodeSearchMobile placeholder="جستجو کردن...">
                 <mat-option *ngFor="let product of filteredProducts"
                     [value]="product.code">{{product.name}}</mat-option>
                 <mat-option [value]="null">
@@ -34,7 +36,7 @@
                         این فیلد الزامیست
                     </ng-container>
                     <ng-container *ngIf="addInvoiceProductForm.get('amount')?.hasError('min')">
-                        حداقل مقدار 1 میباشد     
+                        حداقل مقدار 1 میباشد
                     </ng-container>
                 </mat-error>
             </mat-form-field>
@@ -54,6 +56,7 @@
                     این فیلد الزامیست
                 </mat-error>
             </mat-form-field>
+
             <mat-form-field class="form-dialog-field" appearance="outline">
                 <mat-label>تخفیف</mat-label>
                 <input type="text" mask="separator" thousandSeparator="," matInput formControlName="discount">
@@ -61,7 +64,103 @@
                     حداکثر میزان تخفیف: {{ addInvoiceProductForm.get('price')?.value | price }} ریال
                 </mat-error>
             </mat-form-field>
+
+            
+            <!-- برای الگو طلا -->
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline" *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
+                <mat-label>اجرت ساخت (ریال)</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="constructionWages">
+                <mat-error *ngIf="addInvoiceProductForm.get('constructionWages')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline" *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
+                <mat-label>سود فروشنده (ریال)</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="constructionWages">
+                <mat-error *ngIf="addInvoiceProductForm.get('constructionWages')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline" *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
+                <mat-label>حق العمل (ریال)</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="constructionWages">
+                <mat-error *ngIf="addInvoiceProductForm.get('constructionWages')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline" *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
+                <mat-label>شناسه یکتا ثبت قرارداد حق العمل کاری</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="uniqueWorkRightIdentifier">
+                <mat-error *ngIf="addInvoiceProductForm.get('uniqueWorkRightIdentifier')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+
+            <!-- برای الگو ارز -->
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="data.pattern === InvoicePatternTypeEnum.CurrencySale">
+                <mat-label>میزان ارز</mat-label>
+                <input type="number" matInput formControlName="currencyAmount">
+                <mat-error *ngIf="addInvoiceProductForm.get('currencyAmount')?.invalid && validationLastCheck">
+                    <ng-container *ngIf="addInvoiceProductForm.get('currencyAmount')?.hasError('required')">
+                        این فیلد الزامیست
+                    </ng-container>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="data.pattern === InvoicePatternTypeEnum.CurrencySale">
+                <mat-label>نرخ ارز (ریال)</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="exchangeRateRials">
+                <mat-error *ngIf="addInvoiceProductForm.get('exchangeRateRials')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="data.pattern === InvoicePatternTypeEnum.CurrencySale">
+                <mat-label>نوع ارز</mat-label>
+                <mat-select formControlName="currencyType" name="currencyType" (opened)="currencyTypeSearch.focus()">
+                    <input class="mat-select-search" type="text" formControlName="currencyTypeSearch"
+                        #currencyTypeSearch placeholder="جستجو کردن..">
+                    <mat-option *ngFor="let currencyType of filteredCurrencyList"
+                        [value]="currencyType.id">{{currencyType.currencyName}}</mat-option>
+                    <mat-option [value]="null">
+                        <ng-container *ngIf="filteredCurrencyList.length < 1">
+                            ارزی یافت نشد.
+                        </ng-container>
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="addInvoiceProductForm.get('currencyType')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="data.pattern === InvoicePatternTypeEnum.CurrencySale">
+                <mat-label>ارزش ریالی کالا</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="productRialsWorth">
+                <mat-error *ngIf="addInvoiceProductForm.get('productRialsWorth')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="data.pattern === InvoicePatternTypeEnum.CurrencySale">
+                <mat-label>ارزش ارزی کالا</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="productCurrencyWorth">
+                <mat-error *ngIf="addInvoiceProductForm.get('productCurrencyWorth')?.invalid && validationLastCheck">
+                    این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
         </div>
+
+
         <div class="invoice-price-details">
             <div class="invoice-price-details-item" *ngIf="taxPrice > 0">
                 <span>مبلغ مالیات: </span>
@@ -73,7 +172,7 @@
             </div>
         </div>
     </div>
-    
+
     <mat-dialog-actions class="form-dialog-footer">
         <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
         <key-button (click)="onAddInvoiceProduct()" type="submit">
