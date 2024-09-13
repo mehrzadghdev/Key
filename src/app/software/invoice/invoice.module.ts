@@ -24,6 +24,7 @@ import { UpdateInvoiceComponent } from './update-invoice/update-invoice.componen
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatRippleModule } from '@angular/material/core';
 import { CurrencyComponent } from './currency/currency.component';
+import { SelectPatternTypeComponent } from './select-pattern-type/select-pattern-type.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { CurrencyComponent } from './currency/currency.component';
     AddInvoiceProductComponent,
     ListInvoiceComponent,
     UpdateInvoiceComponent,
-    CurrencyComponent
+    CurrencyComponent,
+    SelectPatternTypeComponent
   ],
   imports: [
     CommonModule,

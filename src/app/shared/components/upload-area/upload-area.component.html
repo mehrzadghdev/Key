@@ -7,7 +7,7 @@
                 برای بارگذاری، پیوست خود را اینجا رها کنید
                 <span>یا</span>
             </span>
-            <key-button appearance="text" (click)="fileInput.click()">
+            <key-button appearance="stroked" (click)="fileInput.click()">
                 <mat-icon class="material-icons-outlined">file_upload</mat-icon>
                 انتخاب پیوست
             </key-button>
@@ -18,7 +18,7 @@
                 <span class="sub-title">حجم فایل: {{ (uploadedFile.size | bytes) | farsiNumber }}</span>
             </div>
             <div class="key-upload-area__delete-button">
-                <key-button appearance="stroked" (click)="onRemoveUploadedFile()">
+                <key-button appearance="error" (click)="onRemoveUploadedFile()">
                     <mat-icon class="material-icons-outlined">delete</mat-icon>
                     حذف پیوست
                 </key-button>

@@ -36,5 +36,13 @@
         font-size: 16px;
         font-weight: 400;
         color: var(--error-color);
+
+        &.default-color {
+            color: var(--text-tertiary-color);
+        }
+
+        &.success-color {
+            color: var(--primary-color);
+        }
     }
 }

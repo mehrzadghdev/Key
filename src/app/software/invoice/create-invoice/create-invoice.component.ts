@@ -20,6 +20,7 @@ import { InvoiceService } from '../../services/definitions/invoice.service';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { CurrencyService } from '../../services/definitions/currency.service';
 import { Currency } from '../../types/definitions/currency.type';
+import { SelectPatternTypeComponent } from '../select-pattern-type/select-pattern-type.component';
 
 @Component({
   selector: 'app-create-invoice',
@@ -29,6 +30,7 @@ import { Currency } from '../../types/definitions/currency.type';
 export class CreateInvoiceComponent implements OnInit {
   public tailedTable: boolean = false;
   public invoiceForm: FormGroup;
+  public disableInvoicePatternTypeChange: boolean = false;
   public validationLastCheck: boolean = false;
   public referenceInvoiceList: GetInvoiceListInvoiceItem[] = [];
   public filteredReferenceInvoiceList: GetInvoiceListInvoiceItem[] = [];
@@ -129,9 +131,18 @@ export class CreateInvoiceComponent implements OnInit {
 
     this.initFormFieldSubscriptions();
     this.fetchData();
+    this.openSelectInvoicePatternDialog();
 
     this.invoiceService.getNewInvoiceCode({}).subscribe(res => {
       this.invoiceForm.get('invoiceCode')?.patchValue(res.newCode);
+    })
+  }
+
+  private openSelectInvoicePatternDialog(): void {
+    this.dialog.openFormDialog(SelectPatternTypeComponent,  {
+      width: "656px"
+    }).afterClosed().subscribe(result => {
+      this.invoiceForm.get("patternType")?.patchValue(result as unknown as InvoicePatternType)
     })
   }
 
@@ -361,6 +372,7 @@ export class CreateInvoiceComponent implements OnInit {
       if (invoiceProductItem) {
         this.invoiceProducts.push(invoiceProductItem as unknown as AddInvoiceProductItem);
         this.invoiceProducts = [...this.invoiceProducts];
+        this.invoiceForm.get("patternType")?.disable();
       }
     })
   }
@@ -369,6 +381,9 @@ export class CreateInvoiceComponent implements OnInit {
     this.dialog.openAcceptDeleteDialog().afterClosed().subscribe(result => {
       if (result) {
         this.invoiceProducts = this.invoiceProducts.filter(product => product.productCode !== invoiceProductCode);
+        if (this.invoiceProducts.length < 1) {
+          this.invoiceForm.get("patternType")?.enable();
+        }
         this.utility.message('کالا با موفقیت حذف شد.', 'بستن');
       }
     })

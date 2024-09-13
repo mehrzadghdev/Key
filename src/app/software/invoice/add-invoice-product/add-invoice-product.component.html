@@ -65,10 +65,11 @@
                 </mat-error>
             </mat-form-field>
 
-            
+
             <!-- برای الگو طلا -->
 
-            <mat-form-field class="invoice-section-grid-field" appearance="outline" *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
                 <mat-label>اجرت ساخت (ریال)</mat-label>
                 <input type="text" mask="separator" thousandSeparator="," matInput formControlName="constructionWages">
                 <mat-error *ngIf="addInvoiceProductForm.get('constructionWages')?.invalid && validationLastCheck">
@@ -76,7 +77,8 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="invoice-section-grid-field" appearance="outline" *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
                 <mat-label>سود فروشنده (ریال)</mat-label>
                 <input type="text" mask="separator" thousandSeparator="," matInput formControlName="constructionWages">
                 <mat-error *ngIf="addInvoiceProductForm.get('constructionWages')?.invalid && validationLastCheck">
@@ -84,7 +86,8 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="invoice-section-grid-field" appearance="outline" *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
                 <mat-label>حق العمل (ریال)</mat-label>
                 <input type="text" mask="separator" thousandSeparator="," matInput formControlName="constructionWages">
                 <mat-error *ngIf="addInvoiceProductForm.get('constructionWages')?.invalid && validationLastCheck">
@@ -92,13 +95,17 @@
                 </mat-error>
             </mat-form-field>
 
-            <mat-form-field class="invoice-section-grid-field" appearance="outline" *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
-                <mat-label>شناسه یکتا ثبت قرارداد حق العمل کاری</mat-label>
-                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="uniqueWorkRightIdentifier">
-                <mat-error *ngIf="addInvoiceProductForm.get('uniqueWorkRightIdentifier')?.invalid && validationLastCheck">
-                    این فیلد الزامیست
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="data.pattern === InvoicePatternTypeEnum.GoldAndPlatinum">
+                <mat-label>عیار</mat-label>
+                <input type="number" matInput formControlName="carat">
+                <mat-error *ngIf="addInvoiceProductForm.get('carat')?.invalid && validationLastCheck">
+                    <ng-container *ngIf="addInvoiceProductForm.get('carat')?.hasError('required')">
+                        این فیلد الزامیست
+                    </ng-container>
                 </mat-error>
             </mat-form-field>
+
 
             <!-- برای الگو ارز -->
 
@@ -110,15 +117,6 @@
                     <ng-container *ngIf="addInvoiceProductForm.get('currencyAmount')?.hasError('required')">
                         این فیلد الزامیست
                     </ng-container>
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field class="invoice-section-grid-field" appearance="outline"
-                *ngIf="data.pattern === InvoicePatternTypeEnum.CurrencySale">
-                <mat-label>نرخ ارز (ریال)</mat-label>
-                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="exchangeRateRials">
-                <mat-error *ngIf="addInvoiceProductForm.get('exchangeRateRials')?.invalid && validationLastCheck">
-                    این فیلد الزامیست
                 </mat-error>
             </mat-form-field>
 
@@ -143,31 +141,55 @@
 
             <mat-form-field class="invoice-section-grid-field" appearance="outline"
                 *ngIf="data.pattern === InvoicePatternTypeEnum.CurrencySale">
-                <mat-label>ارزش ریالی کالا</mat-label>
-                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="productRialsWorth">
-                <mat-error *ngIf="addInvoiceProductForm.get('productRialsWorth')?.invalid && validationLastCheck">
+                <mat-label>نرخ ارز (ریال)</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="exchangeRateRials">
+                <mat-error *ngIf="addInvoiceProductForm.get('exchangeRateRials')?.invalid && validationLastCheck">
                     این فیلد الزامیست
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field class="invoice-section-grid-field" appearance="outline"
                 *ngIf="data.pattern === InvoicePatternTypeEnum.CurrencySale">
-                <mat-label>ارزش ارزی کالا</mat-label>
-                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="productCurrencyWorth">
-                <mat-error *ngIf="addInvoiceProductForm.get('productCurrencyWorth')?.invalid && validationLastCheck">
+                <mat-label>کارمزد فروش ارز</mat-label>
+                <input type="text" mask="separator" thousandSeparator="," matInput formControlName="currencySaleFee">
+                <mat-error *ngIf="addInvoiceProductForm.get('currencySaleFee')?.invalid && validationLastCheck">
                     این فیلد الزامیست
+                </mat-error>
+            </mat-form-field>
+
+            <!-- یوکنیک ادنتیفایر  -->
+
+            <mat-form-field class="invoice-section-grid-field" appearance="outline"
+                *ngIf="this.data.pattern === InvoicePatternTypeEnum.Ticket
+                || this.data.pattern === InvoicePatternTypeEnum.Export
+                || this.data.pattern === InvoicePatternTypeEnum.UtilityBills
+                || this.data.pattern === InvoicePatternTypeEnum.Contract">
+                <mat-label>شناسه یکتای ثبت قرارداد حق العمل کاری</mat-label>
+                <input type="number" matInput formControlName="uniqeIdentifierOfWorkRights">
+                <mat-error *ngIf="addInvoiceProductForm.get('uniqeIdentifierOfWorkRights')?.invalid && validationLastCheck">
+                    <ng-container *ngIf="addInvoiceProductForm.get('uniqeIdentifierOfWorkRights')?.hasError('required')">
+                        این فیلد الزامیست
+                    </ng-container>
                 </mat-error>
             </mat-form-field>
         </div>
 
 
+        <div class="invoice-price-details-item">
+            <span>مبلغ کل قبل از تخفیف</span>
+            <h4 class="default-color">{{ (priceBeforeDiscount >= 0 ? priceBeforeDiscount : 0) | price }} ریال</h4>
+        </div>
+        <div class="invoice-price-details-item">
+            <span>مبلغ کل بعد از تخفیف: </span>
+            <h4 class="success-color">{{ (priceAfterDiscount >= 0 ? priceAfterDiscount : 0) | price }} ریال</h4>
+        </div>
         <div class="invoice-price-details">
             <div class="invoice-price-details-item" *ngIf="taxPrice > 0">
                 <span>مبلغ مالیات: </span>
                 <h4>{{ (taxPrice >= 0 ? taxPrice : 0) | price }} ریال</h4>
             </div>
             <div class="invoice-price-details-item">
-                <span>مبلغ کل: </span>
+                <span>مبلغ نهایی: </span>
                 <h3>{{ (totalPrice >= 0 ? totalPrice : 0) | price }} ریال</h3>
             </div>
         </div>

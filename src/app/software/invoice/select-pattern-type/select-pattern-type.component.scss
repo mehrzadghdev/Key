@@ -1,0 +1,48 @@
+@import url('../../../shared/scss/key-form-dialog.scss');
+
+.invoice-pattern-item {
+    border: 1px solid var(--border-color-medium);
+    box-shadow: var(--light-shadow);
+    padding: 0px 5px 5px 5px;
+    display: flex;
+    aspect-ratio: 1 / 1;
+    border-radius: 3px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 20px;
+    transition: all .1s ease;
+
+    img {
+        width: 60px;
+    }
+
+    span {
+        font-size: 14px;
+        text-align: center;
+        font-weight: 500;
+        color: var(--text-primary-color);
+    }
+
+    &:hover {
+        border-color: var(--primary-color);
+    }
+}
+
+.invoice-patterns-container {
+    padding: 0px 20px 20px 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px;
+}
+
+@media only screen and (max-width: 768px) {
+    .invoice-patterns-container {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .invoice-pattern-item {
+        aspect-ratio: unset;
+    }
+}

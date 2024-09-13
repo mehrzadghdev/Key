@@ -27,15 +27,27 @@ export class AddInvoiceProductComponent implements OnInit {
   public filteredCurrencyList: Currency[] = [];
 
   public get totalPrice(): number {
-    return this.pricebeforeTax + this.taxPrice;
+    return this.priceBeforeTax + this.taxPrice;
   }
 
-  public get pricebeforeTax(): number {
+  public get priceBeforeTax(): number {
     return (this.addInvoiceProductForm.get("price")?.value * this.addInvoiceProductForm.get("amount")?.value) - this.addInvoiceProductForm.get("discount")?.value
   }
 
+  public get priceBeforeDiscount(): number {
+    return this.addInvoiceProductForm.get("price")?.value * this.addInvoiceProductForm.get("amount")?.value;
+  }
+
+  public get priceAfterDiscount(): number {
+    return this.addInvoiceProductForm.get("price")?.value * this.addInvoiceProductForm.get("amount")?.value - this.addInvoiceProductForm.get("discount")?.value;
+  }
+
+  public get discountPrice(): number {
+    return this.addInvoiceProductForm.get("discount")?.value;
+  }
+
   public get taxPrice(): number {
-    return this.addInvoiceProductForm.get("taxPercent")?.value / 100 * this.pricebeforeTax;
+    return this.addInvoiceProductForm.get("taxPercent")?.value / 100 * this.priceBeforeTax;
   }
 
   get InvoicePatternTypeEnum(): typeof InvoicePatternType {
@@ -62,12 +74,12 @@ export class AddInvoiceProductComponent implements OnInit {
       currencyType: [null, Validators.nullValidator],
       currencyTypeSearch: [null, Validators.nullValidator],
       exchangeRateRials: [null, Validators.nullValidator],
-      productRialsWorth: [null, Validators.nullValidator],
-      productCurrencyWorth: [null, Validators.nullValidator],
+      currencySaleFee: [null, Validators.nullValidator],
       constructionWages: [null, Validators.nullValidator],
-      uniqueWorkRightIdentifier: [null, Validators.nullValidator],
       sellersProfit: [null, Validators.nullValidator],
       rightToWork: [null, Validators.nullValidator],
+      carat: [null, Validators.nullValidator],
+      uniqeIdentifierOfWorkRights: [null, Validators.nullValidator],
     });
   }
 
@@ -91,6 +103,23 @@ export class AddInvoiceProductComponent implements OnInit {
   }
 
   private initPatternTypeFromConditions(): void {
+    if (
+      this.data.pattern === InvoicePatternType.Ticket
+      || this.data.pattern === InvoicePatternType.Export
+      || this.data.pattern === InvoicePatternType.UtilityBills
+      || this.data.pattern === InvoicePatternType.Contract
+    ) {
+      this.addInvoiceProductForm.get("uniqeIdentifierOfWorkRights")?.setValidators(Validators.required);
+      this.addInvoiceProductForm.get("uniqeIdentifierOfWorkRights")?.updateValueAndValidity();
+      this.addInvoiceProductForm.get("uniqeIdentifierOfWorkRights")?.enable();
+    }
+    else {
+      this.addInvoiceProductForm.get("uniqeIdentifierOfWorkRights")?.clearValidators();
+      this.addInvoiceProductForm.get("uniqeIdentifierOfWorkRights")?.updateValueAndValidity();
+      this.addInvoiceProductForm.get("uniqeIdentifierOfWorkRights")?.patchValue(null);
+      this.addInvoiceProductForm.get("uniqeIdentifierOfWorkRights")?.disable();
+    }
+
     if (this.data.pattern === InvoicePatternType.CurrencySale) {
       this.addInvoiceProductForm.get("currencyAmount")?.setValidators(Validators.required);
       this.addInvoiceProductForm.get("currencyAmount")?.updateValueAndValidity();
@@ -103,14 +132,10 @@ export class AddInvoiceProductComponent implements OnInit {
       this.addInvoiceProductForm.get("exchangeRateRials")?.updateValueAndValidity();
       this.addInvoiceProductForm.get("exchangeRateRials")?.enable();
       this.addInvoiceProductForm.get("exchangeRateRials")?.patchValue(0);
-      this.addInvoiceProductForm.get("productRialsWorth")?.setValidators(Validators.required);
-      this.addInvoiceProductForm.get("productRialsWorth")?.updateValueAndValidity();
-      this.addInvoiceProductForm.get("productRialsWorth")?.enable();
-      this.addInvoiceProductForm.get("productRialsWorth")?.patchValue(0);
-      this.addInvoiceProductForm.get("productCurrencyWorth")?.setValidators(Validators.required);
-      this.addInvoiceProductForm.get("productCurrencyWorth")?.updateValueAndValidity();
-      this.addInvoiceProductForm.get("productCurrencyWorth")?.enable();
-      this.addInvoiceProductForm.get("productCurrencyWorth")?.patchValue(0);
+      this.addInvoiceProductForm.get("currencySaleFee")?.setValidators(Validators.required);
+      this.addInvoiceProductForm.get("currencySaleFee")?.updateValueAndValidity();
+      this.addInvoiceProductForm.get("currencySaleFee")?.enable();
+      this.addInvoiceProductForm.get("currencySaleFee")?.patchValue(0);
     }
     else {
       this.addInvoiceProductForm.get("currencyAmount")?.clearValidators();
@@ -125,14 +150,10 @@ export class AddInvoiceProductComponent implements OnInit {
       this.addInvoiceProductForm.get("exchangeRateRials")?.updateValueAndValidity();
       this.addInvoiceProductForm.get("exchangeRateRials")?.patchValue(null);
       this.addInvoiceProductForm.get("exchangeRateRials")?.disable();
-      this.addInvoiceProductForm.get("productRialsWorth")?.clearValidators();
-      this.addInvoiceProductForm.get("productRialsWorth")?.updateValueAndValidity();
-      this.addInvoiceProductForm.get("productRialsWorth")?.patchValue(null);
-      this.addInvoiceProductForm.get("productRialsWorth")?.disable();
-      this.addInvoiceProductForm.get("productCurrencyWorth")?.clearValidators();
-      this.addInvoiceProductForm.get("productCurrencyWorth")?.updateValueAndValidity();
-      this.addInvoiceProductForm.get("productCurrencyWorth")?.patchValue(null);
-      this.addInvoiceProductForm.get("productCurrencyWorth")?.disable();
+      this.addInvoiceProductForm.get("currencySaleFee")?.clearValidators();
+      this.addInvoiceProductForm.get("currencySaleFee")?.updateValueAndValidity();
+      this.addInvoiceProductForm.get("currencySaleFee")?.patchValue(null);
+      this.addInvoiceProductForm.get("currencySaleFee")?.disable();
     }
 
     if (this.data.pattern === InvoicePatternType.GoldAndPlatinum) {
@@ -148,9 +169,10 @@ export class AddInvoiceProductComponent implements OnInit {
       this.addInvoiceProductForm.get("rightToWork")?.updateValueAndValidity();
       this.addInvoiceProductForm.get("rightToWork")?.enable();
       this.addInvoiceProductForm.get("rightToWork")?.patchValue(0);
-      this.addInvoiceProductForm.get("uniqueWorkRightIdentifier")?.setValidators(Validators.required);
-      this.addInvoiceProductForm.get("uniqueWorkRightIdentifier")?.updateValueAndValidity();
-      this.addInvoiceProductForm.get("uniqueWorkRightIdentifier")?.enable();
+      this.addInvoiceProductForm.get("carat")?.setValidators(Validators.required);
+      this.addInvoiceProductForm.get("carat")?.updateValueAndValidity();
+      this.addInvoiceProductForm.get("carat")?.enable();
+      this.addInvoiceProductForm.get("carat")?.patchValue(0);
     }
     else {
       this.addInvoiceProductForm.get("constructionWages")?.clearValidators();
@@ -165,10 +187,10 @@ export class AddInvoiceProductComponent implements OnInit {
       this.addInvoiceProductForm.get("rightToWork")?.updateValueAndValidity();
       this.addInvoiceProductForm.get("rightToWork")?.patchValue(null);
       this.addInvoiceProductForm.get("rightToWork")?.disable();
-      this.addInvoiceProductForm.get("uniqueWorkRightIdentifier")?.clearValidators();
-      this.addInvoiceProductForm.get("uniqueWorkRightIdentifier")?.updateValueAndValidity();
-      this.addInvoiceProductForm.get("uniqueWorkRightIdentifier")?.patchValue(null);
-      this.addInvoiceProductForm.get("uniqueWorkRightIdentifier")?.disable();
+      this.addInvoiceProductForm.get("carat")?.clearValidators();
+      this.addInvoiceProductForm.get("carat")?.updateValueAndValidity();
+      this.addInvoiceProductForm.get("carat")?.patchValue(null);
+      this.addInvoiceProductForm.get("carat")?.disable();
     }
 
     if (this.data.pattern === InvoicePatternType.Ticket) {

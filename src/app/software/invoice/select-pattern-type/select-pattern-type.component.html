@@ -1,0 +1,14 @@
+<form class="form-dialog">
+    <div class="form-dialog-top-bar" cdkDrag cdkDragRootElement=".cdk-overlay-pane" cdkDragHandle>
+        <h3>انتخاب الگو فاکتور</h3>
+    </div>
+
+    <div class="form-dialog-content">
+        <div class="invoice-patterns-container">
+            <div class="invoice-pattern-item" mat-ripple *ngFor="let invoiceType of invoicePatternTypeList" (click)="selectInvoicePattern(invoiceType.value)">
+                <img [src]="invoiceType.imageSource" alt="">
+                <span>{{ invoiceType.display }}</span>
+            </div>
+        </div>
+    </div>
+</form>

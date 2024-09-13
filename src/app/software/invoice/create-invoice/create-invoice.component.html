@@ -207,7 +207,7 @@
                 </mat-error>
             </mat-form-field>
             
-            <mat-form-field class="invoice-section-grid-field" appearance="outline">
+            <mat-form-field class="invoice-section-grid-field" appearance="outline" matTooltip="برای الگو مورد نظر کالا ثبت شده لطفا برای تغییر الگو ابتدا کالا های ثبت شده را حذف کنید" [matTooltipDisabled]="!invoiceProducts.length">
                 <mat-label>الگو فاکتور</mat-label>
                 <mat-select formControlName="patternType" name="patternType">
                     <mat-option *ngFor="let patternType of invoicePatternTypeList"
@@ -217,6 +217,7 @@
                     این فیلد الزامیست
                 </mat-error>
                 <mat-hint *ngIf="this.invoiceForm.get('invoiceType')?.value === InvoiceTypeEnum.TypeTwo">* فاکتور نوع دوم فقط فروش طلا</mat-hint>
+                <mat-hint *ngIf="invoiceProducts.length">برای الگو کالا اضافه شده است</mat-hint>
             </mat-form-field>
 
             <!-- برای قرارداد پیمانکاری -->
