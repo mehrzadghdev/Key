@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { RequestService } from 'src/app/shared/services/api/request.service';
-import { AddPerson, AddPersonBody, AddPersons, AddPersonsBody, DeletePerson, DeletePersonBody, GetCompaniesPersonList, GetCompaniesPersonListBody, GetNewPersonCode, GetNewPersonCodeBody, GetPerson, GetPersonBody, GetPersonList, GetPersonListBody, UpdatePerson, UpdatePersonBody } from '../../types/definitions/person.type';
+import { AddPerson, AddPersonBody, AddPersons, AddPersonsBody, DeletePerson, DeletePersonBody, GetCompaniesPersonCodes, GetCompaniesPersonCodesBody, GetCompaniesPersonList, GetCompaniesPersonListBody, GetNewPersonCode, GetNewPersonCodeBody, GetPerson, GetPersonBody, GetPersonList, GetPersonListBody, UpdatePerson, UpdatePersonBody } from '../../types/definitions/person.type';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -16,6 +16,10 @@ export class PersonService {
 
   public getCompaniesPersonList(getCompaniesPersonListBody: GetCompaniesPersonListBody): Observable<GetCompaniesPersonList> {
     return this.request.post<GetCompaniesPersonList, GetCompaniesPersonListBody>("Person/GetCompaniesPersonList", getCompaniesPersonListBody)
+  }
+
+  public getCompaniesPersonCodes(getCompaniesPersonCodesBody: GetCompaniesPersonCodesBody): Observable<GetCompaniesPersonCodes> {
+    return this.request.post<GetCompaniesPersonCodes, GetCompaniesPersonCodesBody>("Person/GetCompaniesPersonCodes", getCompaniesPersonCodesBody)
   }
 
   public getPerson(getPersonBody: GetPersonBody): Observable<GetPerson> {

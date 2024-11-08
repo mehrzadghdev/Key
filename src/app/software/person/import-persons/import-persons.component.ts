@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Person } from '../../types/definitions/person.type';
+import { AddPersonsBody, Person } from '../../types/definitions/person.type';
 import * as XLSX from 'xlsx';
 import { UtilityService } from 'src/app/shared/services/utilities/utility.service';
 import { PersonType } from '../../enums/person-type.enum';
 import { DialogService } from 'src/app/shared/services/utilities/dialog.service';
 import { AlertDialogType } from 'src/app/shared/types/dialog.type';
 import { PersonService } from '../../services/definitions/person.service';
+import { CustomValidators } from 'src/app/shared/validators/custom-validators';
+import { invalid } from 'jalali-moment';
 
 @Component({
   selector: 'app-import-persons',
@@ -17,11 +19,17 @@ import { PersonService } from '../../services/definitions/person.service';
 export class ImportPersonsComponent implements OnInit {
   public importPersonsLoading: boolean = false;
   public personsList: Person[] = [];
+  public allPersonCodes: number[] = [];
   public readExcelLoading: boolean = false;
   public addPersonsLoading: boolean = false;
-  public tailedTable: boolean = false;
   public excelReaded: boolean = false;
-  public tableColumns: string[] = ["کد طرف حساب", "نوع", "نام", "کد ملی یا شماره اقتصادی", "تلفن", "تلفن ثابت", "کد پستی", "آدرس"];
+  public tableColumns: string[] = ["کد طرف حساب", "نوع", "نام", "کد ملی", "شماره اقتصادی", "تلفن", "تلفن ثابت", "کد پستی", "آدرس"];
+  public importPersonsForm: FormGroup = this.fb.group({
+    persons: this.fb.array([])
+  });
+  get personsFromArray(): FormArray<FormGroup> {
+    return <FormArray<FormGroup>>this.importPersonsForm.get("persons");
+  }
 
   public personTypes = [
     { display: 'حقیقی', value: PersonType.Genuine },
@@ -44,110 +52,44 @@ export class ImportPersonsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if (window.innerWidth <= 768) {
-      this.tailedTable = true;
-    }
+    this.getCompaniesPersonCodes();
   }
 
-  public personTypeTextByNumber(personType: PersonType): string {
-    return this.personTypes.find(person => person.value === personType)?.display ?? "نامعتبر";
-  }
+  private getCompaniesPersonCodes(): void {
+    this.personService.getCompaniesPersonCodes({}).subscribe(result => {
+      const personCodesNumberList: number[] = result.map(personCodeObject => personCodeObject.code);
 
-  public isPersonTypeValid(personType: number): boolean {
-    if (this.personTypes.find(person => person.value === personType)) {
-      return true;
-    }
-
-    return false
-  }
-
-  public isNationalIdOrEconomicCodeValid(nationalIdOrEconomicCode: string): boolean {
-    if (nationalIdOrEconomicCode.length > 10) {
-      return true;
-    }
-
-    return false
-  }
-
-  public isMobileValid(mobileNumber?: string): boolean {
-    if (!mobileNumber) {
-      return true;
-    }
-
-    if (mobileNumber.length === 11) {
-      return true;
-    }
-
-    return false
-  }
-
-  public isZipCodeValid(zipCode?: string): boolean {
-    if (!zipCode) {
-      return true;
-    }
-
-    if (zipCode.length === 10) {
-      return true;
-    }
-
-    return false
-  }
-
-  public isPersonCodeUniqueInExcel(personCode: number): boolean {
-    if (this.personsList.filter(person => person.code === personCode).length < 1) {
-      return true;
-    }
-
-    return false;
-  }
-
-  public onImportPersons(): void {
-    const validPersons = this.personsList.filter((person: Person) => {
-      return this.isPersonTypeValid(person.personType) 
-      && this.isNationalIdOrEconomicCodeValid(person.personType === PersonType.Genuine || person.personType === PersonType.NonIranianNotionals ? person.nationalId : person.economicCode)
-      && this.isMobileValid(person.mobile)
-      && this.isZipCodeValid(person.zipCode)
-      && this.isPersonCodeUniqueInExcel(person.code);
+      for (const personCode of personCodesNumberList) {
+        this.allPersonCodes.push(personCode);
+      }
     })
-
-    if (validPersons.length < 1) {
-      this.dialog.openAlertDialog({ 
-        dialogName: 'فراخوانی از اکسل', 
-        title: 'خطا: هیچ ردیف معتبری پیدا نشد', 
-        message: 'هیچ ردیف معتبری برای فراخوانی پیدا نشد، لطفا ابتدا خطا های مربوطه را رفع و سپس دوباره تلاش کنید', 
-        alertType: AlertDialogType.Error, 
-        hasCancel: false
-      })
-    }
-    else if (validPersons.length === this.personsList.length) {
-      this.dialog.openAlertDialog({ 
-        dialogName: 'فراخوانی از اکسل', 
-        title: `تایید فراخوانی ${validPersons.length} طرف حساب`, 
-        message: 'در صورت تایید تمام طرف حساب های نمایش داده شده در پیش نمایش به لیست طرف حساب ها اصافه میشوند', 
-        alertType: AlertDialogType.Info, 
-        hasCancel: true
-      }).afterClosed().subscribe(result => {
-        if (result) {
-          this.onAddPersons(validPersons);
-        }
-      });
-    }
-    else {
-      this.dialog.openAlertDialog({ 
-        dialogName: 'فراخوانی از اکسل', 
-        title: 'اخطار: بعضی از ردیف ها نامعتبر میباشند', 
-        message: 'بعضی از ردیف های انتخاب شده خطا دارند و در فراخوانی اضافه نمیشوند', 
-        alertType: AlertDialogType.Warning,
-         hasCancel: true 
-      }).afterClosed().subscribe(result => {
-        if (result) {
-          this.onAddPersons(validPersons);
-        }
-      });
-    }
   }
 
-  public onAddPersons(personList: Person[]): void {
+  private initPersonsFormArraySubscriptions(): void {
+    this.personsFromArray.controls.forEach(group => {
+      group.get('code')?.valueChanges.subscribe(value => {
+        if (
+          this.allPersonCodes.includes(value)
+          && this.allPersonCodes.filter(person => person === value).length > 1
+        ) {
+          group.get('code')?.setErrors({ conflict: true });
+        }
+      });
+    })
+  }
+
+  private initConflictedCodesCheck(): void {
+    this.personsFromArray.controls.forEach(group => {
+      if (
+        this.allPersonCodes.filter(personCode => personCode === group.get('code')?.value).length > 1
+        && this.allPersonCodes.includes(group.get('code')?.value)
+      ) {
+        group.get('code')?.setErrors({ conflict: true });
+      }
+    })
+  }
+
+  private onAddPersons(personList: Person[]): void {
     this.addPersonsLoading = true;
 
     this.personService.addPersons({ persons: personList }).subscribe(
@@ -162,25 +104,11 @@ export class ImportPersonsComponent implements OnInit {
     );
   }
 
-  public onExcelUploaded(file: File): void {
-    this.readExcelLoading = true;
-    file.arrayBuffer()
-    .then(arrayBuffer => {
-      const excelWorkBook: XLSX.WorkBook = XLSX.read(arrayBuffer);
-
-      this.onReadExcel(excelWorkBook);
-    })
-    .catch(error => {
-      this.utility.message("خواندن اکسل با خطا مواجه شد", 'بستن')
-      this.readExcelLoading = false;
-    })
-  }
-  
-  public onReadExcel(excelWorkBook: XLSX.WorkBook): void {
+  private onReadExcel(excelWorkBook: XLSX.WorkBook): void {
     const worksheet: XLSX.WorkSheet = excelWorkBook.Sheets[excelWorkBook.SheetNames[0]];
 
     const rowData = XLSX.utils.sheet_to_json(worksheet);
-    
+
     for (let i = 0; i < rowData.length; i++) {
       const field: Record<string, string> = rowData[i] as Record<string, string>;
 
@@ -206,19 +134,112 @@ export class ImportPersonsComponent implements OnInit {
         }
 
         this.personsList.push(newPersonObject);
+        this.allPersonCodes.push(newPersonObject.code);
+
+        const fromControlFromPersonObject: FormGroup = this.fb.group({
+          code: [newPersonObject.code, Validators.required],
+          personName: [newPersonObject.personName, Validators.required],
+          personType: [newPersonObject.personType, [Validators.required, Validators.pattern(/^[1-5]$/)]],
+          tel: [Number(newPersonObject.tel), CustomValidators.homePhoneNumber],
+          mobile: [Number(newPersonObject.mobile), CustomValidators.phoneNumber],
+          nationalId: [Number(newPersonObject.nationalId), CustomValidators.nationalId],
+          economicCode: [Number(newPersonObject.economicCode), CustomValidators.economicCode],
+          zipCode: [Number(newPersonObject.zipCode), CustomValidators.zipCode],
+          address: [newPersonObject.address],
+        })
+        this.personsFromArray.push(fromControlFromPersonObject);
       }
     }
+    
+    this.initPersonsFormArraySubscriptions();
+    // this.initConflictedCodesCheck(allPersonCodes);
 
     this.excelReaded = true;
     this.readExcelLoading = false;
   }
-  
+
+  public personTypeTextByNumber(personType: PersonType): string {
+    return this.personTypes.find(person => person.value === personType)?.display ?? "نامعتبر";
+  }
+
+  public onImportPersons(): void {
+    const validPersonFormGroups: FormGroup[] = this.personsFromArray.controls.filter(control => control.valid);
+    const invalidPersonsCount: number = this.personsFromArray.controls.filter(control => control.invalid).length;
+    const validPersons: Person[] = validPersonFormGroups.map(control => {
+      const personObject: Person = {
+        id: 0,
+        code: control.value,
+        personName: control.value,
+        personType: control.value,
+        nationalId: control.value ? control.value + '' : null,
+        economicCode: control.value ? control.value + '' : null,
+        tel: control.value ? control.value + '' : null,
+        mobile: control.value ? control.value + '' : null,
+        zipCode: control.value ? control.value + '' : null,
+        address: control.value ? control.value + '' : null
+      }
+
+      return personObject;
+    })
+
+    if (validPersons.length < 1) {
+      this.dialog.openAlertDialog({
+        dialogName: 'فراخوانی از اکسل',
+        title: 'خطا: هیچ ردیف معتبری پیدا نشد',
+        message: 'هیچ ردیف معتبری برای فراخوانی پیدا نشد، لطفا ابتدا خطا های مربوطه را رفع و سپس دوباره تلاش کنید',
+        alertType: AlertDialogType.Error,
+        hasCancel: false
+      })
+    }
+    else if (validPersons.length === this.personsList.length) {
+      this.dialog.openAlertDialog({
+        dialogName: 'فراخوانی از اکسل',
+        title: `تایید فراخوانی ${validPersons.length} طرف حساب`,
+        message: 'در صورت تایید تمام طرف حساب های نمایش داده شده در پیش نمایش به لیست طرف حساب ها اصافه میشوند',
+        alertType: AlertDialogType.Info,
+        hasCancel: true
+      }).afterClosed().subscribe(result => {
+        if (result) {
+          this.onAddPersons(validPersons);
+        }
+      });
+    }
+    else {
+      this.dialog.openAlertDialog({
+        dialogName: 'فراخوانی از اکسل',
+        title: 'اخطار: ' + invalidPersonsCount + ' طرف حساب نامعتبر میباشد',
+        message: invalidPersonsCount + ' طرف حساب نامعتبر میباشد و در فراخوانی خوانده نمیشود',
+        alertType: AlertDialogType.Warning,
+        hasCancel: true
+      }).afterClosed().subscribe(result => {
+        if (result) {
+          this.onAddPersons(validPersons);
+        }
+      });
+    }
+  }
+
+  public onExcelUploaded(file: File): void {
+    this.readExcelLoading = true;
+    file.arrayBuffer()
+      .then(arrayBuffer => {
+        const excelWorkBook: XLSX.WorkBook = XLSX.read(arrayBuffer);
+
+        this.onReadExcel(excelWorkBook);
+      })
+      .catch(error => {
+        this.utility.message("خواندن اکسل با خطا مواجه شد", 'بستن')
+        this.readExcelLoading = false;
+      })
+  }
+
   public closeDialog(value?: any): void {
     this.dialogRef.close(value ?? null);
   }
 
   public onRemoveReadedExcel(): void {
     this.personsList = [];
+    this.personsFromArray.clear();
 
     this.excelReaded = false;
   }

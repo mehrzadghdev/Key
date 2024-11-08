@@ -10,12 +10,12 @@ export interface Person extends HasDatabase {
     code: number,
     personType: number,
     personName: string,
-    nationalId: string,
-    economicCode: string,
-    tel: string,
-    mobile: string,
-    zipCode: string,
-    address: string
+    nationalId: string | null,
+    economicCode: string | null,
+    tel: string | null,
+    mobile: string | null,
+    zipCode: string | null,
+    address: string | null
 }
 
 // Person/GetPersonList
@@ -133,3 +133,13 @@ export interface DeletePersonBody extends HasDatabase {
 
 export type GetNewPersonCodeBody = GetNewCodeBody;
 export type GetNewPersonCode = GetNewCode;
+
+// Person/GetCompaniesPersonCodes
+
+export interface GetCompaniesPersonCodesBody extends HasDatabase {}
+
+export interface PersonCodesObject {
+    code: number
+}
+
+export type GetCompaniesPersonCodes = PersonCodesObject[];

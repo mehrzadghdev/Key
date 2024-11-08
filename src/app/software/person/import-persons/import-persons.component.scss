@@ -30,3 +30,102 @@
     max-width: 65ch;
     text-wrap: balance;
 }
+
+.import-from-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    min-width: 768px;
+    overflow-x: auto;
+    align-items: center;
+    // gap: 5px;
+
+    .import-form-field {
+
+        &.invalid-row {
+            background-color: color-mix(in srgb, var(--error-color), transparent 75%);
+        }
+
+        border-bottom: 1px solid var(--border-color-medium);
+        padding: 5px;
+        width: 100%;
+        flex: 1;
+
+        input {
+            height: 36px;
+            width: 100%;
+            border: 2px dashed transparent;
+            background-color: transparent;
+            outline: none;
+            border-radius: 5px;
+            color: var(--text-secondary-color);
+            padding: 5px 10px;
+
+            &:hover {
+                border: 2px dashed var(--primary-color);
+                color: var(--text-primary-color);
+            }
+
+            &:focus {
+                border: 2px solid var(--primary-color);
+                color: var(--text-primary-color);
+            }
+
+            &.invalid-input {
+                border-color: var(--error-color) !important;
+            }
+        }
+
+        mat-select {
+            height: 36px !important;
+            width: 100% !important;
+            border: 2px dashed transparent !important;
+            outline: none !important;
+            border-radius: 5px !important;
+            color: var(--text-secondary-color) !important;
+            padding: 5px 10px !important;
+            margin: 0 !important;
+
+            &:hover {
+                border: 2px dashed var(--primary-color) !important;
+            }
+
+            &:focus {
+                border: 2px solid var(--primary-color) !important;
+            }
+
+            &.invalid-input {
+                border-color: var(--error-color) !important;
+            }
+        }
+    }
+
+    .import-form-field-title {
+        font-size: 14px;
+        color: var(--text-primary-color);
+        font-weight: 500;
+        padding: 10px;
+        border-bottom: 1px solid var(--border-color-strong);
+        white-space: nowrap;
+    }
+}
+
+.import-data-not-found {
+    padding: 20px 20px 20px 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--text-secondary-color);
+
+    img {
+        margin: auto auto 10px auto;
+        display: block;
+        width: 70px;
+        height: 70px;
+    }
+}

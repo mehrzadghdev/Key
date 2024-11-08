@@ -112,3 +112,13 @@ export interface DeleteProductBody extends HasDatabase {
 
 export type GetNewProductCodeBody = GetNewCodeBody;
 export type GetNewProductCode = GetNewCode;
+
+// Product/GetCompaniesProductCodes
+
+export interface GetCompaniesProductCodesBody extends HasDatabase {}
+
+export interface ProductCodesObject {
+    code: number
+}
+
+export type GetCompaniesProductCodes = ProductCodesObject[];

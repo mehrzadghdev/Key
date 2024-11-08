@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { RequestService } from 'src/app/shared/services/api/request.service';
-import { AddProduct, AddProductBody, DeleteProduct, DeleteProductBody, GetCompaniesProductList, GetCompaniesProductListBody, GetNewProductCode, GetNewProductCodeBody, GetProduct, GetProductBody, GetProductList, GetProductListBody, UpdateProduct, UpdateProductBody } from '../../types/definitions/product.type';
+import { AddProduct, AddProductBody, DeleteProduct, DeleteProductBody, GetCompaniesProductCodes, GetCompaniesProductCodesBody, GetCompaniesProductList, GetCompaniesProductListBody, GetNewProductCode, GetNewProductCodeBody, GetProduct, GetProductBody, GetProductList, GetProductListBody, UpdateProduct, UpdateProductBody } from '../../types/definitions/product.type';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +16,10 @@ export class ProductService {
 
   public getCompaniesProductList(getCompaniesProductListBody: GetCompaniesProductListBody): Observable<GetCompaniesProductList> {
     return this.request.post<GetCompaniesProductList, GetCompaniesProductListBody>("Product/GetCompaniesProductList", getCompaniesProductListBody)
+  }
+
+  public getCompaniesProductCodes(getCompaniesProductCodesBody: GetCompaniesProductCodesBody): Observable<GetCompaniesProductCodes> {
+    return this.request.post<GetCompaniesProductCodes, GetCompaniesProductCodesBody>("Product/GetCompaniesProductCodes", getCompaniesProductCodesBody)
   }
 
   public getProduct(getProductBody: GetProductBody): Observable<GetProduct> {

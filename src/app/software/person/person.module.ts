@@ -8,6 +8,7 @@ import { CreatePersonComponent } from './create-person/create-person.component';
 import { UpdatePersonComponent } from './update-person/update-person.component';
 import { NgxMaskDirective } from 'ngx-mask';
 import { ImportPersonsComponent } from './import-persons/import-persons.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -20,6 +21,8 @@ import { ImportPersonsComponent } from './import-persons/import-persons.componen
   imports: [
     CommonModule,
     PersonRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
     SharedModule,
     NgxMaskDirective
   ]

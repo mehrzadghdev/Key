@@ -18,7 +18,7 @@ export class CreateCompanyComponent {
   public generateKeysLoading: boolean = false;
 
   public addCompanyForm: FormGroup;
-  public addCompanyStep: 'welcome' | 'base' | 'information' | 'tax' | 'keys' = 'welcome';
+  public addCompanyStep: 'welcome' | 'base' | 'information' | 'tax' | 'keys' = 'base';
   public addCompanyLoading: boolean = false;
   public get stepsProgress(): 0 | 20 | 40 | 60 | 80 {
     switch (this.addCompanyStep) {
