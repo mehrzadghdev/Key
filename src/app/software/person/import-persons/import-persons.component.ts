@@ -18,8 +18,8 @@ import { invalid } from 'jalali-moment';
 })
 export class ImportPersonsComponent implements OnInit {
   public importPersonsLoading: boolean = false;
-  public personsList: Person[] = [];
-  public allPersonCodes: number[] = [];
+  // public personsList: Person[] = [];
+  public serverPersonCodes: number[] = [];
   public readExcelLoading: boolean = false;
   public addPersonsLoading: boolean = false;
   public excelReaded: boolean = false;
@@ -29,6 +29,11 @@ export class ImportPersonsComponent implements OnInit {
   });
   get personsFromArray(): FormArray<FormGroup> {
     return <FormArray<FormGroup>>this.importPersonsForm.get("persons");
+  }
+  get allPersonCodes(): readonly number[] {
+    const allImportedPersonCodes: number[] = this.personsFromArray.controls.map(group => group.get("code")?.value);
+
+    return [...this.serverPersonCodes, ...allImportedPersonCodes]
   }
 
   public personTypes = [
@@ -60,32 +65,22 @@ export class ImportPersonsComponent implements OnInit {
       const personCodesNumberList: number[] = result.map(personCodeObject => personCodeObject.code);
 
       for (const personCode of personCodesNumberList) {
-        this.allPersonCodes.push(personCode);
+        this.serverPersonCodes.push(personCode);
       }
     })
   }
 
   private initPersonsFormArraySubscriptions(): void {
     this.personsFromArray.controls.forEach(group => {
-      group.get('code')?.valueChanges.subscribe(value => {
-        if (
-          this.allPersonCodes.includes(value)
-          && this.allPersonCodes.filter(person => person === value).length > 1
-        ) {
-          group.get('code')?.setErrors({ conflict: true });
-        }
-      });
-    })
-  }
-
-  private initConflictedCodesCheck(): void {
-    this.personsFromArray.controls.forEach(group => {
-      if (
-        this.allPersonCodes.filter(personCode => personCode === group.get('code')?.value).length > 1
-        && this.allPersonCodes.includes(group.get('code')?.value)
-      ) {
-        group.get('code')?.setErrors({ conflict: true });
+      if ((this.allPersonCodes.includes(group.get("code")?.value)) && (this.allPersonCodes.filter(code => code === group.get("code")?.value).length > 1)) {
+        group.get("code")?.setErrors({ conflict: true });
       }
+
+      group.get("code")?.valueChanges.subscribe(value => {
+        if ((this.allPersonCodes.includes(value)) && (this.allPersonCodes.filter(code => code === value).length > 1)) {
+          group.get("code")?.setErrors({ conflict: true });
+        }
+      })
     })
   }
 
@@ -133,9 +128,6 @@ export class ImportPersonsComponent implements OnInit {
           newPersonObject.nationalId = field['کدملی / کد اقتصادی / کد اتباع *']
         }
 
-        this.personsList.push(newPersonObject);
-        this.allPersonCodes.push(newPersonObject.code);
-
         const fromControlFromPersonObject: FormGroup = this.fb.group({
           code: [newPersonObject.code, Validators.required],
           personName: [newPersonObject.personName, Validators.required],
@@ -152,8 +144,7 @@ export class ImportPersonsComponent implements OnInit {
     }
     
     this.initPersonsFormArraySubscriptions();
-    // this.initConflictedCodesCheck(allPersonCodes);
-
+    
     this.excelReaded = true;
     this.readExcelLoading = false;
   }
@@ -191,7 +182,7 @@ export class ImportPersonsComponent implements OnInit {
         hasCancel: false
       })
     }
-    else if (validPersons.length === this.personsList.length) {
+    else if (validPersons.length === this.personsFromArray.controls.length) {
       this.dialog.openAlertDialog({
         dialogName: 'فراخوانی از اکسل',
         title: `تایید فراخوانی ${validPersons.length} طرف حساب`,
@@ -238,7 +229,6 @@ export class ImportPersonsComponent implements OnInit {
   }
 
   public onRemoveReadedExcel(): void {
-    this.personsList = [];
     this.personsFromArray.clear();
 
     this.excelReaded = false;

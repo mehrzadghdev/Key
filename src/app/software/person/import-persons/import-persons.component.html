@@ -30,8 +30,8 @@
                         <ng-container *ngIf="personsFromArray.controls.length > 0">
                             <ng-container *ngFor="let personFrom of personsFromArray.controls; let i = index">
                                 <ng-container  [formGroup]="personFrom">
-                                    <div [class.invalid-row]="personFrom.invalid" class="import-form-field" matTooltip="کد تکراری یا فیلد نامعتبر میباشد و فراخوانی خوانده نمیشود" [matTooltipDisabled]="!personFrom.get('code')?.invalid">
-                                        <input [class.invalid-input]="personFrom.get('code')?.invalid" type="text" formControlName="code">
+                                    <div [class.invalid-row]="personFrom.invalid" class="import-form-field" matTooltip="کد تکراری یا فیلد نامعتبر میباشد ور در فراخوانی خوانده نمیشود" [matTooltipDisabled]="!personFrom.get('code')?.invalid">
+                                        <input [class.invalid-input]="personFrom.get('code')?.invalid" type="number" formControlName="code">
                                     </div>
                                     <div [class.invalid-row]="personFrom.invalid" class="import-form-field" matTooltip="فیلد نامعتبر میباشد و فراخوانی خوانده نمیشود" [matTooltipDisabled]="!personFrom.get('personType')?.invalid">
                                         <mat-select [class.invalid-input]="personFrom.get('personType')?.invalid" formControlName="personType">
@@ -80,6 +80,6 @@
     
     <mat-dialog-actions class="form-dialog-footer">
         <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
-        <key-button [disabled]="personsList.length <= 0" [loading]="importPersonsLoading || addPersonsLoading" (click)="onImportPersons()" type="submit">اضافه کردن</key-button>
+        <key-button [disabled]="this.personsFromArray.controls.length <= 0" [loading]="importPersonsLoading || addPersonsLoading" (click)="onImportPersons()" type="submit">اضافه کردن</key-button>
     </mat-dialog-actions>
 </form>
