@@ -30,7 +30,7 @@
                         <ng-container *ngIf="personsFromArray.controls.length > 0">
                             <ng-container *ngFor="let personFrom of personsFromArray.controls; let i = index">
                                 <ng-container  [formGroup]="personFrom">
-                                    <div [class.invalid-row]="personFrom.invalid" class="import-form-field" matTooltip="کد تکراری یا فیلد نامعتبر میباشد ور در فراخوانی خوانده نمیشود" [matTooltipDisabled]="!personFrom.get('code')?.invalid">
+                                    <div [class.invalid-row]="personFrom.invalid" class="import-form-field" matTooltip="کد تکراری یا فیلد نامعتبر میباشد و در فراخوانی خوانده نمیشود" [matTooltipDisabled]="!personFrom.get('code')?.invalid">
                                         <input [class.invalid-input]="personFrom.get('code')?.invalid" type="number" formControlName="code">
                                     </div>
                                     <div [class.invalid-row]="personFrom.invalid" class="import-form-field" matTooltip="فیلد نامعتبر میباشد و فراخوانی خوانده نمیشود" [matTooltipDisabled]="!personFrom.get('personType')?.invalid">

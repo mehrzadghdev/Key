@@ -28,6 +28,7 @@ import { ProductIdSearchComponent } from './product/product-id-search/product-id
 import { GenerateKeysComponent } from './company/generate-keys/generate-keys.component';
 import { ProductType } from './enums/product-type.enum';
 import { UserEventsComponent } from './reports/user-events/user-events.component';
+import { ImportPersonsComponent } from './person/import-persons/import-persons.component';
 
 @Component({
   selector: 'app-software',
@@ -304,6 +305,16 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   public onAddPerson(): void {
     this.dialog.openFormDialog(CreatePersonComponent, {
       width: "456px"
+    }).afterClosed().subscribe(res => {
+      if (res && this.currentActivatedRoute instanceof ListPersonComponent) {
+        this.currentActivatedRoute.loadPersonList();
+      }
+    })
+  }
+
+  public onImportPersonsFromExcel(): void {
+    this.dialog.openFormDialog(ImportPersonsComponent, {
+      width: "100%",
     }).afterClosed().subscribe(res => {
       if (res && this.currentActivatedRoute instanceof ListPersonComponent) {
         this.currentActivatedRoute.loadPersonList();
