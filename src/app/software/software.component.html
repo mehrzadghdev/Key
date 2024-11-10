@@ -277,17 +277,7 @@
                             [src]="activeRouteIs('company') ? 'assets/images/software/company-solid.svg' : 'assets/images/software/company-outlined.svg'"
                             alt="company icon">
                     </div>
-                    <span>شرکت</span>
-                </li>
-            </a>
-            <a routerLink="/software/person">
-                <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('person')}">
-                    <div class="bottom-menu-icon">
-                        <img class="icon-light"
-                            [src]="activeRouteIs('person') ? 'assets/images/software/person-solid.svg' : 'assets/images/software/person-outlined.svg'"
-                            alt="company icon">
-                    </div>
-                    <span>طرف حساب</span>
+                    <span>مودی</span>
                 </li>
             </a>
             <a routerLink="/software/product">
@@ -297,7 +287,7 @@
                             [src]="activeRouteIs('product') ? 'assets/images/software/product-solid.svg' : 'assets/images/software/product-outlined.svg'"
                             alt="company icon">
                     </div>
-                    <span>کالا و خدمات</span>
+                    <span>تعاریف پایه</span>
                 </li>
             </a>
             <a routerLink="/software/invoice">
@@ -308,6 +298,16 @@
                             alt="company icon">
                     </div>
                     <span>فاکتور</span>
+                </li>
+            </a>
+            <a routerLink="/software/reports">
+                <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('reports')}">
+                    <div class="bottom-menu-icon">
+                        <img class="icon-light"
+                            [src]="activeRouteIs('reports') ? 'assets/images/software/report-solid.svg' : 'assets/images/software/report-outlined.svg'"
+                            alt="company icon">
+                    </div>
+                    <span>گزارشات</span>
                 </li>
             </a>
         </ul>

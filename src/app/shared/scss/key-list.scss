@@ -1,3 +1,59 @@
+.content-mobile-base-definitions {
+    display: none;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 5px;
+    padding: 0 0 20px 0;
+
+    .content-mobile-base-definition {
+        padding: 10px;
+        box-shadow: var(--light-shadow);
+        background-color: var(--primary-color);
+        background-image: url('../../../assets/images/bg.png');
+        background-size: cover;
+        background-repeat: no-repeat;
+        border-radius: 3px;
+        border: 1px solid var(--border-color-medium);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+        &:hover {
+            border-color: var(--primary-color);
+        }
+
+        .base-definition-image-container {
+            width: 32px;
+            height: 32px;
+            padding: 5px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--background-color-light);
+            background-color: color-mix(in srgb, var(--primary-color), 95% var(--base-color));
+            
+            img {
+                width: 100%;
+                filter: var(--icon-primary);
+            }
+        }
+
+        h5 {
+            font-size: 12px;
+            color: var(--text-colorful-background);
+            margin-top: 5px;
+            font-weight: 500;
+        }
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .content-mobile-base-definitions {
+        display: grid;
+    }
+}
+
 .content-topbar {
     gap: 20px;
     display: flex;
@@ -45,7 +101,7 @@
         &:focus {
             border: 1px solid var(--primary-color);
         }
-        
+
         .tiled-table-toggle-icon {
             width: 20px;
             height: 20px;
@@ -69,7 +125,7 @@
         &:focus {
             border: 1px solid var(--primary-color);
         }
-        
+
         .list-more-options-icon {
             width: 22px;
             height: 22px;
@@ -107,12 +163,12 @@
 
 .content-table {
     margin-top: 17px;
-    box-shadow: var(--light-shadow); 
+    box-shadow: var(--light-shadow);
     overflow-x: auto;
-    background-color: var(--base-color); 
+    background-color: var(--base-color);
     border-radius: 3px;
     border: 1px solid var(--border-color-medium);
-    
+
     &.flat-table {
         box-shadow: unset;
         border: unset;
@@ -130,7 +186,7 @@
 
     table {
         width: 100% !important;
-        background-color: var(--base-color); 
+        background-color: var(--base-color);
 
         & th {
             color: var(--text-primary-color);
@@ -205,7 +261,8 @@
                 transition: all .1s ease;
                 border-radius: 2px;
 
-                &:hover, &:focus {
+                &:hover,
+                &:focus {
                     border-color: var(--primary-color);
                 }
 

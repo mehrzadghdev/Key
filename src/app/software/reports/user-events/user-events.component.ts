@@ -75,7 +75,7 @@ export class UserEventsComponent implements OnInit {
     this.loadUserEventList();
   }
 
-  private loadUserEventList(pagination: PaginationBody = { pageSize: 5, page: 1 }): void {
+  private loadUserEventList(pagination: PaginationBody = { pageSize: 10, page: 1 }): void {
     this.userEventListLoading = true;
 
     const userDetails: UserDetails = this.authentication.userDetails as UserDetails;
@@ -103,7 +103,7 @@ export class UserEventsComponent implements OnInit {
     });
   }
 
-  public onItemPerPageChanged(itemsPerPage: 5 | 10 | 25 | 40 | 60): void {
+  public onItemPerPageChanged(itemsPerPage: 10 | 25 | 40 | 60): void {
     this.loadUserEventList({ pageSize: itemsPerPage, page: 1, sortFieldName: this.sortFieldname });
   }
 
