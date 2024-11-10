@@ -99,11 +99,13 @@
                 <ul class="accordion-content" (click)="$event.stopPropagation()">
                     <li matRipple class="unselectable" tabindex="1" (keydown.enter)="onAddPerson()" (click)="onAddPerson()">ایجاد طرف حساب جدید</li>
                     <li matRipple class="unselectable"><a routerLink="/software/person" tabindex="1">لیست تمام طرف حساب ها</a></li>
+                    <li matRipple class="unselectable" tabindex="1" (keydown.enter)="onImportPersonsFromExcel()" (click)="onImportPersonsFromExcel()">فراخوانی از اکسل</li>
                 </ul>
             </li>
             <mat-menu #contactMenu="matMenu" xPosition="before">
                 <button mat-menu-item tabindex="1" (keydown.enter)="onAddPerson()" (click)="onAddPerson()">ایجاد طرف حساب جدید</button>
                 <button mat-menu-item><a routerLink="/software/person" tabindex="1">لیست تمام طرف حساب ها</a></button>
+                <button mat-menu-item tabindex="1" (keydown.enter)="onImportPersonsFromExcel()" (click)="onImportPersonsFromExcel()">فراخوانی از اکسل</button>
             </mat-menu>
 
             <li class="nav-item accordion" tabindex="1" #productAccordion (keydown.enter)="toggleAccordion(productAccordion)" (click)="toggleAccordion(productAccordion)"
