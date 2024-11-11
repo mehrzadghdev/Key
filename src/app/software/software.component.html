@@ -40,12 +40,12 @@
         </div>
         <ul class="panel-sidebar__menu">
             <li class="menu-title">منو اصلی</li>
-            <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('dashboard')}">
+            <li class="nav-item accordion" #dashboardItem [ngClass]="{'opened': activeRouteIs('dashboard')}">
                 <a routerLink="/software" tabindex="1">
                     <div class="accordion-header" matRipple>
                         <div class="accordion-title">
                             <div class="nav-item__icon">
-                                <mat-icon class="material-icons-outlined">poll_outline</mat-icon>
+                                <img [src]="(dashboardItem.classList.contains('opened')) ? 'assets/images/software/report-solid.svg' : 'assets/images/software/report-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
                             </div>
                             <span *ngIf="isExpanded" class="nav-item__title unselectable">پیشخوان</span>
                         </div>
@@ -59,7 +59,7 @@
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
-                            <mat-icon class="material-icons-outlined">business_outline</mat-icon>
+                            <img [src]="(companyAccordion.classList.contains('opened')) ? 'assets/images/software/company-solid.svg' : 'assets/images/software/company-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
                         </div>
                         <span *ngIf="isExpanded" class="nav-item__title unselectable">شرکت</span>
                     </div>
@@ -88,7 +88,7 @@
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
-                            <mat-icon class="material-icons-outlined">contacts_outline</mat-icon>
+                            <img [src]="(contactAccordion.classList.contains('opened')) ? 'assets/images/software/person-solid.svg' : 'assets/images/software/person-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
                         </div>
                         <span *ngIf="isExpanded" class="nav-item__title unselectable">طرف حساب</span>
                     </div>
@@ -114,7 +114,7 @@
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
-                            <mat-icon class="material-icons-outlined">inventory_2_outline</mat-icon>
+                            <img [src]="(productAccordion.classList.contains('opened')) ? 'assets/images/software/product-solid.svg' : 'assets/images/software/product-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
                         </div>
                         <span *ngIf="isExpanded" class="nav-item__title unselectable">کالا و خدمات</span>
                     </div>
@@ -145,7 +145,7 @@
                 <div class="accordion-header" matRipple>
                     <div class="accordion-title">
                         <div class="nav-item__icon">
-                            <mat-icon class="material-icons-outlined">article_outline</mat-icon>
+                            <img [src]="(productAccordion.classList.contains('opened')) ? 'assets/images/software/invoice-solid.svg' : 'assets/images/software/invoice-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
                         </div>
                         <span *ngIf="isExpanded" class="nav-item__title unselectable">فاکتور فروش</span>
                     </div>
@@ -167,12 +167,12 @@
             </mat-menu>
 
             <li class="menu-title">گزارشات</li>
-            <li class="nav-item accordion" [ngClass]="{'opened': activeRouteIs('reports')}">
+            <li class="nav-item accordion" #historyItem [ngClass]="{'opened': activeRouteIs('reports')}">
                 <a routerLink="/software/reports" tabindex="1">
                     <div class="accordion-header" matRipple>
                         <div class="accordion-title">
                             <div class="nav-item__icon">
-                                <mat-icon class="material-icons-outlined">history_outline</mat-icon>
+                                <img [src]="(historyItem.classList.contains('opened')) ? 'assets/images/software/report-solid.svg' : 'assets/images/software/report-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
                             </div>
                             <span *ngIf="isExpanded" class="nav-item__title unselectable">وقایع کاربری</span>
                         </div>
@@ -281,10 +281,10 @@
                 </li>
             </a>
             <a routerLink="/software/product">
-                <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('product')}">
+                <li mat-ripple [ngClass]="{'active-bottom-menu-item': (activeRouteIs('product') || activeRouteIs('person') || activeRouteIs('unit'))}">
                     <div class="bottom-menu-icon">
                         <img class="icon-light"
-                            [src]="activeRouteIs('product') ? 'assets/images/software/product-solid.svg' : 'assets/images/software/product-outlined.svg'"
+                            [src]="(activeRouteIs('product') || activeRouteIs('person') || activeRouteIs('unit')) ? 'assets/images/software/product-solid.svg' : 'assets/images/software/product-outlined.svg'"
                             alt="company icon">
                     </div>
                     <span>تعاریف پایه</span>

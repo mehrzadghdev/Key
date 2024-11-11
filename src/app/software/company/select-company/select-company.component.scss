@@ -42,9 +42,10 @@
 .select-company-dialog {
     width: 360px;
     background-color: var(--base-color);
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: var(--base-shadow);
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--border-color-medium);
+    box-shadow: var(--light-shadow);
 
     .companies {
         overflow-y: auto;

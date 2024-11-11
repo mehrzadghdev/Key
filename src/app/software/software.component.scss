@@ -64,6 +64,12 @@
                             width: 20px;
                             height: 20px;
                         }
+
+                        .nav-item__icon-image {
+                            width: 28px;
+                            height: 28px;
+                            filter: var(--icon-light);
+                        }
                     }
                 }
 
@@ -79,6 +85,12 @@
                     .nav-item__icon {
                         .mat-icon {
                             color: #A4B0BE !important;
+                        }
+
+                        .nav-item__icon-image {
+                            width: 28px;
+                            height: 28px;
+                            filter: var(--icon-white) !important;
                         }
                     }
                 }
@@ -171,6 +183,12 @@
                     .mat-icon {
                         color: #ffffff;
                     }
+
+                    .nav-item__icon-image {
+                        width: 26px;
+                        height: 26px;
+                        filter: var(--icon-white);
+                    }
                 }
 
                 .accordion-icon {
@@ -202,6 +220,13 @@
                     height: 18px;
                     color: #A4B0BE;
                 }
+                
+                .nav-item__icon-image {
+                    width: 26px;
+                    height: 26px;
+                    filter: var(--icon-light);
+                }
+
             }
 
             .accordion-icon {
