@@ -134,7 +134,7 @@ export class ListPersonComponent implements OnInit {
       this.tablePagination.totalPages = res.totalPages,
       this.tablePagination.hasNext = res.hasNext,
       this.tablePagination.hasPrev = res.hasPrev
-      this.personListLoaded = true;
+      this.personListLoaded = false;
     })
   }
 
@@ -153,7 +153,7 @@ export class ListPersonComponent implements OnInit {
       this.tablePagination.totalPages = res.totalPages,
       this.tablePagination.hasNext = res.hasNext,
       this.tablePagination.hasPrev = res.hasPrev
-      this.personListLoaded = true;
+      this.personListLoaded = false;
     })
   }
 
