@@ -2,6 +2,7 @@
     background-color: var(--base-color);
     display: flex;
     align-items: stretch;
+    border-top: 4px solid var(--primary-color);
 
     .skeleton-table-column {
         flex: 1;
@@ -13,6 +14,10 @@
             font-weight: 500;
             white-space: nowrap;
             border-bottom: 1px solid var(--border-color-medium);
+
+            &:not(:last-child) {
+                border-left: 2px dashed var(--border-color-medium) !important;
+            }
         }
         
         .skeleton-table-content {

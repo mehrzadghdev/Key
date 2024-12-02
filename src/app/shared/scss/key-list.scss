@@ -41,7 +41,7 @@
 
         h5 {
             font-size: 12px;
-            color: var(--text-colorful-background);
+            color: var(--text-opposite-color);
             margin-top: 5px;
             font-weight: 500;
         }
@@ -162,11 +162,11 @@
 }
 
 .content-table {
-    margin-top: 17px;
+    margin-top: 24px;
     box-shadow: var(--light-shadow);
     overflow-x: auto;
     background-color: var(--base-color);
-    border-radius: 3px;
+    border-radius: 0 0 3px 3px;
     border: 1px solid var(--border-color-medium);
 
     &.flat-table {
@@ -187,14 +187,7 @@
     table {
         width: 100% !important;
         background-color: var(--base-color);
-
-        & th {
-            color: var(--text-primary-color);
-        }
-
-        & td {
-            color: var(--text-secondary-color);
-        }
+        border-top: 3px solid var(--primary-color);
     }
 
     .table-no-data {

@@ -45,7 +45,7 @@
                     <div class="accordion-header" matRipple>
                         <div class="accordion-title">
                             <div class="nav-item__icon">
-                                <img [src]="(dashboardItem.classList.contains('opened')) ? 'assets/images/software/report-solid.svg' : 'assets/images/software/report-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
+                                <img [src]="(dashboardItem.classList.contains('opened')) ? 'assets/images/software/dashboard-solid.svg' : 'assets/images/software/dashboard-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
                             </div>
                             <span *ngIf="isExpanded" class="nav-item__title unselectable">پیشخوان</span>
                         </div>
@@ -172,7 +172,7 @@
                     <div class="accordion-header" matRipple>
                         <div class="accordion-title">
                             <div class="nav-item__icon">
-                                <img [src]="(historyItem.classList.contains('opened')) ? 'assets/images/software/report-solid.svg' : 'assets/images/software/report-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
+                                <img [src]="(historyItem.classList.contains('opened')) ? 'assets/images/software/history-solid.svg' : 'assets/images/software/history-outlined.svg'" class="nav-item__icon-image" alt="menu icon">
                             </div>
                             <span *ngIf="isExpanded" class="nav-item__title unselectable">وقایع کاربری</span>
                         </div>
@@ -304,7 +304,7 @@
                 <li mat-ripple [ngClass]="{'active-bottom-menu-item': activeRouteIs('reports')}">
                     <div class="bottom-menu-icon">
                         <img class="icon-light"
-                            [src]="activeRouteIs('reports') ? 'assets/images/software/report-solid.svg' : 'assets/images/software/report-outlined.svg'"
+                            [src]="activeRouteIs('reports') ? 'assets/images/software/history-solid.svg' : 'assets/images/software/history-outlined.svg'"
                             alt="company icon">
                     </div>
                     <span>گزارشات</span>
