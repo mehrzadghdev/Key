@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, SimpleChanges } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, Input, OnChanges, OnDestroy, OnInit, Renderer2, RendererStyleFlags2, SimpleChanges } from '@angular/core';
 import { Subject, BehaviorSubject, combineLatest, mapTo, map, takeUntil } from 'rxjs';
 
 @Directive({
@@ -48,6 +48,15 @@ export class TiledTableDirective implements OnInit, AfterViewInit, OnDestroy {
      * Set the "data-column-name" attribute for every body row cell, either on
      * thead row changes (e.g. language changes) or tbody rows changes (add, delete).
      */
+
+    this.tbody.querySelectorAll('tr').forEach(tr => {
+      this.renderer.setStyle(
+        tr,
+        'height',
+        'auto',
+        RendererStyleFlags2.Important
+      )
+    })
     combineLatest([this.theadChanged$, this.tbodyChanged$])
       .pipe(
         mapTo({ headRow: this.thead.rows.item(0)!, bodyRows: this.tbody.rows }),
@@ -59,17 +68,17 @@ export class TiledTableDirective implements OnInit, AfterViewInit, OnDestroy {
         })),
         takeUntil(this.onDestroy$)
       )
-      .subscribe(({ columnNames, rows }) =>
-        rows.forEach(rowCells =>
-          rowCells.forEach(cell =>
+      .subscribe(({ columnNames, rows }) => {
+        rows.forEach(rowCells => {
+          rowCells.forEach(cell => {
             this.renderer.setAttribute(
               cell,
               'data-column-name',
               columnNames[(cell as HTMLTableCellElement).cellIndex]
-            )
-          )
-        )
-      );
+            );
+          })
+        })
+      });
   }
 
   ngOnDestroy(): void {

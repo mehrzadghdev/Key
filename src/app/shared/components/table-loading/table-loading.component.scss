@@ -17,7 +17,7 @@
             height: 32px;
             display: flex;
             align-items: center;
-            border-left: 2px dashed var(--border-color-medium) !important;
+            border-left: 1.5px dashed var(--border-color-medium) !important;
         }
 
         .skeleton-table-content {
@@ -26,6 +26,7 @@
             display: flex;
             align-items: center;
             font-size: 14px;
+            border-bottom: 1px solid var(--border-color-medium);
         }
     }
 }
