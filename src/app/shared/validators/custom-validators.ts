@@ -24,7 +24,7 @@ export abstract class CustomValidators {
         }
     }
 
-    public static englishOnly(formControl: AbstractControl): ValidationErrors | null {
+    public static englishOnly(formControl: AbstractControl): CustomValidationErrors | null {
         if (formControl.value == null) {
             return null;
         }
@@ -33,8 +33,7 @@ export abstract class CustomValidators {
         return !valid ? { englishOnly: true } : null;
     }
 
-
-    public static nationalId(formControl: AbstractControl): ValidationErrors | null {
+    public static nationalId(formControl: AbstractControl): CustomValidationErrors | null {
         const value = formControl.value;
 
         if (!value) return null;
@@ -44,7 +43,7 @@ export abstract class CustomValidators {
         return value.toString().length !== 10 ? { nationalId: true } : null;
     }
 
-    public static zipCode(formControl: AbstractControl): ValidationErrors | null {
+    public static zipCode(formControl: AbstractControl): CustomValidationErrors | null {
         const value = formControl.value;
 
         if (!value) return null;
@@ -54,11 +53,11 @@ export abstract class CustomValidators {
         return value.toString().length !== 10 ? { zipCode: true } : null;
     }
 
-    public static invalid(formControl: AbstractControl): ValidationErrors {
+    public static invalid(formControl: AbstractControl): CustomValidationErrors {
         return { invalid: true }
     }
 
-    public static phoneNumber(formControl: AbstractControl): ValidationErrors | null {
+    public static phoneNumber(formControl: AbstractControl): CustomValidationErrors | null {
         const value = formControl.value;
 
         if (!value) return null;
@@ -68,17 +67,17 @@ export abstract class CustomValidators {
         return value.toString().length !== 10 ? { phoneNumber: true } : null;
     }
 
-    public static homePhoneNumber(formControl: AbstractControl): ValidationErrors | null {
+    public static homePhoneNumber(formControl: AbstractControl): CustomValidationErrors | null {
         const value = formControl.value;
 
         if (!value) return null;
 
         if (!value.toString().length) return null;
 
-        return value.toString().length < 5 ? { phoneNumber: true } : null;
+        return value.toString().length < 5 ? { homePhoneNumber: true } : null;
     }
 
-    public static economicCode(formControl: AbstractControl): ValidationErrors | null {
+    public static economicCode(formControl: AbstractControl): CustomValidationErrors | null {
         const value = formControl.value;
 
         if (!value) return null;
@@ -88,7 +87,7 @@ export abstract class CustomValidators {
         return value.toString().length !== 12 ? { economicCode: true } : null;
     }
 
-    public static economicOrNationalCode(formControl: AbstractControl): ValidationErrors | null {
+    public static economicOrNationalCode(formControl: AbstractControl): CustomValidationErrors | null {
         const value = formControl.value;
 
         if (!value) return null;
@@ -98,7 +97,7 @@ export abstract class CustomValidators {
         return value.toString().length < 10 ? { economicOrNationalCode: true } : null;
     }
 
-    public static taxIdentity(formControl: AbstractControl): ValidationErrors | null {
+    public static taxIdentity(formControl: AbstractControl): CustomValidationErrors | null {
         const value = formControl.value;
 
         if (!value) return null;
@@ -108,17 +107,17 @@ export abstract class CustomValidators {
         return value.toString().length > 6 ? { taxIdentity: true } : null;
     }
 
-    public static branchNo(formControl: AbstractControl): ValidationErrors | null {
+    public static branchNo(formControl: AbstractControl): CustomValidationErrors | null {
         const value = formControl.value;
 
         if (!value) return null;
 
         if (!value.toString().length) return null;
 
-        return value.toString().length > 4 ? { economicCode: true } : null;
+        return value.toString().length > 4 ? { branchNo: true } : null;
     }
 
-    public static code(formControl: AbstractControl): ValidationErrors | null {
+    public static code(formControl: AbstractControl): CustomValidationErrors | null {
         const value = formControl.value;
 
         if (!value) return null;
@@ -127,4 +126,44 @@ export abstract class CustomValidators {
 
         return value.toString().length > 10 ? { code: true } : null;
     }
+
+    public static getValidatorMessage(validator: string): string {
+        switch (validator) {
+            case 'code': return 'کد تفضیلی نامعتبر میباشد.';
+
+            case 'branchNo': return "کد شعبه حداکثر چهار رقم میباشد.";
+
+            case 'taxIdentity': return 'شناسه یکتا حداکثر شش رقم میباشد.';
+
+            case 'economicOrNationalCode': return 'کد ملی یا اقتصادی نامعتبر میباشد.';
+
+            case 'economicCode': return 'کد اقتصادی سیزده رقم میباشد.';
+
+            case 'homePhoneNumber': return 'شماره ثابت حداقل پنج رقم میباشد.';
+
+            case 'phoneNumber': return 'شماره تماس ده رقم میباشد.';
+
+            case 'invalid': return 'فیلد همیشه نامعتبر میباشد';
+
+            case 'zipCode': return 'کد پستی ده رقم میباشد.';
+
+            case 'nationalId': return 'کد ملی ده رقم میباشد';
+
+            case 'englishOnly': return 'فقط حروف انگلیسی مجاز میباشد';
+
+            case 'passwordMismatch': return 'رمز عبور مطابقت ندارد';
+
+            case 'required': return 'این فیلد الزامی میباشد.';
+
+            default: return 'اطلاعات وارد شده نامعتبر میباشد';
+        }
+    }
+}
+
+export type CustomValidator = 'code' | 'branchNo' | 'taxIdentity' | 'economicOrNationalCode' | 'economicCode' | 'homePhoneNumber' | 'phoneNumber' | 'invalid' | 'zipCode' | 'nationalId' | 'englishOnly' | 'passwordMismatch';
+
+export type DefaultValidator = 'required'
+
+type CustomValidationErrors = {
+    [key in CustomValidator]?: boolean;
 }

@@ -46,6 +46,7 @@ import { HideTabsDirective } from './directives/hide-tabs.directive';
 import { DaysBetweenDatesPipe } from './pipes/days-between-dates.pipe';
 import { UploadAreaComponent } from './components/upload-area/upload-area.component';
 import { BytesPipe } from './pipes/bytes.pipe';
+import { ValidatorMessagePipe } from './pipes/validator-message.pipe';
 
 export function playerFactory() { 
   return import('lottie-web'); 
@@ -71,7 +72,8 @@ export function playerFactory() {
     HideTabsDirective,
     DaysBetweenDatesPipe,
     UploadAreaComponent,
-    BytesPipe
+    BytesPipe,
+    ValidatorMessagePipe
   ],
   imports: [
     CommonModule,
@@ -121,6 +123,7 @@ export function playerFactory() {
     PricePipe,
     FarsiNumberPipe,
     DaysBetweenDatesPipe,
+    ValidatorMessagePipe,
     RandomWidthDirective,
     AutoFocusDirective,
     PercentageInputDirective,

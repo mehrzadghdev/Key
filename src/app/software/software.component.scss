@@ -154,6 +154,7 @@
                     & a {
                         color: #A4B0BE;
                         font-size: 13px;
+                        display: block;
 
                         &:hover {
                             color: #fff;
@@ -235,7 +236,7 @@
                     width: 18px;
                     height: 18px;
                     color: #A4B0BE;
-                    transform: rotate(-90deg);
+                    transform: rotate(90deg);
                     transition: all .1s ease;
                 }
             }

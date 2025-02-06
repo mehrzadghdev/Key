@@ -39,19 +39,19 @@
                     <mat-form-field class="add-company-field" appearance="outline">
                         <mat-label>نام شرکت</mat-label>
                         <input keyAutoFocus matInput formControlName="companyName" type="text" />
-                        <mat-error *ngIf="addCompanyForm.get('companyName')?.invalid && addCompanyForm.get('companyName')?.invalid">
-                            این فیلد الزامیست
+                        <mat-error *ngIf="addCompanyForm.get('companyName')?.invalid && addCompanyForm.get('companyName')?.touched">
+                            {{ 'required' | validatorMessage }}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="add-company-field" appearance="outline">
                         <mat-label>نام انگلیسی شرکت</mat-label>
                         <input matInput formControlName="companyNameEn" type="text" />
-                        <mat-error *ngIf="addCompanyForm.get('companyNameEn')?.invalid && addCompanyForm.get('companyNameEn')?.invalid">
+                        <mat-error *ngIf="addCompanyForm.get('companyNameEn')?.invalid && addCompanyForm.get('companyNameEn')?.touched">
                             <ng-container *ngIf="addCompanyForm.get('companyNameEn')?.hasError('required')">
-                                این فیلد الزامیست
+                                {{ 'required' | validatorMessage }}
                             </ng-container>
                             <ng-container *ngIf="addCompanyForm.get('companyNameEn')?.hasError('englishOnly')">
-                                نام شرکت انگلیسی نامعتبر است 
+                                {{ 'englishOnly' | validatorMessage }}
                             </ng-container>  
                         </mat-error>
                     </mat-form-field>
@@ -59,8 +59,8 @@
                 <mat-form-field class="add-company-field" appearance="outline">
                     <mat-label>توضیحات شرکت</mat-label>
                     <textarea matInput formControlName="companyDesc" rows="3"></textarea>
-                    <mat-error *ngIf="addCompanyForm.get('companyDesc')?.invalid && addCompanyForm.get('companyDesc')?.invalid">
-                        این فیلد الزامیست
+                    <mat-error *ngIf="addCompanyForm.get('companyDesc')?.invalid && addCompanyForm.get('companyDesc')?.touched">
+                        {{ 'required' | validatorMessage }}
                     </mat-error>
                 </mat-form-field>
                 <div class="add-company-buttons-container">
@@ -73,31 +73,28 @@
                     <mat-form-field class="add-company-field" appearance="outline" hideRequiredMarker>
                         <mat-label>کد پستی</mat-label>
                         <input matInput formControlName="companyZipCode" type="number" maxlength="11" />
-                        <mat-error *ngIf="addCompanyForm.get('companyZipCode')?.invalid && addCompanyForm.get('companyZipCode')?.invalid">
-                            کد پستی نامعتبر است  
+                        <mat-error *ngIf="addCompanyForm.get('companyZipCode')?.invalid && addCompanyForm.get('companyZipCode')?.touched">
+                            {{ 'zipCode' | validatorMessage }}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="add-company-field" appearance="outline" hideRequiredMarker>
                         <mat-label>آدرس و مکان</mat-label>
                         <textarea matInput formControlName="companyAddress" rows="1"></textarea>
-                        <mat-error *ngIf="addCompanyForm.get('companyAddress')?.invalid && addCompanyForm.get('companyAddress')?.invalid">
-                            این فیلد الزامیست
-                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="two-colums-input">
                     <mat-form-field class="add-company-field" appearance="outline" hideRequiredMarker>
                         <mat-label>تلفن</mat-label>
                         <input matInput formControlName="companyTel" type="number" maxlength="11" />
-                        <mat-error *ngIf="addCompanyForm.get('companyTel')?.invalid && addCompanyForm.get('companyTel')?.invalid">
-                            تلفن نامعتبر است
+                        <mat-error *ngIf="addCompanyForm.get('companyTel')?.invalid && addCompanyForm.get('companyTel')?.touched">
+                            {{ 'phoneNumber' | validatorMessage }}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="add-company-field" appearance="outline" hideRequiredMarker>
                         <mat-label>کد شعبه</mat-label>
                         <input matInput formControlName="companyBranchNo" type="text" />
-                        <mat-error *ngIf="addCompanyForm.get('companyBranchNo')?.invalid && addCompanyForm.get('companyBranchNo')?.invalid">
-                            کد شعبه حداکثر چهار رقم میباشد
+                        <mat-error *ngIf="addCompanyForm.get('companyBranchNo')?.invalid && addCompanyForm.get('companyBranchNo')?.touched">
+                            {{ 'branchNo' | validatorMessage }}
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -111,12 +108,12 @@
                 <mat-form-field class="add-company-field" appearance="outline">
                     <mat-label>شناسه یکتا مالیاتی</mat-label>
                     <input matInput formControlName="taxIdentity" type="text" />
-                    <mat-error *ngIf="addCompanyForm.get('taxIdentity')?.invalid && addCompanyForm.get('taxIdentity')?.invalid">
+                    <mat-error *ngIf="addCompanyForm.get('taxIdentity')?.invalid && addCompanyForm.get('taxIdentity')?.touched">
                         <ng-container *ngIf="addCompanyForm.get('taxIdentity')?.hasError('required')">
-                            این فیلد الزامیست
+                            {{ 'required' | validatorMessage }}
                         </ng-container>
                         <ng-container *ngIf="addCompanyForm.get('taxIdentity')?.hasError('taxIdentity')">
-                            شناسه یکتا نامعتبر است  
+                            {{ 'taxIdentity' | validatorMessage }}
                         </ng-container>  
                     </mat-error>
                 </mat-form-field>
@@ -124,12 +121,12 @@
                     <mat-label>کد ملی یا اقتصادی</mat-label>
                     <input matInput formControlName="economicCode" type="text" />
                     <!-- <textarea matInput formControlName="economicCode" rows="1"></textarea> -->
-                    <mat-error *ngIf="addCompanyForm.get('economicCode')?.invalid && addCompanyForm.get('economicCode')?.invalid">
+                    <mat-error *ngIf="addCompanyForm.get('economicCode')?.invalid && addCompanyForm.get('economicCode')?.touched">
                         <ng-container *ngIf="addCompanyForm.get('economicCode')?.hasError('required')">
-                            این فیلد الزامیست
+                            {{ 'required' | validatorMessage }}
                         </ng-container>
                         <ng-container *ngIf="addCompanyForm.get('economicCode')?.hasError('economicOrNationalCode')">
-                            کد ملی ی اقتصادی نامعتبر است 
+                            {{ 'economicOrNationalCode' | validatorMessage }}
                         </ng-container>  
                     </mat-error>
                 </mat-form-field>
@@ -153,18 +150,18 @@
                     <mat-form-field class="add-company-field" appearance="outline">
                         <mat-label>کلید خصوصی</mat-label>
                         <textarea matInput formControlName="privateKey" rows="5"></textarea>
-                        <mat-error *ngIf="addCompanyForm.get('privateKey')?.invalid && addCompanyForm.get('privateKey')?.invalid">
+                        <mat-error *ngIf="addCompanyForm.get('privateKey')?.invalid && addCompanyForm.get('privateKey')?.touched">
                             <ng-container *ngIf="addCompanyForm.get('privateKey')?.hasError('required')">
-                                این فیلد الزامیست
+                                {{ 'required' | validatorMessage }}
                             </ng-container> 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="add-company-field" appearance="outline">
                         <mat-label>کلید عمومی</mat-label>
                         <textarea matInput formControlName="publicKey" rows="5"></textarea>
-                        <mat-error *ngIf="addCompanyForm.get('publicKey')?.invalid && addCompanyForm.get('publicKey')?.invalid">
+                        <mat-error *ngIf="addCompanyForm.get('publicKey')?.invalid && addCompanyForm.get('publicKey')?.touched">
                             <ng-container *ngIf="addCompanyForm.get('publicKey')?.hasError('required')">
-                                این فیلد الزامیست
+                                {{ 'required' | validatorMessage }}
                             </ng-container> 
                         </mat-error>
                     </mat-form-field>

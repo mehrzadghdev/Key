@@ -90,7 +90,7 @@ body {
         outline-style: none;
         box-shadow: none;
         border-color: transparent;
-        border: 2px dashed color-mix(in srgb, var(--primary-color), var(--base-color) 20%);
+        outline: 2px dashed color-mix(in srgb, var(--primary-color), var(--base-color) 20%);
         border-radius: 5px;
     }
 }
