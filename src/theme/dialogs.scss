@@ -23,11 +23,13 @@ $dialogMaxHeight: 60rem;
 }
 
 .mobile-like-dialog {
+    border-radius: 8px;
     height: auto;
     max-height: 90% !important;
 }
 
 .tab-friendly-dialog {
+    border-radius: 8px;
     min-height: 90% !important;
 
     .dialog .content {
@@ -46,6 +48,11 @@ $dialogMaxHeight: 60rem;
     .mat-mdc-dialog-container {
         border-radius: 0 !important;
     }
+}
+
+.window-dialog {
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border-radius: 8px;
 }
 
 // Dialog border radius

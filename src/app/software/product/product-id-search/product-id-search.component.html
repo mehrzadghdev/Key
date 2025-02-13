@@ -49,7 +49,7 @@
                         </td>
                     </tr>
                 </table>
-                <key-table-loading *ngIf="staffIdSearchLoading" [columns]="loadingTableColumns"></key-table-loading>
+                <key-table-loading *ngIf="staffIdSearchLoading" [columns]="loadingTableColumns" [rows]="5"></key-table-loading>
                 <div class="table-pagination">
                     <div class="table-pagination__paginator">
                         <key-button content="icon" [disabled]="!tablePagination.hasPrev" (click)="tablePagination.hasPrev && onPaginationChanged((tablePagination.currentPage ?? 1) - 1)">

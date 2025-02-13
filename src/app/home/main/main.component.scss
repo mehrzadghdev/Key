@@ -5,7 +5,7 @@
     z-index: 1;
     min-height: calc(100vh - 74px);
     display: flex;
-    align-items: center;
+    align-items: center;  
     overflow: hidden;
 
     &::before {
@@ -458,5 +458,11 @@
         ul {
             grid-template-columns: 1fr;
         }
+    }
+
+    .packages-items {
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: stretch;
     }
 }

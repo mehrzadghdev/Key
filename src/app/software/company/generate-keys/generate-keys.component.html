@@ -15,7 +15,7 @@
                 <mat-label>نام شرکت</mat-label>
                 <input keyAutoFocus type="text" matInput formControlName="companyName">
                 <mat-error *ngIf="generateKeysForm.get('companyName')?.invalid && validationLastCheck">
-                    این فیلد الزامیست
+                    {{ 'required' | validatorMessage }}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="form-dialog-field" appearance="outline">
@@ -24,10 +24,10 @@
                 <mat-error
                     *ngIf="generateKeysForm.get('companyNameEn')?.invalid && generateKeysForm.get('companyNameEn')?.invalid">
                     <ng-container *ngIf="generateKeysForm.get('companyNameEn')?.hasError('required')">
-                        این فیلد الزامیست
+                        {{ 'required' | validatorMessage }}
                     </ng-container>
                     <ng-container *ngIf="generateKeysForm.get('companyNameEn')?.hasError('englishOnly')">
-                        نام شرکت انگلیسی نامعتبر است
+                        {{ 'englishOnly' | validatorMessage }}
                     </ng-container>
                 </mat-error>
             </mat-form-field>
@@ -37,10 +37,10 @@
                 <mat-error
                     *ngIf="generateKeysForm.get('economicCode')?.invalid && generateKeysForm.get('economicCode')?.invalid">
                     <ng-container *ngIf="generateKeysForm.get('economicCode')?.hasError('required')">
-                        این فیلد الزامیست
+                        {{ 'required' | validatorMessage }}
                     </ng-container>
                     <ng-container *ngIf="generateKeysForm.get('economicCode')?.hasError('economicCode')">
-                        کد اقتصادی نامعتبر است
+                        {{ 'economicCode' | validatorMessage }}
                     </ng-container>
                 </mat-error>
             </mat-form-field>
@@ -52,7 +52,7 @@
             </mat-form-field>
         </ng-container>
     </div>
-
+    
     <mat-dialog-actions class="form-dialog-footer">
         <key-button appearance="stroked" (click)="closeDialog()">لغو</key-button>
         <key-button [disabled]="generateKeysLoading" (click)="onGenerateKeys()" type="submit" *ngIf="!csrGenerated">دریافت CSR</key-button>

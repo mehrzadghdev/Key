@@ -122,7 +122,6 @@ export interface AddInvoiceBody extends HasDatabase {
 }
 
 export interface AddInvoiceProductItem extends HasDatabase {
-    databaseId: number,
     productCode: number,
     productName: string,
     amount: number,
@@ -130,6 +129,16 @@ export interface AddInvoiceProductItem extends HasDatabase {
     discount: number,
     taxPercent: Percentage,
     tax: number
+}
+
+export interface AddInvoiceCurrencySaleItem extends HasDatabase {
+    productCode: number,
+    currencyAmount: number,
+    currencyType: string,
+    currencyRate: number,
+    currencySaleFee: number,
+    discount: Percentage,
+    
 }
 
 // Invoice/UpdateSaleInvoice

@@ -169,6 +169,10 @@
     border-radius: 0 0 3px 3px;
     border: 1px solid var(--border-color-medium);
 
+    &.no-margin {
+        margin: 0;
+    }
+    
     &.flat-table {
         box-shadow: unset;
         border: unset;
@@ -184,10 +188,11 @@
         flex-wrap: wrap;
     }
 
+    
     table {
         width: 100% !important;
         background-color: var(--base-color);
-        border-top: 3px solid var(--primary-color);
+        border-top: 3px solid var(--primary-color) !important;
     }
 
     .table-no-data {

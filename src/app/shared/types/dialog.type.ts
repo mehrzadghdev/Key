@@ -10,10 +10,12 @@ export interface DialogResult<T> {
 };
 
 export enum DialogCSSClasses {
-    mobileFriendlyClass = 'mobile-like-dialog',
-    tabFriendlyClass = 'tab-friendly-dialog',
-    fullScreenClass = 'full-screen-dialog',
-    transformClass = 'transform-dialog',
+    ResponsiveDialog = 'mobile-like-dialog',
+    FullHeightDialog = 'tab-friendly-dialog',
+    FullScreenDialog = 'full-screen-dialog',
+    TransfromDialog = 'transform-dialog',
+    WindowDialog = 'window-dialog',
+
 }
 
 export enum AlertDialogType {

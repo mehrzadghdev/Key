@@ -29,6 +29,7 @@ import { GenerateKeysComponent } from './company/generate-keys/generate-keys.com
 import { ProductType } from './enums/product-type.enum';
 import { UserEventsComponent } from './reports/user-events/user-events.component';
 import { ImportPersonsComponent } from './person/import-persons/import-persons.component';
+import { AlertDialogType } from '../shared/types/dialog.type';
 
 @Component({
   selector: 'app-software',
@@ -66,7 +67,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
     return this.versioningService.version as number;
   }
 
-  public currentActivatedRoute!: ComponentRef< ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent | UnitComponent | DashboardComponent | CurrencyComponent>;
+  public currentActivatedRoute!: ComponentRef<ListProductComponent | ListPersonComponent | ListCompanyComponent | ListInvoiceComponent | UnitComponent | DashboardComponent | CurrencyComponent>;
   public currentActivatedRouteLoaded: boolean = false;
   public searchQuery: string = "";
   public fullscreen: boolean = true;
@@ -101,7 +102,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       if (this.authentication.userDetails) {
         this.initCompanySelection(this.authentication.userDetails.packageNo);
       }
-      
+
       if (!this.authentication.userDetails) {
         this.authentication.userInfo().subscribe(result => {
           this.authentication.userDetails = result[0];
@@ -130,7 +131,7 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
       }
       else {
         if (
-          this.authentication.currentCompanySelected() 
+          this.authentication.currentCompanySelected()
           && res.find((company: Company) => company.databaseId === (this.authentication.currentCompany as Company).databaseId)
         ) {
           this.companySelected = true
@@ -230,7 +231,17 @@ export class SoftwareComponent implements OnInit, AfterViewInit {
   }
 
   public onLogout(): void {
-    this.authentication.logout();
+    this.dialog.openAlertDialog({
+      alertType: AlertDialogType.Error,
+      message: 'آیا از خروج حساب کاربری اطمینان دارید؟',
+      title: 'خروج از حساب کاربری',
+      hasCancel: true,
+      dialogName: 'خروج از حساب کاربری'
+    }).afterClosed().subscribe(res => {
+      if (res === true) {
+        this.authentication.logout();
+      }
+    });
   }
 
   public toggleAccordion(accordion: HTMLLIElement): void {

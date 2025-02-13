@@ -251,7 +251,15 @@
         position: sticky;
         top: 0;
         z-index: 999;
-        background-color: var(--sidebar-background);
+        background-color: var(--primary-color);
+        background-image: url("../../assets/images/bg.png");
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        .username {
+            color: var(--base-color) !important;
+        }
 
         .panel-sidebar__logo {
             cursor: pointer;
@@ -261,8 +269,20 @@
             align-items: center;
             gap: 10px;
 
+            .key-logo {
+                width: 45px;
+                height: 45px;
+                padding: 2px;
+                // border-radius: 50%;
+                // background-color: color-mix(in srgb, var(--primary-color), var(--base-color) 25%);
+
+                img {
+                    width: 100%;
+                }
+            }
+
             .person-icon {
-                background-color: var(--sidebar-active-accordion);
+                background-color: color-mix(in srgb, var(--primary-color), var(--base-color) 25%);
                 min-width: 40px;
                 min-height: 40px;
                 display: flex;
@@ -274,16 +294,15 @@
                     font-size: 20px;
                     width: 20px;
                     height: 20px;
-                    color: #A4B0BE;
+                    color: color-mix(in srgb, var(--base-color), var(--base-opposite-color) 5%);
                 }
             }
-
 
             .package-number {
                 font-size: 12px !important;
                 font-weight: 400;
                 display: block;
-                color: #A4B0BE !important;
+                color: color-mix(in srgb, var(--base-color), var(--base-opposite-color) 5%) !important;
             }
 
             span {

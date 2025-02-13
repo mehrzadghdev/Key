@@ -20,7 +20,7 @@ export class DialogService {
       autoFocus: false,
       disableClose: true,
       hasBackdrop: true,
-      panelClass: [DialogCSSClasses.fullScreenClass]
+      panelClass: [DialogCSSClasses.FullScreenDialog]
     });
 
     return dialogRef;
@@ -31,8 +31,11 @@ export class DialogService {
       data: config?.data,
       autoFocus: true,
       disableClose: true,
-      hasBackdrop: true,
+      hasBackdrop: false,
       width: config?.width,
+      panelClass: [
+        DialogCSSClasses.WindowDialog,
+      ]
     });
 
     return dialogRef;
@@ -42,12 +45,12 @@ export class DialogService {
     const dialogRef = this.dialog.open(AlertComponent, {
       autoFocus: true,
       disableClose: false,
-      hasBackdrop: true,
+      hasBackdrop: false,
       data: alertData,
       width:"456px",
       height: "auto",
       panelClass: [
-        DialogCSSClasses.mobileFriendlyClass,
+        DialogCSSClasses.WindowDialog,
       ],
     });
 
@@ -59,7 +62,7 @@ export class DialogService {
       data: config?.data,
       autoFocus: false,
       disableClose: false,
-      hasBackdrop: true,
+      hasBackdrop: false,
       width: config?.width,
     });
 
@@ -70,26 +73,13 @@ export class DialogService {
     const dialogRef = this.dialog.open(AcceptDeleteComponent, {
       autoFocus: true,
       disableClose: false,
-      hasBackdrop: true,
+      hasBackdrop: false,
       width:"300px",
       height: "auto",
       panelClass: [
-        DialogCSSClasses.mobileFriendlyClass,
+        DialogCSSClasses.ResponsiveDialog,
+        DialogCSSClasses.WindowDialog,
       ],
-    });
-
-    return dialogRef;
-  }
-
-  public openTransformDialog<T, R = any>(component: ComponentType<unknown>, config?: DialogConfig<T>): MatDialogRef<unknown, DialogResult<R>> {
-    const dialogRef = this.open<T, R>(component, {
-      data: config?.data,
-      autoFocus: false,
-      disableClose: true,
-      hasBackdrop: true,
-      width: config?.width,
-      height: config?.height,
-      panelClass: [DialogCSSClasses.transformClass]
     });
 
     return dialogRef;
@@ -105,7 +95,7 @@ export class DialogService {
       width: config?.width || "auto",
       height: config?.height || "auto",
       panelClass: [
-        DialogCSSClasses.mobileFriendlyClass,
+        DialogCSSClasses.ResponsiveDialog,
         ...config.panelClass || []
       ],
     });
